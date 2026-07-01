@@ -1079,6 +1079,81 @@ Le/les → se when followed by lo/la/los/las: "se lo doy" (I give it to him) NOT
   }
 ];
 
+// ─── BUILDER STATIC BANK ──────────────────────────────────────────────────────
+// 5 sentences × 10 concepts = 50 instant, offline sentence-arrangement drills
+const BUILDER_BANK = {
+  'ser-estar': [
+    { _static:true, en:"She is a doctor and she is tired.", words:["Ella","es","médica","y","está","cansada"], explanation:"es = profession (permanent identity), está = temporary state of tiredness" },
+    { _static:true, en:"The coffee is Colombian and it is very hot.", words:["El","café","es","colombiano","y","está","muy","caliente"], explanation:"es colombiano = origin (ser), está caliente = current temperature (estar)" },
+    { _static:true, en:"Are you nervous or are you always like this?", words:["¿Estás","nervioso","o","eres","así","siempre?"], explanation:"estás = current emotional state, eres = permanent character trait" },
+    { _static:true, en:"The problem is serious but my sister is okay.", words:["El","problema","es","grave","pero","mi","hermana","está","bien"], explanation:"es grave = nature of the problem (characteristic), está bien = current condition" },
+    { _static:true, en:"Madrid is in Spain and is very lively.", words:["Madrid","está","en","España","y","es","muy","animada"], explanation:"está en España = location (always estar), es animada = characteristic quality (ser)" }
+  ],
+  'pret-imp': [
+    { _static:true, en:"When I was a child I used to eat paella every Sunday.", words:["Cuando","era","niño","comía","paella","todos","los","domingos"], explanation:"era, comía = imperfect for habitual past actions and ongoing background states" },
+    { _static:true, en:"She called me while I was studying.", words:["Me","llamó","mientras","yo","estudiaba"], explanation:"llamó = preterite (completed single event), estudiaba = imperfect (ongoing background)" },
+    { _static:true, en:"We arrived late because the bus broke down.", words:["Llegamos","tarde","porque","el","autobús","se","averió"], explanation:"Both preterite — two specific completed events in the past" },
+    { _static:true, en:"He lived in Paris for three years.", words:["Vivió","en","París","durante","tres","años"], explanation:"Preterite — bounded completed period with a specific duration" },
+    { _static:true, en:"It was raining and there were many people in the street.", words:["Llovía","y","había","mucha","gente","en","la","calle"], explanation:"llovía, había = imperfect for background scene description" }
+  ],
+  'subjunctive': [
+    { _static:true, en:"I want you to come to the party.", words:["Quiero","que","tú","vengas","a","la","fiesta"], explanation:"Quiero que + different subject triggers subjunctive (vengas)" },
+    { _static:true, en:"It is important that you study every day.", words:["Es","importante","que","estudies","todos","los","días"], explanation:"Es importante que = impersonal expression triggering subjunctive (estudies)" },
+    { _static:true, en:"I doubt that he knows the answer.", words:["Dudo","que","él","sepa","la","respuesta"], explanation:"Dudar que = doubt/uncertainty triggers subjunctive (sepa)" },
+    { _static:true, en:"She hopes that her team wins the championship.", words:["Espera","que","su","equipo","gane","el","campeonato"], explanation:"Esperar que with two different subjects triggers subjunctive (gane)" },
+    { _static:true, en:"When you arrive call me.", words:["Cuando","llegues","llámame"], explanation:"Cuando + future idea = subjunctive (llegues); imperative follows" }
+  ],
+  'por-para': [
+    { _static:true, en:"I bought this gift for you.", words:["Compré","este","regalo","para","ti"], explanation:"para = intended recipient of the gift (forward-facing purpose)" },
+    { _static:true, en:"They traveled through the mountains for two hours.", words:["Viajaron","por","las","montañas","durante","dos","horas"], explanation:"por = movement through a space" },
+    { _static:true, en:"She studied all night in order to pass the exam.", words:["Estudió","toda","la","noche","para","aprobar","el","examen"], explanation:"para + infinitive = purpose/goal (in order to)" },
+    { _static:true, en:"I bought it for ten euros.", words:["Lo","compré","por","diez","euros"], explanation:"por = exchange — in exchange for a price" },
+    { _static:true, en:"For a beginner you speak very well.", words:["Para","ser","principiante","hablas","muy","bien"], explanation:"para = comparison against what's expected (for a beginner)" }
+  ],
+  'gender': [
+    { _static:true, en:"The red house is beautiful and big.", words:["La","casa","roja","es","hermosa","y","grande"], explanation:"casa is feminine → la; roja agrees in feminine singular; grande has no gender form" },
+    { _static:true, en:"The blue books are on the table.", words:["Los","libros","azules","están","sobre","la","mesa"], explanation:"libros = masculine plural → los; azules = plural form of azul" },
+    { _static:true, en:"He bought a new white shirt.", words:["Compró","una","camisa","nueva","blanca"], explanation:"camisa is feminine → una; nueva and blanca agree in feminine singular" },
+    { _static:true, en:"The problems are difficult but interesting.", words:["Los","problemas","son","difíciles","pero","interesantes"], explanation:"problema = masculine despite -a ending → los; adjectives agree in masculine plural" },
+    { _static:true, en:"The yellow flowers are in the garden.", words:["Las","flores","amarillas","están","en","el","jardín"], explanation:"flores = feminine plural → las; amarillas agrees in feminine plural" }
+  ],
+  'reflexive': [
+    { _static:true, en:"She wakes up at seven and gets dressed quickly.", words:["Se","despierta","a","las","siete","y","se","viste","rápido"], explanation:"se despierta, se viste = reflexive — actions loop back to the subject herself" },
+    { _static:true, en:"My name is Carlos and I live in Madrid.", words:["Me","llamo","Carlos","y","vivo","en","Madrid"], explanation:"Me llamo = reflexive llamarse (I call myself); vivo = non-reflexive vivir" },
+    { _static:true, en:"They say goodbye and leave the restaurant.", words:["Se","despiden","y","salen","del","restaurante"], explanation:"se despiden = reflexive/reciprocal; salen = non-reflexive (they leave)" },
+    { _static:true, en:"I went to bed late and fell asleep immediately.", words:["Me","acosté","tarde","y","me","dormí","enseguida"], explanation:"me acosté (acostarse) and me dormí (dormirse) = both reflexive preterite" },
+    { _static:true, en:"He got angry when he heard the news.", words:["Se","enojó","cuando","escuchó","las","noticias"], explanation:"se enojó (enojarse) = reflexive to express becoming angry; escuchó = non-reflexive" }
+  ],
+  'present': [
+    { _static:true, en:"I have a lot of work and I cannot go out today.", words:["Tengo","mucho","trabajo","y","no","puedo","salir","hoy"], explanation:"tengo = irregular yo form of tener; puedo = o→ue stem change of poder" },
+    { _static:true, en:"Do you want to come with me to the market?", words:["¿Quieres","venir","conmigo","al","mercado?"], explanation:"quieres = e→ie stem change; near-future use of present tense" },
+    { _static:true, en:"She orders a coffee and pays at the counter.", words:["Pide","un","café","y","paga","en","la","barra"], explanation:"pide = e→i stem change of pedir; paga = regular -ar verb in present" },
+    { _static:true, en:"We go out every Friday to have dinner.", words:["Salimos","todos","los","viernes","a","cenar"], explanation:"salimos = present tense of salir (irregular yo: salgo, regular elsewhere)" },
+    { _static:true, en:"I know that he knows the answer.", words:["Sé","que","él","sabe","la","respuesta"], explanation:"sé = irregular yo form of saber; sabe = regular third person" }
+  ],
+  'gustar': [
+    { _static:true, en:"I love spicy food.", words:["Me","encanta","la","comida","picante"], explanation:"me encanta — la comida is the subject (singular), me = indirect object (me)" },
+    { _static:true, en:"They like history and science.", words:["Les","gustan","la","historia","y","las","ciencias"], explanation:"les = them; gustan = plural because two subjects (historia + ciencias)" },
+    { _static:true, en:"It bothers you that she is always late.", words:["Te","molesta","que","siempre","llegue","tarde"], explanation:"te molesta (molestar-type) — the clause is singular subject; te = indirect object" },
+    { _static:true, en:"We love traveling by train.", words:["Nos","encanta","viajar","en","tren"], explanation:"nos encanta — viajar (infinitive) = singular subject; nos = indirect object" },
+    { _static:true, en:"My head hurts and I lack energy.", words:["Me","duele","la","cabeza","y","me","falta","energía"], explanation:"me duele (doler-type) and me falta (faltar-type) — body part/thing is the subject" }
+  ],
+  'word-order': [
+    { _static:true, en:"Juan arrived yesterday from Paris.", words:["Llegó","Juan","ayer","de","París"], explanation:"Verb before subject (llegó Juan) — Juan is new information placed at end for emphasis" },
+    { _static:true, en:"I already know what happened.", words:["Ya","sé","lo","que","pasó"], explanation:"Subject pronoun yo is omitted — embedded in sé; ya adds temporal emphasis" },
+    { _static:true, en:"The director told the truth at the meeting.", words:["La","verdad","la","dijo","el","director","en","la","reunión"], explanation:"La verdad fronted as topic and doubled with la; el director at end = focused new info" },
+    { _static:true, en:"Is it raining a lot?", words:["¿Llueve","mucho?"], explanation:"Subject-less verb — llueve = it rains; verb-first is natural for questions and new info" },
+    { _static:true, en:"Only María knows the truth.", words:["Solo","María","sabe","la","verdad"], explanation:"Solo fronted for emphasis; María + sabe follow SVO but solo isolates subject" }
+  ],
+  'obj-pronouns': [
+    { _static:true, en:"I give it to her every day.", words:["Se","lo","doy","todos","los","días"], explanation:"le → se when followed by lo; both pronouns placed before conjugated verb" },
+    { _static:true, en:"She is going to send them to us.", words:["Nos","los","va","a","enviar"], explanation:"nos = indirect (to us), los = direct (them); both before conjugated verb va" },
+    { _static:true, en:"They sent us the documents yesterday.", words:["Nos","enviaron","los","documentos","ayer"], explanation:"nos = indirect object pronoun; placed before conjugated verb enviaron" },
+    { _static:true, en:"He wants to send you the letter.", words:["Quiere","enviarte","la","carta"], explanation:"te (indirect) attaches to infinitive: enviar + te = enviarte" },
+    { _static:true, en:"Tell me the truth.", words:["Dime","la","verdad"], explanation:"Imperative + me attached to verb end: di + me = dime (accent shifts to preserve stress)" }
+  ]
+};
+
 // ─── CONCEPT GATEWAYS ─────────────────────────────────────────────────────────
 const GATEWAYS = {
   'ser-estar': {
@@ -4197,10 +4272,26 @@ Rules:
   return await ollamaJSON(prompt);
 }
 
+function getStaticBuilderEntry() {
+  if (!currentConcept) return null;
+  const bank = BUILDER_BANK[currentConcept.key];
+  if (!bank || !bank.length) return null;
+  return bank[Math.floor(Math.random() * bank.length)];
+}
+
 async function loadBuilder() {
   exerciseAnswered = false;
   clearErrorBox();
   placedWords = [];
+
+  // Static bank — instant, no AI needed
+  const staticData = getStaticBuilderEntry();
+  if (staticData) {
+    renderBuilder(staticData);
+    return;
+  }
+
+  // AI fallback for concepts not yet in the bank
   let data;
   if (nextExercise) {
     data = nextExercise;
@@ -4533,4 +4624,58 @@ Respond with ONLY valid JSON:
       <div class="fb-grade ${gradeClass}">${result.gradeLabel || 'Graded'}</div>
       <div>${formatExplanation(result.feedback || '')}</div>
       <br>
-      <div><b style="color:var(--ac
+      <div><b style="color:var(--accent)">The concept:</b> ${formatExplanation(result.concept || '')}</div>
+      <br>
+      <div><b style="color:var(--green)">Another example:</b> ${formatExplanation(result.example || '')}</div>`;
+
+    const bar = document.getElementById('result-bar');
+    bar.style.display = 'flex';
+    bar.classList.add('show', result.grade === 'good' ? 'correct-bar' : 'wrong-bar');
+    document.getElementById('result-icon').textContent = result.grade === 'good' ? '✅' : result.grade === 'ok' ? '〜' : '❌';
+    document.getElementById('result-main').textContent = result.gradeLabel || 'Checked!';
+
+    if (result.grade === 'good' || result.grade === 'ok') {
+      const pts = result.grade === 'good' ? 18 : 9;
+      addXP(pts);
+      updateStreak(true);
+      popXP(`+${pts} XP`, null);
+      recordMastery(true);
+    } else {
+      const wrongData = {
+        conceptName: currentConcept?.name,
+        question: data?.en || 'Translation',
+        wrong: studentAnswer,
+        correct: data?.es || '?'
+      };
+      updateStreak(false, wrongData);
+      recordMastery(false);
+    }
+    btn.textContent = 'Done';
+  } catch (err) {
+    feedback.innerHTML = `<div class="fb-grade poor">Grading failed</div><div>Ollama error: ${err.message}. The correct answer was: <b>${data?.es}</b></div>`;
+    btn.textContent = 'Try again';
+    btn.disabled = false;
+    exerciseAnswered = false;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── MINI STORY MODE ────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+
+async function loadStory() {
+  storyQuestionsAnswered = 0;
+  clearErrorBox();
+  showLoading('Writing a story...', 'Mixing realistic and absurd for neuroplasticity');
+  try {
+    const c = currentConcept;
+    const prompt = `You are a creative Spanish teacher writing a mini story for students.
+Concept to feature: ${c.name}
+Context: ${c.context}
+
+Write a 4-sentence micro-story in Spanish that naturally demonstrates "${c.name}" multiple times.
+Mix REALISTIC and ABSURD elements — e.g., a plumber who fights dragons, a chef in space, a grandmother who codes.
+Make it memorable and slightly funny. The absurdity helps it stick in memory.
+Each sentence should feel natural and use vocabulary a B1 student would know.
+
+Then write 3 comprehension questions with 4 options each. The ques
