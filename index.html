@@ -595,6 +595,47 @@ body.focus-mode header { min-height:auto; }
 .cfg-inp { background: var(--surface2); border: 1px solid var(--border2); border-radius: 4px; padding: 3px 7px; font-size: 11px; color: var(--text); outline: none; width: 168px; font-family: monospace; }
 .cfg-inp:focus { border-color: var(--accent); }
 
+
+/* ── BATCH F: STUDENT FEATURES ── */
+.vocab-card { background:var(--surface2); border-radius:12px; padding:20px; text-align:center; margin-bottom:14px; }
+.vocab-es { font-size:28px; font-weight:800; margin-bottom:4px; color:var(--accent); }
+.vocab-pos { font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; }
+.vocab-reveal-btn { padding:8px 20px; border-radius:20px; border:none; background:var(--accent); color:#fff; font-size:14px; font-weight:700; cursor:pointer; margin-bottom:10px; }
+.vocab-en { font-size:18px; color:var(--text2); margin-bottom:6px; display:none; }
+.vocab-example { font-size:12px; color:var(--text3); font-style:italic; display:none; }
+.vocab-nav { display:flex; gap:10px; justify-content:center; margin-top:10px; }
+.vocab-nav button { padding:7px 16px; border-radius:8px; border:1px solid var(--border2); background:var(--surface2); color:var(--text2); font-size:13px; cursor:pointer; }
+.vocab-progress { font-size:11px; color:var(--text3); text-align:center; margin-bottom:8px; }
+/* Spot the Error */
+.ste-sentence { font-size:17px; line-height:1.6; padding:16px; background:var(--surface2); border-radius:10px; margin-bottom:12px; text-align:center; }
+.ste-error-word { color:#f87171; text-decoration:underline; text-decoration-style:wavy; cursor:pointer; }
+.ste-options { display:flex; flex-direction:column; gap:7px; margin-bottom:12px; }
+.ste-opt { padding:10px 14px; border-radius:8px; border:1px solid var(--border2); background:var(--surface2); color:var(--text); font-size:13px; cursor:pointer; text-align:left; transition:all .15s; }
+.ste-opt:hover { border-color:var(--accent); }
+.ste-opt.correct-opt { background:rgba(62,207,142,.15); border-color:#3ecf8e; color:#3ecf8e; }
+.ste-opt.wrong-opt { background:rgba(244,91,105,.1); border-color:#f45b69; color:#f45b69; }
+/* Reading Comprehension */
+.rc-passage { background:var(--surface2); border-radius:10px; padding:16px; font-size:14px; line-height:1.7; margin-bottom:14px; color:var(--text2); }
+.rc-questions { display:flex; flex-direction:column; gap:10px; margin-bottom:12px; }
+.rc-question { background:var(--surface); border:1px solid var(--border2); border-radius:8px; padding:12px; }
+.rc-question-text { font-size:13px; font-weight:600; margin-bottom:6px; }
+.rc-question input { width:100%; padding:7px 9px; border-radius:6px; border:1px solid var(--border2); background:var(--surface2); color:var(--text); font-size:13px; }
+/* Confidence Rating */
+.confidence-row { display:flex; align-items:center; gap:8px; margin-top:8px; font-size:12px; color:var(--text3); }
+.conf-btn { padding:3px 8px; border-radius:5px; border:1px solid var(--border2); background:var(--surface2); font-size:14px; cursor:pointer; transition:all .15s; }
+.conf-btn:hover, .conf-btn.selected { border-color:var(--accent); background:rgba(91,141,238,.12); }
+/* Error Taxonomy Badge */
+.error-tax-bar { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; }
+.etax-badge { font-size:10px; padding:2px 6px; border-radius:3px; background:rgba(239,68,68,.12); color:#f87171; }
+/* Assignment Banner */
+.assignment-banner { background:linear-gradient(135deg,rgba(91,141,238,.12),rgba(168,85,247,.08)); border:1px solid rgba(91,141,238,.25); border-radius:10px; padding:10px 14px; margin-bottom:10px; display:none; }
+.assignment-banner.visible { display:block; }
+.assignment-title { font-size:12px; font-weight:700; color:var(--accent); margin-bottom:4px; }
+.assignment-items { display:flex; flex-wrap:wrap; gap:4px; }
+.assignment-item { font-size:10px; padding:2px 7px; border-radius:4px; background:rgba(91,141,238,.1); color:var(--text2); }
+/* Progress Share Canvas */
+.share-canvas-wrap { text-align:center; margin-top:10px; }
+#share-preview { border-radius:10px; max-width:100%; border:1px solid var(--border2); }
 /* ── TOAST ── */
 .toast { position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; padding: 10px 18px; font-size: 13px; color: var(--text); opacity: 0; transition: all .25s; z-index: 100; pointer-events: none; white-space: nowrap; box-shadow: 0 4px 20px rgba(0,0,0,.4); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -1030,9 +1071,16 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   <div class="mode-tab" data-mode="missing" onclick="switchMode('missing', this)">🔍 Missing</div>
   <div class="mode-tab" data-mode="worddrop" onclick="switchMode('worddrop', this)">🃏 Word Drop</div>
   <div class="mode-tab" data-mode="dialogue" onclick="switchMode('dialogue', this)">💬 Dialogue</div>
+  <div class="mode-tab" data-mode="vocab" onclick="switchMode('vocab', this)">📖 Vocab</div>
+  <div class="mode-tab" data-mode="spottherror" onclick="switchMode('spottherror', this)">🐛 Errors</div>
+  <div class="mode-tab" data-mode="readcomp" onclick="switchMode('readcomp', this)">📚 Read</div>
 </div>
 
 <!-- EXERCISE AREA -->
+<div id="assignment-banner" class="assignment-banner">
+  <div class="assignment-title">📋 Teacher Assignment</div>
+  <div id="assignment-items" class="assignment-items"></div>
+</div>
 <div class="exercise-area" id="exercise-area">
   <div class="mode-empty">
     <div class="empty-icon">🧠</div>
@@ -1267,14 +1315,14 @@ Key examples: "Es médico" (permanent profession=ser) vs "Está cansado" (curren
 Pairs to drill: es/está aburrido, es/está listo, es/está malo, es/está bueno, locations, emotions, professions.`
   },
   {
-    key:'pret-imp', name:'Preterite vs Imperfect', emoji:'📸', level:'both',
+    key:'pret-imp', name:'Preterite vs Imperfect', emoji:'📸', level:'both', requires:['present'],
     context:`Preterite (pretérito indefinido) = bounded, completed, single event — like a PHOTO. Imperfect (imperfecto) = ongoing, background, habitual past — like a MOVIE.
 Same event framed differently: "Comí pizza" (once, done) vs "Comía pizza todos los viernes" (habit).
 Background: "Llovía cuando llegué" (llovía=imperfect background, llegué=preterite event).
 States almost always imperfect: era, estaba, tenía, sabía, quería, podía.`
   },
   {
-    key:'subjunctive', name:'Subjunctive', emoji:'🌫️', level:'int',
+    key:'subjunctive', name:'Subjunctive', emoji:'🌫️', level:'int', requires:['present'],
     context:`Indicative = asserting facts. Subjunctive = reality in question: doubt, desire, emotion, uncertainty.
 Triggered by: querer que, esperar que, dudar que, es importante que, tener miedo de que, ojalá.
 Key rule: TWO different subjects needed ("Quiero que TÚ vayas" but "Quiero ir" with same subject = infinitive).
@@ -1296,7 +1344,7 @@ Tricky: el agua (feminine but uses el in singular), la mano (feminine but ends i
 Agreement chain: el libro rojo / la casa roja / los libros rojos / las casas rojas.`
   },
   {
-    key:'reflexive', name:'Reflexive Verbs', emoji:'🔄', level:'both',
+    key:'reflexive', name:'Reflexive Verbs', emoji:'🔄', level:'both', requires:['present'],
     context:`Reflexive pronouns: me, te, se, nos, os, se. Used when action loops back to subject.
 Levantarse (to get up), lavarse (to wash oneself), llamarse (to be called), dormirse (to fall asleep).
 Some verbs change meaning with reflexive: ir (to go) vs irse (to leave/go away), dormir (to sleep) vs dormirse (to fall asleep), poner (to put) vs ponerse (to put on / to become).
@@ -1329,7 +1377,7 @@ Verbs can come before subjects: "Llegó Juan" = Juan arrived (Juan is new info).
 Subject pronouns often omitted: hablas = you speak (yo/tú embedded in verb ending).`
   },
   {
-    key:'obj-pronouns', name:'Object Pronouns', emoji:'🎁', level:'int',
+    key:'obj-pronouns', name:'Object Pronouns', emoji:'🎁', level:'int', requires:['present','gender'],
     context:`Direct object pronouns (replace WHAT is acted on): lo, la, los, las (also me, te, nos, os).
 Indirect object pronouns (replace WHO receives the action): le, les (also me, te, nos, os).
 Position: BEFORE conjugated verb — "Lo como" (I eat it), "Le doy el libro" (I give him the book).
@@ -3830,7 +3878,7 @@ function switchMode(mode, el) {
 }
 
 function startExercise() {
-  const noConceptModes = ['conjugate'];
+  const noConceptModes = ['conjugate','vocab','spottherror','readcomp'];
   if (!currentConcept && !noConceptModes.includes(currentMode)) return;
   if (currentMode === 'pairs') loadPairs();
   else if (currentMode === 'examples') loadExamples();
@@ -3843,6 +3891,9 @@ function startExercise() {
   else if (currentMode === 'missing') loadMissing();
   else if (currentMode === 'worddrop') loadWordDrop();
   else if (currentMode === 'dialogue') loadDialogue();
+  else if (currentMode === 'vocab') loadVocab();
+  else if (currentMode === 'spottherror') loadSpotError();
+  else if (currentMode === 'readcomp') loadReadComp();
 }
 
 // ─── CONJUGATION DRILLS ───────────────────────────────────────────────────────
@@ -6375,6 +6426,567 @@ function updateStreak(correct, wrongData) {
     });
     if (custom.length) console.log('[Student] Injected', custom.length, 'custom exercises from teacher');
   } catch(e) {}
+})();
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── BATCH F: REMAINING STUDENT FEATURES ──────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+// ── #12 CONCEPT PREREQUISITES ────────────────────────────────────────────────
+function checkPrerequisites(concept) {
+  if (!concept.requires || !concept.requires.length) return { ok: true };
+  const unmet = concept.requires.filter(req => {
+    const m = conceptMastery[req];
+    if (!m || m.total < 5) return true; // Need at least 5 attempts
+    const acc = m.correct / m.total;
+    return acc < 0.6; // Need at least 60% accuracy
+  });
+  if (unmet.length) {
+    const names = unmet.map(k => CONCEPTS.find(c=>c.key===k)?.name || k);
+    return { ok: false, missing: names };
+  }
+  return { ok: true };
+}
+
+// Patch openGateway or the concept click to check prereqs
+const _origConceptClick = typeof selectConcept !== 'undefined' ? selectConcept : null;
+
+// We hook into the gateway open — check prerequisites before showing
+document.addEventListener('click', e => {
+  const conceptCard = e.target.closest('[data-concept-key]');
+  if (!conceptCard) return;
+  const key = conceptCard.dataset.conceptKey;
+  const concept = CONCEPTS.find(c => c.key === key);
+  if (!concept) return;
+  const check = checkPrerequisites(concept);
+  if (!check.ok) {
+    e.stopPropagation();
+    e.preventDefault();
+    showToast('🔒 Complete first: ' + check.missing.join(', '), 3500);
+  }
+}, true);
+
+// ── #14 CONFIDENCE TRACKING ───────────────────────────────────────────────────
+let _confidenceData = JSON.parse(localStorage.getItem('sl_confidence') || '{}');
+
+function showConfidenceRating(conceptKey) {
+  const bar = document.getElementById('result-bar');
+  if (!bar || !conceptKey) return;
+  const existing = bar.querySelector('.confidence-row');
+  if (existing) return;
+  const row = document.createElement('div');
+  row.className = 'confidence-row';
+  row.innerHTML = 'Confidence: ' + [1,2,3,4,5].map(n =>
+    `<button class="conf-btn" data-conf="${n}" onclick="recordConfidence('${conceptKey}',${n},this)" title="${['😰','😕','😐','😊','🎯'][n-1]}">${['😰','😕','😐','😊','🎯'][n-1]}</button>`
+  ).join('');
+  bar.appendChild(row);
+}
+
+function recordConfidence(conceptKey, score, btn) {
+  if (!_confidenceData[conceptKey]) _confidenceData[conceptKey] = [];
+  _confidenceData[conceptKey].push({ score, ts: Date.now() });
+  if (_confidenceData[conceptKey].length > 50) _confidenceData[conceptKey] = _confidenceData[conceptKey].slice(-50);
+  localStorage.setItem('sl_confidence', JSON.stringify(_confidenceData));
+  btn.closest('.confidence-row').querySelectorAll('.conf-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  if (score <= 2) showToast('📌 Flagged for extra practice', 1500);
+}
+
+// Hook into result-bar show to add confidence rating
+const _origUpdateStreakConf = updateStreak;
+// (Already monkey-patched for live feed — extend that pattern via a separate observer)
+const _confObserver = new MutationObserver(() => {
+  const bar = document.getElementById('result-bar');
+  if (bar && bar.classList.contains('show') && currentConcept) {
+    showConfidenceRating(currentConcept.key || currentConcept.name);
+  }
+});
+const _barEl = document.getElementById('result-bar');
+if (_barEl) _confObserver.observe(_barEl, { attributes: true, attributeFilter: ['class'] });
+
+// ── #11 ERROR TAXONOMY ────────────────────────────────────────────────────────
+const ERROR_CATEGORIES = {
+  'ser-estar': 'Ser/Estar',
+  'pret-imp': 'Preterite/Imperfect',
+  'subjunctive': 'Subjunctive',
+  'por-para': 'Por/Para',
+  'gender': 'Gender Agreement',
+  'reflexive': 'Reflexive Verbs',
+  'gustar': 'Gustar Pattern',
+  'obj-pronouns': 'Object Pronouns',
+  'word-order': 'Word Order',
+  'present': 'Present Tense',
+};
+
+let _errorTaxonomy = JSON.parse(localStorage.getItem('sl_error_taxonomy') || '{}');
+
+function recordErrorTaxonomy(conceptKey, errorText) {
+  if (!conceptKey) return;
+  if (!_errorTaxonomy[conceptKey]) _errorTaxonomy[conceptKey] = 0;
+  _errorTaxonomy[conceptKey]++;
+  localStorage.setItem('sl_error_taxonomy', JSON.stringify(_errorTaxonomy));
+}
+
+// Monkey-patch updateStreak to also record taxonomy
+const _origUpdateStreakTax = updateStreak;
+function updateStreak(correct, wrongData) {
+  _origUpdateStreakTax(correct, wrongData);
+  if (!correct && currentConcept) {
+    recordErrorTaxonomy(currentConcept.key, wrongData?.question);
+    writeLiveFeed(correct, wrongData?.question, currentMode);
+  } else if (correct) {
+    writeLiveFeed(correct, null, currentMode);
+  }
+}
+
+// ── #9 DIFFICULTY INTERLEAVING ────────────────────────────────────────────────
+// Adds smart difficulty selection: after 2 easy exercises, pick a hard one
+let _diffStreak = 0;
+
+function getDifficultyScore(conceptKey) {
+  const m = conceptMastery[conceptKey];
+  if (!m || m.total < 3) return 0.5; // Unknown = medium
+  return 1 - (m.correct / m.total); // Higher = harder
+}
+
+function selectConceptWithInterleaving() {
+  if (!CONCEPTS || !CONCEPTS.length) return null;
+  const withScores = CONCEPTS.map(c => ({ ...c, diff: getDifficultyScore(c.key) }));
+  withScores.sort((a, b) => b.diff - a.diff);
+  _diffStreak++;
+  // Every 3rd exercise: pick hardest concept not currently selected
+  if (_diffStreak % 3 === 0 && withScores[0].key !== currentConcept?.key) {
+    return withScores[0]; // Hardest concept
+  }
+  return null; // Let normal selection continue
+}
+
+// ── #20 VOCABULARY MODE ───────────────────────────────────────────────────────
+const VOCAB_LIST = [
+  {es:'hablar',en:'to speak',pos:'verb',ex:'Ella habla español muy bien.'},
+  {es:'comer',en:'to eat',pos:'verb',ex:'¿Qué quieres comer esta noche?'},
+  {es:'vivir',en:'to live',pos:'verb',ex:'Vivo en una ciudad grande.'},
+  {es:'ser',en:'to be (permanent)',pos:'verb',ex:'Soy estudiante de español.'},
+  {es:'estar',en:'to be (temp/location)',pos:'verb',ex:'Estoy muy cansado hoy.'},
+  {es:'tener',en:'to have',pos:'verb',ex:'Tengo dos hermanos.'},
+  {es:'ir',en:'to go',pos:'verb',ex:'Voy al mercado todos los sábados.'},
+  {es:'hacer',en:'to do / to make',pos:'verb',ex:'¿Qué haces los fines de semana?'},
+  {es:'poder',en:'to be able to',pos:'verb',ex:'No puedo venir mañana.'},
+  {es:'querer',en:'to want / to love',pos:'verb',ex:'Quiero aprender más español.'},
+  {es:'saber',en:'to know (fact/how)',pos:'verb',ex:'¿Sabes dónde está la farmacia?'},
+  {es:'conocer',en:'to know (person/place)',pos:'verb',ex:'Conozco a tu amiga María.'},
+  {es:'llevar',en:'to carry / to wear / to take',pos:'verb',ex:'Lleva una camisa roja.'},
+  {es:'volver',en:'to return',pos:'verb',ex:'¿A qué hora vuelves a casa?'},
+  {es:'encontrar',en:'to find',pos:'verb',ex:'No puedo encontrar mis llaves.'},
+  {es:'pensar',en:'to think',pos:'verb',ex:'¿Qué piensas de esta idea?'},
+  {es:'poner',en:'to put / to place',pos:'verb',ex:'Pon los libros en la mesa.'},
+  {es:'llegar',en:'to arrive',pos:'verb',ex:'El tren llega a las tres.'},
+  {es:'creer',en:'to believe / to think',pos:'verb',ex:'Creo que tienes razón.'},
+  {es:'dejar',en:'to leave / to let',pos:'verb',ex:'Deja el abrigo aquí.'},
+  {es:'seguir',en:'to follow / to continue',pos:'verb',ex:'Sigue recto por esta calle.'},
+  {es:'pasar',en:'to pass / to happen',pos:'verb',ex:'¿Qué pasó ayer?'},
+  {es:'llamar',en:'to call',pos:'verb',ex:'Te llamo esta tarde.'},
+  {es:'trabajar',en:'to work',pos:'verb',ex:'Trabajo en una empresa de tecnología.'},
+  {es:'necesitar',en:'to need',pos:'verb',ex:'Necesito ayuda con esto.'},
+  {es:'empezar',en:'to start / to begin',pos:'verb',ex:'La clase empieza a las nueve.'},
+  {es:'esperar',en:'to wait / to hope',pos:'verb',ex:'Espera un momento, por favor.'},
+  {es:'recordar',en:'to remember',pos:'verb',ex:'¿Recuerdas su nombre?'},
+  {es:'sentir',en:'to feel / to be sorry',pos:'verb',ex:'Me siento muy bien hoy.'},
+  {es:'el tiempo',en:'time / weather',pos:'noun',ex:'No tengo tiempo ahora.'},
+  {es:'la casa',en:'house / home',pos:'noun',ex:'Mi casa está cerca del centro.'},
+  {es:'el trabajo',en:'work / job',pos:'noun',ex:'¿Cómo va el trabajo?'},
+  {es:'el año',en:'year',pos:'noun',ex:'Este año quiero viajar más.'},
+  {es:'el día',en:'day',pos:'noun',ex:'Buenos días, ¿cómo estás?'},
+  {es:'la vida',en:'life',pos:'noun',ex:'La vida es corta y hermosa.'},
+  {es:'la gente',en:'people',pos:'noun',ex:'Hay mucha gente en la plaza.'},
+  {es:'la vez',en:'time / occasion',pos:'noun',ex:'Esta vez lo hice bien.'},
+  {es:'el mundo',en:'world',pos:'noun',ex:'Quiero conocer el mundo.'},
+  {es:'el país',en:'country',pos:'noun',ex:'España es un país hermoso.'},
+  {es:'la ciudad',en:'city',pos:'noun',ex:'Vivo en una ciudad pequeña.'},
+  {es:'la familia',en:'family',pos:'noun',ex:'Mi familia es muy importante para mí.'},
+  {es:'el amigo/la amiga',en:'friend',pos:'noun',ex:'Tengo muchos amigos aquí.'},
+  {es:'la comida',en:'food / meal',pos:'noun',ex:'La comida española es deliciosa.'},
+  {es:'el agua',en:'water (f)',pos:'noun',ex:'¿Me puedes traer un vaso de agua?'},
+  {es:'el dinero',en:'money',pos:'noun',ex:'No tengo mucho dinero este mes.'},
+  {es:'la mesa',en:'table',pos:'noun',ex:'Los platos están sobre la mesa.'},
+  {es:'la puerta',en:'door',pos:'noun',ex:'Cierra la puerta, por favor.'},
+  {es:'el libro',en:'book',pos:'noun',ex:'Estoy leyendo un libro muy bueno.'},
+  {es:'el coche',en:'car',pos:'noun',ex:'Mi coche es azul.'},
+  {es:'el teléfono',en:'phone',pos:'noun',ex:'¿Dónde dejé mi teléfono?'},
+  {es:'grande',en:'big / great',pos:'adj',ex:'Vivo en un apartamento grande.'},
+  {es:'pequeño/a',en:'small',pos:'adj',ex:'El gato es muy pequeño.'},
+  {es:'bueno/a',en:'good',pos:'adj',ex:'Es un libro muy bueno.'},
+  {es:'malo/a',en:'bad',pos:'adj',ex:'El tiempo está malo hoy.'},
+  {es:'nuevo/a',en:'new',pos:'adj',ex:'Tengo un trabajo nuevo.'},
+  {es:'mismo/a',en:'same / himself',pos:'adj',ex:'El mismo problema de siempre.'},
+  {es:'otro/a',en:'other / another',pos:'adj',ex:'Dame otro café, por favor.'},
+  {es:'mucho/a',en:'much / many',pos:'adj',ex:'Hay muchas personas aquí.'},
+  {es:'poco/a',en:'little / few',pos:'adj',ex:'Hablo un poco de italiano.'},
+  {es:'todo/a',en:'all / every / whole',pos:'adj',ex:'Todo el mundo sabe eso.'},
+  {es:'último/a',en:'last / latest',pos:'adj',ex:'Es la última vez que te lo digo.'},
+  {es:'propio/a',en:'own',pos:'adj',ex:'Tengo mi propio apartamento.'},
+  {es:'primer/o/a',en:'first',pos:'adj',ex:'Es mi primer viaje a España.'},
+  {es:'mejor',en:'better / best',pos:'adj',ex:'Es la mejor pizza que he comido.'},
+  {es:'ya',en:'already / now / anymore',pos:'adv',ex:'Ya terminé mis deberes.'},
+  {es:'también',en:'also / too',pos:'adv',ex:'Yo también quiero ir.'},
+  {es:'siempre',en:'always',pos:'adv',ex:'Siempre llega puntual.'},
+  {es:'nunca',en:'never',pos:'adv',ex:'Nunca he estado en Argentina.'},
+  {es:'todavía',en:'still / yet',pos:'adv',ex:'¿Todavía estás aquí?'},
+  {es:'después',en:'after / afterwards',pos:'adv',ex:'Hablamos después de clase.'},
+  {es:'ahora',en:'now',pos:'adv',ex:'Ahora mismo te llamo.'},
+  {es:'aquí',en:'here',pos:'adv',ex:'Ven aquí, por favor.'},
+  {es:'allí/allá',en:'there',pos:'adv',ex:'Ella vive allá en el norte.'},
+  {es:'muy',en:'very',pos:'adv',ex:'Estoy muy cansado.'},
+  {es:'bien',en:'well / good',pos:'adv',ex:'¿Cómo estás? — Muy bien, gracias.'},
+  {es:'así',en:'like this / so / thus',pos:'adv',ex:'Hazlo así, de esta manera.'},
+  {es:'más',en:'more / most',pos:'adv',ex:'Necesito más tiempo.'},
+  {es:'menos',en:'less / fewer',pos:'adv',ex:'Trabajo menos horas ahora.'},
+  {es:'solo/solamente',en:'only / just',pos:'adv',ex:'Solo quiero un poco de agua.'},
+  {es:'pero',en:'but',pos:'conj',ex:'Es tarde pero no tengo sueño.'},
+  {es:'porque',en:'because',pos:'conj',ex:'No fui porque estaba enfermo.'},
+  {es:'aunque',en:'although / even though',pos:'conj',ex:'Aunque llueve, voy a salir.'},
+  {es:'cuando',en:'when',pos:'conj',ex:'Llámame cuando llegues.'},
+  {es:'si',en:'if',pos:'conj',ex:'Si tienes tiempo, ven a verme.'},
+  {es:'que',en:'that / which / who',pos:'conj',ex:'Creo que tienes razón.'},
+  {es:'como',en:'as / like / how',pos:'conj',ex:'Hablas español como un nativo.'},
+  {es:'a',en:'to / at / (personal a)',pos:'prep',ex:'Voy a la tienda.'},
+  {es:'de',en:'of / from / about',pos:'prep',ex:'Soy de México.'},
+  {es:'en',en:'in / on / at',pos:'prep',ex:'Estoy en casa.'},
+  {es:'con',en:'with',pos:'prep',ex:'Voy al cine con mis amigos.'},
+  {es:'sin',en:'without',pos:'prep',ex:'No puedo vivir sin música.'},
+  {es:'sobre',en:'on / about / over',pos:'prep',ex:'El libro está sobre la mesa.'},
+  {es:'entre',en:'between / among',pos:'prep',ex:'Está entre la puerta y la ventana.'},
+  {es:'hasta',en:'until / up to / even',pos:'prep',ex:'Trabajo hasta las seis.'},
+  {es:'desde',en:'from / since',pos:'prep',ex:'Vivo aquí desde hace dos años.'},
+  {es:'para',en:'for / in order to / by',pos:'prep',ex:'Este café es para ti.'},
+];
+
+let _vocabIdx = 0;
+let _vocabSeen = JSON.parse(localStorage.getItem('sl_vocab_seen') || '[]');
+
+function loadVocab() {
+  const shuffled = shuffle([...VOCAB_LIST]);
+  _vocabIdx = 0;
+  renderVocabCard(shuffled);
+}
+
+function renderVocabCard(list) {
+  const area = document.getElementById('exercise-area');
+  if (!area) return;
+  const total = list.length;
+  const idx = _vocabIdx % total;
+  const word = list[idx];
+  exerciseAnswered = false;
+  area.innerHTML = `
+    <div class="vocab-progress">${idx + 1} / ${total} words</div>
+    <div class="vocab-card" id="vocab-card">
+      <div class="vocab-es">${word.es}</div>
+      <div class="vocab-pos">${word.pos}</div>
+      <button class="vocab-reveal-btn" id="vocab-reveal" onclick="revealVocab()">Show meaning</button>
+      <div class="vocab-en" id="vocab-en">${word.en}</div>
+      <div class="vocab-example" id="vocab-ex">${word.ex}</div>
+    </div>
+    <div class="vocab-nav">
+      <button onclick="_vocabIdx--;if(_vocabIdx<0)_vocabIdx=total-1;renderVocabCard(list)">← Prev</button>
+      <button onclick="markVocabKnown('${idx}');_vocabIdx++;renderVocabCard(list)" style="background:rgba(62,207,142,.12);border-color:#3ecf8e;color:#3ecf8e">✓ Know it</button>
+      <button onclick="_vocabIdx++;renderVocabCard(list)" style="background:rgba(244,91,105,.06);border-color:#f45b69;color:#f45b69">✗ Review</button>
+    </div>`;
+  addXP(2);
+}
+
+function revealVocab() {
+  document.getElementById('vocab-reveal').style.display = 'none';
+  document.getElementById('vocab-en').style.display = 'block';
+  document.getElementById('vocab-ex').style.display = 'block';
+}
+
+function markVocabKnown(idx) {
+  if (!_vocabSeen.includes(idx)) _vocabSeen.push(idx);
+  localStorage.setItem('sl_vocab_seen', JSON.stringify(_vocabSeen));
+}
+
+// ── #21 SPOT THE ERROR MODE ───────────────────────────────────────────────────
+const SPOT_ERROR_BANK = [
+  {
+    sentence: 'Ella <span class="ste-error-word">soy</span> médica y trabaja mucho.',
+    error: 'soy', correct_word: 'es', explanation: '"Soy" is yo-form. She = ella → "es" (third person ser)',
+    options: ['soy → es', 'soy → está', 'médica → médico', 'trabaja → trabajas']
+  },
+  {
+    sentence: 'Ayer, yo <span class="ste-error-word">comía</span> una pizza deliciosa.',
+    error: 'comía', correct_word: 'comí', explanation: '"Ayer" triggers preterite. "comía" is imperfect (habitual). → "comí"',
+    options: ['comía → comí', 'comía → como', 'ayer → antes', 'deliciosa → delicioso']
+  },
+  {
+    sentence: 'Quiero que tú <span class="ste-error-word">vas</span> a la fiesta.',
+    error: 'vas', correct_word: 'vayas', explanation: '"Quiero que" requires subjunctive with different subject → "vayas"',
+    options: ['vas → vayas', 'vas → irás', 'quiero → querer', 'tú → te']
+  },
+  {
+    sentence: 'El libro está <span class="ste-error-word">por</span> ti, un regalo.',
+    error: 'por', correct_word: 'para', explanation: '"Para" = intended recipient (gift). "Por" = because of / exchange.',
+    options: ['por → para', 'está → es', 'libro → libra', 'regalo → regalos']
+  },
+  {
+    sentence: 'La casa <span class="ste-error-word">rojo</span> tiene un jardín grande.',
+    error: 'rojo', correct_word: 'roja', explanation: '"Casa" is feminine → adjective must agree: "roja" not "rojo"',
+    options: ['rojo → roja', 'La → El', 'tiene → tienen', 'grande → grandes']
+  },
+  {
+    sentence: 'Me <span class="ste-error-word">gustan</span> el café por la mañana.',
+    error: 'gustan', correct_word: 'gusta', explanation: '"Café" is singular → "gusta" (singular verb). "Gustan" = plural subject.',
+    options: ['gustan → gusta', 'Me → Te', 'por → para', 'el → la']
+  },
+  {
+    sentence: 'Mañana yo <span class="ste-error-word">trabajaba</span> en la ciudad.',
+    error: 'trabajaba', correct_word: 'trabajaré / voy a trabajar', explanation: '"Mañana" = future → use future tense or "ir a + infinitive", not imperfect.',
+    options: ['trabajaba → trabajaré', 'trabajaba → trabajé', 'mañana → ayer', 'yo → me']
+  },
+  {
+    sentence: '<span class="ste-error-word">Le</span> vi en el parque ayer.',
+    error: 'Le', correct_word: 'Lo', explanation: '"Ver" takes a direct object (what you see) → "lo" (masc. direct object). "Le" = indirect object.',
+    options: ['Le → Lo', 'Le → La', 'vi → veía', 'ayer → hoy']
+  },
+  {
+    sentence: 'Ella se <span class="ste-error-word">lleva</span> María en la escuela.',
+    error: 'lleva', correct_word: 'llama', explanation: '"Llamarse" = to be named/called. "Llevarse" = to get along (different verb).',
+    options: ['lleva → llama', 'lleva → lleva bien con', 'se → le', 'en → de']
+  },
+  {
+    sentence: 'Espero que ella <span class="ste-error-word">viene</span> pronto.',
+    error: 'viene', correct_word: 'venga', explanation: '"Esperar que" + different subject = subjunctive → "venga" not "viene".',
+    options: ['viene → venga', 'Espero → Espera', 'pronto → tarde', 'ella → él']
+  },
+];
+
+let _steIdx = 0;
+function loadSpotError() {
+  if (_steIdx >= SPOT_ERROR_BANK.length) _steIdx = 0;
+  const ex = SPOT_ERROR_BANK[_steIdx];
+  _steIdx++;
+  const area = document.getElementById('exercise-area');
+  exerciseAnswered = false;
+  area.innerHTML = `
+    <div class="prompt-box" style="margin-bottom:14px">
+      <div class="prompt-lbl">🐛 Find and fix the grammar error</div>
+    </div>
+    <div class="ste-sentence">${ex.sentence}</div>
+    <div class="ste-options" id="ste-options">
+      ${shuffle([...ex.options]).map(opt => 
+        `<button class="ste-opt" onclick="checkSpotError(this,'${escStr(ex.options[0])}','${escStr(ex.explanation)}')">${opt}</button>`
+      ).join('')}
+    </div>
+    <div class="result-bar" id="result-bar">
+      <div class="result-icon" id="result-icon"></div>
+      <div class="result-body"><div class="result-main" id="result-main"></div><div class="result-sub" id="result-sub"></div></div>
+      <button class="next-btn" id="next-btn" onclick="loadSpotError()">Next →</button>
+    </div>`;
+}
+
+function checkSpotError(btn, correctOption, explanation) {
+  if (exerciseAnswered) return;
+  exerciseAnswered = true;
+  const allBtns = document.querySelectorAll('.ste-opt');
+  allBtns.forEach(b => b.disabled = true);
+  const correct = btn.textContent.trim() === correctOption.trim();
+  btn.classList.add(correct ? 'correct-opt' : 'wrong-opt');
+  if (!correct) {
+    allBtns.forEach(b => { if (b.textContent.trim() === correctOption.trim()) b.classList.add('correct-opt'); });
+  }
+  const bar = document.getElementById('result-bar');
+  const icon = document.getElementById('result-icon');
+  const main = document.getElementById('result-main');
+  const sub = document.getElementById('result-sub');
+  if (icon) icon.textContent = correct ? '✅' : '❌';
+  if (main) main.textContent = correct ? 'Correct!' : 'Wrong — correct was: ' + correctOption;
+  if (sub) sub.textContent = explanation;
+  if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
+  if (correct) { addXP(15); updateStreak(true); }
+  else { updateStreak(false, { conceptName: 'Error Detection', question: 'Spot the error', wrong: btn.textContent, correct: correctOption }); }
+  logAnswerHistory('Spot Error', correct);
+  checkBadges();
+}
+
+// ── #23 READING COMPREHENSION ─────────────────────────────────────────────────
+const READ_COMP_BANK = [
+  {
+    title: 'Un día en Madrid',
+    level: 'beginner',
+    passage: 'Hoy es martes y hace mucho calor en Madrid. María se levanta temprano y desayuna en casa. Come tostadas con mantequilla y bebe un café con leche. Después va al trabajo en metro. En la oficina trabaja con su colega Pedro. A mediodía comen juntos en un restaurante cerca de la oficina. Por la tarde María regresa a casa y llama a su madre. Por la noche ve la televisión y se acuesta a las once.',
+    questions: [
+      { q: 'What day is it and what is the weather like?', key: ['martes', 'calor'] },
+      { q: 'What does María eat for breakfast?', key: ['tostadas', 'café'] },
+      { q: 'How does María get to work?', key: ['metro'] },
+      { q: 'What time does she go to bed?', key: ['once', '11'] },
+    ]
+  },
+  {
+    title: 'El mercado',
+    level: 'beginner',
+    passage: 'Los sábados por la mañana, Carlos va al mercado del barrio. Le gustan mucho las verduras frescas y la fruta de temporada. Hoy compra tomates, pimientos rojos, lechuga y también unas manzanas verdes. El vendedor es muy simpático y siempre le da una muestra gratis. Carlos paga con tarjeta porque nunca lleva dinero en efectivo. Cuando llega a casa, prepara una ensalada para el almuerzo.',
+    questions: [
+      { q: 'When does Carlos go to the market?', key: ['sábados', 'mañana'] },
+      { q: 'Name two vegetables he buys.', key: ['tomates', 'pimientos', 'lechuga'] },
+      { q: 'How does Carlos pay?', key: ['tarjeta'] },
+      { q: 'What does he make when he gets home?', key: ['ensalada'] },
+    ]
+  },
+  {
+    title: 'Carta a un amigo',
+    level: 'intermediate',
+    passage: 'Querido Javier, espero que estés bien. Te escribo desde Buenos Aires, donde llevo ya tres semanas. La ciudad es increíble — hay tanto que ver y hacer. La gente es muy amable y el español que hablan aquí tiene un acento diferente al de España, lo cual me resultó difícil al principio. He probado el famoso asado argentino y tengo que decirte que es lo mejor que he comido en mi vida. También fui a ver un partido de fútbol en el estadio Monumental. La semana que viene visito Mendoza para conocer la región vinícola. Un abrazo fuerte, Ana',
+    questions: [
+      { q: 'How long has Ana been in Buenos Aires?', key: ['tres', '3', 'semanas'] },
+      { q: 'What did she find difficult at first?', key: ['acento'] },
+      { q: 'What Argentinian food did she try?', key: ['asado'] },
+      { q: 'Where is she going next week?', key: ['Mendoza'] },
+    ]
+  },
+];
+
+let _rcIdx = 0;
+function loadReadComp() {
+  if (_rcIdx >= READ_COMP_BANK.length) _rcIdx = 0;
+  const ex = READ_COMP_BANK[_rcIdx];
+  _rcIdx++;
+  const area = document.getElementById('exercise-area');
+  exerciseAnswered = false;
+  area.innerHTML = `
+    <div class="prompt-box" style="margin-bottom:10px">
+      <div class="prompt-lbl">📚 Reading Comprehension · <em>${ex.level}</em></div>
+      <div class="prompt-en" style="font-size:14px">${ex.title}</div>
+    </div>
+    <div class="rc-passage">${ex.passage}</div>
+    <div class="rc-questions" id="rc-questions">
+      ${ex.questions.map((q, i) => `
+        <div class="rc-question">
+          <div class="rc-question-text">Q${i+1}: ${q.q}</div>
+          <input id="rc-inp-${i}" placeholder="Your answer..." data-key='${JSON.stringify(q.key)}' autocomplete="off">
+        </div>`).join('')}
+    </div>
+    <button class="check-btn" onclick="checkReadComp(${ex.questions.length})">Check Answers</button>
+    <div class="result-bar" id="result-bar">
+      <div class="result-icon" id="result-icon"></div>
+      <div class="result-body"><div class="result-main" id="result-main"></div></div>
+      <button class="next-btn" id="next-btn" onclick="loadReadComp()">Next →</button>
+    </div>`;
+}
+
+function checkReadComp(count) {
+  if (exerciseAnswered) return;
+  exerciseAnswered = true;
+  let correct = 0;
+  for (let i = 0; i < count; i++) {
+    const inp = document.getElementById('rc-inp-' + i);
+    if (!inp) continue;
+    const keys = JSON.parse(inp.dataset.key || '[]');
+    const val = inp.value.toLowerCase();
+    const ok = keys.some(k => val.includes(k.toLowerCase()));
+    inp.style.borderColor = ok ? '#3ecf8e' : '#f45b69';
+    if (ok) correct++;
+    inp.disabled = true;
+  }
+  const bar = document.getElementById('result-bar');
+  const icon = document.getElementById('result-icon');
+  const main = document.getElementById('result-main');
+  const allCorrect = correct === count;
+  if (icon) icon.textContent = allCorrect ? '✅' : correct > 0 ? '🟡' : '❌';
+  if (main) main.textContent = `${correct}/${count} correct`;
+  if (bar) bar.classList.add('show', allCorrect ? 'correct-bar' : 'wrong-bar');
+  const xpEarned = correct * 5;
+  if (xpEarned) addXP(xpEarned);
+  updateStreak(allCorrect);
+  logAnswerHistory('Reading: ' + (READ_COMP_BANK[_rcIdx-1]?.title || '?'), allCorrect);
+  checkBadges();
+}
+
+// ── #38 ASSIGNMENT DISPLAY (reads teacher queue) ─────────────────────────────
+function renderAssignmentBanner() {
+  const q = JSON.parse(localStorage.getItem('sl_teacher_queue') || '[]');
+  const banner = document.getElementById('assignment-banner');
+  const items = document.getElementById('assignment-items');
+  if (!banner || !items) return;
+  if (!q.length) { banner.classList.remove('visible'); return; }
+  banner.classList.add('visible');
+  items.innerHTML = q.map(c => {
+    const m = conceptMastery[c.key];
+    const pct = m && m.total ? Math.round(m.correct/m.total*100) : 0;
+    return `<span class="assignment-item">${c.name} ${pct}%</span>`;
+  }).join('');
+}
+
+// ── #48 PROGRESS SHARE CANVAS ─────────────────────────────────────────────────
+function showProgressShare() {
+  const xp = parseInt(localStorage.getItem('sl_xp') || 0);
+  const level = Math.floor(xp / 100) + 1;
+  const badges = JSON.parse(localStorage.getItem('sl_badges') || '[]');
+  const best = parseInt(localStorage.getItem('sl_best_streak') || 0);
+  const mastered = Object.values(conceptMastery).filter(m => m.total >= 5 && m.correct/m.total >= 0.8).length;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 600; canvas.height = 280;
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  const grad = ctx.createLinearGradient(0,0,600,280);
+  grad.addColorStop(0, '#0f172a'); grad.addColorStop(1, '#1e1b4b');
+  ctx.fillStyle = grad;
+  ctx.roundRect ? ctx.roundRect(0,0,600,280,16) : ctx.fillRect(0,0,600,280);
+  ctx.fill();
+
+  // Title
+  ctx.fillStyle = '#94a3b8'; ctx.font = '14px sans-serif';
+  ctx.fillText('🇪🇸 Spanish Progress Card', 24, 36);
+
+  // XP + Level
+  ctx.fillStyle = '#5b8dee'; ctx.font = 'bold 48px sans-serif';
+  ctx.fillText('Lv.' + level, 24, 100);
+  ctx.fillStyle = '#e2e8f0'; ctx.font = 'bold 24px sans-serif';
+  ctx.fillText(xp + ' XP', 160, 88);
+
+  // Stats row
+  ctx.fillStyle = '#64748b'; ctx.font = '12px sans-serif';
+  ctx.fillText('BEST STREAK', 24, 134);
+  ctx.fillText('CONCEPTS MASTERED', 170, 134);
+  ctx.fillText('BADGES', 370, 134);
+  ctx.fillStyle = '#f1f5f9'; ctx.font = 'bold 26px sans-serif';
+  ctx.fillText('🔥 ' + best, 24, 168);
+  ctx.fillText('📚 ' + mastered, 170, 168);
+  ctx.fillText('🏅 ' + badges.length, 370, 168);
+
+  // Concept bars
+  const concepts = CONCEPTS.slice(0, 5);
+  concepts.forEach((c, i) => {
+    const m = conceptMastery[c.key];
+    const pct = m && m.total ? Math.round(m.correct/m.total*100) : 0;
+    const x = 24, y = 200 + i * 14;
+    ctx.fillStyle = '#1e293b'; ctx.fillRect(x, y, 340, 10);
+    ctx.fillStyle = pct >= 80 ? '#3ecf8e' : pct >= 50 ? '#5b8dee' : '#64748b';
+    ctx.fillRect(x, y, 340 * pct / 100, 10);
+    ctx.fillStyle = '#94a3b8'; ctx.font = '9px sans-serif';
+    ctx.fillText(c.name + ' ' + pct + '%', x + 348, y + 9);
+  });
+
+  // Watermark
+  ctx.fillStyle = '#334155'; ctx.font = '11px sans-serif';
+  ctx.fillText('spanish-lab-students.netlify.app', 24, 268);
+
+  // Show in overlay
+  const img = canvas.toDataURL('image/png');
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px';
+  overlay.innerHTML = `
+    <img src="${img}" id="share-preview" style="border-radius:12px;max-width:90vw;box-shadow:0 8px 32px rgba(0,0,0,.4)">
+    <div style="display:flex;gap:8px">
+      <button onclick="const a=document.createElement('a');a.href='${img}';a.download='spanish-progress.png';a.click()" style="padding:10px 20px;border-radius:8px;background:#5b8dee;color:#fff;border:none;font-weight:700;cursor:pointer">⬇ Download PNG</button>
+      <button onclick="this.closest('div[style*=fixed]').remove()" style="padding:10px 20px;border-radius:8px;background:#1e293b;color:#94a3b8;border:1px solid #334155;cursor:pointer">Close</button>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+// ── INIT BATCH F ─────────────────────────────────────────────────────────────
+(function initBatchF() {
+  renderAssignmentBanner();
 })();
 // ─── OLLAMA STATUS & CONTROL ──────────────────────────────────────────────────
 let ollamaOnline = false;
