@@ -146,6 +146,8 @@ body.focus-mode header { min-height:auto; }
 .grade-close { padding:10px 28px; border-radius:8px; border:none; background:var(--accent); color:#fff; font-size:14px; font-weight:700; cursor:pointer; margin-top:8px; }
 /* ── DIFFICULTY HINT (#49) ── */
 .diff-hint { font-size:11px; color:var(--text3); text-align:center; margin-top:6px; font-style:italic; }
+.accent-tip { font-size:12px; color:var(--text2); background:var(--surface2); border:1px solid var(--border2); border-radius:8px; padding:8px 10px; margin-top:8px; text-align:left; line-height:1.4; }
+.accent-tip strong { color:var(--accent); }
 
 /* ── SPEAK MODE (#17) ── */
 .speak-prompt { background:var(--surface2); border-radius:12px; padding:20px; text-align:center; margin-bottom:16px; }
@@ -1005,6 +1007,8 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
     <div class="pomo-bar" id="pomo-bar"><span>🍅</span><span class="pomo-time" id="pomo-time">25:00</span><button class="pomo-stop" onclick="stopPomodoro()" title="Stop">✕</button></div>
     <div class="lvl-badge" id="lvl-badge">Level 1</div>
     <button class="review-btn" id="review-btn" onclick="openReviewModal()">📊 Review <span id="review-count">0</span></button>
+    <button class="cfg-btn" onclick="openCheatSheet()" title="Grammar reference — always available">📖 Cheat Sheet</button>
+    <button class="cfg-btn" onclick="openHelp()" title="How to use this dashboard">❓ Help</button>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
     <button class="cfg-btn" onclick="openSettings()">⚙ Settings</button>
   </div>
@@ -1183,6 +1187,9 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
         <input type="checkbox" id="m-sound" onchange="setSoundEnabled(this.checked)" checked> Sound effects
       </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer" title="Accent marks are always graded leniently — this only controls whether the short 'why this word has an accent' tip is shown">
+        <input type="checkbox" id="m-accent-tips" onchange="setAccentTips(this.checked)" checked> 💡 Accent tips
+      </label>
     </div>
 
     <div class="modal-row">
@@ -1203,6 +1210,28 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
       <button onclick="exportProgress()" style="background:var(--bg3);border:1px solid var(--border2);color:var(--text2);border-radius:7px;padding:6px 12px;font-size:11.5px;cursor:pointer;font-family:inherit">📋 Export Progress</button>
       <span style="margin-left:auto"><b style="color:var(--text2);">Reset:</b>
       <span onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="color:var(--red);cursor:pointer;text-decoration:underline;margin-left:4px;">Clear all XP & stats</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- CHEAT SHEET (always available — see settings for source data) -->
+<div class="modal-overlay" id="cheatsheet-overlay" onclick="if(event.target===this)closeCheatSheet()">
+  <div class="modal" style="width:640px;max-width:92vw;max-height:88vh;overflow-y:auto;">
+    <div class="modal-title">📖 Grammar Cheat Sheet</div>
+    <div id="cheatsheet-body" style="display:flex;flex-direction:column;gap:14px;"></div>
+    <div class="modal-actions">
+      <button class="modal-close" onclick="closeCheatSheet()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- HELP / HOW TO USE -->
+<div class="modal-overlay" id="help-overlay" onclick="if(event.target===this)closeHelp()">
+  <div class="modal" style="width:560px;max-width:92vw;max-height:88vh;overflow-y:auto;">
+    <div class="modal-title">❓ How to Use Spanish Lab</div>
+    <div id="help-body" style="display:flex;flex-direction:column;gap:14px;"></div>
+    <div class="modal-actions">
+      <button class="modal-close" onclick="closeHelp()">Close</button>
     </div>
   </div>
 </div>
@@ -3786,6 +3815,15 @@ function init() {
   const logoSub = document.querySelector('.logo-sub');
   if (logoSub && savedName) logoSub.textContent = `Hola, ${savedName} 👋`;
   renderConceptBar();
+  // Auto-select a starting concept so the app is never blank on first load.
+  // Root cause fixed 2026-07-01: nothing was selected until a student clicked a
+  // concept chip, which silently no-op'd every mode tab except Conjugate/Vocab/
+  // Errors/Read (the only modes that don't require currentConcept) — that's why
+  // clicking Conjugate first made every other tab look "broken."
+  if (!currentConcept) {
+    const firstChip = document.querySelector('.concept-chip[data-key]');
+    if (firstChip) selectConcept(firstChip.dataset.key, firstChip);
+  }
   updateStats();
   checkOllama();
   // SM-2: notify if cards are due for review
@@ -3866,6 +3904,154 @@ function closeGateway() {
   }
 }
 
+// ─── CHEAT SHEET (2026-07-01) ─────────────────────────────────────────────────
+// Always-available reference — no gating, no lock-out. Built entirely from
+// data that already exists elsewhere in the app (GATEWAYS, CONCEPTS,
+// CONJUGATIONS, ACCENT_DIACRITICALS) so there's one source of truth instead
+// of a second copy of the grammar content to keep in sync.
+function openCheatSheet() {
+  renderCheatSheet();
+  document.getElementById('cheatsheet-overlay').classList.add('open');
+}
+function closeCheatSheet() {
+  document.getElementById('cheatsheet-overlay').classList.remove('open');
+}
+
+function renderCheatSheet() {
+  const body = document.getElementById('cheatsheet-body');
+  if (!body) return;
+
+  const conceptSections = CONCEPTS.map(c => {
+    const gw = GATEWAYS[c.key];
+    let inner;
+    if (gw) {
+      inner = `
+        <div style="font-size:12.5px;color:var(--text2);font-style:italic;margin-bottom:6px;">${gw.subtitle}</div>
+        <div style="font-size:13px;line-height:1.5;margin-bottom:8px;">${gw.mental}</div>
+        <div style="background:var(--surface2);border-radius:8px;padding:8px 10px;margin-bottom:6px;">
+          <div style="font-size:12.5px;"><b>${gw.anchorEs}</b><br><span style="color:var(--text3)">${gw.anchorEn}</span></div>
+          <div style="font-size:12px;margin-top:5px;">${gw.anchorWhy}</div>
+        </div>
+        <div style="font-size:12px;color:var(--red);">${gw.mistake}</div>`;
+    } else {
+      inner = `<div style="font-size:13px;line-height:1.5;white-space:pre-line;">${c.context || 'No summary available yet.'}</div>`;
+    }
+    return `<details style="border:1px solid var(--border2);border-radius:8px;padding:10px 12px;">
+      <summary style="cursor:pointer;font-weight:700;font-size:14px;">${c.emoji} ${c.name}</summary>
+      <div style="margin-top:8px;">${inner}</div>
+    </details>`;
+  }).join('');
+
+  const verbOptions = Object.keys(CONJUGATIONS).map(v =>
+    `<option value="${v}">${v} (${CONJUGATIONS[v].meaning})</option>`
+  ).join('');
+
+  const diacriticalRows = Object.entries(ACCENT_DIACRITICALS).map(([word, tip]) =>
+    `<div style="font-size:12px;padding:4px 0;border-bottom:1px solid var(--border);"><b>${word}</b> — ${tip}</div>`
+  ).join('');
+
+  body.innerHTML = `
+    <div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:8px;">Concepts (click to expand)</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">${conceptSections}</div>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:8px;">Verb Conjugation Tables</div>
+      <select class="modal-sel" id="cheat-verb-select" onchange="renderCheatConjugationTable(this.value)">${verbOptions}</select>
+      <div id="cheat-conj-table" style="margin-top:8px;"></div>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:8px;">Accent Rules</div>
+      <div style="font-size:13px;line-height:1.6;margin-bottom:8px;">
+        Spanish words are stressed on one syllable, and the written accent (´) only appears when a word breaks the default pattern:
+        <br>• Ends in a vowel, <b>-n</b>, or <b>-s</b> → normally stressed on the <b>second-to-last</b> syllable (llana). No accent needed unless it breaks this rule.
+        <br>• Ends in any other consonant → normally stressed on the <b>last</b> syllable (aguda). No accent needed unless it breaks this rule.
+        <br>• Stressed further back than that (esdrújula, e.g. <i>médico</i>, <i>práctico</i>) → <b>always</b> written with an accent, no exceptions.
+        <br>• A weak vowel (i/u) stressed next to a strong vowel (a/e/o) breaks what would be a diphthong (hiatus) and needs an accent — e.g. <i>país</i>, <i>continúa</i>, <i>María</i>.
+      </div>
+      <div style="font-weight:700;font-size:12.5px;margin-bottom:4px;">Diacritical pairs (same spelling, accent changes the word)</div>
+      <div>${diacriticalRows}</div>
+      <div style="font-size:11.5px;color:var(--text3);margin-top:8px;">Accent marks are graded leniently everywhere in this app — getting the word right without the accent still counts as correct. These tips are just here to help it click over time. Turn them off anytime in ⚙ Settings.</div>
+    </div>`;
+
+  renderCheatConjugationTable(Object.keys(CONJUGATIONS)[0]);
+}
+
+function renderCheatConjugationTable(verbKey) {
+  const el = document.getElementById('cheat-conj-table');
+  const data = CONJUGATIONS[verbKey];
+  if (!el || !data) return;
+  const tenseKeys = Object.keys(data.tenses);
+  const pronouns = CONJ_PRONOUNS;
+  const rows = pronouns.map(p => {
+    const cells = tenseKeys.map(t => `<td style="padding:4px 8px;">${data.tenses[t][p]}</td>`).join('');
+    return `<tr><td style="padding:4px 8px;color:var(--text3);">${p}</td>${cells}</tr>`;
+  }).join('');
+  const headerCells = tenseKeys.map(t => `<th style="padding:4px 8px;text-align:left;color:var(--text3);font-size:11px;">${CONJ_TENSE_LABELS[t] || t}</th>`).join('');
+  el.innerHTML = `
+    <div style="font-size:12px;color:var(--text3);margin-bottom:4px;">${data.meaning} · <i>${data.type}</i></div>
+    <table style="width:100%;font-size:12.5px;border-collapse:collapse;">
+      <tr><th></th>${headerCells}</tr>
+      ${rows}
+    </table>`;
+}
+
+// ─── HELP / HOW TO USE (2026-07-01) ──────────────────────────────────────────
+function openHelp() {
+  renderHelp();
+  document.getElementById('help-overlay').classList.add('open');
+}
+function closeHelp() {
+  document.getElementById('help-overlay').classList.remove('open');
+}
+
+function renderHelp() {
+  const body = document.getElementById('help-body');
+  if (!body) return;
+  const modeList = [
+    ['⚡ Pairs', 'Match a Spanish phrase to its English meaning — fastest warm-up.'],
+    ['📚 Examples', 'Read worked examples of the concept in context before you\'re quizzed on it.'],
+    ['✏️ Fill Blank', 'Pick the right word to complete a sentence.'],
+    ['🔨 Builder', 'Drag words into the correct order to build a sentence.'],
+    ['✍️ Translate', 'Type an English sentence in Spanish — graded by AI for natural phrasing.'],
+    ['📖 Story', 'Read a short story and answer comprehension questions as you go.'],
+    ['🔤 Conjugate', 'Type the correct conjugated verb form. Works without picking a concept first.'],
+    ['🎙️ Speak', 'Practice speaking a phrase out loud.'],
+    ['🔍 Missing', 'Type the one missing word in a sentence.'],
+    ['🃏 Word Drop', 'Drag word tiles into the right slots to build a sentence.'],
+    ['💬 Dialogue', 'Hold a short back-and-forth conversation in a real-life scenario.'],
+    ['📖 Vocab', 'Vocabulary drills — no concept needed.'],
+    ['🐛 Errors', 'Find and fix the grammar mistake in a sentence — no concept needed.'],
+    ['📚 Read', 'Reading comprehension passages — no concept needed.'],
+  ].map(([name, desc]) => `<div style="font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--border);"><b>${name}</b> — ${desc}</div>`).join('');
+
+  body.innerHTML = `
+    <div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:6px;">1. Pick a concept</div>
+      <div style="font-size:13px;line-height:1.5;">The row of chips at the top (⚖️ Ser vs Estar, 📸 Preterite vs Imperfect, etc.) is what most exercises practice. Pick one before switching modes — a concept is auto-selected for you on first visit, but you can always change it. 🔀 Mixed pulls from everything.</div>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:6px;">2. Pick a mode</div>
+      <div style="font-size:13px;line-height:1.4;margin-bottom:6px;">The tab row below the concept chips has 13 practice styles for the concept you picked:</div>
+      <div>${modeList}</div>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:6px;">3. Track your progress</div>
+      <div style="font-size:13px;line-height:1.5;">
+        🔥 Streak and XP build as you answer. Every 20 exercises you get a session grade (A–F). ⭐/📈/🔴 marks on each concept chip show your accuracy on it.
+        📅 Today's stat tracks your daily goal. 📊 Review surfaces cards due for spaced-repetition review (the science-backed way to make things stick).
+      </div>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:6px;">4. Accents</div>
+      <div style="font-size:13px;line-height:1.5;">Missing or wrong accent marks are never marked wrong here — accents are hard to memorize even for native speakers. You'll still get a short 💡 tip explaining why a word needs its accent, so it builds intuition over time. Turn tips off anytime in ⚙ Settings.</div>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:6px;">5. Cheat Sheet</div>
+      <div style="font-size:13px;line-height:1.5;">📖 Cheat Sheet (top right) is a permanent, always-open grammar reference — concept explanations, verb conjugation tables, and accent rules. Use it to study before practicing, not as a way to skip thinking during an exercise — it won't make the streak/XP disappear, but looking up every answer means you're not actually building recall.</div>
+    </div>`;
+}
+
 // ─── MODE SWITCHING ────────────────────────────────────────────────────────────
 function switchMode(mode, el) {
   document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
@@ -3879,7 +4065,13 @@ function switchMode(mode, el) {
 
 function startExercise() {
   const noConceptModes = ['conjugate','vocab','spottherror','readcomp'];
-  if (!currentConcept && !noConceptModes.includes(currentMode)) return;
+  if (!currentConcept && !noConceptModes.includes(currentMode)) {
+    // Defensive fallback: if this state is ever reached (should no longer happen
+    // now that init() auto-selects a concept), tell the student why instead of
+    // silently doing nothing.
+    showToast('👆 Pick a concept above to start practicing', 2500);
+    return;
+  }
   if (currentMode === 'pairs') loadPairs();
   else if (currentMode === 'examples') loadExamples();
   else if (currentMode === 'fillblank') loadFillBlank();
@@ -3959,8 +4151,12 @@ function checkConjugate() {
   inp.disabled = true;
 
   const correct = currentConjData.answer;
-  const isCorrect = val.toLowerCase() === correct.toLowerCase();
-  const isAccentOnly = !isCorrect && stripAccents(val) === stripAccents(correct);
+  const isExact = val.toLowerCase() === correct.toLowerCase();
+  const isAccentOnly = !isExact && stripAccents(val) === stripAccents(correct);
+  const isCorrect = isExact || isAccentOnly;
+  // 2026-07-01: accent-only misses now get FULL credit everywhere (accents are
+  // hard even for native speakers) — but we still surface a rule-based tip
+  // every time the correct answer contains a written accent, exact or not.
 
   const bar = document.getElementById('conj-result-bar');
   bar.classList.add('show');
@@ -3970,24 +4166,16 @@ function checkConjugate() {
     document.getElementById('conj-result-icon').textContent = '✅';
     const streakBonus = streak >= 4 ? ` 🔥 ${streak + 1} in a row!` : '';
     document.getElementById('conj-result-main').textContent = 'Correct!' + streakBonus;
-    document.getElementById('conj-result-sub').textContent = '';
+    document.getElementById('conj-result-sub').innerHTML = (isAccentOnly ? `Correct form: "${correct}" — watch the accent mark.` : '') + accentTipHTML(correct);
     const pts = 12 + Math.min(streak, 5) * 2;
     addXP(pts);
     updateStreak(true);
     popXP('+' + pts + ' XP', null);
-  } else if (isAccentOnly) {
-    bar.classList.add('accent-bar');
-    document.getElementById('conj-result-icon').textContent = '⚠️';
-    document.getElementById('conj-result-main').textContent = 'Almost — missing or wrong accent mark.';
-    document.getElementById('conj-result-sub').textContent = 'You wrote: "' + val + '"  ·  Correct: "' + correct + '"';
-    addXP(6);
-    popXP('+6 XP', null);
-    // Don't break streak for accent-only errors
   } else {
     bar.classList.add('wrong-bar');
     document.getElementById('conj-result-icon').textContent = '❌';
     document.getElementById('conj-result-main').textContent = 'Not quite.';
-    document.getElementById('conj-result-sub').textContent = 'You wrote: "' + val + '"  ·  Correct: "' + correct + '"';
+    document.getElementById('conj-result-sub').innerHTML = 'You wrote: "' + val + '"  ·  Correct: "' + correct + '"' + accentTipHTML(correct);
     updateStreak(false);
   }
   // Speak button appears in all cases
@@ -4012,6 +4200,100 @@ function insertAccent(c) {
 
 function stripAccents(s) {
   return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+}
+
+// ─── ACCENT TIP ENGINE (2026-07-01) ──────────────────────────────────────────
+// Accent marks are now graded leniently everywhere (full credit for an
+// accent-only miss) — but we still want students to notice and eventually
+// internalize accent rules, so every correct answer that contains a written
+// accent gets a short, rule-based explanation. This is a local heuristic
+// (diacritical lookup + aguda/llana/esdrújula stress-override detection),
+// deliberately not an AI call — it's instant, free, and covers the vast
+// majority of cases that show up in this curriculum. Toggle: sl_accent_tips.
+const ACCENT_DIACRITICALS = {
+  'tú': 'tú (you) vs. tu (your) — the accent marks the pronoun, not the possessive.',
+  'él': 'él (he/him) vs. el (the) — the accent marks the pronoun.',
+  'mí': 'mí (me, after a preposition) vs. mi (my) — the accent marks the pronoun.',
+  'sí': 'sí (yes / himself-herself-itself) vs. si (if) — the accent marks "yes" or the reflexive pronoun.',
+  'sé': 'sé (I know / know! command) vs. se (reflexive pronoun) — the accent marks the verb forms.',
+  'dé': 'dé (give! / that ... give) vs. de (of/from) — the accent marks the verb form.',
+  'más': 'más (more) vs. mas (but, literary) — the accent marks "more".',
+  'té': 'té (tea) vs. te (you, object pronoun) — the accent marks the noun.',
+  'aún': 'aún (still/yet) vs. aun (even) — the accent shifts the meaning.',
+  'qué': 'qué carries an accent in questions/exclamations (¿qué? = what?) vs. que (that/which) without one.',
+  'cómo': 'cómo carries an accent in questions/exclamations (¿cómo? = how?) vs. como (like/as, or "I eat") without one.',
+  'cuándo': 'cuándo carries an accent in questions (¿cuándo? = when?) vs. cuando (when, in statements) without one.',
+  'dónde': 'dónde carries an accent in questions (¿dónde? = where?) vs. donde (where, in statements) without one.',
+  'cuál': 'cuál carries an accent in questions (¿cuál? = which?) vs. cual (which, in statements) without one.',
+  'cuáles': 'cuáles carries an accent in questions (¿cuáles? = which ones?) vs. cuales without one.',
+  'quién': 'quién carries an accent in questions (¿quién? = who?) vs. quien (who, in statements) without one.',
+  'quiénes': 'quiénes carries an accent in questions (¿quiénes? = who, plural?) vs. quienes without one.',
+  'cuánto': 'cuánto carries an accent in questions/exclamations (¿cuánto? = how much?) vs. cuanto without one.',
+  'cuánta': 'cuánta carries an accent in questions/exclamations (¿cuánta? = how much?, feminine) vs. cuanta without one.',
+};
+
+function firstAccentedWord(text) {
+  if (!text) return null;
+  const words = String(text).split(/[\s/]+/);
+  for (const raw of words) {
+    const w = raw.replace(/[^A-Za-zÁÉÍÓÚÑÜáéíóúñü]/g, '');
+    if (/[áéíóú]/i.test(w)) return w;
+  }
+  return null;
+}
+
+function explainAccent(word) {
+  if (!word) return null;
+  const w = word.trim();
+  const lw = w.toLowerCase();
+  if (ACCENT_DIACRITICALS[lw]) return ACCENT_DIACRITICALS[lw];
+
+  const chars = [...lw];
+  const accentedVowels = { 'á':1,'é':1,'í':1,'ó':1,'ú':1 };
+  let accentIdx = -1;
+  chars.forEach((c, i) => { if (accentedVowels[c] && accentIdx === -1) accentIdx = i; });
+  if (accentIdx === -1) return null; // no written accent — nothing to explain
+
+  // Approximate syllable position by counting vowel groups from the end.
+  const vowelIdxs = [];
+  chars.forEach((c, i) => { if ('aeiouáéíóú'.includes(c)) vowelIdxs.push(i); });
+  const distFromLastVowel = vowelIdxs.length - 1 - vowelIdxs.indexOf(accentIdx);
+
+  const lastChar = chars[chars.length - 1];
+  const endsVowelNS = 'aeiou'.includes(lastChar) || lastChar === 'n' || lastChar === 's';
+
+  if (distFromLastVowel === 0) {
+    if (endsVowelNS) {
+      return `${w} is stressed on the LAST syllable. Words ending in a vowel, -n, or -s are normally stressed on the second-to-last syllable (llana) — the accent overrides that default to show the stress falls on the end.`;
+    }
+    return `${w} carries an accent to clearly mark the stressed syllable, since this ending doesn't fit the usual pattern.`;
+  } else if (distFromLastVowel === 1) {
+    if (!endsVowelNS) {
+      return `${w} is stressed on the SECOND-to-last syllable (llana). Words ending in a consonant other than -n/-s are normally stressed on the last syllable (aguda) — the accent overrides that default.`;
+    }
+    return `${w} likely breaks what would otherwise be a diphthong: the accent shows that vowel is pronounced in its own syllable rather than blending with the vowel next to it (hiatus) — common in words like "país" or "continúa".`;
+  } else {
+    return `${w} is stressed on the THIRD-to-last syllable or earlier (esdrújula). Words stressed this far back always carry a written accent in Spanish, no exceptions.`;
+  }
+}
+
+function accentTipsEnabled() {
+  return localStorage.getItem('sl_accent_tips') !== 'off';
+}
+
+function setAccentTips(on) {
+  localStorage.setItem('sl_accent_tips', on ? 'on' : 'off');
+}
+
+// Returns an HTML fragment (or '') to append into a result-sub/result-body
+// element — call this every time a correct-answer string is displayed.
+function accentTipHTML(correctText) {
+  if (!accentTipsEnabled()) return '';
+  const word = firstAccentedWord(correctText);
+  if (!word) return '';
+  const tip = explainAccent(word);
+  if (!tip) return '';
+  return `<div class="accent-tip">💡 <strong>${word}</strong> — ${tip}</div>`;
 }
 
 // ─── PRONUNCIATION ────────────────────────────────────────────────────────────
@@ -4484,6 +4766,29 @@ Rules:
 
 let fbData = null;
 async function loadFillBlank() {
+  // Consolidated 2026-07-01 (was a separate monkey-patch — see note near updateStreak).
+  // Prefer the static exercises.json bank for this concept when one exists.
+  if (currentConcept && currentConcept.fillblankBank && currentConcept.fillblankBank.length) {
+    const bank = currentConcept.fillblankBank;
+    const ex = bank[Math.floor(Math.random() * bank.length)];
+    if (ex && ex.question && ex.answer) {
+      const area = document.getElementById('exercise-area');
+      area.innerHTML = '<div class="prompt-box"><div class="prompt-lbl">Fill in the blank</div>' +
+        (ex.hint ? '<div class="prompt-en">' + ex.hint + '</div>' : '') +
+        '</div>' +
+        '<div class="fb-sentence" style="font-size:17px;text-align:center;padding:16px;background:var(--surface2);border-radius:10px;margin-bottom:12px">' + ex.question + '</div>' +
+        '<input class="fill-input" id="fill-input" placeholder="Type the missing word..." autocomplete="off">' +
+        '<div style="display:flex;gap:8px;margin-top:10px;justify-content:center">' +
+        '<button class="check-btn" onclick="checkFillBlankBankAnswer(' + JSON.stringify(ex.answer) + ',' + JSON.stringify(ex.explanation||'') + ')">Check</button>' +
+        '</div>' +
+        '<div class="result-bar" id="result-bar"><div class="result-icon" id="result-icon"></div><div class="result-body"><div class="result-main" id="result-main"></div><div class="result-sub" id="result-sub"></div></div>' +
+        '<button class="next-btn" onclick="loadFillBlank()">Next →</button></div>';
+      exerciseAnswered = false;
+      const inp = document.getElementById('fill-input');
+      if (inp) { inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkFillBlankBankAnswer(ex.answer, ex.explanation||''); }); inp.focus(); }
+      return;
+    }
+  }
   exerciseAnswered = false;
   clearErrorBox();
   let data;
@@ -4747,7 +5052,11 @@ function checkBuilderAnswer(explanation) {
   if (exerciseAnswered) return;
   exerciseAnswered = true;
   const attempt = placedWords.map(p => p.word);
-  const isCorrect = attempt.join(' ').toLowerCase() === builderAnswer.join(' ').toLowerCase();
+  const attemptStr = attempt.join(' ');
+  const correctStr = builderAnswer.join(' ');
+  // 2026-07-01: accent-only differences now get full credit (this mode tests
+  // word order, not accent memorization) — see explainAccent() for the tip.
+  const isCorrect = stripAccents(attemptStr) === stripAccents(correctStr);
 
   const area = document.getElementById('answer-area');
   area.className = `answer-area ${isCorrect ? 'correct-answer' : 'wrong-answer'}`;
@@ -4757,8 +5066,8 @@ function checkBuilderAnswer(explanation) {
   const bar = document.getElementById('result-bar');
   bar.classList.add('show', isCorrect ? 'correct-bar' : 'wrong-bar');
   document.getElementById('result-icon').textContent = isCorrect ? '✅' : '❌';
-  document.getElementById('result-main').textContent = isCorrect ? 'Perfect!' : `Correct: "${builderAnswer.join(' ')}"`;
-  document.getElementById('result-sub').textContent = explanation || '';
+  document.getElementById('result-main').textContent = isCorrect ? 'Perfect!' : `Correct: "${correctStr}"`;
+  document.getElementById('result-sub').innerHTML = (explanation || '') + accentTipHTML(correctStr);
 
   if (isCorrect) {
     const pts = 15 + Math.min(streak, 5) * 2;
@@ -5210,6 +5519,8 @@ function toggleTheme() {
 }
 
 function applyThemeChoice(val) {
+  // Consolidated 2026-07-01 (was a separate monkey-patch — see note near updateStreak)
+  if (val === 'auto') { localStorage.setItem('sl_theme', 'auto'); applyAutoTheme(); return; }
   currentTheme = val;
   applyTheme();
 }
@@ -5411,6 +5722,8 @@ function recordMastery(correct) {
     const chip = document.querySelector(`.concept-chip[data-key="${key}"]`);
     if (chip) chip.classList.add('active');
   }
+  // Consolidated 2026-07-01 (was a separate monkey-patch — see note near updateStreak)
+  appendMasteryHistory(key, correct, currentMode);
 }
 
 function updateStats() {
@@ -5446,6 +5759,9 @@ function updateStats() {
     dueStat.style.display = dueCount > 0 ? '' : 'none';
   }
   updateDailyDisplay();
+  // Consolidated 2026-07-01 (was a separate monkey-patch — see note near updateStreak)
+  const _total = sessionCorrect + sessionWrong;
+  if (_total > 0 && _total % 20 === 0) checkBadges();
 }
 
 // ─── VISUAL EFFECTS ────────────────────────────────────────────────────────────
@@ -5530,13 +5846,6 @@ function applyAutoTheme() {
   // Call the original applyTheme directly to avoid recursion
   localStorage.setItem('sl_theme', isDark ? 'dark' : 'light');
   applyTheme();
-}
-
-// Patch applyThemeChoice to handle 'auto' value
-const _origApplyThemeChoice = applyThemeChoice;
-function applyThemeChoice(val) {
-  if (val === 'auto') { localStorage.setItem('sl_theme', 'auto'); applyAutoTheme(); return; }
-  _origApplyThemeChoice(val);
 }
 
 // ── #41 SOUND EFFECTS (Web Audio API) ────────────────────────────────────────
@@ -5717,6 +6026,8 @@ function adjustFont(dir) {
   if (sndCb) sndCb.checked = _soundEnabled;
   const focusCb = document.getElementById('m-focus');
   if (focusCb) focusCb.checked = document.body.classList.contains('focus-mode');
+  const accentCb = document.getElementById('m-accent-tips');
+  if (accentCb) accentCb.checked = accentTipsEnabled();
 })();
 
 
@@ -5825,13 +6136,7 @@ function showDiffHint(exerciseKey) {
   }
 }
 
-// ── AUTO GRADE at 20 exercises ────────────────────────────────────────────────
-const _origUpdateStats = updateStats;
-function updateStats() {
-  _origUpdateStats();
-  const total = sessionCorrect + sessionWrong;
-  if (total > 0 && total % 20 === 0) checkBadges();
-}
+// ── AUTO GRADE at 20 exercises: folded into updateStats() directly (see 2026-07-01 note) ──
 
 // ── CHECK BADGES on every answer: folded into updateStreak() directly (see 2026-07-01 note) ──
 
@@ -5962,13 +6267,6 @@ function showWeeklyReviewBanner() {
       showToast('📅 Review: ' + names.join(', ') + (queue.length > 3 ? ' +' + (queue.length-3) + ' more' : '') + ' not practiced in 3+ days', 5000);
     }, 2000);
   }
-}
-
-// ── PATCH recordMastery to also append history ─────────────────────────────
-const _origRecordMastery = recordMastery;
-function recordMastery(correct) {
-  _origRecordMastery(correct);
-  if (currentConcept) appendMasteryHistory(currentConcept.key, correct, currentMode);
 }
 
 // ── INIT BATCH C ─────────────────────────────────────────────────────────────
@@ -6177,7 +6475,7 @@ function checkMissing(answer) {
   const main = document.getElementById('result-main');
   if (bar) bar.style.display = '';
   if (icon) icon.textContent = correct ? '✅' : '❌';
-  if (main) main.textContent = correct ? 'Correct!' : 'Answer: "' + answer + '"';
+  if (main) main.innerHTML = (correct ? 'Correct!' : 'Answer: "' + answer + '"') + accentTipHTML(answer);
   if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(10); updateStreak(true); }
   else { updateStreak(false, { conceptName: currentConcept?.name, question: 'Missing word: ' + answer, wrong: input.value, correct: answer }); }
@@ -6256,14 +6554,16 @@ function checkWordDrop(explanation) {
   exerciseAnswered = true;
   const target = document.getElementById('drop-target');
   const placed = [...target.querySelectorAll('.drop-slot')].map(s => s.textContent.trim());
-  const correct = placed.join(' ').toLowerCase() === _dropAnswer.join(' ').toLowerCase();
+  const correctStr = _dropAnswer.join(' ');
+  // 2026-07-01: accent-only differences now get full credit — see explainAccent().
+  const correct = stripAccents(placed.join(' ')) === stripAccents(correctStr);
   const bar = document.getElementById('result-bar');
   const icon = document.getElementById('result-icon');
   const main = document.getElementById('result-main');
   const sub = document.getElementById('result-sub');
   if (icon) icon.textContent = correct ? '✅' : '❌';
-  if (main) main.textContent = correct ? 'Perfect!' : 'Correct: "' + _dropAnswer.join(' ') + '"';
-  if (sub) sub.textContent = explanation || '';
+  if (main) main.textContent = correct ? 'Perfect!' : 'Correct: "' + correctStr + '"';
+  if (sub) sub.innerHTML = (explanation || '') + accentTipHTML(correctStr);
   if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(12); updateStreak(true); }
   else { updateStreak(false, { conceptName: currentConcept?.name, question: 'Word drop', wrong: placed.join(' '), correct: _dropAnswer.join(' ') }); }
@@ -7029,34 +7329,6 @@ async function loadStaticExerciseBank() {
 // Call on page load (non-blocking)
 window.addEventListener('DOMContentLoaded', () => { setTimeout(loadStaticExerciseBank, 500); });
 
-// ── Patch: prefer fillblankBank from exercise.json when available ─────────────
-const _origLoadFillBlank = loadFillBlank;
-async function loadFillBlank() {
-  if (currentConcept && currentConcept.fillblankBank && currentConcept.fillblankBank.length) {
-    const bank = currentConcept.fillblankBank;
-    const ex = bank[Math.floor(Math.random() * bank.length)];
-    if (ex && ex.question && ex.answer) {
-      // Render using the fill-blank UI pattern directly
-      const area = document.getElementById('exercise-area');
-      area.innerHTML = '<div class="prompt-box"><div class="prompt-lbl">Fill in the blank</div>' +
-        (ex.hint ? '<div class="prompt-en">' + ex.hint + '</div>' : '') +
-        '</div>' +
-        '<div class="fb-sentence" style="font-size:17px;text-align:center;padding:16px;background:var(--surface2);border-radius:10px;margin-bottom:12px">' + ex.question + '</div>' +
-        '<input class="fill-input" id="fill-input" placeholder="Type the missing word..." autocomplete="off">' +
-        '<div style="display:flex;gap:8px;margin-top:10px;justify-content:center">' +
-        '<button class="check-btn" onclick="checkFillBlankBankAnswer(' + JSON.stringify(ex.answer) + ',' + JSON.stringify(ex.explanation||'') + ')">Check</button>' +
-        '</div>' +
-        '<div class="result-bar" id="result-bar"><div class="result-icon" id="result-icon"></div><div class="result-body"><div class="result-main" id="result-main"></div><div class="result-sub" id="result-sub"></div></div>' +
-        '<button class="next-btn" onclick="loadFillBlank()">Next →</button></div>';
-      exerciseAnswered = false;
-      const inp = document.getElementById('fill-input');
-      if (inp) { inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkFillBlankBankAnswer(ex.answer, ex.explanation||''); }); inp.focus(); }
-      return;
-    }
-  }
-  _origLoadFillBlank();
-}
-
 function checkFillBlankBankAnswer(answer, explanation) {
   if (exerciseAnswered) return;
   exerciseAnswered = true;
@@ -7072,7 +7344,7 @@ function checkFillBlankBankAnswer(answer, explanation) {
   const sub = document.getElementById('result-sub');
   if (icon) icon.textContent = correct ? '✅' : '❌';
   if (main) main.textContent = correct ? 'Correct!' : 'Answer: ' + answer;
-  if (sub && explanation) sub.textContent = explanation;
+  if (sub) sub.innerHTML = (explanation || '') + accentTipHTML(answer);
   if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(10); updateStreak(true); }
   else { updateStreak(false, { conceptName: currentConcept?.name, question: answer, wrong: inp.value, correct: answer }); }
