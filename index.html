@@ -6988,6 +6988,108 @@ function showProgressShare() {
 (function initBatchF() {
   renderAssignmentBanner();
 })();
+
+// ── #1 STATIC EXERCISE BANK LOADER ───────────────────────────────────────────
+async function loadStaticExerciseBank() {
+  try {
+    const resp = await fetch('./exercises.json');
+    if (!resp.ok) { console.log('[Bank] exercises.json not found, using built-in data'); return; }
+    const data = await resp.json();
+    if (!data.concepts) return;
+    let loaded = 0;
+    Object.entries(data.concepts).forEach(([conceptKey, modes]) => {
+      const concept = CONCEPTS.find(c => c.key === conceptKey);
+      if (!concept) return;
+      if (!concept.exercises) concept.exercises = [];
+      // Merge pairs as exercise objects
+      if (modes.pairs) {
+        modes.pairs.forEach(p => {
+          if (!concept.exercises.find(e => e.es === p.es)) {
+            concept.exercises.push({ ...p, _source: 'bank' });
+            loaded++;
+          }
+        });
+      }
+      // Store fillblank and translate separately on concept
+      if (modes.fillblank) {
+        if (!concept.fillblankBank) concept.fillblankBank = [];
+        modes.fillblank.forEach(fb => {
+          if (!concept.fillblankBank.find(e => e.question === fb.question)) {
+            concept.fillblankBank.push({ ...fb, _source: 'bank' });
+            loaded++;
+          }
+        });
+      }
+      if (modes.translate) {
+        if (!concept.translateBank) concept.translateBank = [];
+        modes.translate.forEach(tr => {
+          if (!concept.translateBank.find(e => e.en === tr.en)) {
+            concept.translateBank.push({ ...tr, _source: 'bank' });
+            loaded++;
+          }
+        });
+      }
+    });
+    console.log('[Bank] Loaded ' + loaded + ' exercises from exercises.json');
+    if (loaded > 0) showToast('📚 ' + loaded + ' exercises loaded', 1500);
+  } catch(e) {
+    console.warn('[Bank] Could not load exercises.json:', e.message);
+  }
+}
+
+// Call on page load (non-blocking)
+window.addEventListener('DOMContentLoaded', () => { setTimeout(loadStaticExerciseBank, 500); });
+
+// ── Patch: prefer fillblankBank from exercise.json when available ─────────────
+const _origLoadFillBlank = loadFillBlank;
+async function loadFillBlank() {
+  if (currentConcept && currentConcept.fillblankBank && currentConcept.fillblankBank.length) {
+    const bank = currentConcept.fillblankBank;
+    const ex = bank[Math.floor(Math.random() * bank.length)];
+    if (ex && ex.question && ex.answer) {
+      // Render using the fill-blank UI pattern directly
+      const area = document.getElementById('exercise-area');
+      area.innerHTML = '<div class="prompt-box"><div class="prompt-lbl">Fill in the blank</div>' +
+        (ex.hint ? '<div class="prompt-en">' + ex.hint + '</div>' : '') +
+        '</div>' +
+        '<div class="fb-sentence" style="font-size:17px;text-align:center;padding:16px;background:var(--surface2);border-radius:10px;margin-bottom:12px">' + ex.question + '</div>' +
+        '<input class="fill-input" id="fill-input" placeholder="Type the missing word..." autocomplete="off">' +
+        '<div style="display:flex;gap:8px;margin-top:10px;justify-content:center">' +
+        '<button class="check-btn" onclick="checkFillBlankBankAnswer(' + JSON.stringify(ex.answer) + ',' + JSON.stringify(ex.explanation||'') + ')">Check</button>' +
+        '</div>' +
+        '<div class="result-bar" id="result-bar"><div class="result-icon" id="result-icon"></div><div class="result-body"><div class="result-main" id="result-main"></div><div class="result-sub" id="result-sub"></div></div>' +
+        '<button class="next-btn" onclick="loadFillBlank()">Next →</button></div>';
+      exerciseAnswered = false;
+      const inp = document.getElementById('fill-input');
+      if (inp) { inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkFillBlankBankAnswer(ex.answer, ex.explanation||''); }); inp.focus(); }
+      return;
+    }
+  }
+  _origLoadFillBlank();
+}
+
+function checkFillBlankBankAnswer(answer, explanation) {
+  if (exerciseAnswered) return;
+  exerciseAnswered = true;
+  const inp = document.getElementById('fill-input');
+  if (!inp) return;
+  const got = stripAccents(inp.value.trim().toLowerCase());
+  // Accept multiple answers separated by /
+  const answers = answer.split('/').map(a => stripAccents(a.trim().toLowerCase()));
+  const correct = answers.some(a => got === a || got.includes(a));
+  const bar = document.getElementById('result-bar');
+  const icon = document.getElementById('result-icon');
+  const main = document.getElementById('result-main');
+  const sub = document.getElementById('result-sub');
+  if (icon) icon.textContent = correct ? '✅' : '❌';
+  if (main) main.textContent = correct ? 'Correct!' : 'Answer: ' + answer;
+  if (sub && explanation) sub.textContent = explanation;
+  if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
+  if (correct) { addXP(10); updateStreak(true); }
+  else { updateStreak(false, { conceptName: currentConcept?.name, question: answer, wrong: inp.value, correct: answer }); }
+  logAnswerHistory('Fill blank: ' + answer, correct);
+  checkBadges();
+}
 // ─── OLLAMA STATUS & CONTROL ──────────────────────────────────────────────────
 let ollamaOnline = false;
 let reconnectTimer = null;

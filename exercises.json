@@ -1,0 +1,1797 @@
+{
+  "version": "1.0",
+  "generated": "2026-07-01",
+  "total": 325,
+  "concepts": {
+    "ser-estar": {
+      "pairs": [
+        {
+          "es": "soy médico",
+          "en": "I am a doctor (profession)",
+          "explanation": "Profession = ser"
+        },
+        {
+          "es": "estoy cansado",
+          "en": "I am tired (state)",
+          "explanation": "Temporary state = estar"
+        },
+        {
+          "es": "es colombiano",
+          "en": "he is Colombian (origin)",
+          "explanation": "Origin/nationality = ser"
+        },
+        {
+          "es": "está en Madrid",
+          "en": "it is in Madrid (location)",
+          "explanation": "Location = estar"
+        },
+        {
+          "es": "somos estudiantes",
+          "en": "we are students (identity)",
+          "explanation": "Identity/role = ser"
+        },
+        {
+          "es": "están enfermos",
+          "en": "they are sick (condition)",
+          "explanation": "Current condition = estar"
+        },
+        {
+          "es": "es de madera",
+          "en": "it is made of wood (material)",
+          "explanation": "Material/composition = ser"
+        },
+        {
+          "es": "estoy de acuerdo",
+          "en": "I agree (set phrase)",
+          "explanation": "Fixed expression with estar"
+        },
+        {
+          "es": "es lunes",
+          "en": "it is Monday (time)",
+          "explanation": "Days/dates = ser"
+        },
+        {
+          "es": "está abierto",
+          "en": "it is open (state)",
+          "explanation": "State that can change = estar"
+        },
+        {
+          "es": "soy alta",
+          "en": "I am tall (characteristic)",
+          "explanation": "Permanent physical trait = ser"
+        },
+        {
+          "es": "estoy aburrida",
+          "en": "I am bored (emotion)",
+          "explanation": "Temporary emotion = estar"
+        },
+        {
+          "es": "es aburrido",
+          "en": "he is boring (personality)",
+          "explanation": "Inherent trait = ser"
+        },
+        {
+          "es": "está listo",
+          "en": "it is ready",
+          "explanation": "Temporary state = estar (ready)"
+        },
+        {
+          "es": "es listo",
+          "en": "he is clever",
+          "explanation": "Permanent quality = ser (clever)"
+        },
+        {
+          "es": "está malo",
+          "en": "he is sick",
+          "explanation": "Temporary ill = estar"
+        },
+        {
+          "es": "es malo",
+          "en": "he is bad/evil",
+          "explanation": "Inherent character = ser"
+        },
+        {
+          "es": "está bueno",
+          "en": "it tastes good",
+          "explanation": "Taste/temporary = estar"
+        },
+        {
+          "es": "es bueno",
+          "en": "he is a good person",
+          "explanation": "Character = ser"
+        },
+        {
+          "es": "estamos casados",
+          "en": "we are married",
+          "explanation": "State/condition = estar"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "Ella ___ doctora en el hospital.",
+          "answer": "es",
+          "hint": "profession",
+          "explanation": "Profession uses ser"
+        },
+        {
+          "question": "¿Dónde ___ el banco más cercano?",
+          "answer": "está",
+          "hint": "location",
+          "explanation": "Location uses estar"
+        },
+        {
+          "question": "El café ___ muy caliente hoy.",
+          "answer": "está",
+          "hint": "temperature right now",
+          "explanation": "Current state/temperature = estar"
+        },
+        {
+          "question": "Mi padre ___ ingeniero.",
+          "answer": "es",
+          "hint": "job",
+          "explanation": "Profession = ser"
+        },
+        {
+          "question": "Nosotros ___ muy contentos.",
+          "answer": "estamos",
+          "hint": "feeling happy",
+          "explanation": "Temporary emotion = estar"
+        },
+        {
+          "question": "La reunión ___ a las tres.",
+          "answer": "es",
+          "hint": "time/event",
+          "explanation": "Events and times = ser"
+        },
+        {
+          "question": "¿Cómo ___ tú hoy?",
+          "answer": "estás",
+          "hint": "how are you feeling",
+          "explanation": "Current condition = estar"
+        },
+        {
+          "question": "Este libro ___ de Ana.",
+          "answer": "es",
+          "hint": "ownership",
+          "explanation": "Possession/ownership = ser"
+        },
+        {
+          "question": "Las luces ___ apagadas.",
+          "answer": "están",
+          "hint": "lights off",
+          "explanation": "State = estar (on/off)"
+        },
+        {
+          "question": "Los jugadores ___ listos para jugar.",
+          "answer": "están",
+          "hint": "ready to play",
+          "explanation": "Ready = estar listo"
+        }
+      ],
+      "translate": [
+        {
+          "en": "The soup is cold.",
+          "es": "La sopa está fría.",
+          "explanation": "Current state/temperature = estar"
+        },
+        {
+          "en": "She is an architect.",
+          "es": "Es arquitecta.",
+          "explanation": "Profession = ser (no article with professions)"
+        },
+        {
+          "en": "Are you okay?",
+          "es": "¿Estás bien?",
+          "explanation": "Current condition = estar"
+        },
+        {
+          "en": "The meeting is at noon.",
+          "es": "La reunión es a las doce.",
+          "explanation": "Events use ser"
+        },
+        {
+          "en": "The store is closed on Sundays.",
+          "es": "La tienda está cerrada los domingos.",
+          "explanation": "State = estar cerrado"
+        },
+        {
+          "en": "He is nervous about the exam.",
+          "es": "Está nervioso por el examen.",
+          "explanation": "Temporary emotion = estar"
+        },
+        {
+          "en": "They are from Argentina.",
+          "es": "Son de Argentina.",
+          "explanation": "Origin = ser"
+        },
+        {
+          "en": "The window is broken.",
+          "es": "La ventana está rota.",
+          "explanation": "Resultant state = estar"
+        },
+        {
+          "en": "It is very important to study.",
+          "es": "Es muy importante estudiar.",
+          "explanation": "Impersonal expressions = ser"
+        },
+        {
+          "en": "We are very tired after the trip.",
+          "es": "Estamos muy cansados después del viaje.",
+          "explanation": "Temporary state = estar"
+        }
+      ]
+    },
+    "pret-imp": {
+      "pairs": [
+        {
+          "es": "comí",
+          "en": "I ate (once, done)",
+          "explanation": "Preterite: single completed event"
+        },
+        {
+          "es": "comía",
+          "en": "I used to eat / was eating",
+          "explanation": "Imperfect: habit or ongoing"
+        },
+        {
+          "es": "llegué ayer",
+          "en": "I arrived yesterday",
+          "explanation": "Specific past event = preterite"
+        },
+        {
+          "es": "llegaba tarde",
+          "en": "I used to arrive late",
+          "explanation": "Habitual = imperfect"
+        },
+        {
+          "es": "conocí a María",
+          "en": "I met María (first time)",
+          "explanation": "Preterite: beginning of state"
+        },
+        {
+          "es": "conocía a María",
+          "en": "I knew María",
+          "explanation": "Imperfect: existing knowledge"
+        },
+        {
+          "es": "empezó a llover",
+          "en": "it started to rain",
+          "explanation": "Preterite: event with clear start"
+        },
+        {
+          "es": "llovía cuando salí",
+          "en": "it was raining when I left",
+          "explanation": "Imperfect background + preterite event"
+        },
+        {
+          "es": "vivió en París tres años",
+          "en": "he lived in Paris for 3 years",
+          "explanation": "Preterite: bounded, completed period"
+        },
+        {
+          "es": "vivía cerca del parque",
+          "en": "he used to live near the park",
+          "explanation": "Imperfect: ongoing past situation"
+        },
+        {
+          "es": "tuve un accidente",
+          "en": "I had an accident (event)",
+          "explanation": "Preterite: specific occurrence"
+        },
+        {
+          "es": "tenía mucho dinero",
+          "en": "I had a lot of money (state)",
+          "explanation": "Imperfect: ongoing state"
+        },
+        {
+          "es": "supe la verdad",
+          "en": "I found out the truth",
+          "explanation": "Preterite: moment of discovery"
+        },
+        {
+          "es": "sabía la respuesta",
+          "en": "I knew the answer (already)",
+          "explanation": "Imperfect: existing knowledge"
+        },
+        {
+          "es": "quise ir pero no pude",
+          "en": "I tried to go but couldn't",
+          "explanation": "Preterite: attempted action"
+        },
+        {
+          "es": "quería ir",
+          "en": "I wanted to go (ongoing desire)",
+          "explanation": "Imperfect: background desire"
+        },
+        {
+          "es": "se cayó",
+          "en": "he fell (it happened)",
+          "explanation": "Preterite: single event"
+        },
+        {
+          "es": "se caía siempre",
+          "en": "he was always falling",
+          "explanation": "Imperfect: recurring event"
+        },
+        {
+          "es": "gritó de repente",
+          "en": "she suddenly screamed",
+          "explanation": "Preterite: sudden event"
+        },
+        {
+          "es": "gritaba cuando era niño",
+          "en": "he used to scream as a child",
+          "explanation": "Imperfect: childhood habit"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "Ayer yo ___ (comer) una pizza deliciosa.",
+          "answer": "comí",
+          "hint": "yesterday = one specific event",
+          "explanation": "Ayer signals preterite"
+        },
+        {
+          "question": "Cuando era niño, ___ (jugar) en el parque todos los días.",
+          "answer": "jugaba",
+          "hint": "childhood habit",
+          "explanation": "Habitual past action = imperfect"
+        },
+        {
+          "question": "El tren ___ (llegar) con dos horas de retraso.",
+          "answer": "llegó",
+          "hint": "single past event",
+          "explanation": "Completed event = preterite"
+        },
+        {
+          "question": "Mientras yo ___ (estudiar), sonó el teléfono.",
+          "answer": "estudiaba",
+          "hint": "ongoing background action",
+          "explanation": "Background action = imperfect"
+        },
+        {
+          "question": "Ella ___ (conocer) a su marido en la universidad.",
+          "answer": "conoció",
+          "hint": "moment of meeting someone",
+          "explanation": "Beginning of relationship = preterite"
+        },
+        {
+          "question": "De pequeño siempre ___ (tener) miedo de la oscuridad.",
+          "answer": "tenía",
+          "hint": "childhood fear (ongoing)",
+          "explanation": "Habitual state = imperfect"
+        },
+        {
+          "question": "¿___ (hablar) tú con el director ayer?",
+          "answer": "Hablaste",
+          "hint": "yesterday",
+          "explanation": "Yesterday + you = preterite"
+        },
+        {
+          "question": "Nosotros ___ (vivir) en México durante diez años.",
+          "answer": "vivimos",
+          "hint": "for ten years (completed period)",
+          "explanation": "Bounded completed period = preterite"
+        },
+        {
+          "question": "La película ___ (ser) muy aburrida.",
+          "answer": "fue",
+          "hint": "one movie you saw",
+          "explanation": "Preterite for completed experiences"
+        },
+        {
+          "question": "Siempre me ___ (gustar) la música clásica.",
+          "answer": "gustaba",
+          "hint": "ongoing preference in past",
+          "explanation": "Habitual preference = imperfect"
+        }
+      ],
+      "translate": [
+        {
+          "en": "I was reading when the phone rang.",
+          "es": "Estaba leyendo cuando sonó el teléfono.",
+          "explanation": "Imperfect background + preterite interruption"
+        },
+        {
+          "en": "Every summer we used to go to the beach.",
+          "es": "Todos los veranos íbamos a la playa.",
+          "explanation": "Habitual past action = imperfect"
+        },
+        {
+          "en": "She finished the project last night.",
+          "es": "Terminó el proyecto anoche.",
+          "explanation": "Completed event with time marker = preterite"
+        },
+        {
+          "en": "When I was young I played football.",
+          "es": "Cuando era joven jugaba al fútbol.",
+          "explanation": "Habitual childhood activity = imperfect"
+        },
+        {
+          "en": "He didn't say anything.",
+          "es": "No dijo nada.",
+          "explanation": "Single past event = preterite"
+        },
+        {
+          "en": "It was raining and the streets were empty.",
+          "es": "Llovía y las calles estaban vacías.",
+          "explanation": "Scene description = imperfect"
+        },
+        {
+          "en": "I met him for the first time in 2010.",
+          "es": "Lo conocí por primera vez en 2010.",
+          "explanation": "First meeting = preterite"
+        },
+        {
+          "en": "She used to work in a bank.",
+          "es": "Trabajaba en un banco.",
+          "explanation": "Former ongoing situation = imperfect"
+        },
+        {
+          "en": "We ate at that restaurant three times.",
+          "es": "Comimos en ese restaurante tres veces.",
+          "explanation": "Counted occurrences = preterite"
+        },
+        {
+          "en": "He was tired because he hadn't slept.",
+          "es": "Estaba cansado porque no había dormido.",
+          "explanation": "State as background context = imperfect"
+        }
+      ]
+    },
+    "subjunctive": {
+      "pairs": [
+        {
+          "es": "quiero que vengas",
+          "en": "I want you to come",
+          "explanation": "Querer que + different subject → subjunctive"
+        },
+        {
+          "es": "espero que llueva",
+          "en": "I hope it rains",
+          "explanation": "Esperar que + uncertainty → subjunctive"
+        },
+        {
+          "es": "dudo que sepa",
+          "en": "I doubt he knows",
+          "explanation": "Doubt + subjunctive"
+        },
+        {
+          "es": "es importante que estudies",
+          "en": "it's important that you study",
+          "explanation": "Impersonal expression + que → subjunctive"
+        },
+        {
+          "es": "ojalá haga buen tiempo",
+          "en": "hopefully the weather is good",
+          "explanation": "Ojalá always → subjunctive"
+        },
+        {
+          "es": "cuando llegues",
+          "en": "when you arrive (future)",
+          "explanation": "Future cuando → subjunctive"
+        },
+        {
+          "es": "no creo que tenga razón",
+          "en": "I don't think he's right",
+          "explanation": "Negative creer → subjunctive"
+        },
+        {
+          "es": "me alegra que estés aquí",
+          "en": "I'm glad you're here",
+          "explanation": "Emotion + que → subjunctive"
+        },
+        {
+          "es": "busco un apartamento que sea barato",
+          "en": "I'm looking for an apartment that is cheap",
+          "explanation": "Non-specific antecedent → subjunctive"
+        },
+        {
+          "es": "aunque venga tarde",
+          "en": "even if he comes late",
+          "explanation": "Aunque + uncertainty → subjunctive"
+        },
+        {
+          "es": "para que aprendas",
+          "en": "so that you learn",
+          "explanation": "Para que → subjunctive (always)"
+        },
+        {
+          "es": "sin que me lo digan",
+          "en": "without them telling me",
+          "explanation": "Sin que → subjunctive (always)"
+        },
+        {
+          "es": "quizás venga mañana",
+          "en": "maybe he'll come tomorrow",
+          "explanation": "Quizás + uncertainty → subjunctive"
+        },
+        {
+          "es": "necesito que me ayudes",
+          "en": "I need you to help me",
+          "explanation": "Necesitar que + different subject"
+        },
+        {
+          "es": "no hay nadie que hable chino",
+          "en": "there's no one who speaks Chinese",
+          "explanation": "Negative antecedent → subjunctive"
+        },
+        {
+          "es": "antes de que llegues",
+          "en": "before you arrive",
+          "explanation": "Antes de que → subjunctive (always)"
+        },
+        {
+          "es": "prohíben que fumes",
+          "en": "they prohibit you from smoking",
+          "explanation": "Prohibition verbs → subjunctive"
+        },
+        {
+          "es": "te pido que seas honesto",
+          "en": "I ask you to be honest",
+          "explanation": "Pedir que + different subject"
+        },
+        {
+          "es": "es posible que haya tráfico",
+          "en": "it's possible there's traffic",
+          "explanation": "Es posible que → subjunctive"
+        },
+        {
+          "es": "como si supiera todo",
+          "en": "as if he knew everything",
+          "explanation": "Como si → subjunctive (always)"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "Espero que ellos ___ (llegar) a tiempo.",
+          "answer": "lleguen",
+          "hint": "I hope they arrive",
+          "explanation": "Esperar que triggers subjunctive"
+        },
+        {
+          "question": "Es necesario que tú ___ (estudiar) más.",
+          "answer": "estudies",
+          "hint": "it's necessary that you",
+          "explanation": "Es necesario que → subjunctive"
+        },
+        {
+          "question": "No creo que él ___ (tener) razón.",
+          "answer": "tenga",
+          "hint": "I don't think he's right",
+          "explanation": "Negative creer → subjunctive"
+        },
+        {
+          "question": "Cuando ___ (volver) a casa, llámame.",
+          "answer": "vuelvas",
+          "hint": "when you get home (future)",
+          "explanation": "Future cuando → subjunctive"
+        },
+        {
+          "question": "Quiero que tú me ___ (decir) la verdad.",
+          "answer": "digas",
+          "hint": "I want you to tell me",
+          "explanation": "Querer que + different subject"
+        },
+        {
+          "question": "Ojalá ___ (hacer) buen tiempo mañana.",
+          "answer": "haga",
+          "hint": "hopefully the weather is nice",
+          "explanation": "Ojalá always uses subjunctive"
+        },
+        {
+          "question": "Me alegra que tú ___ (estar) bien.",
+          "answer": "estés",
+          "hint": "I'm glad you're okay",
+          "explanation": "Emotion + que → subjunctive"
+        },
+        {
+          "question": "Busco un empleado que ___ (hablar) inglés.",
+          "answer": "hable",
+          "hint": "non-specific employee",
+          "explanation": "Non-specific noun → subjunctive"
+        },
+        {
+          "question": "Para que nosotros ___ (entender), habla despacio.",
+          "answer": "entendamos",
+          "hint": "so that we understand",
+          "explanation": "Para que → always subjunctive"
+        },
+        {
+          "question": "Aunque ___ (llover), voy a salir.",
+          "answer": "llueva",
+          "hint": "even if it rains",
+          "explanation": "Aunque + future uncertainty → subjunctive"
+        }
+      ],
+      "translate": [
+        {
+          "en": "I want you to be happy.",
+          "es": "Quiero que seas feliz.",
+          "explanation": "Querer que + different subject = subjunctive"
+        },
+        {
+          "en": "It's strange that he isn't here.",
+          "es": "Es extraño que no esté aquí.",
+          "explanation": "Impersonal expression + que = subjunctive"
+        },
+        {
+          "en": "Maybe they know the answer.",
+          "es": "Quizás sepan la respuesta.",
+          "explanation": "Quizás + uncertainty = subjunctive"
+        },
+        {
+          "en": "I'll call you when I arrive.",
+          "es": "Te llamaré cuando llegue.",
+          "explanation": "Future cuando = subjunctive"
+        },
+        {
+          "en": "She needs someone who can help her.",
+          "es": "Necesita a alguien que pueda ayudarla.",
+          "explanation": "Non-specific person = subjunctive"
+        },
+        {
+          "en": "I hope you feel better soon.",
+          "es": "Espero que te mejores pronto.",
+          "explanation": "Esperar que = subjunctive"
+        },
+        {
+          "en": "It's important that you rest.",
+          "es": "Es importante que descanses.",
+          "explanation": "Impersonal + que = subjunctive"
+        },
+        {
+          "en": "I doubt that it will rain today.",
+          "es": "Dudo que llueva hoy.",
+          "explanation": "Doubt = subjunctive"
+        },
+        {
+          "en": "She told me to arrive early.",
+          "es": "Me dijo que llegara temprano.",
+          "explanation": "Past command = imperfect subjunctive"
+        },
+        {
+          "en": "Before you leave, turn off the lights.",
+          "es": "Antes de que te vayas, apaga las luces.",
+          "explanation": "Antes de que = always subjunctive"
+        }
+      ]
+    },
+    "por-para": {
+      "pairs": [
+        {
+          "es": "para ti",
+          "en": "for you (as a recipient)",
+          "explanation": "Para = intended recipient"
+        },
+        {
+          "es": "por ti",
+          "en": "because of you / for your sake",
+          "explanation": "Por = on behalf of / because of"
+        },
+        {
+          "es": "para mañana",
+          "en": "by tomorrow (deadline)",
+          "explanation": "Para = deadline"
+        },
+        {
+          "es": "por la mañana",
+          "en": "in the morning (duration)",
+          "explanation": "Por = time period"
+        },
+        {
+          "es": "para ser principiante",
+          "en": "for a beginner (comparison)",
+          "explanation": "Para = comparison/standard"
+        },
+        {
+          "es": "por cien euros",
+          "en": "for 100 euros (exchange)",
+          "explanation": "Por = exchange/price"
+        },
+        {
+          "es": "para Madrid",
+          "en": "headed to/for Madrid",
+          "explanation": "Para = destination/direction"
+        },
+        {
+          "es": "por Madrid",
+          "en": "through Madrid / around Madrid",
+          "explanation": "Por = movement through/around"
+        },
+        {
+          "es": "trabajar para vivir",
+          "en": "to work in order to live",
+          "explanation": "Para = purpose/goal"
+        },
+        {
+          "es": "gracias por venir",
+          "en": "thanks for coming",
+          "explanation": "Por = reason/cause with gracias"
+        },
+        {
+          "es": "por eso",
+          "en": "because of that / that's why",
+          "explanation": "Por = cause/reason"
+        },
+        {
+          "es": "para colmo",
+          "en": "to top it all off (idiom)",
+          "explanation": "Fixed expression with para"
+        },
+        {
+          "es": "por suerte",
+          "en": "luckily",
+          "explanation": "Fixed expression with por"
+        },
+        {
+          "es": "para siempre",
+          "en": "forever",
+          "explanation": "Para = indefinite future time"
+        },
+        {
+          "es": "por un momento",
+          "en": "for a moment",
+          "explanation": "Por = duration"
+        },
+        {
+          "es": "cambiar por",
+          "en": "to exchange for",
+          "explanation": "Por = exchange"
+        },
+        {
+          "es": "luchar para",
+          "en": "to fight in order to",
+          "explanation": "Para = goal"
+        },
+        {
+          "es": "luchar por",
+          "en": "to fight for (a cause)",
+          "explanation": "Por = on behalf of a cause"
+        },
+        {
+          "es": "llamar por teléfono",
+          "en": "to call by phone",
+          "explanation": "Por = means of communication"
+        },
+        {
+          "es": "apto para",
+          "en": "suitable for",
+          "explanation": "Para = suitability"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "Este regalo es ___ mi madre.",
+          "answer": "para",
+          "hint": "intended recipient",
+          "explanation": "Gift recipient = para"
+        },
+        {
+          "question": "Lo compré ___ diez euros.",
+          "answer": "por",
+          "hint": "price paid",
+          "explanation": "Price/exchange = por"
+        },
+        {
+          "question": "Gracias ___ tu ayuda.",
+          "answer": "por",
+          "hint": "thanks because of your help",
+          "explanation": "Reason/cause = por"
+        },
+        {
+          "question": "Necesito el informe ___ el viernes.",
+          "answer": "para",
+          "hint": "deadline",
+          "explanation": "Deadline = para"
+        },
+        {
+          "question": "Viajamos ___ las montañas durante horas.",
+          "answer": "por",
+          "hint": "movement through a place",
+          "explanation": "Movement through = por"
+        },
+        {
+          "question": "Estudio español ___ trabajar en España.",
+          "answer": "para",
+          "hint": "goal / in order to",
+          "explanation": "Goal/purpose = para"
+        },
+        {
+          "question": "Ella habla muy bien ___ ser extranjera.",
+          "answer": "para",
+          "hint": "considering she's a foreigner",
+          "explanation": "Comparison/standard = para"
+        },
+        {
+          "question": "Te llamo ___ teléfono esta tarde.",
+          "answer": "por",
+          "hint": "means of contact",
+          "explanation": "Means of communication = por"
+        },
+        {
+          "question": "Salimos ___ Barcelona mañana.",
+          "answer": "para",
+          "hint": "we're heading there",
+          "explanation": "Destination = para"
+        },
+        {
+          "question": "Lo hago ___ ti, no ___ él.",
+          "answer": "por / por",
+          "hint": "on your behalf",
+          "explanation": "Acting on behalf of someone = por"
+        }
+      ],
+      "translate": [
+        {
+          "en": "I bought this for you.",
+          "es": "Compré esto para ti.",
+          "explanation": "Recipient = para"
+        },
+        {
+          "en": "He did it because of love.",
+          "es": "Lo hizo por amor.",
+          "explanation": "Cause/motive = por"
+        },
+        {
+          "en": "The homework is due Friday.",
+          "es": "Los deberes son para el viernes.",
+          "explanation": "Deadline = para"
+        },
+        {
+          "en": "They walked through the park.",
+          "es": "Caminaron por el parque.",
+          "explanation": "Movement through = por"
+        },
+        {
+          "en": "She studies hard in order to pass.",
+          "es": "Estudia mucho para aprobar.",
+          "explanation": "Purpose = para"
+        },
+        {
+          "en": "I exchanged my car for a bike.",
+          "es": "Cambié mi coche por una bici.",
+          "explanation": "Exchange = por"
+        },
+        {
+          "en": "This medicine is for headaches.",
+          "es": "Esta medicina es para el dolor de cabeza.",
+          "explanation": "Purpose/use = para"
+        },
+        {
+          "en": "Thanks for everything.",
+          "es": "Gracias por todo.",
+          "explanation": "Gratitude + cause = por"
+        },
+        {
+          "en": "For a student he works a lot.",
+          "es": "Para ser estudiante trabaja mucho.",
+          "explanation": "Comparison against expected = para"
+        },
+        {
+          "en": "I'll be there for two weeks.",
+          "es": "Estaré allí por dos semanas.",
+          "explanation": "Duration = por"
+        }
+      ]
+    },
+    "present": {
+      "pairs": [
+        {
+          "es": "hablo / hablas / habla",
+          "en": "I/you/he speak",
+          "explanation": "-AR: drop -ar, add o/as/a"
+        },
+        {
+          "es": "como / comes / come",
+          "en": "I/you/he eat",
+          "explanation": "-ER: drop -er, add o/es/e"
+        },
+        {
+          "es": "vivo / vives / vive",
+          "en": "I/you/he live",
+          "explanation": "-IR: drop -ir, add o/es/e"
+        },
+        {
+          "es": "tengo",
+          "en": "I have",
+          "explanation": "Irregular yo: tengo (not teno)"
+        },
+        {
+          "es": "vengo",
+          "en": "I come",
+          "explanation": "Irregular yo: vengo (not veno)"
+        },
+        {
+          "es": "salgo",
+          "en": "I leave / go out",
+          "explanation": "Irregular yo: salgo"
+        },
+        {
+          "es": "pongo",
+          "en": "I put",
+          "explanation": "Irregular yo: pongo"
+        },
+        {
+          "es": "hago",
+          "en": "I do / make",
+          "explanation": "Irregular yo: hago"
+        },
+        {
+          "es": "digo",
+          "en": "I say",
+          "explanation": "Irregular yo: digo"
+        },
+        {
+          "es": "sé",
+          "en": "I know",
+          "explanation": "Irregular yo: sé (saber)"
+        },
+        {
+          "es": "voy",
+          "en": "I go",
+          "explanation": "Completely irregular: ir → voy"
+        },
+        {
+          "es": "quiero / quieres / quiere",
+          "en": "I/you/he want",
+          "explanation": "Stem change e→ie: querer"
+        },
+        {
+          "es": "puedo / puedes / puede",
+          "en": "I/you/he can",
+          "explanation": "Stem change o→ue: poder"
+        },
+        {
+          "es": "pido / pides / pide",
+          "en": "I/you/he ask/order",
+          "explanation": "Stem change e→i: pedir"
+        },
+        {
+          "es": "duermo / duermes / duerme",
+          "en": "I/you/he sleep",
+          "explanation": "Stem change o→ue: dormir"
+        },
+        {
+          "es": "juego / juegas / juega",
+          "en": "I/you/he play",
+          "explanation": "Stem change u→ue: jugar"
+        },
+        {
+          "es": "soy / eres / es",
+          "en": "I/you/he am/are/is (ser)",
+          "explanation": "Completely irregular: ser"
+        },
+        {
+          "es": "estoy / estás / está",
+          "en": "I/you/he am/are/is (estar)",
+          "explanation": "Irregular yo: estoy"
+        },
+        {
+          "es": "hay",
+          "en": "there is / there are",
+          "explanation": "Haber: invariable hay"
+        },
+        {
+          "es": "mañana voy al cine",
+          "en": "tomorrow I'm going to the cinema",
+          "explanation": "Present for near-future plans"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "Yo ___ (hablar) español todos los días.",
+          "answer": "hablo",
+          "hint": "I speak (regular -ar)",
+          "explanation": "-AR yo form: hablo"
+        },
+        {
+          "question": "Ella ___ (comer) en la cafetería.",
+          "answer": "come",
+          "hint": "she eats (regular -er)",
+          "explanation": "-ER 3rd person: come"
+        },
+        {
+          "question": "Nosotros ___ (vivir) en el centro.",
+          "answer": "vivimos",
+          "hint": "we live (regular -ir)",
+          "explanation": "-IR nosotros: vivimos"
+        },
+        {
+          "question": "Yo ___ (tener) mucho trabajo hoy.",
+          "answer": "tengo",
+          "hint": "I have",
+          "explanation": "Irregular yo: tengo"
+        },
+        {
+          "question": "Tú ___ (querer) ir a la fiesta?",
+          "answer": "quieres",
+          "hint": "do you want (stem change)",
+          "explanation": "e→ie: quieres"
+        },
+        {
+          "question": "Él no ___ (poder) venir esta tarde.",
+          "answer": "puede",
+          "hint": "he can't (stem change)",
+          "explanation": "o→ue: puede"
+        },
+        {
+          "question": "Yo ___ (salir) a las ocho.",
+          "answer": "salgo",
+          "hint": "I leave",
+          "explanation": "Irregular yo: salgo"
+        },
+        {
+          "question": "¿Qué ___ (hacer) tú los fines de semana?",
+          "answer": "haces",
+          "hint": "what do you do",
+          "explanation": "hacer: haces (tú)"
+        },
+        {
+          "question": "Ellos ___ (dormir) ocho horas cada noche.",
+          "answer": "duermen",
+          "hint": "they sleep",
+          "explanation": "o→ue: duermen"
+        },
+        {
+          "question": "Yo no ___ (saber) la respuesta.",
+          "answer": "sé",
+          "hint": "I don't know",
+          "explanation": "Irregular yo: sé"
+        }
+      ],
+      "translate": [
+        {
+          "en": "I go to the gym every Monday.",
+          "es": "Voy al gimnasio todos los lunes.",
+          "explanation": "Habitual action = present"
+        },
+        {
+          "en": "She knows three languages.",
+          "es": "Sabe tres idiomas.",
+          "explanation": "saber → sabe"
+        },
+        {
+          "en": "What do you want to eat?",
+          "es": "¿Qué quieres comer?",
+          "explanation": "e→ie stem change"
+        },
+        {
+          "en": "We leave at eight every morning.",
+          "es": "Salimos a las ocho todas las mañanas.",
+          "explanation": "Regular -IR nosotros form"
+        },
+        {
+          "en": "Can you help me?",
+          "es": "¿Puedes ayudarme?",
+          "explanation": "poder o→ue: puedes"
+        },
+        {
+          "en": "There is a problem.",
+          "es": "Hay un problema.",
+          "explanation": "Haber = hay (invariable)"
+        },
+        {
+          "en": "I'm meeting a friend tomorrow.",
+          "es": "Mañana quedo con un amigo.",
+          "explanation": "Present for near future"
+        },
+        {
+          "en": "He always says the right thing.",
+          "es": "Siempre dice lo correcto.",
+          "explanation": "decir → dice"
+        },
+        {
+          "en": "Do you have time?",
+          "es": "¿Tienes tiempo?",
+          "explanation": "tener yo→tengo, tú→tienes"
+        },
+        {
+          "en": "I make dinner every night.",
+          "es": "Hago la cena todas las noches.",
+          "explanation": "hacer → hago (yo)"
+        }
+      ]
+    },
+    "gustar": {
+      "pairs": [
+        {
+          "es": "me gusta el café",
+          "en": "I like coffee (singular)",
+          "explanation": "Singular subject → gusta"
+        },
+        {
+          "es": "me gustan los libros",
+          "en": "I like books (plural)",
+          "explanation": "Plural subject → gustan"
+        },
+        {
+          "es": "te gusta bailar",
+          "en": "you like to dance",
+          "explanation": "Infinitive subject → gusta (singular)"
+        },
+        {
+          "es": "le encanta la música",
+          "en": "she loves music",
+          "explanation": "Encantar = same pattern as gustar"
+        },
+        {
+          "es": "nos gusta viajar",
+          "en": "we like to travel",
+          "explanation": "Nos = indirect object for nosotros"
+        },
+        {
+          "es": "les molesta el ruido",
+          "en": "noise bothers them",
+          "explanation": "Molestar = same pattern"
+        },
+        {
+          "es": "me faltan diez euros",
+          "en": "I'm missing ten euros",
+          "explanation": "Faltar = same pattern"
+        },
+        {
+          "es": "¿te interesa la política?",
+          "en": "are you interested in politics?",
+          "explanation": "Interesar = same pattern"
+        },
+        {
+          "es": "me duele la cabeza",
+          "en": "my head hurts",
+          "explanation": "Doler = same pattern, o→ue"
+        },
+        {
+          "es": "le parece bien",
+          "en": "it seems fine to him/her",
+          "explanation": "Parecer = same pattern"
+        },
+        {
+          "es": "nos quedan dos días",
+          "en": "we have two days left",
+          "explanation": "Quedar = same pattern"
+        },
+        {
+          "es": "me apetece un helado",
+          "en": "I feel like an ice cream",
+          "explanation": "Apetecer = same pattern"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "A mí ___ los deportes.",
+          "answer": "me gustan",
+          "hint": "I like sports (plural)",
+          "explanation": "Sports = plural → gustan + me"
+        },
+        {
+          "question": "A ella ___ mucho el chocolate.",
+          "answer": "le gusta",
+          "hint": "she likes chocolate (singular)",
+          "explanation": "Singular → gusta, 3rd person → le"
+        },
+        {
+          "question": "A nosotros ___ las películas de acción.",
+          "answer": "nos gustan",
+          "hint": "we like action movies",
+          "explanation": "Plural → gustan, we → nos"
+        },
+        {
+          "question": "¿A ti ___ estudiar por la noche?",
+          "answer": "te gusta",
+          "hint": "do you like studying",
+          "explanation": "Infinitive → gusta, you → te"
+        },
+        {
+          "question": "A ellos no ___ el frío.",
+          "answer": "les gusta",
+          "hint": "they don't like the cold",
+          "explanation": "Singular → gusta, them → les"
+        },
+        {
+          "question": "A mí me ___ (doler) las piernas después de correr.",
+          "answer": "duelen",
+          "hint": "my legs hurt",
+          "explanation": "Doler o→ue, plural subject → duelen"
+        },
+        {
+          "question": "A Juan le ___ (encantar) el jazz.",
+          "answer": "encanta",
+          "hint": "Juan loves jazz",
+          "explanation": "Singular → encanta"
+        },
+        {
+          "question": "A nosotros nos ___ (faltar) información.",
+          "answer": "falta",
+          "hint": "we're missing information",
+          "explanation": "Singular subject → falta"
+        }
+      ],
+      "translate": [
+        {
+          "en": "I like Spanish food a lot.",
+          "es": "Me gusta mucho la comida española.",
+          "explanation": "Singular subject = gusta"
+        },
+        {
+          "en": "Do you like traveling?",
+          "es": "¿Te gusta viajar?",
+          "explanation": "Infinitive = singular → gusta"
+        },
+        {
+          "en": "He loves his dog.",
+          "es": "Le encanta su perro.",
+          "explanation": "Encantar same pattern as gustar"
+        },
+        {
+          "en": "They don't like cold weather.",
+          "es": "No les gusta el frío.",
+          "explanation": "Singular = gusta, them = les"
+        },
+        {
+          "en": "My feet hurt.",
+          "es": "Me duelen los pies.",
+          "explanation": "Plural subject = duelen, o→ue"
+        },
+        {
+          "en": "She's interested in art.",
+          "es": "Le interesa el arte.",
+          "explanation": "Interesar same pattern"
+        },
+        {
+          "en": "We really like these songs.",
+          "es": "Nos encantan estas canciones.",
+          "explanation": "Plural = encantan"
+        },
+        {
+          "en": "I feel like a coffee.",
+          "es": "Me apetece un café.",
+          "explanation": "Apetecer same pattern"
+        }
+      ]
+    },
+    "gender": {
+      "pairs": [
+        {
+          "es": "el libro / los libros",
+          "en": "the book / the books (masc)",
+          "explanation": "-o ending = usually masculine"
+        },
+        {
+          "es": "la mesa / las mesas",
+          "en": "the table / the tables (fem)",
+          "explanation": "-a ending = usually feminine"
+        },
+        {
+          "es": "el problema",
+          "en": "the problem (masculine)",
+          "explanation": "Exception: -ma words often masculine"
+        },
+        {
+          "es": "la mano",
+          "en": "the hand (feminine)",
+          "explanation": "Exception: mano ends in -o but is feminine"
+        },
+        {
+          "es": "el agua (fría)",
+          "en": "the cold water (feminine)",
+          "explanation": "Feminine noun uses el before stressed a-"
+        },
+        {
+          "es": "un libro rojo",
+          "en": "a red book",
+          "explanation": "Masc: un, adjective -o"
+        },
+        {
+          "es": "una camisa roja",
+          "en": "a red shirt",
+          "explanation": "Fem: una, adjective -a"
+        },
+        {
+          "es": "unos libros rojos",
+          "en": "some red books",
+          "explanation": "Masc plural: unos, -os"
+        },
+        {
+          "es": "unas camisas rojas",
+          "en": "some red shirts",
+          "explanation": "Fem plural: unas, -as"
+        },
+        {
+          "es": "el médico / la médica",
+          "en": "male/female doctor",
+          "explanation": "Profession changes with gender"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "___ (el/la) problema es muy grave.",
+          "answer": "El",
+          "hint": "-ma ending words are usually masculine",
+          "explanation": "Problema = masculine despite -a"
+        },
+        {
+          "question": "___ (un/una) casa blanca",
+          "answer": "una",
+          "hint": "house is feminine",
+          "explanation": "Casa = feminine → una"
+        },
+        {
+          "question": "Los niños están cansad___ .",
+          "answer": "os",
+          "hint": "plural masculine adjective",
+          "explanation": "Masculine plural → -os"
+        },
+        {
+          "question": "Las niñas están cansad___.",
+          "answer": "as",
+          "hint": "plural feminine adjective",
+          "explanation": "Feminine plural → -as"
+        },
+        {
+          "question": "Necesito ___ (el/la/un/una) agua fría.",
+          "answer": "un",
+          "hint": "stressed a- takes masculine article",
+          "explanation": "Agua is feminine but takes el/un before it"
+        },
+        {
+          "question": "___ mano derecha de María",
+          "answer": "La",
+          "hint": "mano is feminine",
+          "explanation": "Mano ends -o but is feminine"
+        },
+        {
+          "question": "Compré ___ coche nuev___.",
+          "answer": "un / o",
+          "hint": "car is masculine",
+          "explanation": "Coche = masculine → un, nuevo"
+        },
+        {
+          "question": "Ella es ___ médic___.",
+          "answer": "una / a",
+          "hint": "female doctor",
+          "explanation": "Female profession → la/una médica"
+        }
+      ],
+      "translate": [
+        {
+          "en": "The red houses are beautiful.",
+          "es": "Las casas rojas son hermosas.",
+          "explanation": "Feminine plural agreement throughout"
+        },
+        {
+          "en": "I need a new white shirt.",
+          "es": "Necesito una camisa blanca nueva.",
+          "explanation": "Camisa = fem → una, adjectives agree"
+        },
+        {
+          "en": "The blue cars are fast.",
+          "es": "Los coches azules son rápidos.",
+          "explanation": "Masculine plural agreement"
+        },
+        {
+          "en": "She is a good doctor.",
+          "es": "Es una buena médica.",
+          "explanation": "Female doctor → médica"
+        },
+        {
+          "en": "The big problems are difficult.",
+          "es": "Los problemas grandes son difíciles.",
+          "explanation": "Problema = masculine plural"
+        },
+        {
+          "en": "Give me cold water please.",
+          "es": "Dame agua fría por favor.",
+          "explanation": "Agua = feminine, adjective agrees"
+        },
+        {
+          "en": "A new red dress.",
+          "es": "Un vestido rojo nuevo.",
+          "explanation": "Vestido = masculine → un, rojo, nuevo"
+        },
+        {
+          "en": "The interesting books.",
+          "es": "Los libros interesantes.",
+          "explanation": "Interesante = no gender change, only number"
+        }
+      ]
+    },
+    "reflexive": {
+      "pairs": [
+        {
+          "es": "me levanto",
+          "en": "I get up",
+          "explanation": "Reflexive: action on yourself"
+        },
+        {
+          "es": "te duchas",
+          "en": "you shower",
+          "explanation": "Reflexive: te for tú"
+        },
+        {
+          "es": "se llama",
+          "en": "he/she is called",
+          "explanation": "Llamarse: identity reflexive"
+        },
+        {
+          "es": "nos acostamos",
+          "en": "we go to bed",
+          "explanation": "Acostarse: nos for nosotros"
+        },
+        {
+          "es": "se visten",
+          "en": "they get dressed",
+          "explanation": "Vestirse (e→i): reflexive"
+        },
+        {
+          "es": "me despierto a las siete",
+          "en": "I wake up at seven",
+          "explanation": "Despertarse (e→ie)"
+        },
+        {
+          "es": "se va",
+          "en": "he leaves (goes away)",
+          "explanation": "Irse ≠ ir: irse = to leave"
+        },
+        {
+          "es": "me pongo nervioso",
+          "en": "I get nervous",
+          "explanation": "Ponerse + emotion = to become"
+        },
+        {
+          "es": "se hace tarde",
+          "en": "it's getting late",
+          "explanation": "Hacerse = to become"
+        },
+        {
+          "es": "nos queremos",
+          "en": "we love each other",
+          "explanation": "Reciprocal reflexive: each other"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "Yo ___ (levantarse) a las seis de la mañana.",
+          "answer": "me levanto",
+          "hint": "I get up",
+          "explanation": "Levantarse: me + levanto"
+        },
+        {
+          "question": "¿A qué hora ___ (acostarse) tú?",
+          "answer": "te acuestas",
+          "hint": "what time do you go to bed",
+          "explanation": "Acostarse o→ue: te acuestas"
+        },
+        {
+          "question": "Ellos ___ (llamarse) Pedro y Ana.",
+          "answer": "se llaman",
+          "hint": "their names are...",
+          "explanation": "Llamarse: se + llaman"
+        },
+        {
+          "question": "Nosotros ___ (ducharse) por la mañana.",
+          "answer": "nos duchamos",
+          "hint": "we shower",
+          "explanation": "Ducharse: nos + duchamos"
+        },
+        {
+          "question": "Ella ___ (vestirse) muy elegante.",
+          "answer": "se viste",
+          "hint": "she gets dressed",
+          "explanation": "Vestirse e→i: se viste"
+        },
+        {
+          "question": "Yo ___ (ponerse) el abrigo porque hace frío.",
+          "answer": "me pongo",
+          "hint": "I put on my coat",
+          "explanation": "Ponerse: me + pongo (irregular yo)"
+        },
+        {
+          "question": "Los niños no quieren ___ (dormirse).",
+          "answer": "dormirse",
+          "hint": "attached to infinitive",
+          "explanation": "Reflexive attached to infinitive"
+        },
+        {
+          "question": "¿___ (sentirse, tú) mejor hoy?",
+          "answer": "Te sientes",
+          "hint": "do you feel better",
+          "explanation": "Sentirse e→ie: te sientes"
+        }
+      ],
+      "translate": [
+        {
+          "en": "She washes her hair every morning.",
+          "es": "Se lava el pelo todas las mañanas.",
+          "explanation": "Lavarse + body part with article"
+        },
+        {
+          "en": "I'm getting angry.",
+          "es": "Me estoy enfadando. / Me enfado.",
+          "explanation": "Enfadarse = to get angry"
+        },
+        {
+          "en": "They met each other at university.",
+          "es": "Se conocieron en la universidad.",
+          "explanation": "Reciprocal reflexive: conocerse"
+        },
+        {
+          "en": "He got up late and missed the bus.",
+          "es": "Se levantó tarde y perdió el autobús.",
+          "explanation": "Preterite reflexive"
+        },
+        {
+          "en": "Put your shoes on!",
+          "es": "¡Ponte los zapatos!",
+          "explanation": "Imperative reflexive: ponerse"
+        },
+        {
+          "en": "We fell asleep during the film.",
+          "es": "Nos dormimos durante la película.",
+          "explanation": "Dormirse: nos dormimos"
+        },
+        {
+          "en": "Don't worry about it.",
+          "es": "No te preocupes.",
+          "explanation": "Preocuparse: negative imperative"
+        },
+        {
+          "en": "I feel much better today.",
+          "es": "Me siento mucho mejor hoy.",
+          "explanation": "Sentirse e→ie: me siento"
+        }
+      ]
+    },
+    "word-order": {
+      "pairs": [
+        {
+          "es": "Juan llegó tarde",
+          "en": "Juan arrived late (neutral)",
+          "explanation": "Standard SVO order"
+        },
+        {
+          "es": "Llegó Juan tarde",
+          "en": "Juan arrived late (Juan emphasized)",
+          "explanation": "Verb-first: Juan is new information"
+        },
+        {
+          "es": "No lo sé",
+          "en": "I don't know it",
+          "explanation": "Negation before object pronoun before verb"
+        },
+        {
+          "es": "adj after noun",
+          "en": "casa bonita (not bonita casa)",
+          "explanation": "Adjectives usually follow noun in Spanish"
+        },
+        {
+          "es": "gran hombre",
+          "en": "great man (before noun = meaning shift)",
+          "explanation": "Some adjectives change meaning before noun"
+        },
+        {
+          "es": "¿Dónde vive usted?",
+          "en": "Where do you live?",
+          "explanation": "Question: inversion (verb before subject)"
+        },
+        {
+          "es": "Lo quiero mucho",
+          "en": "I love it very much",
+          "explanation": "Object pronoun before conjugated verb"
+        },
+        {
+          "es": "quiero verlo",
+          "en": "I want to see it",
+          "explanation": "Pronoun attached to infinitive"
+        },
+        {
+          "es": "lo estoy comiendo",
+          "en": "I am eating it",
+          "explanation": "Pronoun before aux OR attached to gerund"
+        },
+        {
+          "es": "solo habla inglés",
+          "en": "he only speaks English",
+          "explanation": "Solo modifies the verb, placed before it"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "___ veo a María todos los días. (I see)",
+          "answer": "La",
+          "hint": "direct object pronoun before verb",
+          "explanation": "Direct object pronoun precedes conjugated verb"
+        },
+        {
+          "question": "Quiero ___ leer. (it)",
+          "answer": "lo",
+          "hint": "attached to infinitive",
+          "explanation": "Pronoun can attach to infinitive"
+        },
+        {
+          "question": "No ___ gusta. (me)",
+          "answer": "me",
+          "hint": "me goes between no and verb",
+          "explanation": "No + pronoun + verb"
+        },
+        {
+          "question": "¿___ hora es? (what)",
+          "answer": "Qué",
+          "hint": "what time is it",
+          "explanation": "¿Qué + noun in questions"
+        },
+        {
+          "question": "Ella tiene los ojos ___. (blue, not azules ojos)",
+          "answer": "azules",
+          "hint": "adjective usually after noun",
+          "explanation": "Color adjectives follow noun"
+        }
+      ],
+      "translate": [
+        {
+          "en": "I don't know him.",
+          "es": "No lo conozco.",
+          "explanation": "No + object pronoun + verb"
+        },
+        {
+          "en": "Where are you from?",
+          "es": "¿De dónde eres?",
+          "explanation": "Question word + verb + subject"
+        },
+        {
+          "en": "She's giving it to me.",
+          "es": "Me lo está dando. / Está dándomelo.",
+          "explanation": "Double pronouns or attached"
+        },
+        {
+          "en": "I want to eat it.",
+          "es": "Quiero comerlo.",
+          "explanation": "Pronoun attached to infinitive"
+        },
+        {
+          "en": "I'm looking for a big apartment.",
+          "es": "Busco un apartamento grande.",
+          "explanation": "Adjective follows noun"
+        },
+        {
+          "en": "He never calls me.",
+          "es": "Nunca me llama.",
+          "explanation": "Negative adverb + pronoun + verb"
+        },
+        {
+          "en": "What time does the train leave?",
+          "es": "¿A qué hora sale el tren?",
+          "explanation": "Question structure with inverted order"
+        }
+      ]
+    },
+    "obj-pronouns": {
+      "pairs": [
+        {
+          "es": "lo veo",
+          "en": "I see it/him",
+          "explanation": "Direct object: lo (masc)"
+        },
+        {
+          "es": "la veo",
+          "en": "I see it/her",
+          "explanation": "Direct object: la (fem)"
+        },
+        {
+          "es": "le doy el libro",
+          "en": "I give him/her the book",
+          "explanation": "Indirect object: le"
+        },
+        {
+          "es": "me lo da",
+          "en": "he gives it to me",
+          "explanation": "Double pronoun: IO before DO"
+        },
+        {
+          "es": "se lo doy",
+          "en": "I give it to him/her/them",
+          "explanation": "Le/les → se before lo/la/los/las"
+        },
+        {
+          "es": "te veo",
+          "en": "I see you",
+          "explanation": "Direct object 2nd person: te"
+        },
+        {
+          "es": "nos ayuda",
+          "en": "he helps us",
+          "explanation": "us = nos"
+        },
+        {
+          "es": "los compré",
+          "en": "I bought them (masc)",
+          "explanation": "Direct object plural: los"
+        },
+        {
+          "es": "las busco",
+          "en": "I'm looking for them (fem)",
+          "explanation": "Direct object plural fem: las"
+        },
+        {
+          "es": "les escribo",
+          "en": "I write to them",
+          "explanation": "Indirect object plural: les"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "¿___ ves a María? — Sí, ___ veo todos los días.",
+          "answer": "La",
+          "hint": "direct object, feminine",
+          "explanation": "María = feminine direct object → la"
+        },
+        {
+          "question": "¿Me das el libro? — Sí, te ___ doy.",
+          "answer": "lo",
+          "hint": "libro = masculine direct object",
+          "explanation": "El libro → lo, te + lo = te lo"
+        },
+        {
+          "question": "¿Le diste la carta a Juan? — Sí, ___ ___ di.",
+          "answer": "se / la",
+          "hint": "le → se before la",
+          "explanation": "Le → se when followed by la"
+        },
+        {
+          "question": "Quiero ver___. (them, masc)",
+          "answer": "los",
+          "hint": "them attached to infinitive",
+          "explanation": "Direct object attached to infinitive"
+        },
+        {
+          "question": "No ___ entiendo. (you, formal)",
+          "answer": "le",
+          "hint": "usted = indirect; or 'lo' as direct",
+          "explanation": "Formal you as direct object = lo/la"
+        },
+        {
+          "question": "Ella ___ (nos) escribió ayer.",
+          "answer": "nos",
+          "hint": "she wrote to us",
+          "explanation": "Indirect object: nos"
+        }
+      ],
+      "translate": [
+        {
+          "en": "I'll call you tomorrow.",
+          "es": "Te llamo mañana.",
+          "explanation": "Direct object pronoun: te"
+        },
+        {
+          "en": "Give it to me.",
+          "es": "Dámelo.",
+          "explanation": "Imperative + double pronoun attached"
+        },
+        {
+          "en": "She told him the truth.",
+          "es": "Le dijo la verdad.",
+          "explanation": "Indirect object: le"
+        },
+        {
+          "en": "Don't tell them.",
+          "es": "No se lo digas.",
+          "explanation": "Negative imperative + se + lo"
+        },
+        {
+          "en": "I'm going to buy it for her.",
+          "es": "Voy a comprárselo.",
+          "explanation": "Pronouns attached to infinitive: se + lo"
+        },
+        {
+          "en": "He saw us at the park.",
+          "es": "Nos vio en el parque.",
+          "explanation": "Direct object: nos"
+        },
+        {
+          "en": "Can you show me the way?",
+          "es": "¿Puedes mostrarme el camino? / ¿Me puedes mostrar el camino?",
+          "explanation": "Pronoun before aux or attached to inf"
+        }
+      ]
+    }
+  }
+}
