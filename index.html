@@ -125,6 +125,27 @@ body.focus-mode header { min-height:auto; }
 .hist-icon { font-size:14px; flex-shrink:0; }
 .hist-q { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .hist-mode { font-size:10px; color:var(--text3); flex-shrink:0; }
+/* ── ACHIEVEMENT BADGES (#27) ── */
+.badge-panel { position:fixed; top:70px; right:14px; z-index:800; display:flex; flex-direction:column; gap:6px; pointer-events:none; }
+.badge-toast { background:linear-gradient(135deg,rgba(246,166,35,.15),rgba(168,85,247,.15)); border:1px solid rgba(246,166,35,.4); border-radius:10px; padding:8px 14px; font-size:12px; color:var(--text); display:flex; align-items:center; gap:8px; animation:badgeIn .4s ease; opacity:0; pointer-events:none; }
+@keyframes badgeIn { 0%{opacity:0;transform:translateX(60px)} 20%{opacity:1;transform:translateX(-4px)} 100%{opacity:1;transform:translateX(0)} }
+.badge-emoji { font-size:20px; }
+.badge-label { font-weight:700; font-size:11px; }
+.badge-desc { font-size:10px; color:var(--text2); }
+/* ── SESSION GRADE MODAL (#30) ── */
+.grade-overlay { display:none; position:fixed; inset:0; z-index:1200; background:rgba(0,0,0,.7); align-items:center; justify-content:center; }
+.grade-overlay.open { display:flex; }
+.grade-box { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px 36px; text-align:center; max-width:360px; width:90vw; }
+.grade-letter { font-size:72px; font-weight:900; line-height:1; margin-bottom:8px; }
+.grade-A { color:#4ade80; } .grade-B { color:#60a5fa; } .grade-C { color:#facc15; } .grade-D { color:#fb923c; } .grade-F { color:#f87171; }
+.grade-title { font-size:18px; font-weight:700; margin-bottom:4px; }
+.grade-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0; }
+.grade-stat { background:var(--surface2); border-radius:8px; padding:10px; }
+.grade-stat-num { font-size:22px; font-weight:800; color:var(--accent); }
+.grade-stat-lbl { font-size:10px; color:var(--text3); margin-top:2px; }
+.grade-close { padding:10px 28px; border-radius:8px; border:none; background:var(--accent); color:#fff; font-size:14px; font-weight:700; cursor:pointer; margin-top:8px; }
+/* ── DIFFICULTY HINT (#49) ── */
+.diff-hint { font-size:11px; color:var(--text3); text-align:center; margin-top:6px; font-style:italic; }
 
 /* ── CONCEPT BAR ── */
 .concept-bar {
@@ -908,6 +929,25 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   </div>
 </header>
 
+
+
+<!-- BADGE PANEL -->
+<div class="badge-panel" id="badge-panel"></div>
+
+<!-- SESSION GRADE MODAL (#30) -->
+<div class="grade-overlay" id="grade-overlay">
+  <div class="grade-box">
+    <div class="grade-letter" id="grade-letter">A</div>
+    <div class="grade-title" id="grade-title">Excellent session!</div>
+    <div class="grade-stats">
+      <div class="grade-stat"><div class="grade-stat-num" id="gs-correct">0</div><div class="grade-stat-lbl">Correct</div></div>
+      <div class="grade-stat"><div class="grade-stat-num" id="gs-wrong">0</div><div class="grade-stat-lbl">Wrong</div></div>
+      <div class="grade-stat"><div class="grade-stat-num" id="gs-acc">0%</div><div class="grade-stat-lbl">Accuracy</div></div>
+      <div class="grade-stat"><div class="grade-stat-num" id="gs-xp">+0</div><div class="grade-stat-lbl">XP earned</div></div>
+    </div>
+    <button class="grade-close" onclick="closeGrade()">Keep going 🚀</button>
+  </div>
+</div>
 
 <!-- LEVEL-UP CEREMONY -->
 <div class="lvlup-overlay" id="lvlup-overlay">
@@ -5566,6 +5606,127 @@ function adjustFont(dir) {
   const focusCb = document.getElementById('m-focus');
   if (focusCb) focusCb.checked = document.body.classList.contains('focus-mode');
 })();
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── BATCH B: GAMIFICATION + SESSION ───────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ── #27 ACHIEVEMENT BADGES ───────────────────────────────────────────────────
+const BADGES = [
+  { id:'first_correct',   emoji:'⭐', label:'First correct!',        desc:'Got your first right answer',        check: () => sessionCorrect === 1 },
+  { id:'streak_5',        emoji:'🔥', label:'On fire!',              desc:'5 correct in a row',                 check: () => streak === 5 },
+  { id:'streak_10',       emoji:'💥', label:'Unstoppable!',          desc:'10 in a row',                        check: () => streak === 10 },
+  { id:'streak_20',       emoji:'🚀', label:'Legend!',               desc:'20 in a row',                        check: () => streak === 20 },
+  { id:'first_master',    emoji:'🏆', label:'First mastery!',        desc:'Mastered a concept',                 check: () => Object.values(conceptMastery).some(m => (m.correct/(m.correct+m.wrong||1)) >= 0.8 && (m.correct+m.wrong) >= 5) },
+  { id:'hundred_ex',      emoji:'📚', label:'Century!',              desc:'100 exercises completed',            check: () => (sessionCorrect + sessionWrong) >= 100 },
+  { id:'perfect_session', emoji:'🎯', label:'Perfect session!',      desc:'Session with 0 wrong answers (10+)', check: () => sessionWrong === 0 && sessionCorrect >= 10 },
+  { id:'night_owl',       emoji:'🌙', label:'Night owl',             desc:'Practiced after 10pm',               check: () => new Date().getHours() >= 22 },
+  { id:'early_bird',      emoji:'🌅', label:'Early bird',            desc:'Practiced before 7am',               check: () => new Date().getHours() < 7 },
+  { id:'goal_hit',        emoji:'🎉', label:'Goal reached!',         desc:'Hit daily XP goal',                  check: () => (dailyLog[todayKey()] || 0) >= dailyGoal },
+];
+const _unlockedBadges = new Set(JSON.parse(localStorage.getItem('sl_badges') || '[]'));
+
+function checkBadges() {
+  for (const badge of BADGES) {
+    if (!_unlockedBadges.has(badge.id) && badge.check()) {
+      _unlockedBadges.add(badge.id);
+      localStorage.setItem('sl_badges', JSON.stringify([..._unlockedBadges]));
+      showBadge(badge);
+    }
+  }
+}
+function showBadge(badge) {
+  const panel = document.getElementById('badge-panel');
+  if (!panel) return;
+  const el = document.createElement('div');
+  el.className = 'badge-toast';
+  el.innerHTML = `<span class="badge-emoji">${badge.emoji}</span><div><div class="badge-label">${badge.label}</div><div class="badge-desc">${badge.desc}</div></div>`;
+  panel.appendChild(el);
+  // Animate in
+  requestAnimationFrame(() => { el.style.opacity = '1'; el.style.pointerEvents = 'auto'; });
+  setTimeout(() => {
+    el.style.transition = 'opacity .5s';
+    el.style.opacity = '0';
+    setTimeout(() => el.remove(), 600);
+  }, 4000);
+  playSound('streak');
+}
+
+// ── #30 SESSION GRADE ────────────────────────────────────────────────────────
+let _sessionXPStart = parseInt(localStorage.getItem('sl_xp') || '0');
+function showSessionGrade() {
+  const total = sessionCorrect + sessionWrong;
+  if (total < 5) return; // Too few exercises to grade
+  const acc = total > 0 ? sessionCorrect / total : 0;
+  const xpEarned = xp - _sessionXPStart;
+  let grade, title;
+  if (acc >= 0.95) { grade = 'A'; title = 'Excellent session! 🌟'; }
+  else if (acc >= 0.85) { grade = 'B'; title = 'Great work! 💪'; }
+  else if (acc >= 0.70) { grade = 'C'; title = 'Good effort! 📈'; }
+  else if (acc >= 0.55) { grade = 'D'; title = 'Keep practicing! 🧠'; }
+  else { grade = 'F'; title = 'Don't give up! 💡'; }
+
+  const el = id => document.getElementById(id);
+  const letter = el('grade-letter');
+  if (letter) { letter.textContent = grade; letter.className = 'grade-letter grade-' + grade; }
+  if (el('grade-title')) el('grade-title').textContent = title;
+  if (el('gs-correct')) el('gs-correct').textContent = sessionCorrect;
+  if (el('gs-wrong')) el('gs-wrong').textContent = sessionWrong;
+  if (el('gs-acc')) el('gs-acc').textContent = Math.round(acc * 100) + '%';
+  if (el('gs-xp')) el('gs-xp').textContent = '+' + xpEarned;
+  const overlay = el('grade-overlay');
+  if (overlay) overlay.classList.add('open');
+}
+function closeGrade() {
+  const overlay = document.getElementById('grade-overlay');
+  if (overlay) overlay.classList.remove('open');
+  // Reset for next session
+  _sessionXPStart = xp;
+}
+
+// ── #49 DIFFICULTY HINTS ──────────────────────────────────────────────────────
+const _exerciseAttemptCounts = {}; // exerciseId -> {total, wrong}
+function getDifficultyHint(exerciseKey) {
+  const stats = _exerciseAttemptCounts[exerciseKey];
+  if (!stats || stats.total < 5) return null;
+  const wrongRate = stats.wrong / stats.total;
+  if (wrongRate >= 0.7) return 'Only ' + Math.round((1 - wrongRate) * 100) + '% of attempts get this right — tricky one!';
+  if (wrongRate >= 0.5) return 'This one trips up about half of students. You've got this!';
+  return null;
+}
+function trackExerciseAttempt(key, correct) {
+  if (!_exerciseAttemptCounts[key]) _exerciseAttemptCounts[key] = { total: 0, wrong: 0 };
+  _exerciseAttemptCounts[key].total++;
+  if (!correct) _exerciseAttemptCounts[key].wrong++;
+}
+function showDiffHint(exerciseKey) {
+  const hint = getDifficultyHint(exerciseKey);
+  const existing = document.querySelector('.diff-hint');
+  if (existing) existing.remove();
+  if (hint) {
+    const el = document.createElement('div');
+    el.className = 'diff-hint';
+    el.textContent = hint;
+    const exerciseArea = document.getElementById('exercise-area');
+    if (exerciseArea) exerciseArea.appendChild(el);
+  }
+}
+
+// ── AUTO GRADE at 20 exercises ────────────────────────────────────────────────
+const _origUpdateStats = updateStats;
+function updateStats() {
+  _origUpdateStats();
+  const total = sessionCorrect + sessionWrong;
+  if (total > 0 && total % 20 === 0) checkBadges();
+}
+
+// ── CHECK BADGES on every answer ─────────────────────────────────────────────
+const _origUpdateStreak = updateStreak;
+function updateStreak(correct, wrongData) {
+  _origUpdateStreak(correct, wrongData);
+  checkBadges();
+}
 
 // ─── OLLAMA STATUS & CONTROL ──────────────────────────────────────────────────
 let ollamaOnline = false;
