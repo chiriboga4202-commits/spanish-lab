@@ -694,6 +694,86 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
 .review-start-btn { flex: 1; padding: 11px; font-size: 13px; font-weight: 700; border-radius: 8px; border: none; background: linear-gradient(135deg, var(--accent), var(--purple)); color: #fff; cursor: pointer; transition: opacity .15s; }
 .review-start-btn:hover { opacity: .87; }
 .review-dismiss-btn { padding: 11px 18px; font-size: 13px; font-weight: 600; border-radius: 8px; border: 1px solid var(--border2); background: transparent; color: var(--text2); cursor: pointer; }
+
+/* ── MOBILE RESPONSIVE ── */
+
+/* Tablet — hide less-critical header items */
+@media (max-width: 680px) {
+  header {
+    height: auto;
+    min-height: 48px;
+    padding: 8px 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .logo-sub { display: none; }
+  .hd-stats { gap: 12px; }
+  .hd-stat-val { font-size: 13px; }
+  .hd-right { gap: 6px; }
+  .lvl-badge { font-size: 10px; padding: 3px 8px; }
+  .cfg-btn { font-size: 10px; padding: 3px 7px; }
+  /* Concept bar — smaller chips */
+  .concept-bar { padding: 6px 14px; }
+  .concept-chip { font-size: 11px; padding: 4px 10px; }
+  /* Mode tabs — scrollable strip */
+  .mode-tabs {
+    padding: 0 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .mode-tabs::-webkit-scrollbar { display: none; }
+  .mode-tab { padding: 8px 11px; font-size: 11.5px; }
+  /* Exercise area — tighter padding */
+  .exercise-area { padding: 14px 12px; gap: 12px; }
+  /* Pairs — single column on narrow phones */
+  .pair-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pair-card { padding: 16px 14px; min-height: 120px; }
+  .pair-es { font-size: 17px; }
+  /* Question card */
+  .question-card { padding: 12px 16px; }
+  .q-text { font-size: 15px; }
+  /* XP progress bar */
+  .xp-progress { max-width: none; }
+  /* Fill blank */
+  .fillblank-wrap, .translate-wrap, .builder-wrap, .examples-wrap,
+  .pairs-wrap, .story-wrap, .conj-wrap { max-width: 100%; padding-left: 0; padding-right: 0; }
+  /* Conjugate */
+  .conj-verb-name { font-size: 26px; }
+  .conj-inp { font-size: 16px; }
+  /* Result bar */
+  .result-bar { flex-wrap: wrap; gap: 10px; }
+  .next-btn { width: 100%; margin-top: 4px; }
+  /* Review modal */
+  .review-overlay { padding: 12px; }
+}
+
+/* Phone — single column pairs, hide hd-stat icons, collapse logo sub */
+@media (max-width: 480px) {
+  /* Header: hide Accuracy stat on phones (keep Streak + XP + Due) */
+  .hd-stats .hd-stat:nth-child(3) { display: none; }
+  .hd-stat-icon { font-size: 14px; }
+  /* Pairs grid → 1 column */
+  .pair-grid { grid-template-columns: 1fr; }
+  .pair-card { min-height: 80px; padding: 14px 12px; }
+  /* Story options → 1 column */
+  .story-q-opts { grid-template-columns: 1fr; }
+  /* Builder word bank wraps nicer */
+  .builder-bank { gap: 6px; }
+  /* Fill blank — 1-col option grid */
+  .options-grid { grid-template-columns: 1fr; }
+  .opt-btn { padding: 13px 14px; font-size: 14px; }
+  /* Translate — full-width submit */
+  .translate-submit { width: 100%; padding: 14px; font-size: 15px; }
+  /* Conjugate */
+  .conj-input-row { flex-direction: column; gap: 8px; }
+  .conj-check-btn { width: 100%; padding: 12px; font-size: 15px; }
+  .conj-verb-name { font-size: 22px; }
+  .conj-accents { gap: 5px; }
+  .accent-btn { padding: 7px 10px; font-size: 16px; }
+  /* Empty state */
+  .empty-icon { font-size: 38px; }
+  .empty-title { font-size: 17px; }
+}
 </style>
 </head>
 <body>
@@ -4453,58 +4533,4 @@ Respond with ONLY valid JSON:
       <div class="fb-grade ${gradeClass}">${result.gradeLabel || 'Graded'}</div>
       <div>${formatExplanation(result.feedback || '')}</div>
       <br>
-      <div><b style="color:var(--accent)">The concept:</b> ${formatExplanation(result.concept || '')}</div>
-      <br>
-      <div><b style="color:var(--green)">Another example:</b> ${formatExplanation(result.example || '')}</div>`;
-
-    const bar = document.getElementById('result-bar');
-    bar.style.display = 'flex';
-    bar.classList.add('show', result.grade === 'good' ? 'correct-bar' : 'wrong-bar');
-    document.getElementById('result-icon').textContent = result.grade === 'good' ? '✅' : result.grade === 'ok' ? '〜' : '❌';
-    document.getElementById('result-main').textContent = result.gradeLabel || 'Checked!';
-
-    if (result.grade === 'good' || result.grade === 'ok') {
-      const pts = result.grade === 'good' ? 18 : 9;
-      addXP(pts);
-      updateStreak(true);
-      popXP(`+${pts} XP`, null);
-      recordMastery(true);
-    } else {
-      const wrongData = {
-        conceptName: currentConcept?.name,
-        question: data?.en || 'Translation',
-        wrong: studentAnswer,
-        correct: data?.es || '?'
-      };
-      updateStreak(false, wrongData);
-      recordMastery(false);
-    }
-    btn.textContent = 'Done';
-  } catch (err) {
-    feedback.innerHTML = `<div class="fb-grade poor">Grading failed</div><div>Ollama error: ${err.message}. The correct answer was: <b>${data?.es}</b></div>`;
-    btn.textContent = 'Try again';
-    btn.disabled = false;
-    exerciseAnswered = false;
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// ── MINI STORY MODE ────────────────────────────────────────────────────────────
-// ═══════════════════════════════════════════════════════════════════════════════
-
-async function loadStory() {
-  storyQuestionsAnswered = 0;
-  clearErrorBox();
-  showLoading('Writing a story...', 'Mixing realistic and absurd for neuroplasticity');
-  try {
-    const c = currentConcept;
-    const prompt = `You are a creative Spanish teacher writing a mini story for students.
-Concept to feature: ${c.name}
-Context: ${c.context}
-
-Write a 4-sentence micro-story in Spanish that naturally demonstrates "${c.name}" multiple times.
-Mix REALISTIC and ABSURD elements — e.g., a plumber who fights dragons, a chef in space, a grandmother who codes.
-Make it memorable and slightly funny. The absurdity helps it stick in memory.
-Each sentence should feel natural and use vocabulary a B1 student would know.
-
-Then write 3 comprehension questions with 4 options each. The ques
+      <div><b style="color:var(--ac
