@@ -5728,6 +5728,146 @@ function updateStreak(correct, wrongData) {
   checkBadges();
 }
 
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── BATCH C: LEARNING SCIENCE ──────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ── #4 MASTERY TIMESTAMPS + ATTEMPT HISTORY ──────────────────────────────────
+// recordMastery already writes lastPracticed; we extend it to store attempt history
+function appendMasteryHistory(key, correct, mode) {
+  if (!conceptMastery[key]) conceptMastery[key] = { correct: 0, total: 0 };
+  if (!conceptMastery[key].history) conceptMastery[key].history = [];
+  conceptMastery[key].history.push({
+    date: new Date().toISOString().slice(0, 10),
+    correct,
+    mode: mode || currentMode
+  });
+  // Cap history at 200 entries per concept
+  if (conceptMastery[key].history.length > 200) conceptMastery[key].history = conceptMastery[key].history.slice(-200);
+}
+
+// ── #5 BEFOREUNLOAD AUTO-EXPORT ────────────────────────────────────────────────
+window.addEventListener('beforeunload', () => {
+  try {
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      xp, level: Math.floor(xp / XP_PER_LEVEL) + 1,
+      bestStreak, sessionCorrect, sessionWrong,
+      mastery: conceptMastery,
+      dailyLog
+    };
+    localStorage.setItem('sl_last_export', JSON.stringify(payload));
+  } catch(e) {}
+});
+
+// ── #6 EXERCISE VALIDATOR ─────────────────────────────────────────────────────
+function validateExercise(data, mode) {
+  if (!data) return false;
+  if (mode === 'pairs' || mode === 'fillblank') {
+    if (!data.cards && !data.options) return false;
+    if (data.options && (typeof data.correct !== 'number')) return false;
+    if (data.options && (!data.options[data.correct] || !data.en)) return false;
+  }
+  if (mode === 'builder') {
+    if (!data.words || !Array.isArray(data.words) || data.words.length < 2) return false;
+    if (!data.en) return false;
+  }
+  return true;
+}
+
+// ── #7 EXERCISE CACHE ─────────────────────────────────────────────────────────
+const _exerciseCache = JSON.parse(localStorage.getItem('sl_exercise_cache') || '{}');
+const CACHE_MAX = 50;
+function cacheExercise(conceptKey, mode, data) {
+  if (!validateExercise(data, mode)) return;
+  if (!_exerciseCache[conceptKey]) _exerciseCache[conceptKey] = {};
+  if (!_exerciseCache[conceptKey][mode]) _exerciseCache[conceptKey][mode] = [];
+  const arr = _exerciseCache[conceptKey][mode];
+  // Avoid duplicates by checking stringified en/question
+  const sig = data.en || data.question || JSON.stringify(data).slice(0, 80);
+  if (!arr.some(e => (e.en || e.question || '').slice(0, 80) === sig)) {
+    arr.push(data);
+    if (arr.length > CACHE_MAX) arr.shift();
+    localStorage.setItem('sl_exercise_cache', JSON.stringify(_exerciseCache));
+  }
+}
+function getCachedExercise(conceptKey, mode) {
+  const arr = _exerciseCache[conceptKey]?.[mode];
+  if (!arr || !arr.length) return null;
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// ── #10 SESSION EXERCISE COOLDOWN ─────────────────────────────────────────────
+const _sessionSeenExercises = new Set();
+function markExerciseSeen(sig) { _sessionSeenExercises.add(sig); }
+function wasExerciseSeen(sig) { return _sessionSeenExercises.has(sig); }
+function exerciseSig(data) {
+  return (data?.en || data?.question || data?.words?.join('') || '').slice(0, 60);
+}
+
+// ── #13 MINIMUM ATTEMPTS SCALING ──────────────────────────────────────────────
+const CONCEPT_MIN_ATTEMPTS = {
+  'present':      8,
+  'ser-estar':   15,
+  'pret-imp':    20,
+  'subjunctive': 25,
+  'por-para':    15,
+  'gender':      10,
+  'reflexive':   12,
+  'gustar':      12,
+  'word-order':   8,
+  'obj-pronouns':15
+};
+function getMinAttempts(conceptKey) {
+  return CONCEPT_MIN_ATTEMPTS[conceptKey] || 10;
+}
+function isMasteryThresholdMet(conceptKey) {
+  const m = conceptMastery[conceptKey];
+  if (!m) return false;
+  const total = m.correct + (m.wrong || (m.total - m.correct));
+  const minAttempts = getMinAttempts(conceptKey);
+  if (total < minAttempts) return false;
+  return (m.correct / (m.total || 1)) >= 0.8;
+}
+
+// ── #15 WEEKLY REVIEW QUEUE ──────────────────────────────────────────────────
+function getWeeklyReviewQueue() {
+  const threeDaysAgo = new Date();
+  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+  const cutoff = threeDaysAgo.toISOString();
+  return Object.entries(conceptMastery)
+    .filter(([key, m]) => {
+      const practiced = m.lastPracticed || '';
+      return practiced < cutoff; // Not practiced in 3+ days
+    })
+    .map(([key]) => key);
+}
+
+function showWeeklyReviewBanner() {
+  const queue = getWeeklyReviewQueue();
+  if (!queue.length) return;
+  const names = queue.slice(0, 3).map(k => {
+    const c = (typeof CONCEPTS !== 'undefined' ? CONCEPTS : []).find(c => c.key === k);
+    return c ? c.name : k;
+  });
+  if (names.length > 0) {
+    setTimeout(() => {
+      showToast('📅 Review: ' + names.join(', ') + (queue.length > 3 ? ' +' + (queue.length-3) + ' more' : '') + ' not practiced in 3+ days', 5000);
+    }, 2000);
+  }
+}
+
+// ── PATCH recordMastery to also append history ─────────────────────────────
+const _origRecordMastery = recordMastery;
+function recordMastery(correct) {
+  _origRecordMastery(correct);
+  if (currentConcept) appendMasteryHistory(currentConcept.key, correct, currentMode);
+}
+
+// ── INIT BATCH C ─────────────────────────────────────────────────────────────
+showWeeklyReviewBanner();
+
 // ─── OLLAMA STATUS & CONTROL ──────────────────────────────────────────────────
 let ollamaOnline = false;
 let reconnectTimer = null;
