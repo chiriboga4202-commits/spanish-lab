@@ -5765,7 +5765,7 @@ function showSessionGrade() {
   else if (acc >= 0.85) { grade = 'B'; title = 'Great work! 💪'; }
   else if (acc >= 0.70) { grade = 'C'; title = 'Good effort! 📈'; }
   else if (acc >= 0.55) { grade = 'D'; title = 'Keep practicing! 🧠'; }
-  else { grade = 'F'; title = 'Don't give up! 💡'; }
+  else { grade = 'F'; title = "Don't give up! 💡"; }
 
   const el = id => document.getElementById(id);
   const letter = el('grade-letter');
@@ -5792,7 +5792,7 @@ function getDifficultyHint(exerciseKey) {
   if (!stats || stats.total < 5) return null;
   const wrongRate = stats.wrong / stats.total;
   if (wrongRate >= 0.7) return 'Only ' + Math.round((1 - wrongRate) * 100) + '% of attempts get this right — tricky one!';
-  if (wrongRate >= 0.5) return 'This one trips up about half of students. You've got this!';
+  if (wrongRate >= 0.5) return "This one trips up about half of students. You've got this!";
   return null;
 }
 function trackExerciseAttempt(key, correct) {
@@ -6313,8 +6313,7 @@ async function sendDialogue() {
   appendDialogueMsg(userText, 'user');
   addXP(5); // XP for participating
   // Build AI prompt
-  const history = _dialogueHistory.slice(-6).map(m => (m.role === 'ai' ? 'AI: ' : 'Student: ') + m.text).join('
-');
+  const history = _dialogueHistory.slice(-6).map(m => (m.role === 'ai' ? 'AI: ' : 'Student: ') + m.text).join('\n');
   const concept = currentConcept ? currentConcept.name : 'Spanish conversation';
   const prompt = `You are a ${_dialogueScenario.role} in a ${_dialogueScenario.setting}. Respond naturally in Spanish to continue the conversation. Keep responses to 1-2 sentences. Focus on the concept: ${concept}.
 
@@ -7300,4 +7299,16 @@ document.addEventListener('keydown', e => {
         // Find first unanswered question
         const allQBlocks = document.querySelectorAll('[id^="sq-"]:not([id*="-"])');
         for (const block of allQBlocks) {
-          const opts = block.querySelectorAll('.story-o
+          const opts = block.querySelectorAll('.story-opt');
+          if (opts.length && !opts[0].classList.contains('disabled')) {
+            opts[numMap[e.key]]?.click();
+            break;
+          }
+        }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
