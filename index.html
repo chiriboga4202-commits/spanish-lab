@@ -56,6 +56,36 @@ header {
 .hd-stat-val { font-size: 15px; font-weight: 800; color: var(--text); }
 .hd-stat-lbl { font-size: 10px; color: var(--text3); margin-top: 1px; }
 .hd-right { display: flex; align-items: center; gap: 8px; }
+/* ── DAILY GOAL STAT ── */
+.hd-stat.goal-hit .hd-stat-val { color: #4ade80; }
+.hd-stat#hd-today { cursor: pointer; }
+.hd-stat#hd-today:hover .hd-stat-val { color: var(--accent); }
+/* ── CALENDAR MODAL ── */
+.cal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:1000; align-items:center; justify-content:center; }
+.cal-overlay.open { display:flex; }
+.cal-box { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px 24px; width:min(420px,92vw); max-height:90vh; overflow-y:auto; }
+.cal-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.cal-title { font-size:15px; font-weight:700; }
+.cal-close { background:none; border:none; font-size:18px; cursor:pointer; color:var(--text3); line-height:1; padding:2px 6px; border-radius:5px; }
+.cal-close:hover { color:var(--text); background:var(--surface2); }
+.cal-goal-row { display:flex; align-items:center; gap:10px; margin-bottom:18px; font-size:13px; }
+.cal-goal-row label { color:var(--text2); white-space:nowrap; }
+.cal-goal-input { width:70px; padding:4px 8px; border-radius:6px; border:1px solid var(--border2); background:var(--surface2); color:var(--text); font-size:13px; font-weight:700; text-align:center; }
+.cal-goal-save { padding:4px 12px; border-radius:6px; border:none; background:var(--accent); color:#fff; font-size:12px; font-weight:700; cursor:pointer; }
+.cal-grid-label { font-size:11px; color:var(--text3); margin-bottom:8px; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-bottom:14px; }
+.cal-day { aspect-ratio:1; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; }
+.cal-day.empty { background:none; }
+.cal-day.no-data { background:var(--surface2); color:var(--text3); }
+.cal-day.practiced { background:rgba(91,141,238,.25); color:var(--accent); }
+.cal-day.goal-met { background:rgba(74,222,128,.25); color:#4ade80; }
+.cal-day.today { outline:2px solid var(--accent); outline-offset:1px; }
+.cal-legend { display:flex; gap:14px; font-size:11px; color:var(--text3); }
+.cal-legend-dot { width:10px; height:10px; border-radius:3px; display:inline-block; margin-right:4px; }
+.cal-streak-row { margin-top:16px; padding-top:14px; border-top:1px solid var(--border); display:flex; gap:24px; font-size:12px; }
+.cal-streak-item { display:flex; flex-direction:column; gap:2px; }
+.cal-streak-num { font-size:20px; font-weight:800; color:var(--accent); }
+.cal-streak-lbl { color:var(--text3); font-size:10px; }
 .lvl-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: linear-gradient(135deg, rgba(91,141,238,.2), rgba(168,85,247,.2)); border: 1px solid rgba(91,141,238,.3); color: var(--accent); }
 .cfg-btn { padding: 4px 9px; font-size: 11px; font-weight: 600; border-radius: 5px; border: 1px solid var(--border2); background: var(--surface2); color: var(--text3); cursor: pointer; transition: all .15s; }
 .cfg-btn:hover { border-color: var(--accent); color: var(--accent); }
@@ -824,6 +854,13 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
         <div class="hd-stat-lbl">Due</div>
       </div>
     </div>
+    <div class="hd-stat" id="hd-today" onclick="openCalendar()" title="Daily goal — click to view calendar">
+      <span class="hd-stat-icon">📅</span>
+      <div>
+        <div class="hd-stat-val" id="today-val">0</div>
+        <div class="hd-stat-lbl">Today</div>
+      </div>
+    </div>
   </div>
 
   <div class="hd-right">
@@ -979,6 +1016,46 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
     <div class="gateway-footer">
       <button class="gw-start-btn" onclick="closeGateway()">Got it — start practicing →</button>
       <div class="gw-skip" onclick="closeGateway()">Skip</div>
+    </div>
+  </div>
+</div>
+
+<!-- CALENDAR MODAL -->
+<div class="cal-overlay" id="cal-overlay" onclick="if(event.target===this)closeCalendar()">
+  <div class="cal-box">
+    <div class="cal-head">
+      <div class="cal-title">📅 Practice Calendar</div>
+      <button class="cal-close" onclick="closeCalendar()">✕</button>
+    </div>
+    <div class="cal-goal-row">
+      <label for="cal-goal-input">Daily XP goal:</label>
+      <input class="cal-goal-input" id="cal-goal-input" type="number" min="5" max="500" step="5">
+      <button class="cal-goal-save" onclick="saveGoal()">Save</button>
+    </div>
+    <div class="cal-grid-label">Last 28 days</div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-legend">
+      <span><span class="cal-legend-dot" style="background:var(--surface2)"></span>No practice</span>
+      <span><span class="cal-legend-dot" style="background:rgba(91,141,238,.4)"></span>Practiced</span>
+      <span><span class="cal-legend-dot" style="background:rgba(74,222,128,.4)"></span>Goal met ✓</span>
+    </div>
+    <div class="cal-streak-row">
+      <div class="cal-streak-item">
+        <span class="cal-streak-num" id="cal-cur-streak">0</span>
+        <span class="cal-streak-lbl">Day streak</span>
+      </div>
+      <div class="cal-streak-item">
+        <span class="cal-streak-num" id="cal-best-streak">0</span>
+        <span class="cal-streak-lbl">Best streak</span>
+      </div>
+      <div class="cal-streak-item">
+        <span class="cal-streak-num" id="cal-days-practiced">0</span>
+        <span class="cal-streak-lbl">Days practiced</span>
+      </div>
+      <div class="cal-streak-item">
+        <span class="cal-streak-num" id="cal-goals-hit">0</span>
+        <span class="cal-streak-lbl">Goals hit</span>
+      </div>
     </div>
   </div>
 </div>
@@ -3428,6 +3505,10 @@ let currentTheme = localStorage.getItem('sl_theme') || 'dark';
 let reviewDrillItems = [];        // subset of wrongAnswers being drilled
 let reviewDrillIndex = 0;
 let storyQuestionsAnswered = 0;   // how many story questions done this round
+// ── DAILY GOAL STATE ──────────────────────────────────────────────────────────
+let dailyGoal = parseInt(localStorage.getItem('sl_daily_goal') || '30');
+let dailyLog  = JSON.parse(localStorage.getItem('sl_daily_log')  || '{}');
+let _todayGoalCelebrated = false; // prevent repeat celebration per session
 // ── SM-2 SPACED REPETITION ────────────────────────────────────────────────────
 let sm2State = JSON.parse(localStorage.getItem('sl_sm2') || '{}');
 let lastCardId = null; // ID of the most recently shown static exercise
@@ -4717,4 +4798,688 @@ Mix REALISTIC and ABSURD elements — e.g., a plumber who fights dragons, a chef
 Make it memorable and slightly funny. The absurdity helps it stick in memory.
 Each sentence should feel natural and use vocabulary a B1 student would know.
 
-Then write 3 comprehension questions with 4 options each. The ques
+Then write 3 comprehension questions with 4 options each. The questions should test whether they understood the story AND the grammar concept.
+
+Respond with ONLY valid JSON:
+{
+  "title": "Story title (fun, 3-5 words)",
+  "sentences": [
+    {"es": "Spanish sentence 1", "en": "English translation"},
+    {"es": "Spanish sentence 2", "en": "English translation"},
+    {"es": "Spanish sentence 3", "en": "English translation"},
+    {"es": "Spanish sentence 4", "en": "English translation"}
+  ],
+  "questions": [
+    {
+      "q": "Question text",
+      "opts": ["option A", "option B", "option C", "option D"],
+      "correct": 0,
+      "why": "One sentence explaining why that answer is correct"
+    }
+  ]
+}
+
+Concept hint: use ${c.name} naturally in at least 3 of the 4 sentences.`;
+
+    const data = await ollamaJSONCreative(prompt, 1, 0.8);
+    renderStory(data);
+  } catch (err) {
+    showError(err.message, loadStory);
+  }
+}
+
+function renderStory(data) {
+  const area = document.getElementById('exercise-area');
+  const sentences = (data.sentences || []).map((s, i) => `
+    <div class="story-line" style="animation:fadeUp .3s ${i*0.08}s both">
+      <div class="story-sentence">${s.es}</div>
+      <div class="story-translation">${s.en}</div>
+    </div>`).join('');
+
+  const questions = (data.questions || []).map((q, qi) => {
+    const opts = q.opts.map((o, oi) =>
+      `<button class="story-opt" id="sq-${qi}-${oi}" onclick="pickStoryOpt(${qi}, ${oi}, ${q.correct}, '${escStr(q.why)}')">${o}</button>`
+    ).join('');
+    return `
+      <div class="story-q" id="sq-${qi}">
+        <div class="story-q-text">${qi + 1}. ${q.q}</div>
+        <div class="story-q-opts">${opts}</div>
+      </div>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="story-wrap">
+      <div class="story-card">
+        <div class="story-header">
+          <div class="story-label">📖 Mini Story · ${currentConcept.name}</div>
+          <div class="story-concept">${data.title || 'A short story'}</div>
+        </div>
+        <div class="story-body">${sentences}</div>
+      </div>
+      <div class="story-section-label">Comprehension Questions</div>
+      <div class="story-questions">${questions}</div>
+      <div class="story-score" id="story-score"></div>
+      <div class="result-bar" id="result-bar" style="display:none">
+        <div class="result-icon" id="result-icon">📖</div>
+        <div class="result-body"><div class="result-main" id="result-main">Story complete!</div></div>
+        <button class="next-btn" id="next-btn" onclick="loadStory()">New Story →</button>
+      </div>
+    </div>`;
+}
+
+function pickStoryOpt(qIdx, optIdx, correct, why) {
+  const qBlock = document.getElementById(`sq-${qIdx}`);
+  if (!qBlock) return;
+  const opts = qBlock.querySelectorAll('.story-opt');
+  if (opts[0].classList.contains('disabled')) return; // already answered
+
+  const isCorrect = optIdx === correct;
+  opts.forEach((o, i) => {
+    o.classList.add('disabled');
+    if (i === correct) o.classList.add('correct');
+    else if (i === optIdx && !isCorrect) o.classList.add('wrong');
+  });
+
+  if (isCorrect) {
+    updateStreak(true);
+    addXP(8);
+    popXP('+8 XP', null);
+    recordMastery(true);
+  } else {
+    updateStreak(false, {
+      conceptName: currentConcept?.name,
+      question: qBlock.querySelector('.story-q-text')?.textContent || 'Story Q',
+      wrong: opts[optIdx]?.textContent || '?',
+      correct: opts[correct]?.textContent || '?'
+    });
+    recordMastery(false);
+  }
+
+  // Tooltip with explanation
+  const tip = document.createElement('div');
+  tip.style.cssText = 'padding:8px 18px 12px;font-size:12.5px;color:var(--text2);line-height:1.6;';
+  tip.innerHTML = (isCorrect ? '✅ ' : '❌ ') + (why || '');
+  qBlock.appendChild(tip);
+
+  storyQuestionsAnswered++;
+  const totalQs = document.querySelectorAll('[id^="sq-"]').length;
+  if (storyQuestionsAnswered >= totalQs) {
+    const scoreBox = document.getElementById('story-score');
+    if (scoreBox) {
+      scoreBox.textContent = `Story complete! Read it again — notice how ${currentConcept?.name} appears in each sentence.`;
+      scoreBox.classList.add('show');
+    }
+    const bar = document.getElementById('result-bar');
+    if (bar) { bar.style.display = 'flex'; bar.classList.add('show', 'correct-bar'); }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── SPACED REPETITION REVIEW ──────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function openReviewModal() {
+  if (wrongAnswers.length === 0) {
+    showToast('No mistakes to review yet — keep practicing!');
+    return;
+  }
+  const list = document.getElementById('review-list');
+  const sub = document.getElementById('review-modal-sub');
+  sub.textContent = `${wrongAnswers.length} question${wrongAnswers.length !== 1 ? 's' : ''} to review`;
+  list.innerHTML = wrongAnswers.map((w, i) => `
+    <div class="review-item">
+      <div class="review-item-concept">${w.conceptName}</div>
+      <div class="review-item-q">${w.question}</div>
+      <div class="review-item-wrong">✗ You chose: ${w.wrong}</div>
+      <div class="review-item-right">✓ Correct: ${w.correct}</div>
+    </div>`).join('');
+  document.getElementById('review-overlay').classList.add('open');
+}
+
+function closeReviewModal() {
+  document.getElementById('review-overlay').classList.remove('open');
+}
+
+function startReviewDrill() {
+  closeReviewModal();
+  if (wrongAnswers.length === 0) return;
+  // Find most-missed concept
+  const counts = {};
+  wrongAnswers.forEach(w => { counts[w.conceptName] = (counts[w.conceptName] || 0) + 1; });
+  const conceptName = Object.keys(counts).sort((a,b) => counts[b]-counts[a])[0];
+  const concept = CONCEPTS.find(c => c.name === conceptName) || CONCEPTS[0];
+  currentConcept = concept;
+  mixedMode = false;
+  // Highlight correct chip
+  document.querySelectorAll('.concept-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.key === concept.key);
+  });
+  document.getElementById('mixed-chip')?.classList.remove('active');
+  // Vary exercise mode for review (not always fill blank)
+  const reviewModes = ['pairs', 'fillblank'];
+  const mode = reviewModes[Math.floor(Math.random() * reviewModes.length)];
+  document.querySelectorAll('.mode-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.mode === mode);
+  });
+  currentMode = mode;
+  nextExercise = null;
+  wrongAnswers = []; // clear after starting drill
+  updateReviewBtn();
+  showToast(`🔄 Drilling "${conceptName}" (${counts[conceptName]} mistake${counts[conceptName]>1?'s':''}) — let's fix it!`, 3200);
+  startExercise();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── THEME ──────────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  applyTheme();
+}
+
+function applyThemeChoice(val) {
+  currentTheme = val;
+  applyTheme();
+}
+
+function applyTheme() {
+  const isLight = currentTheme === 'light';
+  document.body.classList.toggle('light-theme', isLight);
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
+  const sel = document.getElementById('m-theme');
+  if (sel) sel.value = currentTheme;
+  localStorage.setItem('sl_theme', currentTheme);
+}
+
+// ─── SCORING & STATS ──────────────────────────────────────────────────────────
+const XP_PER_LEVEL = 100;
+
+function addXP(amount) {
+  xp += amount;
+  localStorage.setItem('sl_xp', xp);
+  logDailyXP(amount);
+  updateStats();
+}
+
+// ── DAILY GOAL ────────────────────────────────────────────────────────────────
+function todayKey() {
+  return new Date().toISOString().slice(0, 10); // 'YYYY-MM-DD'
+}
+
+function logDailyXP(amount) {
+  const k = todayKey();
+  if (!dailyLog[k]) dailyLog[k] = 0;
+  const prev = dailyLog[k];
+  dailyLog[k] += amount;
+  localStorage.setItem('sl_daily_log', JSON.stringify(dailyLog));
+  // Celebrate hitting goal (only once per session)
+  if (!_todayGoalCelebrated && prev < dailyGoal && dailyLog[k] >= dailyGoal) {
+    _todayGoalCelebrated = true;
+    setTimeout(() => showToast(`🎉 Daily goal hit! ${dailyGoal} XP today — fantastic!`, 4000), 300);
+  }
+}
+
+function updateDailyDisplay() {
+  const el = document.getElementById('today-val');
+  const stat = document.getElementById('hd-today');
+  if (!el) return;
+  const todayXP = dailyLog[todayKey()] || 0;
+  el.textContent = `${todayXP}/${dailyGoal}`;
+  stat && stat.classList.toggle('goal-hit', todayXP >= dailyGoal);
+}
+
+function openCalendar() {
+  renderCalendar();
+  const inp = document.getElementById('cal-goal-input');
+  if (inp) inp.value = dailyGoal;
+  document.getElementById('cal-overlay').classList.add('open');
+}
+
+function closeCalendar() {
+  document.getElementById('cal-overlay').classList.remove('open');
+}
+
+function saveGoal() {
+  const v = parseInt(document.getElementById('cal-goal-input').value);
+  if (!v || v < 5) return;
+  dailyGoal = v;
+  localStorage.setItem('sl_daily_goal', dailyGoal);
+  _todayGoalCelebrated = false; // re-arm celebration with new goal
+  updateDailyDisplay();
+  renderCalendar();
+  showToast(`🎯 Daily goal set to ${dailyGoal} XP`, 2000);
+}
+
+function renderCalendar() {
+  const grid = document.getElementById('cal-grid');
+  if (!grid) return;
+  const today = new Date();
+  const todayStr = todayKey();
+
+  // Build array of last 28 days (oldest first)
+  const days = [];
+  for (let i = 27; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    days.push(d.toISOString().slice(0, 10));
+  }
+
+  // Day-of-week offset so the grid starts on Sunday
+  const firstDow = new Date(days[0]).getDay(); // 0=Sun
+  const cells = [];
+  for (let i = 0; i < firstDow; i++) cells.push(null); // empty spacers
+  days.forEach(d => cells.push(d));
+
+  grid.innerHTML = cells.map(d => {
+    if (!d) return `<div class="cal-day empty"></div>`;
+    const xpThat = dailyLog[d] || 0;
+    let cls = 'no-data';
+    if (xpThat > 0) cls = xpThat >= dailyGoal ? 'goal-met' : 'practiced';
+    const todayCls = d === todayStr ? ' today' : '';
+    const dayNum = parseInt(d.slice(8));
+    return `<div class="cal-day ${cls}${todayCls}" title="${d}: ${xpThat} XP">${dayNum}</div>`;
+  }).join('');
+
+  // Summary stats
+  const daysPracticed = days.filter(d => (dailyLog[d] || 0) > 0).length;
+  const goalsHit = days.filter(d => (dailyLog[d] || 0) >= dailyGoal).length;
+
+  // Current streak (consecutive days ending today with any XP)
+  let curStreak = 0;
+  for (let i = 0; i < days.length; i++) {
+    const d = days[days.length - 1 - i];
+    if ((dailyLog[d] || 0) > 0) curStreak++;
+    else break;
+  }
+
+  const el = id => document.getElementById(id);
+  if (el('cal-cur-streak'))   el('cal-cur-streak').textContent   = curStreak;
+  if (el('cal-best-streak'))  el('cal-best-streak').textContent  = bestStreak;
+  if (el('cal-days-practiced')) el('cal-days-practiced').textContent = daysPracticed;
+  if (el('cal-goals-hit'))    el('cal-goals-hit').textContent    = goalsHit;
+}
+
+function updateStreak(correct, wrongData) {
+  if (correct) {
+    streak++;
+    if (streak > bestStreak) {
+      bestStreak = streak;
+      localStorage.setItem('sl_best_streak', bestStreak);
+    }
+    sessionCorrect++;
+    if (streak === 5 || streak === 10 || streak === 20) showCombo(`🔥 ${streak} in a row!`);
+  } else {
+    streak = 0;
+    sessionWrong++;
+    if (wrongData) {
+      wrongAnswers.push(wrongData);
+      updateReviewBtn();
+      if (wrongAnswers.length === 10) {
+        setTimeout(() => {
+          showToast('📊 10 mistakes logged — review round available!', 3500);
+          openReviewModal();
+        }, 1200);
+      }
+    }
+  }
+  updateStats();
+}
+
+function updateReviewBtn() {
+  const btn = document.getElementById('review-btn');
+  const cnt = document.getElementById('review-count');
+  if (!btn || !cnt) return;
+  cnt.textContent = wrongAnswers.length;
+  if (wrongAnswers.length > 0) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+}
+
+function recordMastery(correct) {
+  if (!currentConcept) return;
+  const key = currentConcept.key;
+  const prevAcc = conceptMastery[key]?.total > 0
+    ? Math.round(conceptMastery[key].correct / conceptMastery[key].total * 100) : 0;
+  if (!conceptMastery[key]) conceptMastery[key] = { correct: 0, total: 0 };
+  conceptMastery[key].total++;
+  if (correct) conceptMastery[key].correct++;
+  // Timestamp + SM-2
+  conceptMastery[key].lastPracticed = new Date().toISOString();
+  sm2Update(lastCardId, correct);
+  const newAcc = Math.round(conceptMastery[key].correct / conceptMastery[key].total * 100);
+  localStorage.setItem('sl_mastery', JSON.stringify(conceptMastery));
+  // Milestone: celebrate crossing 80% for first time
+  if (correct && prevAcc < 80 && newAcc >= 80 && conceptMastery[key].total >= 5) {
+    setTimeout(() => {
+      showCombo(`⭐ ${currentConcept.name} mastered!`);
+      showToast(`🎉 You've hit 80%+ on ${currentConcept.name}! Keep it up!`, 3500);
+    }, 600);
+  }
+  checkDifficultyAdvance(key, correct);
+  renderConceptBar();
+  // Re-mark active chip
+  if (mixedMode) {
+    document.getElementById('mixed-chip')?.classList.add('active');
+  } else {
+    const chip = document.querySelector(`.concept-chip[data-key="${key}"]`);
+    if (chip) chip.classList.add('active');
+  }
+}
+
+function updateStats() {
+  document.getElementById('streak-val').textContent = streak;
+  document.getElementById('xp-val').textContent = xp;
+  document.getElementById('s-correct').textContent = sessionCorrect;
+  document.getElementById('s-wrong').textContent = sessionWrong;
+
+  const total = sessionCorrect + sessionWrong;
+  // Update total exercises count if element exists
+  const totalEl = document.getElementById('s-total');
+  if (totalEl) totalEl.textContent = total;
+
+  if (total > 0) {
+    const acc = Math.round(sessionCorrect / total * 100);
+    document.getElementById('acc-val').textContent = acc + '%';
+    document.getElementById('s-acc').textContent = acc + '%';
+    document.getElementById('s-acc-wrap').style.display = 'flex';
+  }
+
+  const level = Math.floor(xp / XP_PER_LEVEL) + 1;
+  const xpInLevel = xp % XP_PER_LEVEL;
+  const pct = (xpInLevel / XP_PER_LEVEL) * 100;
+  document.getElementById('xp-bar').style.width = pct + '%';
+  document.getElementById('xp-label').textContent = `${xpInLevel} / ${XP_PER_LEVEL} XP to Level ${level + 1}`;
+  document.getElementById('lvl-badge').textContent = `Level ${level}`;
+  // SM-2 due count
+  const dueCount = getTotalDueCount();
+  const dueStat = document.getElementById('due-stat');
+  const dueVal = document.getElementById('due-val');
+  if (dueStat && dueVal) {
+    dueVal.textContent = dueCount;
+    dueStat.style.display = dueCount > 0 ? '' : 'none';
+  }
+  updateDailyDisplay();
+}
+
+// ─── VISUAL EFFECTS ────────────────────────────────────────────────────────────
+function popXP(text, evtOrNull) {
+  const el = document.createElement('div');
+  el.className = 'xp-pop';
+  el.textContent = text;
+  const x = evtOrNull?.clientX || window.innerWidth / 2;
+  const y = evtOrNull?.clientY || window.innerHeight / 2;
+  el.style.left = (x - 20) + 'px';
+  el.style.top = (y - 10) + 'px';
+  el.style.color = text.startsWith('+') ? 'var(--amber)' : 'var(--green)';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1200);
+}
+
+let comboBannerTimer = null;
+function showCombo(text) {
+  const banner = document.getElementById('combo-banner');
+  banner.textContent = text;
+  banner.classList.add('show');
+  clearTimeout(comboBannerTimer);
+  comboBannerTimer = setTimeout(() => banner.classList.remove('show'), 2000);
+}
+
+function showToast(msg, duration = 2400) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ─── SETTINGS ─────────────────────────────────────────────────────────────────
+function openSettings() {
+  document.getElementById('m-ollama').value = ollamaUrl;
+  document.getElementById('m-name').value = localStorage.getItem('sl_name') || '';
+  if (document.getElementById('m-theme')) document.getElementById('m-theme').value = currentTheme;
+  document.getElementById('settings-modal').classList.add('open');
+  // Populate model list from live Ollama
+  refreshModelList();
+}
+
+function closeSettings() {
+  document.getElementById('settings-modal').classList.remove('open');
+}
+
+function saveSettingsModal() {
+  ollamaUrl = document.getElementById('m-ollama').value.trim() || 'http://localhost:11434';
+  const modelSel = document.getElementById('m-model');
+  if (modelSel?.value) selectedModel = modelSel.value;
+  const name = document.getElementById('m-name').value.trim();
+  localStorage.setItem('sl_ollama', ollamaUrl);
+  localStorage.setItem('sl_model', selectedModel);
+  if (name) localStorage.setItem('sl_name', name);
+  document.getElementById('ollama-inp').value = ollamaUrl;
+  // Clear pre-generated exercise since model changed
+  nextExercise = null;
+  saveAndRefreshName();
+  closeSettings();
+  checkOllama();
+  showToast('Settings saved ✓');
+}
+
+function saveSettings() {
+  localStorage.setItem('sl_ollama', ollamaUrl);
+}
+
+function setOllamaUrl(url) {
+  ollamaUrl = url.trim() || 'http://localhost:11434';
+  saveSettings();
+}
+
+// ─── OLLAMA STATUS & CONTROL ──────────────────────────────────────────────────
+let ollamaOnline = false;
+let reconnectTimer = null;
+
+async function checkOllama(silent = false) {
+  const dot = document.getElementById('cfg-dot');
+  const status = document.getElementById('cfg-status');
+  const startBtn = document.getElementById('start-ollama-btn');
+  if (!silent) { dot.className = 'cfg-dot off'; status.textContent = 'Checking...'; }
+  try {
+    const res = await fetch(`${ollamaUrl}/api/tags`, { signal: AbortSignal.timeout(4000) });
+    if (!res.ok) throw new Error('not ok');
+    const data = await res.json();
+    const models = data.models || [];
+    const count = models.length;
+    dot.className = 'cfg-dot on';
+    status.textContent = `Online · ${count} model${count !== 1 ? 's' : ''}`;
+    if (startBtn) startBtn.style.display = 'none';
+    const offBanner = document.getElementById('offline-banner');
+    if (offBanner) offBanner.style.display = 'none';
+
+    // First time coming online after offline: notify
+    if (!ollamaOnline && silent) showToast('Ollama reconnected ✓', 2000);
+    ollamaOnline = true;
+    clearInterval(reconnectTimer);
+    reconnectTimer = null;
+
+    // Auto-select model if current one isn't installed
+    if (count > 0 && !models.find(m => m.name.startsWith(selectedModel.split(':')[0]))) {
+      selectedModel = models[0].name;
+      localStorage.setItem('sl_model', selectedModel);
+    }
+    document.getElementById('m-model').value = selectedModel;
+  } catch {
+    dot.className = 'cfg-dot off';
+    status.textContent = 'Offline';
+    if (startBtn) startBtn.style.display = '';
+    const offBanner = document.getElementById('offline-banner');
+    if (offBanner) offBanner.style.display = 'flex';
+    ollamaOnline = false;
+    // Start polling for reconnect
+    if (!reconnectTimer) {
+      reconnectTimer = setInterval(() => checkOllama(true), 15000);
+    }
+  }
+}
+
+async function startOllama() {
+  const btn = document.getElementById('start-ollama-btn');
+  if (btn) { btn.textContent = '⏳'; btn.disabled = true; }
+  try {
+    const res = await fetch('http://localhost:8765/start-ollama', { method: 'POST' });
+    const data = await res.json();
+    showToast(data.message || 'Starting Ollama...', 3000);
+    // Wait 4s then re-check
+    setTimeout(() => checkOllama(), 4000);
+  } catch {
+    showToast('⚠️ Session server offline — start it manually', 3500);
+  } finally {
+    if (btn) { btn.textContent = '▶ Start'; btn.disabled = false; }
+  }
+}
+
+async function refreshModelList() {
+  const sel = document.getElementById('m-model');
+  const info = document.getElementById('model-info-line');
+  if (!sel) return;
+  sel.innerHTML = '<option>Loading...</option>';
+  try {
+    const res = await fetch(`${ollamaUrl}/api/tags`, { signal: AbortSignal.timeout(5000) });
+    const data = await res.json();
+    const models = data.models || [];
+    if (models.length === 0) {
+      sel.innerHTML = '<option value="">No models installed</option>';
+      if (info) info.textContent = 'Download a model below to get started';
+      return;
+    }
+    sel.innerHTML = models.map(m => {
+      const sizeLabel = m.size ? ` (${(m.size/1e9).toFixed(1)}GB)` : '';
+      return `<option value="${m.name}" ${m.name === selectedModel ? 'selected' : ''}>${m.name}${sizeLabel}</option>`;
+    }).join('');
+    if (info) info.textContent = `${models.length} model${models.length !== 1 ? 's' : ''} installed`;
+  } catch {
+    sel.innerHTML = `<option value="${selectedModel}">${selectedModel} (Ollama offline)</option>`;
+    if (info) info.textContent = 'Ollama offline — showing last used model';
+  }
+}
+
+async function pullModel() {
+  const nameEl = document.getElementById('m-pull-name');
+  const name = nameEl?.value?.trim();
+  if (!name) { showToast('Enter a model name first'); return; }
+
+  const progress = document.getElementById('pull-progress');
+  const bar = document.getElementById('pull-bar');
+  const statusEl = document.getElementById('pull-status');
+  if (progress) progress.style.display = 'block';
+  if (statusEl) statusEl.textContent = `Starting download of ${name}...`;
+
+  try {
+    const res = await fetch('http://localhost:8765/pull-model', {
+      method: 'POST',
+      body: new URLSearchParams({ model_name: name })
+    });
+    if (!res.ok) throw new Error('Server error');
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let lastPct = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      for (const line of decoder.decode(value).split('\n').filter(Boolean)) {
+        try {
+          const j = JSON.parse(line);
+          if (j.total && j.completed) {
+            const pct = Math.round(j.completed / j.total * 100);
+            if (bar) bar.style.width = pct + '%';
+            if (statusEl) statusEl.textContent = `${j.status || 'Downloading'} — ${pct}%`;
+            lastPct = pct;
+          } else if (j.status) {
+            if (statusEl) statusEl.textContent = j.status;
+            if (j.status.includes('success') || j.status.includes('done') || j.status === 'success') {
+              if (bar) bar.style.width = '100%';
+              if (statusEl) statusEl.textContent = `✓ ${name} downloaded!`;
+              setTimeout(() => { if (progress) progress.style.display = 'none'; }, 2500);
+              nameEl.value = '';
+              selectedModel = name;
+              localStorage.setItem('sl_model', name);
+              await refreshModelList();
+            }
+          }
+        } catch {}
+      }
+    }
+  } catch (err) {
+    if (statusEl) statusEl.textContent = `Error: ${err.message}`;
+  }
+}
+
+// ─── PROGRESS EXPORT ──────────────────────────────────────────────────────────
+function exportProgress() {
+  const payload = {
+    name: localStorage.getItem('sl_name') || '',
+    xp,
+    level: Math.floor(xp / XP_PER_LEVEL) + 1,
+    bestStreak,
+    sessionCorrect,
+    sessionWrong,
+    mastery: conceptMastery
+  };
+  const text = JSON.stringify(payload, null, 2);
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('📋 Progress copied to clipboard', 2800))
+    .catch(() => {
+      // Fallback: open a data URI so they can copy manually
+      const w = window.open();
+      w.document.write(`<pre style="font:13px monospace;padding:16px">${text.replace(/</g,'&lt;')}</pre>`);
+      showToast('⚠ Clipboard blocked — data opened in new tab', 3500);
+    });
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function escStr(s) {
+  return (s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, ' ');
+}
+
+// ─── KEYBOARD SHORTCUTS ───────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (document.getElementById('settings-modal').classList.contains('open')) return;
+  if (document.getElementById('review-overlay').classList.contains('open')) return;
+  // Translate mode: Ctrl+Enter submits
+  if (currentMode === 'translate' && e.key === 'Enter' && e.ctrlKey) {
+    e.preventDefault();
+    if (!exerciseAnswered) document.getElementById('translate-go')?.click();
+    return;
+  }
+  // Don't intercept keys when translate input is focused
+  if (currentMode === 'translate' && document.activeElement?.id === 'translate-input') return;
+  if (exerciseAnswered) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      document.getElementById('next-btn')?.click();
+    }
+  } else {
+    if (currentMode === 'pairs') {
+      if (e.key === '1' || e.key === 'a' || e.key === 'ArrowLeft') document.getElementById('card-0')?.click();
+      if (e.key === '2' || e.key === 'b' || e.key === 'ArrowRight') document.getElementById('card-1')?.click();
+    }
+    if (currentMode === 'fillblank') {
+      const map = { '1': 0, '2': 1, '3': 2, '4': 3 };
+      if (map[e.key] !== undefined) document.getElementById(`opt-${map[e.key]}`)?.click();
+    }
+    if (currentMode === 'builder' && e.key === 'Enter') {
+      document.getElementById('check-btn')?.click();
+    }
+    if (currentMode === 'story') {
+      // Number keys 1-4 answer the first unanswered story question
+      const numMap = { '1': 0, '2': 1, '3': 2, '4': 3 };
+      if (numMap[e.key] !== undefined) {
+        // Find first unanswered question
+        const allQBlocks = document.querySelectorAll('[id^="sq-"]:not([id*="-"])');
+        for (const block of allQBlocks) {
+          const opts = block.querySelectorAll('.story-o
