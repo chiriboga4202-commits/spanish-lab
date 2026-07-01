@@ -4060,7 +4060,11 @@ function switchMode(mode, el) {
   mixedMode = false; // switching modes manually disables mixed
   document.getElementById('mixed-chip')?.classList.remove('active');
   nextExercise = null;
-  if (currentConcept || mode === 'conjugate') startExercise();
+  // 2026-07-01: this used to only exempt 'conjugate' from needing a concept,
+  // so vocab/spottherror/readcomp (also concept-free per startExercise()'s own
+  // noConceptModes list) silently did nothing when no concept was selected.
+  // startExercise() already has the full, correct check — just always call it.
+  startExercise();
 }
 
 function startExercise() {
@@ -7571,6 +7575,18 @@ document.addEventListener('keydown', e => {
     }
   }
 });
+
+// ── BOOTSTRAP (2026-07-01) ────────────────────────────────────────────────────
+// init() was defined but never actually called anywhere in the file — nothing
+// wired it to page load (no <body onload>, no DOMContentLoaded listener). That
+// meant renderConceptBar() never ran, so the concept bar was permanently empty:
+// no concept could ever be selected, which is why every mode requiring a
+// concept (everything except Conjugate/Vocab/Errors/Read) looked broken, and
+// even Vocab/Errors/Read were blocked by the switchMode() bug fixed above.
+// Placed at the very end of the script (not right after its own definition)
+// so every const/let it depends on — CONCEPTS, GATEWAYS, CONJUGATIONS,
+// XP_PER_LEVEL, etc. — has already been declared by the time it runs.
+init();
 </script>
 </body>
 </html>
