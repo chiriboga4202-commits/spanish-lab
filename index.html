@@ -664,46 +664,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
 .review-start-btn { flex: 1; padding: 11px; font-size: 13px; font-weight: 700; border-radius: 8px; border: none; background: linear-gradient(135deg, var(--accent), var(--purple)); color: #fff; cursor: pointer; transition: opacity .15s; }
 .review-start-btn:hover { opacity: .87; }
 .review-dismiss-btn { padding: 11px 18px; font-size: 13px; font-weight: 600; border-radius: 8px; border: 1px solid var(--border2); background: transparent; color: var(--text2); cursor: pointer; }
-
-/* ── Mobile responsive ─────────────────────────────── */
-@media (max-width: 768px) {
-  .app-wrap { padding: 8px; }
-  .header { padding: 10px 12px; flex-wrap: wrap; gap: 8px; }
-  .header h1 { font-size: 16px; }
-  .hdr-right { gap: 6px; }
-  .concept-bar { gap: 6px; padding: 8px 10px; }
-  .concept-chip { font-size: 11px; padding: 5px 10px; }
-  .exercise-card { padding: 18px 14px; }
-  .pair-grid { grid-template-columns: 1fr; gap: 10px; }
-  .pair-card { padding: 16px 14px; font-size: 14px; }
-  .fill-opts { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .fill-opt { padding: 12px 10px; font-size: 14px; }
-  .builder-tiles { gap: 8px; }
-  .b-tile { padding: 10px 14px; font-size: 14px; min-width: 44px; min-height: 44px; }
-  .mode-tabs { gap: 4px; overflow-x: auto; }
-  .mode-tab { font-size: 11px; padding: 6px 10px; white-space: nowrap; }
-  .stats-bar { flex-wrap: wrap; gap: 8px; padding: 8px 12px; }
-  .stat-item { font-size: 12px; }
-  .result-bar { padding: 14px; font-size: 15px; }
-  .explanation-box { font-size: 13px; padding: 12px; }
-  .story-qs { grid-template-columns: 1fr; }
-  .translate-input { font-size: 15px; }
-  .modal-box { width: 95vw; max-width: 95vw; padding: 20px 16px; }
-  .cfg-panel { width: 92vw; right: 4vw; }
-}
-@media (max-width: 480px) {
-  .fill-opts { grid-template-columns: 1fr; }
-  .header h1 { font-size: 14px; }
-  .q-round { font-size: 12px; }
-}
 </style>
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#4a9eff">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Spanish Lab">
-  <link rel="apple-touch-icon" href="/icon-192.png">
 </head>
 <body>
 
@@ -737,6 +698,13 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
       <div>
         <div class="hd-stat-val" id="acc-val">—</div>
         <div class="hd-stat-lbl">Accuracy</div>
+      </div>
+    </div>
+    <div class="hd-stat" id="due-stat" style="display:none" title="Cards due for spaced repetition review today">
+      <span class="hd-stat-icon">📚</span>
+      <div>
+        <div class="hd-stat-val" id="due-val" style="color:var(--amber)">0</div>
+        <div class="hd-stat-lbl">Due</div>
       </div>
     </div>
   </div>
@@ -793,7 +761,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   <div class="ollama-cfg">
     <div class="cfg-dot off" id="cfg-dot"></div>
     <span id="cfg-status">Offline</span>
-    <input class="cfg-inp" id="ollama-inp" value="Gemini 1.5 Flash (Cloud)" disabled style="opacity:0.6;cursor:default">
+    <input class="cfg-inp" id="ollama-inp" value="http://localhost:11434" oninput="ollamaUrl=this.value;saveSettings()">
     <button class="cfg-btn" onclick="checkOllama()">↺</button>
     <button class="cfg-btn" id="start-ollama-btn" onclick="startOllama()" style="display:none;color:var(--green);border-color:var(--green)">▶ Start</button>
   </div>
@@ -806,7 +774,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
 
     <div class="modal-row">
       <div class="modal-lbl">Ollama URL</div>
-      <input class="modal-inp" id="m-ollama" value="Gemini 1.5 Flash" disabled style="opacity:0.6">
+      <input class="modal-inp" id="m-ollama" value="http://localhost:11434">
     </div>
 
     <div class="modal-row">
@@ -2939,6 +2907,14 @@ const STATIC_EXERCISES = {
   });
 })();
 
+// ─── ASSIGN STABLE CARD IDs (for SM-2 scheduling) ─────────────────────────────
+(function assignCardIds() {
+  Object.entries(STATIC_EXERCISES).forEach(function([concept, data]) {
+    (data.pairs || []).forEach(function(e, i) { e._id = concept + '_p_' + i; });
+    (data.fillblank || []).forEach(function(e, i) { e._id = concept + '_f_' + i; });
+  });
+})();
+
 // ─── DIFFICULTY SYSTEM ─────────────────────────────────────────────────────────
 const DIFFICULTY_LEVELS = ['beg', 'int', 'adv'];
 const DIFFICULTY_LABELS = { beg: 'Beginner', int: 'Intermediate', adv: 'Advanced' };
@@ -3018,10 +2994,14 @@ function getStaticPair(key) {
   let pool = all.filter(e => e.difficulty === difficulty);
   if (!pool.length) pool = all;
   if (!pool.length) return null;
+  // SM-2: serve overdue cards first
+  const dueEx = getDueExercise(pool);
+  if (dueEx) { lastCardId = dueEx._id; return dueEx; }
   const idxKey = key + '_p_' + difficulty;
   if (!_staticIdx[idxKey]) _staticIdx[idxKey] = 0;
   const ex = pool[_staticIdx[idxKey] % pool.length];
   _staticIdx[idxKey]++;
+  lastCardId = ex._id || null;
   return ex;
 }
 function getStaticFillBlank(key) {
@@ -3030,10 +3010,14 @@ function getStaticFillBlank(key) {
   let pool = all.filter(e => e.difficulty === difficulty);
   if (!pool.length) pool = all;
   if (!pool.length) return null;
+  // SM-2: serve overdue cards first
+  const dueEx = getDueExercise(pool);
+  if (dueEx) { lastCardId = dueEx._id; return dueEx; }
   const idxKey = key + '_f_' + difficulty;
   if (!_staticIdx[idxKey]) _staticIdx[idxKey] = 0;
   const ex = pool[_staticIdx[idxKey] % pool.length];
   _staticIdx[idxKey]++;
+  lastCardId = ex._id || null;
   return ex;
 }
 
@@ -3041,7 +3025,7 @@ function getStaticFillBlank(key) {
 const sessionSeenGateways = new Set(); // concepts seen this session
 let currentConcept = null;
 let currentMode = 'pairs';
-let ollamaUrl = 'gemini'; // AI handled server-side
+let ollamaUrl = localStorage.getItem('sl_ollama') || 'http://localhost:11434';
 let selectedModel = localStorage.getItem('sl_model') || 'llama3.1:8b';
 let xp = parseInt(localStorage.getItem('sl_xp') || '0');
 let streak = 0;
@@ -3063,6 +3047,46 @@ let currentTheme = localStorage.getItem('sl_theme') || 'dark';
 let reviewDrillItems = [];        // subset of wrongAnswers being drilled
 let reviewDrillIndex = 0;
 let storyQuestionsAnswered = 0;   // how many story questions done this round
+// ── SM-2 SPACED REPETITION ────────────────────────────────────────────────────
+let sm2State = JSON.parse(localStorage.getItem('sl_sm2') || '{}');
+let lastCardId = null; // ID of the most recently shown static exercise
+
+function sm2Update(cardId, correct) {
+  if (!cardId) return;
+  const quality = correct ? (streak >= 3 ? 5 : 4) : 1; // 5=easy,4=normal,1=wrong
+  const s = sm2State[cardId] || { ease: 2.5, interval: 0, reps: 0, nextDue: null };
+  if (quality >= 3) {
+    if (s.reps === 0) s.interval = 1;
+    else if (s.reps === 1) s.interval = 6;
+    else s.interval = Math.max(1, Math.round(s.interval * s.ease));
+    s.reps++;
+  } else {
+    s.reps = 0;
+    s.interval = 1;
+  }
+  s.ease = Math.max(1.3, s.ease + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+  const due = new Date();
+  due.setDate(due.getDate() + s.interval);
+  s.nextDue = due.toISOString().split('T')[0];
+  sm2State[cardId] = s;
+  localStorage.setItem('sl_sm2', JSON.stringify(sm2State));
+}
+
+function getTodayStr() { return new Date().toISOString().split('T')[0]; }
+
+function getDueExercise(pool) {
+  // Returns the most-overdue exercise from pool that is due today (or null)
+  const today = getTodayStr();
+  const due = pool.filter(e => e._id && sm2State[e._id] && sm2State[e._id].nextDue <= today);
+  if (!due.length) return null;
+  due.sort((a, b) => sm2State[a._id].nextDue.localeCompare(sm2State[b._id].nextDue));
+  return due[0];
+}
+
+function getTotalDueCount() {
+  const today = getTodayStr();
+  return Object.values(sm2State).filter(s => s.nextDue && s.nextDue <= today).length;
+}
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 function init() {
@@ -3079,6 +3103,11 @@ function init() {
   renderConceptBar();
   updateStats();
   checkOllama();
+  // SM-2: notify if cards are due for review
+  const due = getTotalDueCount();
+  if (due > 0) {
+    setTimeout(() => showToast(`📚 ${due} card${due > 1 ? 's' : ''} due for review today — they'll appear first as you practice!`, 4000), 1500);
+  }
 }
 
 function saveAndRefreshName() {
@@ -3186,17 +3215,33 @@ When returning JSON, return ONLY valid JSON — no markdown fences, no extra tex
 async function ollamaJSON(prompt, retries = 2, temp = 0.3) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const res = await fetch('/api/ai', {
+      const res = await fetch(`${ollamaUrl}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ system: SYSTEM_EXERCISE, prompt, temperature: temp, json_mode: true })
+        body: JSON.stringify({
+          model: selectedModel,
+          messages: [
+            { role: 'system', content: SYSTEM_EXERCISE },
+            { role: 'user', content: prompt }
+          ],
+          stream: false,
+          format: 'json',
+          options: { temperature: temp, num_predict: 800 }
+        })
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      const text = data.content || '';
-      const match = text.match(/\{[\s\S]*\}/);
-      if (!match) throw new Error('No JSON in response');
-      return JSON.parse(match[0]);
+      const text = data.message?.content || '';
+      try {
+        const parsed = JSON.parse(text);
+        // Validate the response has actual content
+        if (Object.keys(parsed).length === 0) throw new Error('Empty JSON object');
+        return parsed;
+      } catch {
+        const match = text.match(/\{[\s\S]*\}/);
+        if (match) return JSON.parse(match[0]);
+        throw new Error('JSON parse failed');
+      }
     } catch (err) {
       if (attempt === retries) throw err;
       await new Promise(r => setTimeout(r, 1000));
@@ -3207,17 +3252,29 @@ async function ollamaJSON(prompt, retries = 2, temp = 0.3) {
 async function ollamaJSONCreative(prompt, retries = 1, temp = 0.75) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const res = await fetch('/api/ai', {
+      const res = await fetch(`${ollamaUrl}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ system: SYSTEM_CREATIVE, prompt, temperature: temp, json_mode: true })
+        body: JSON.stringify({
+          model: selectedModel,
+          messages: [
+            { role: 'system', content: SYSTEM_CREATIVE },
+            { role: 'user', content: prompt }
+          ],
+          stream: false,
+          format: 'json',
+          options: { temperature: temp, num_predict: 1200 }
+        })
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      const text = data.content || '';
-      const match = text.match(/\{[\s\S]*\}/);
-      if (!match) throw new Error('No JSON in response');
-      return JSON.parse(match[0]);
+      const text = data.message?.content || '';
+      try { return JSON.parse(text); }
+      catch {
+        const match = text.match(/\{[\s\S]*\}/);
+        if (match) return JSON.parse(match[0]);
+        throw new Error('JSON parse failed');
+      }
     } catch (err) {
       if (attempt === retries) throw err;
       await new Promise(r => setTimeout(r, 1000));
@@ -3226,20 +3283,34 @@ async function ollamaJSONCreative(prompt, retries = 1, temp = 0.75) {
 }
 
 async function ollamaStream(prompt, onChunk, temp = 0.65) {
-  const res = await fetch('/api/ai', {
+  const res = await fetch(`${ollamaUrl}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ system: SYSTEM_CREATIVE, prompt, temperature: temp })
+    body: JSON.stringify({
+      model: selectedModel,
+      messages: [
+        { role: 'system', content: SYSTEM_CREATIVE },
+        { role: 'user', content: prompt }
+      ],
+      stream: true,
+      options: { temperature: temp, num_predict: 300 }
+    })
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const data = await res.json();
-  const text = data.content || '';
-  // Simulate streaming word-by-word
-  const words = text.split(' ');
-  for (const word of words) {
-    onChunk(word + ' ');
-    await new Promise(r => setTimeout(r, 18));
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let full = '';
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    for (const line of decoder.decode(value).split('\n').filter(Boolean)) {
+      try {
+        const j = JSON.parse(line);
+        if (j.message?.content) { full += j.message.content; onChunk(full); }
+      } catch {}
+    }
   }
+  return full;
 }
 
 // ─── LOADING / ERROR UI ───────────────────────────────────────────────────────
@@ -4353,6 +4424,9 @@ function recordMastery(correct) {
   if (!conceptMastery[key]) conceptMastery[key] = { correct: 0, total: 0 };
   conceptMastery[key].total++;
   if (correct) conceptMastery[key].correct++;
+  // Timestamp + SM-2
+  conceptMastery[key].lastPracticed = new Date().toISOString();
+  sm2Update(lastCardId, correct);
   const newAcc = Math.round(conceptMastery[key].correct / conceptMastery[key].total * 100);
   localStorage.setItem('sl_mastery', JSON.stringify(conceptMastery));
   // Milestone: celebrate crossing 80% for first time
@@ -4397,6 +4471,14 @@ function updateStats() {
   document.getElementById('xp-bar').style.width = pct + '%';
   document.getElementById('xp-label').textContent = `${xpInLevel} / ${XP_PER_LEVEL} XP to Level ${level + 1}`;
   document.getElementById('lvl-badge').textContent = `Level ${level}`;
+  // SM-2 due count
+  const dueCount = getTotalDueCount();
+  const dueStat = document.getElementById('due-stat');
+  const dueVal = document.getElementById('due-val');
+  if (dueStat && dueVal) {
+    dueVal.textContent = dueCount;
+    dueStat.style.display = dueCount > 0 ? '' : 'none';
+  }
 }
 
 // ─── VISUAL EFFECTS ────────────────────────────────────────────────────────────
@@ -4444,7 +4526,7 @@ function closeSettings() {
 }
 
 function saveSettingsModal() {
-  ollamaUrl = 'gemini';
+  ollamaUrl = document.getElementById('m-ollama').value.trim() || 'http://localhost:11434';
   const modelSel = document.getElementById('m-model');
   if (modelSel?.value) selectedModel = modelSel.value;
   const name = document.getElementById('m-name').value.trim();
@@ -4465,55 +4547,148 @@ function saveSettings() {
 }
 
 function setOllamaUrl(url) {
-  ollamaUrl = 'gemini';
+  ollamaUrl = url.trim() || 'http://localhost:11434';
   saveSettings();
 }
 
-// ─── AI STATUS & CONTROL ─────────────────────────────────────────────────────
+// ─── OLLAMA STATUS & CONTROL ──────────────────────────────────────────────────
 let ollamaOnline = false;
 let reconnectTimer = null;
 
 async function checkOllama(silent = false) {
   const dot = document.getElementById('cfg-dot');
   const status = document.getElementById('cfg-status');
+  const startBtn = document.getElementById('start-ollama-btn');
   if (!silent) { dot.className = 'cfg-dot off'; status.textContent = 'Checking...'; }
   try {
-    const res = await fetch('/api/ai', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ system: 'You are a test.', prompt: 'Say OK', temperature: 0.1 }),
-      signal: AbortSignal.timeout(8000)
-    });
-    if (!res.ok) throw new Error('API error');
+    const res = await fetch(`${ollamaUrl}/api/tags`, { signal: AbortSignal.timeout(4000) });
+    if (!res.ok) throw new Error('not ok');
+    const data = await res.json();
+    const models = data.models || [];
+    const count = models.length;
     dot.className = 'cfg-dot on';
-    status.textContent = 'Gemini · Online';
-    if (!ollamaOnline && silent) showToast('AI reconnected ✓', 2000);
-    ollamaOnline = true;
-    clearInterval(reconnectTimer); reconnectTimer = null;
+    status.textContent = `Online · ${count} model${count !== 1 ? 's' : ''}`;
+    if (startBtn) startBtn.style.display = 'none';
     const offBanner = document.getElementById('offline-banner');
     if (offBanner) offBanner.style.display = 'none';
+
+    // First time coming online after offline: notify
+    if (!ollamaOnline && silent) showToast('Ollama reconnected ✓', 2000);
+    ollamaOnline = true;
+    clearInterval(reconnectTimer);
+    reconnectTimer = null;
+
+    // Auto-select model if current one isn't installed
+    if (count > 0 && !models.find(m => m.name.startsWith(selectedModel.split(':')[0]))) {
+      selectedModel = models[0].name;
+      localStorage.setItem('sl_model', selectedModel);
+    }
+    document.getElementById('m-model').value = selectedModel;
   } catch {
     dot.className = 'cfg-dot off';
-    status.textContent = 'AI Offline';
-    ollamaOnline = false;
+    status.textContent = 'Offline';
+    if (startBtn) startBtn.style.display = '';
     const offBanner = document.getElementById('offline-banner');
     if (offBanner) offBanner.style.display = 'flex';
-    if (!reconnectTimer) reconnectTimer = setInterval(() => checkOllama(true), 20000);
+    ollamaOnline = false;
+    // Start polling for reconnect
+    if (!reconnectTimer) {
+      reconnectTimer = setInterval(() => checkOllama(true), 15000);
+    }
   }
 }
 
-function startOllama() { checkOllama(); }
+async function startOllama() {
+  const btn = document.getElementById('start-ollama-btn');
+  if (btn) { btn.textContent = '⏳'; btn.disabled = true; }
+  try {
+    const res = await fetch('http://localhost:8765/start-ollama', { method: 'POST' });
+    const data = await res.json();
+    showToast(data.message || 'Starting Ollama...', 3000);
+    // Wait 4s then re-check
+    setTimeout(() => checkOllama(), 4000);
+  } catch {
+    showToast('⚠️ Session server offline — start it manually', 3500);
+  } finally {
+    if (btn) { btn.textContent = '▶ Start'; btn.disabled = false; }
+  }
+}
 
 async function refreshModelList() {
   const sel = document.getElementById('m-model');
   const info = document.getElementById('model-info-line');
-  if (sel) {
-    sel.innerHTML = '<option value="gemini-1.5-flash">Gemini 1.5 Flash (Cloud)</option>';
+  if (!sel) return;
+  sel.innerHTML = '<option>Loading...</option>';
+  try {
+    const res = await fetch(`${ollamaUrl}/api/tags`, { signal: AbortSignal.timeout(5000) });
+    const data = await res.json();
+    const models = data.models || [];
+    if (models.length === 0) {
+      sel.innerHTML = '<option value="">No models installed</option>';
+      if (info) info.textContent = 'Download a model below to get started';
+      return;
+    }
+    sel.innerHTML = models.map(m => {
+      const sizeLabel = m.size ? ` (${(m.size/1e9).toFixed(1)}GB)` : '';
+      return `<option value="${m.name}" ${m.name === selectedModel ? 'selected' : ''}>${m.name}${sizeLabel}</option>`;
+    }).join('');
+    if (info) info.textContent = `${models.length} model${models.length !== 1 ? 's' : ''} installed`;
+  } catch {
+    sel.innerHTML = `<option value="${selectedModel}">${selectedModel} (Ollama offline)</option>`;
+    if (info) info.textContent = 'Ollama offline — showing last used model';
   }
-  if (info) info.textContent = 'Powered by Google Gemini via secure API';
 }
 
-function setOllamaUrl(url) { saveSettings(); }
+async function pullModel() {
+  const nameEl = document.getElementById('m-pull-name');
+  const name = nameEl?.value?.trim();
+  if (!name) { showToast('Enter a model name first'); return; }
+
+  const progress = document.getElementById('pull-progress');
+  const bar = document.getElementById('pull-bar');
+  const statusEl = document.getElementById('pull-status');
+  if (progress) progress.style.display = 'block';
+  if (statusEl) statusEl.textContent = `Starting download of ${name}...`;
+
+  try {
+    const res = await fetch('http://localhost:8765/pull-model', {
+      method: 'POST',
+      body: new URLSearchParams({ model_name: name })
+    });
+    if (!res.ok) throw new Error('Server error');
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let lastPct = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      for (const line of decoder.decode(value).split('\n').filter(Boolean)) {
+        try {
+          const j = JSON.parse(line);
+          if (j.total && j.completed) {
+            const pct = Math.round(j.completed / j.total * 100);
+            if (bar) bar.style.width = pct + '%';
+            if (statusEl) statusEl.textContent = `${j.status || 'Downloading'} — ${pct}%`;
+            lastPct = pct;
+          } else if (j.status) {
+            if (statusEl) statusEl.textContent = j.status;
+            if (j.status.includes('success') || j.status.includes('done') || j.status === 'success') {
+              if (bar) bar.style.width = '100%';
+              if (statusEl) statusEl.textContent = `✓ ${name} downloaded!`;
+              setTimeout(() => { if (progress) progress.style.display = 'none'; }, 2500);
+              nameEl.value = '';
+              selectedModel = name;
+              localStorage.setItem('sl_model', name);
+              await refreshModelList();
+            }
+          }
+        } catch {}
+      }
+    }
+  } catch (err) {
+    if (statusEl) statusEl.textContent = `Error: ${err.message}`;
+  }
+}
 
 // ─── PROGRESS EXPORT ──────────────────────────────────────────────────────────
 function exportProgress() {
