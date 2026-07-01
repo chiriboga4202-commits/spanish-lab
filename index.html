@@ -695,6 +695,13 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
 .review-start-btn:hover { opacity: .87; }
 .review-dismiss-btn { padding: 11px 18px; font-size: 13px; font-weight: 600; border-radius: 8px; border: 1px solid var(--border2); background: transparent; color: var(--text2); cursor: pointer; }
 
+/* ── PRONUNCIATION BUTTON ── */
+.speak-btn { background: none; border: 1px solid var(--border2); border-radius: 5px; padding: 3px 7px; font-size: 13px; cursor: pointer; color: var(--text3); transition: all .15s; vertical-align: middle; line-height: 1; }
+.speak-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(91,141,238,.07); }
+.speak-btn:active { transform: scale(.92); }
+.pair-speak { position: absolute; top: 9px; right: 9px; font-size: 12px; padding: 2px 5px; }
+.fb-speak-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+
 /* ── MOBILE RESPONSIVE ── */
 
 /* Tablet — hide less-critical header items */
@@ -3671,6 +3678,14 @@ function checkConjugate() {
     document.getElementById('conj-result-sub').textContent = 'You wrote: "' + val + '"  ·  Correct: "' + correct + '"';
     updateStreak(false);
   }
+  // Speak button appears in all cases
+  const body = document.querySelector('.conj-result-body');
+  if (body) {
+    const speakDiv = document.createElement('div');
+    speakDiv.style.cssText = 'margin-top:8px';
+    speakDiv.innerHTML = '<button class="speak-btn" onclick="speakSpanish(\'' + correct.replace(/'/g, "\\'") + '\')" title="Hear pronunciation">🔊 ' + correct + '</button>';
+    body.insertBefore(speakDiv, body.querySelector('.conj-next-btn'));
+  }
 }
 
 function insertAccent(c) {
@@ -3685,6 +3700,25 @@ function insertAccent(c) {
 
 function stripAccents(s) {
   return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+}
+
+// ─── PRONUNCIATION ────────────────────────────────────────────────────────────
+function speakSpanish(text) {
+  if (!window.speechSynthesis || !text) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text.trim());
+  utter.lang = 'es-ES';
+  utter.rate = 0.88;
+  utter.pitch = 1.0;
+  // Prefer a Spanish voice if available (voices may load async)
+  const trySpeak = () => {
+    const voices = window.speechSynthesis.getVoices();
+    const esVoice = voices.find(v => v.lang.startsWith('es'));
+    if (esVoice) utter.voice = esVoice;
+    window.speechSynthesis.speak(utter);
+  };
+  if (window.speechSynthesis.getVoices().length) trySpeak();
+  else window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.onvoiceschanged = null; trySpeak(); };
 }
 
 // ─── OLLAMA HELPERS ───────────────────────────────────────────────────────────
@@ -3925,12 +3959,14 @@ function renderPairs(data) {
       </div>
       <div class="pair-grid">
         <div class="pair-card" id="card-0" onclick="pickCard(0, ${data.correct}, '${escStr(data.cards[0].reason)}', '${escStr(data.explanation)}')">
+          <button class="speak-btn pair-speak" onclick="event.stopPropagation();speakSpanish('${escStr(data.cards[0].es)}')" title="Hear pronunciation">🔊</button>
           <div class="pair-letter">A</div>
           <div class="pair-es">${data.cards[0].es}</div>
           <div class="pair-en">${data.cards[0].en}</div>
           <div class="pair-reason">${data.cards[0].reason}</div>
         </div>
         <div class="pair-card" id="card-1" onclick="pickCard(1, ${data.correct}, '${escStr(data.cards[1].reason)}', '${escStr(data.explanation)}')">
+          <button class="speak-btn pair-speak" onclick="event.stopPropagation();speakSpanish('${escStr(data.cards[1].es)}')" title="Hear pronunciation">🔊</button>
           <div class="pair-letter">B</div>
           <div class="pair-es">${data.cards[1].es}</div>
           <div class="pair-en">${data.cards[1].en}</div>
@@ -4183,7 +4219,10 @@ function renderFillBlank(data) {
         <div class="sentence-display" id="sentence-display">
           ${data.before ? data.before + ' ' : ''}<span class="blank-slot" id="blank-slot">_____</span>${data.after ? ' ' + data.after : ''}
         </div>
-        <div class="sentence-en">${data.en}</div>
+        <div class="fb-speak-row">
+          <div class="sentence-en">${data.en}</div>
+          <button class="speak-btn" onclick="speakSpanish('${escStr([data.before, data.options[data.correct], data.after].filter(Boolean).join(' '))}')" title="Hear full sentence">🔊</button>
+        </div>
       </div>
       <div class="options-grid">${opts}</div>
       <div class="result-bar" id="result-bar">
