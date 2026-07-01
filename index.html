@@ -6320,6 +6320,62 @@ if (_origGwOverlay) {
   });
   observer.observe(_origGwOverlay, { attributes: true, attributeFilter: ['class'] });
 }
+
+// ── LIVE FEED WRITER (for teacher dashboard #31) ─────────────────────────────
+function writeLiveFeed(correct, question, mode) {
+  try {
+    const xp = parseInt(localStorage.getItem('sl_xp') || 0);
+    const level = Math.floor(xp / 100) + 1;
+    localStorage.setItem('sl_live_feed', JSON.stringify({
+      ts: Date.now(),
+      concept: currentConcept ? (currentConcept.name || currentConcept.key) : 'None',
+      mode: currentMode || 'unknown',
+      xp, level,
+      streak: (typeof streak !== 'undefined') ? streak : 0
+    }));
+    const hist = JSON.parse(localStorage.getItem('sl_live_history') || '[]');
+    hist.push({ ts: Date.now(), correct, question: question || '?', mode: mode || currentMode });
+    if (hist.length > 50) hist.splice(0, hist.length - 50);
+    localStorage.setItem('sl_live_history', JSON.stringify(hist));
+  } catch(e) {}
+}
+
+// Monkey-patch updateStreak to also write live feed
+const _origUpdateStreakLive = updateStreak;
+function updateStreak(correct, wrongData) {
+  _origUpdateStreakLive(correct, wrongData);
+  try { writeLiveFeed(correct, wrongData?.question, currentMode); } catch(e) {}
+}
+
+// Read teacher queue on load and show banner (#33)
+(function applyTeacherQueue() {
+  const q = JSON.parse(localStorage.getItem('sl_teacher_queue') || '[]');
+  if (q.length && typeof showToast === 'function') {
+    setTimeout(() => showToast('📋 Teacher queued: ' + q.slice(0,3).map(c=>c.name).join(', '), 4000), 1500);
+  }
+  // Apply custom gateway requirements (#37)
+  const gwCfg = JSON.parse(localStorage.getItem('sl_custom_gateways') || '{}');
+  if (Object.keys(gwCfg).length && typeof CONCEPT_MIN_ATTEMPTS !== 'undefined') {
+    Object.entries(gwCfg).forEach(([key, v]) => {
+      if (v.minEx) CONCEPT_MIN_ATTEMPTS[key] = v.minEx;
+    });
+  }
+})();
+
+// Inject teacher custom exercises into student exercise bank (#34)
+(function injectCustomExercises() {
+  try {
+    const custom = JSON.parse(localStorage.getItem('sl_custom_exercises') || '[]');
+    if (!custom.length) return;
+    custom.forEach(ex => {
+      const concept = typeof CONCEPTS !== 'undefined' && CONCEPTS.find(c => c.key === ex.concept);
+      if (!concept) return;
+      if (!concept.exercises) concept.exercises = [];
+      concept.exercises.push(ex);
+    });
+    if (custom.length) console.log('[Student] Injected', custom.length, 'custom exercises from teacher');
+  } catch(e) {}
+})();
 // ─── OLLAMA STATUS & CONTROL ──────────────────────────────────────────────────
 let ollamaOnline = false;
 let reconnectTimer = null;
