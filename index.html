@@ -89,6 +89,42 @@ header {
 .lvl-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: linear-gradient(135deg, rgba(91,141,238,.2), rgba(168,85,247,.2)); border: 1px solid rgba(91,141,238,.3); color: var(--accent); }
 .cfg-btn { padding: 4px 9px; font-size: 11px; font-weight: 600; border-radius: 5px; border: 1px solid var(--border2); background: var(--surface2); color: var(--text3); cursor: pointer; transition: all .15s; }
 .cfg-btn:hover { border-color: var(--accent); color: var(--accent); }
+/* ── LEVEL-UP CEREMONY ── */
+@keyframes lvlUp { 0%{opacity:0;transform:scale(.5) translateY(60px)} 20%{opacity:1;transform:scale(1.1) translateY(-10px)} 80%{opacity:1;transform:scale(1) translateY(0)} 100%{opacity:0;transform:scale(.9) translateY(-20px)} }
+.lvlup-overlay { display:none; position:fixed; inset:0; z-index:2000; pointer-events:none; align-items:center; justify-content:center; }
+.lvlup-overlay.show { display:flex; }
+.lvlup-box { background:linear-gradient(135deg,var(--accent),#a855f7); border-radius:20px; padding:32px 48px; text-align:center; box-shadow:0 0 60px rgba(91,141,238,.5); animation:lvlUp 2.6s ease forwards; }
+.lvlup-emoji { font-size:56px; line-height:1; margin-bottom:8px; }
+.lvlup-title { font-size:28px; font-weight:900; color:#fff; letter-spacing:-0.5px; }
+.lvlup-sub { font-size:14px; color:rgba(255,255,255,.75); margin-top:6px; }
+/* ── ONE MORE OVERLAY ── */
+.onemore-overlay { display:none; position:fixed; inset:0; z-index:1500; background:rgba(0,0,0,.75); align-items:center; justify-content:center; }
+.onemore-overlay.show { display:flex; }
+.onemore-box { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px 36px; text-align:center; max-width:340px; }
+.onemore-streak { font-size:36px; font-weight:900; color:var(--accent); }
+.onemore-msg { font-size:15px; color:var(--text2); margin:8px 0 20px; }
+.onemore-btns { display:flex; gap:10px; justify-content:center; }
+.onemore-yes { padding:10px 24px; border-radius:8px; border:none; background:var(--accent); color:#fff; font-size:14px; font-weight:700; cursor:pointer; }
+.onemore-no { padding:10px 24px; border-radius:8px; border:1px solid var(--border2); background:none; color:var(--text3); font-size:14px; cursor:pointer; }
+/* ── POMODORO TIMER ── */
+.pomo-bar { display:none; align-items:center; gap:8px; padding:4px 12px; background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.3); border-radius:8px; font-size:12px; color:var(--text2); }
+.pomo-bar.visible { display:flex; }
+.pomo-time { font-weight:800; color:#ef4444; font-variant-numeric:tabular-nums; min-width:40px; }
+.pomo-stop { background:none; border:none; color:var(--text3); cursor:pointer; font-size:14px; line-height:1; }
+/* ── FOCUS MODE ── */
+body.focus-mode .concept-bar,
+body.focus-mode .hd-stats,
+body.focus-mode .progress-bar-wrap { display:none !important; }
+body.focus-mode header { min-height:auto; }
+/* ── ANSWER HISTORY ── */
+.hist-drawer { position:fixed; bottom:0; left:0; right:0; z-index:900; background:var(--surface); border-top:1px solid var(--border); padding:10px 16px; transform:translateY(100%); transition:transform .25s ease; max-height:240px; overflow-y:auto; }
+.hist-drawer.open { transform:translateY(0); }
+.hist-toggle { position:fixed; bottom:10px; right:14px; z-index:901; background:var(--surface2); border:1px solid var(--border2); border-radius:20px; padding:6px 12px; font-size:11px; cursor:pointer; color:var(--text2); box-shadow:0 2px 8px rgba(0,0,0,.2); }
+.hist-row { display:flex; align-items:center; gap:8px; padding:4px 0; border-bottom:1px solid var(--border); font-size:12px; color:var(--text2); }
+.hist-row:last-child { border:none; }
+.hist-icon { font-size:14px; flex-shrink:0; }
+.hist-q { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.hist-mode { font-size:10px; color:var(--text3); flex-shrink:0; }
 
 /* ── CONCEPT BAR ── */
 .concept-bar {
@@ -864,12 +900,39 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   </div>
 
   <div class="hd-right">
+    <div class="pomo-bar" id="pomo-bar"><span>🍅</span><span class="pomo-time" id="pomo-time">25:00</span><button class="pomo-stop" onclick="stopPomodoro()" title="Stop">✕</button></div>
     <div class="lvl-badge" id="lvl-badge">Level 1</div>
     <button class="review-btn" id="review-btn" onclick="openReviewModal()">📊 Review <span id="review-count">0</span></button>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
     <button class="cfg-btn" onclick="openSettings()">⚙ Settings</button>
   </div>
 </header>
+
+
+<!-- LEVEL-UP CEREMONY -->
+<div class="lvlup-overlay" id="lvlup-overlay">
+  <div class="lvlup-box">
+    <div class="lvlup-emoji">🌟</div>
+    <div class="lvlup-title" id="lvlup-title">Level Up!</div>
+    <div class="lvlup-sub" id="lvlup-sub">You reached a new level</div>
+  </div>
+</div>
+
+<!-- ONE MORE OVERLAY -->
+<div class="onemore-overlay" id="onemore-overlay">
+  <div class="onemore-box">
+    <div class="onemore-streak" id="onemore-streak">🔥 5</div>
+    <div class="onemore-msg">One more question before you go?</div>
+    <div class="onemore-btns">
+      <button class="onemore-yes" onclick="dismissOneMore(true)">One more ✓</button>
+      <button class="onemore-no" onclick="dismissOneMore(false)">I'm done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ANSWER HISTORY TOGGLE -->
+<button class="hist-toggle" id="hist-toggle" onclick="toggleHistDrawer()" title="Recent answers" style="display:none">📋 History</button>
+<div class="hist-drawer" id="hist-drawer"></div>
 
 <!-- CONCEPT BAR -->
 <div class="concept-bar" id="concept-bar"></div>
@@ -968,7 +1031,35 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
       <select class="modal-sel" id="m-theme" onchange="applyThemeChoice(this.value)">
         <option value="dark">🌙 Dark (default)</option>
         <option value="light">☀️ Light</option>
+        <option value="auto">🕐 Auto (by time of day)</option>
       </select>
+    </div>
+
+    <div class="modal-row">
+      <div class="modal-lbl">Font Size</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onclick="adjustFont(-1)" style="padding:4px 10px;border-radius:5px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);cursor:pointer;font-size:14px">A−</button>
+        <span id="font-size-label" style="font-size:12px;color:var(--text2);min-width:40px;text-align:center">100%</span>
+        <button onclick="adjustFont(1)" style="padding:4px 10px;border-radius:5px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);cursor:pointer;font-size:16px">A+</button>
+      </div>
+    </div>
+
+    <div class="modal-row" style="display:flex;gap:16px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="m-focus" onchange="setFocusMode(this.checked)"> Focus mode
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="m-sound" onchange="setSoundEnabled(this.checked)" checked> Sound effects
+      </label>
+    </div>
+
+    <div class="modal-row">
+      <div class="modal-lbl">🍅 Pomodoro Timer</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button onclick="startPomodoro(15);closeSettings()" style="padding:5px 12px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;font-size:12px">15 min</button>
+        <button onclick="startPomodoro(25);closeSettings()" style="padding:5px 12px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;font-size:12px">25 min</button>
+        <button onclick="startPomodoro(45);closeSettings()" style="padding:5px 12px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;font-size:12px">45 min</button>
+      </div>
     </div>
 
     <div class="modal-actions">
@@ -5000,6 +5091,7 @@ function addXP(amount) {
   xp += amount;
   localStorage.setItem('sl_xp', xp);
   logDailyXP(amount);
+  checkLevelUp(xp);
   updateStats();
 }
 
@@ -5108,9 +5200,11 @@ function updateStreak(correct, wrongData) {
       bestStreak = streak;
       localStorage.setItem('sl_best_streak', bestStreak);
     }
+    playSound(streak === 5 || streak === 10 || streak === 20 ? 'streak' : 'correct');
     sessionCorrect++;
     if (streak === 5 || streak === 10 || streak === 20) showCombo(`🔥 ${streak} in a row!`);
   } else {
+    playSound('wrong');
     streak = 0;
     sessionWrong++;
     if (wrongData) {
@@ -5271,6 +5365,207 @@ function setOllamaUrl(url) {
   ollamaUrl = url.trim() || 'http://localhost:11434';
   saveSettings();
 }
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── BATCH A: QUICK UX WINS ─────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ── #39 AUTO THEME BY TIME ────────────────────────────────────────────────────
+function applyAutoTheme() {
+  const h = new Date().getHours();
+  const isDark = h >= 20 || h < 7;
+  // Call the original applyTheme directly to avoid recursion
+  localStorage.setItem('sl_theme', isDark ? 'dark' : 'light');
+  applyTheme();
+}
+
+// Patch applyThemeChoice to handle 'auto' value
+const _origApplyThemeChoice = applyThemeChoice;
+function applyThemeChoice(val) {
+  if (val === 'auto') { localStorage.setItem('sl_theme', 'auto'); applyAutoTheme(); return; }
+  _origApplyThemeChoice(val);
+}
+
+// ── #41 SOUND EFFECTS (Web Audio API) ────────────────────────────────────────
+let _soundEnabled = localStorage.getItem('sl_sound') !== 'off';
+function setSoundEnabled(on) {
+  _soundEnabled = on;
+  localStorage.setItem('sl_sound', on ? 'on' : 'off');
+}
+function playSound(type) {
+  if (!_soundEnabled) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    if (type === 'correct') {
+      osc.frequency.setValueAtTime(523, ctx.currentTime);
+      osc.frequency.setValueAtTime(659, ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.22, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      osc.start(); osc.stop(ctx.currentTime + 0.4);
+    } else if (type === 'wrong') {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(180, ctx.currentTime);
+      osc.frequency.setValueAtTime(140, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.13, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+      osc.start(); osc.stop(ctx.currentTime + 0.35);
+    } else if (type === 'streak') {
+      [523, 659, 784, 1047].forEach((freq, i) => {
+        const o2 = ctx.createOscillator();
+        const g2 = ctx.createGain();
+        o2.connect(g2); g2.connect(ctx.destination);
+        o2.frequency.value = freq;
+        g2.gain.setValueAtTime(0.16, ctx.currentTime + i * 0.1);
+        g2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.22);
+        o2.start(ctx.currentTime + i * 0.1);
+        o2.stop(ctx.currentTime + i * 0.1 + 0.25);
+      });
+    }
+  } catch(e) {}
+}
+
+// ── #29 LEVEL-UP CEREMONY ─────────────────────────────────────────────────────
+let _lastLevelTracked = Math.floor((parseInt(localStorage.getItem('sl_xp') || '0')) / (typeof XP_PER_LEVEL !== 'undefined' ? XP_PER_LEVEL : 100)) + 1;
+function checkLevelUp(newXP) {
+  const lvl = typeof XP_PER_LEVEL !== 'undefined' ? XP_PER_LEVEL : 100;
+  const newLevel = Math.floor(newXP / lvl) + 1;
+  if (_lastLevelTracked && newLevel > _lastLevelTracked) triggerLevelUp(newLevel);
+  _lastLevelTracked = newLevel;
+}
+function triggerLevelUp(level) {
+  playSound('streak');
+  const overlay = document.getElementById('lvlup-overlay');
+  const title = document.getElementById('lvlup-title');
+  const sub = document.getElementById('lvlup-sub');
+  if (title) title.textContent = 'Level ' + level + '! 🎉';
+  if (sub) sub.textContent = 'You\'ve reached Level ' + level + ' — keep going!';
+  if (overlay) { overlay.classList.add('show'); setTimeout(() => overlay.classList.remove('show'), 2800); }
+}
+
+// ── #50 "ONE MORE" OVERLAY ────────────────────────────────────────────────────
+let _onMoreShown = false;
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden' && !_onMoreShown && streak >= 2 && currentConcept) {
+    _onMoreShown = true;
+    const el = document.getElementById('onemore-streak');
+    if (el) el.textContent = '🔥 ' + streak + ' in a row';
+    const overlay = document.getElementById('onemore-overlay');
+    if (overlay) overlay.classList.add('show');
+  }
+});
+function dismissOneMore(cont) {
+  const overlay = document.getElementById('onemore-overlay');
+  if (overlay) overlay.classList.remove('show');
+  if (cont) { _onMoreShown = false; startExercise(); }
+}
+
+// ── #47 VOICE "NEXT" / "SIGUIENTE" COMMAND ────────────────────────────────────
+let _voiceRecog = null;
+let _voiceInited = false;
+function initVoiceNext() {
+  if (_voiceInited) return;
+  _voiceInited = true;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  _voiceRecog = new SR();
+  _voiceRecog.continuous = true;
+  _voiceRecog.lang = 'es-ES';
+  _voiceRecog.interimResults = false;
+  _voiceRecog.onresult = e => {
+    const t = e.results[e.results.length - 1][0].transcript.trim().toLowerCase();
+    if (t.includes('siguiente') || t.includes('next') || t.includes('adelante')) {
+      document.getElementById('next-btn') && document.getElementById('next-btn').click();
+    }
+  };
+  _voiceRecog.onerror = () => {};
+  _voiceRecog.onend = () => { try { _voiceRecog.start(); } catch(e) {} };
+  try { _voiceRecog.start(); } catch(e) {}
+}
+
+// ── #43 FOCUS MODE ─────────────────────────────────────────────────────────────
+function setFocusMode(on) {
+  document.body.classList.toggle('focus-mode', on);
+  localStorage.setItem('sl_focus', on ? '1' : '0');
+  const cb = document.getElementById('m-focus');
+  if (cb) cb.checked = on;
+}
+
+// ── #44 POMODORO TIMER ─────────────────────────────────────────────────────────
+let _pomoInterval = null;
+function startPomodoro(mins) {
+  let secsLeft = mins * 60;
+  const bar = document.getElementById('pomo-bar');
+  if (bar) bar.classList.add('visible');
+  clearInterval(_pomoInterval);
+  _pomoInterval = setInterval(() => {
+    secsLeft--;
+    const m = String(Math.floor(secsLeft / 60)).padStart(2, '0');
+    const s = String(secsLeft % 60).padStart(2, '0');
+    const el = document.getElementById('pomo-time');
+    if (el) el.textContent = m + ':' + s;
+    if (secsLeft <= 0) { stopPomodoro(); playSound('streak'); showToast('🍅 Pomodoro done! Take a break.', 5000); }
+  }, 1000);
+  showToast('🍅 ' + mins + '-min focus timer started', 2000);
+}
+function stopPomodoro() {
+  clearInterval(_pomoInterval);
+  const bar = document.getElementById('pomo-bar');
+  if (bar) bar.classList.remove('visible');
+  const el = document.getElementById('pomo-time');
+  if (el) el.textContent = '25:00';
+}
+
+// ── #45 ANSWER HISTORY ─────────────────────────────────────────────────────────
+const answerHistory = [];
+function logAnswerHistory(question, correct, mode) {
+  answerHistory.unshift({ question, correct, mode: mode || currentMode });
+  if (answerHistory.length > 15) answerHistory.pop();
+  renderHistDrawer();
+  const toggle = document.getElementById('hist-toggle');
+  if (toggle) toggle.style.display = '';
+}
+function renderHistDrawer() {
+  const el = document.getElementById('hist-drawer');
+  if (!el) return;
+  if (!answerHistory.length) return;
+  el.innerHTML = answerHistory.map(h =>
+    '<div class="hist-row"><span class="hist-icon">' + (h.correct ? '✅' : '❌') + '</span>' +
+    '<span class="hist-q">' + h.question + '</span>' +
+    '<span class="hist-mode">' + h.mode + '</span></div>'
+  ).join('');
+}
+function toggleHistDrawer() {
+  const el = document.getElementById('hist-drawer');
+  if (el) el.classList.toggle('open');
+}
+
+// ── #42 FONT SIZE CONTROL ──────────────────────────────────────────────────────
+let _fontScale = parseFloat(localStorage.getItem('sl_font_scale') || '1');
+function applyFontScale() {
+  document.documentElement.style.fontSize = (_fontScale * 16) + 'px';
+  const lbl = document.getElementById('font-size-label');
+  if (lbl) lbl.textContent = Math.round(_fontScale * 100) + '%';
+}
+function adjustFont(dir) {
+  _fontScale = Math.max(0.75, Math.min(1.4, parseFloat((_fontScale + dir * 0.1).toFixed(2))));
+  localStorage.setItem('sl_font_scale', _fontScale);
+  applyFontScale();
+}
+
+// ── BATCH A INIT ──────────────────────────────────────────────────────────────
+(function initBatchA() {
+  applyFontScale();
+  if (localStorage.getItem('sl_focus') === '1') document.body.classList.add('focus-mode');
+  if (localStorage.getItem('sl_theme') === 'auto') applyAutoTheme();
+  const sndCb = document.getElementById('m-sound');
+  if (sndCb) sndCb.checked = _soundEnabled;
+  const focusCb = document.getElementById('m-focus');
+  if (focusCb) focusCb.checked = document.body.classList.contains('focus-mode');
+})();
 
 // ─── OLLAMA STATUS & CONTROL ──────────────────────────────────────────────────
 let ollamaOnline = false;
