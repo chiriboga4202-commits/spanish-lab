@@ -5359,6 +5359,18 @@ function updateStreak(correct, wrongData) {
     }
   }
   updateStats();
+  // Consolidated 2026-07-01: folds in what used to be 3 separate monkey-patches
+  // (Batch E checkBadges, Batch "Live" writeLiveFeed, Batch F taxonomy) that were
+  // each redeclaring `function updateStreak`. Because function declarations hoist,
+  // the LAST declaration silently won and every `_origUpdateStreak*` const captured
+  // a reference to that same final function — so calling updateStreak() recursed
+  // into itself infinitely. Single clean body now; do not re-add monkey-patches
+  // on this function without renaming to a local variable/const chain.
+  checkBadges();
+  if (!correct && currentConcept) {
+    recordErrorTaxonomy(currentConcept.key, wrongData?.question);
+  }
+  try { writeLiveFeed(correct, wrongData?.question, currentMode); } catch(e) {}
 }
 
 function updateReviewBtn() {
@@ -5821,13 +5833,7 @@ function updateStats() {
   if (total > 0 && total % 20 === 0) checkBadges();
 }
 
-// ── CHECK BADGES on every answer ─────────────────────────────────────────────
-const _origUpdateStreak = updateStreak;
-function updateStreak(correct, wrongData) {
-  _origUpdateStreak(correct, wrongData);
-  checkBadges();
-}
-
+// ── CHECK BADGES on every answer: folded into updateStreak() directly (see 2026-07-01 note) ──
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ── BATCH C: LEARNING SCIENCE ──────────────────────────────────────────────────
@@ -6390,12 +6396,7 @@ function writeLiveFeed(correct, question, mode) {
   } catch(e) {}
 }
 
-// Monkey-patch updateStreak to also write live feed
-const _origUpdateStreakLive = updateStreak;
-function updateStreak(correct, wrongData) {
-  _origUpdateStreakLive(correct, wrongData);
-  try { writeLiveFeed(correct, wrongData?.question, currentMode); } catch(e) {}
-}
+// writeLiveFeed on every answer: folded into updateStreak() directly (see 2026-07-01 note)
 
 // Read teacher queue on load and show banner (#33)
 (function applyTeacherQueue() {
@@ -6492,7 +6493,6 @@ function recordConfidence(conceptKey, score, btn) {
 }
 
 // Hook into result-bar show to add confidence rating
-const _origUpdateStreakConf = updateStreak;
 // (Already monkey-patched for live feed — extend that pattern via a separate observer)
 const _confObserver = new MutationObserver(() => {
   const bar = document.getElementById('result-bar');
@@ -6526,17 +6526,7 @@ function recordErrorTaxonomy(conceptKey, errorText) {
   localStorage.setItem('sl_error_taxonomy', JSON.stringify(_errorTaxonomy));
 }
 
-// Monkey-patch updateStreak to also record taxonomy
-const _origUpdateStreakTax = updateStreak;
-function updateStreak(correct, wrongData) {
-  _origUpdateStreakTax(correct, wrongData);
-  if (!correct && currentConcept) {
-    recordErrorTaxonomy(currentConcept.key, wrongData?.question);
-    writeLiveFeed(correct, wrongData?.question, currentMode);
-  } else if (correct) {
-    writeLiveFeed(correct, null, currentMode);
-  }
-}
+// Error-taxonomy recording on every answer: folded into updateStreak() directly (see 2026-07-01 note)
 
 // ── #9 DIFFICULTY INTERLEAVING ────────────────────────────────────────────────
 // Adds smart difficulty selection: after 2 easy exercises, pick a hard one
