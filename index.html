@@ -644,6 +644,36 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
 .story-score { text-align: center; padding: 12px; font-size: 14px; font-weight: 700; color: var(--text2); background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); display: none; }
 .story-score.show { display: block; }
 
+/* ── CONJUGATION DRILLS ── */
+.conj-wrap { padding: 24px; max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.conj-verb-card { background: var(--surface2); border: 1.5px solid var(--border2); border-radius: var(--r); padding: 22px 24px; text-align: center; }
+.conj-verb-name { font-size: 34px; font-weight: 900; letter-spacing: -1.5px; color: var(--accent); }
+.conj-verb-meta { font-size: 13px; color: var(--text3); margin-top: 5px; }
+.conj-prompt { font-size: 16px; color: var(--text); text-align: center; line-height: 1.6; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; }
+.conj-prompt strong { color: var(--accent); }
+.conj-input-row { display: flex; gap: 10px; }
+.conj-inp { flex: 1; background: var(--surface2); border: 1.5px solid var(--border2); border-radius: 8px; padding: 13px 16px; font-size: 18px; color: var(--text); outline: none; transition: border-color .15s; }
+.conj-inp:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(91,141,238,.12); }
+.conj-check-btn { padding: 0 22px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background .15s; }
+.conj-check-btn:hover { background: var(--accent2,#4a7fd4); }
+.conj-accents { display: flex; gap: 7px; flex-wrap: wrap; }
+.accent-btn { padding: 5px 11px; background: var(--surface2); border: 1px solid var(--border2); border-radius: 6px; color: var(--text2); font-size: 15px; cursor: pointer; transition: all .12s; }
+.accent-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(91,141,238,.07); }
+.conj-result-bar { display: none; align-items: flex-start; gap: 14px; padding: 16px 18px; border-radius: 10px; border: 1.5px solid var(--border2); background: var(--surface2); }
+.conj-result-bar.show { display: flex; }
+.conj-result-bar.correct-bar { border-color: var(--green); background: rgba(62,207,142,.07); }
+.conj-result-bar.wrong-bar { border-color: var(--red); background: rgba(244,91,105,.07); }
+.conj-result-bar.accent-bar { border-color: var(--amber); background: rgba(255,177,66,.07); }
+.conj-result-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.conj-result-body { flex: 1; }
+.conj-result-main { font-size: 15px; font-weight: 700; color: var(--text); }
+.conj-result-sub { font-size: 13px; color: var(--text2); margin-top: 4px; font-family: 'Courier New', monospace; }
+.conj-next-btn { margin-top: 10px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 7px; font-size: 13px; font-weight: 700; cursor: pointer; display: none; }
+.conj-result-bar.show .conj-next-btn { display: inline-flex; }
+.conj-table-hint { font-size: 12px; color: var(--text3); text-align: center; }
+@keyframes conj-shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
+.conj-inp.shake { animation: conj-shake .35s ease; }
+
 /* ── REVIEW MODAL ── */
 .review-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.72); z-index: 350; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity .2s; }
 .review-overlay.open { opacity: 1; pointer-events: all; }
@@ -728,6 +758,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   <div class="mode-tab" data-mode="builder" onclick="switchMode('builder', this)">🔨 Builder</div>
   <div class="mode-tab" data-mode="translate" onclick="switchMode('translate', this)">✍️ Translate</div>
   <div class="mode-tab" data-mode="story" onclick="switchMode('story', this)">📖 Story</div>
+  <div class="mode-tab" data-mode="conjugate" onclick="switchMode('conjugate', this)">🔤 Conjugate</div>
 </div>
 
 <!-- EXERCISE AREA -->
@@ -2915,6 +2946,194 @@ const STATIC_EXERCISES = {
   });
 })();
 
+// ─── CONJUGATIONS DATA ─────────────────────────────────────────────────────────
+// 20 key verbs × 4 tenses × 6 pronouns = 480 drill combinations
+const CONJUGATIONS = {
+  hablar: {
+    meaning: 'to speak', type: 'regular -ar',
+    tenses: {
+      present:   {yo:'hablo',    tú:'hablas',    él:'habla',    nosotros:'hablamos',  vosotros:'habláis',    ellos:'hablan'},
+      preterite: {yo:'hablé',    tú:'hablaste',  él:'habló',    nosotros:'hablamos',  vosotros:'hablasteis', ellos:'hablaron'},
+      imperfect: {yo:'hablaba',  tú:'hablabas',  él:'hablaba',  nosotros:'hablábamos',vosotros:'hablabais',  ellos:'hablaban'},
+      future:    {yo:'hablaré',  tú:'hablarás',  él:'hablará',  nosotros:'hablaremos',vosotros:'hablaréis',  ellos:'hablarán'}
+    }
+  },
+  comer: {
+    meaning: 'to eat', type: 'regular -er',
+    tenses: {
+      present:   {yo:'como',     tú:'comes',     él:'come',     nosotros:'comemos',   vosotros:'coméis',     ellos:'comen'},
+      preterite: {yo:'comí',     tú:'comiste',   él:'comió',    nosotros:'comimos',   vosotros:'comisteis',  ellos:'comieron'},
+      imperfect: {yo:'comía',    tú:'comías',    él:'comía',    nosotros:'comíamos',  vosotros:'comíais',    ellos:'comían'},
+      future:    {yo:'comeré',   tú:'comerás',   él:'comerá',   nosotros:'comeremos', vosotros:'comeréis',   ellos:'comerán'}
+    }
+  },
+  vivir: {
+    meaning: 'to live', type: 'regular -ir',
+    tenses: {
+      present:   {yo:'vivo',     tú:'vives',     él:'vive',     nosotros:'vivimos',   vosotros:'vivís',      ellos:'viven'},
+      preterite: {yo:'viví',     tú:'viviste',   él:'vivió',    nosotros:'vivimos',   vosotros:'vivisteis',  ellos:'vivieron'},
+      imperfect: {yo:'vivía',    tú:'vivías',    él:'vivía',    nosotros:'vivíamos',  vosotros:'vivíais',    ellos:'vivían'},
+      future:    {yo:'viviré',   tú:'vivirás',   él:'vivirá',   nosotros:'viviremos', vosotros:'viviréis',   ellos:'vivirán'}
+    }
+  },
+  ser: {
+    meaning: 'to be (permanent)', type: 'irregular',
+    tenses: {
+      present:   {yo:'soy',      tú:'eres',      él:'es',       nosotros:'somos',     vosotros:'sois',       ellos:'son'},
+      preterite: {yo:'fui',      tú:'fuiste',    él:'fue',      nosotros:'fuimos',    vosotros:'fuisteis',   ellos:'fueron'},
+      imperfect: {yo:'era',      tú:'eras',      él:'era',      nosotros:'éramos',    vosotros:'erais',      ellos:'eran'},
+      future:    {yo:'seré',     tú:'serás',     él:'será',     nosotros:'seremos',   vosotros:'seréis',     ellos:'serán'}
+    }
+  },
+  estar: {
+    meaning: 'to be (temporary)', type: 'irregular',
+    tenses: {
+      present:   {yo:'estoy',    tú:'estás',     él:'está',     nosotros:'estamos',   vosotros:'estáis',     ellos:'están'},
+      preterite: {yo:'estuve',   tú:'estuviste', él:'estuvo',   nosotros:'estuvimos', vosotros:'estuvisteis',ellos:'estuvieron'},
+      imperfect: {yo:'estaba',   tú:'estabas',   él:'estaba',   nosotros:'estábamos', vosotros:'estabais',   ellos:'estaban'},
+      future:    {yo:'estaré',   tú:'estarás',   él:'estará',   nosotros:'estaremos', vosotros:'estaréis',   ellos:'estarán'}
+    }
+  },
+  tener: {
+    meaning: 'to have', type: 'irregular',
+    tenses: {
+      present:   {yo:'tengo',    tú:'tienes',    él:'tiene',    nosotros:'tenemos',   vosotros:'tenéis',     ellos:'tienen'},
+      preterite: {yo:'tuve',     tú:'tuviste',   él:'tuvo',     nosotros:'tuvimos',   vosotros:'tuvisteis',  ellos:'tuvieron'},
+      imperfect: {yo:'tenía',    tú:'tenías',    él:'tenía',    nosotros:'teníamos',  vosotros:'teníais',    ellos:'tenían'},
+      future:    {yo:'tendré',   tú:'tendrás',   él:'tendrá',   nosotros:'tendremos', vosotros:'tendréis',   ellos:'tendrán'}
+    }
+  },
+  ir: {
+    meaning: 'to go', type: 'irregular',
+    tenses: {
+      present:   {yo:'voy',      tú:'vas',       él:'va',       nosotros:'vamos',     vosotros:'vais',       ellos:'van'},
+      preterite: {yo:'fui',      tú:'fuiste',    él:'fue',      nosotros:'fuimos',    vosotros:'fuisteis',   ellos:'fueron'},
+      imperfect: {yo:'iba',      tú:'ibas',      él:'iba',      nosotros:'íbamos',    vosotros:'ibais',      ellos:'iban'},
+      future:    {yo:'iré',      tú:'irás',      él:'irá',      nosotros:'iremos',    vosotros:'iréis',      ellos:'irán'}
+    }
+  },
+  hacer: {
+    meaning: 'to do / make', type: 'irregular',
+    tenses: {
+      present:   {yo:'hago',     tú:'haces',     él:'hace',     nosotros:'hacemos',   vosotros:'hacéis',     ellos:'hacen'},
+      preterite: {yo:'hice',     tú:'hiciste',   él:'hizo',     nosotros:'hicimos',   vosotros:'hicisteis',  ellos:'hicieron'},
+      imperfect: {yo:'hacía',    tú:'hacías',    él:'hacía',    nosotros:'hacíamos',  vosotros:'hacíais',    ellos:'hacían'},
+      future:    {yo:'haré',     tú:'harás',     él:'hará',     nosotros:'haremos',   vosotros:'haréis',     ellos:'harán'}
+    }
+  },
+  poder: {
+    meaning: 'to be able to / can', type: 'stem-changing (o→ue)',
+    tenses: {
+      present:   {yo:'puedo',    tú:'puedes',    él:'puede',    nosotros:'podemos',   vosotros:'podéis',     ellos:'pueden'},
+      preterite: {yo:'pude',     tú:'pudiste',   él:'pudo',     nosotros:'pudimos',   vosotros:'pudisteis',  ellos:'pudieron'},
+      imperfect: {yo:'podía',    tú:'podías',    él:'podía',    nosotros:'podíamos',  vosotros:'podíais',    ellos:'podían'},
+      future:    {yo:'podré',    tú:'podrás',    él:'podrá',    nosotros:'podremos',  vosotros:'podréis',    ellos:'podrán'}
+    }
+  },
+  querer: {
+    meaning: 'to want / love', type: 'stem-changing (e→ie)',
+    tenses: {
+      present:   {yo:'quiero',   tú:'quieres',   él:'quiere',   nosotros:'queremos',  vosotros:'queréis',    ellos:'quieren'},
+      preterite: {yo:'quise',    tú:'quisiste',  él:'quiso',    nosotros:'quisimos',  vosotros:'quisisteis', ellos:'quisieron'},
+      imperfect: {yo:'quería',   tú:'querías',   él:'quería',   nosotros:'queríamos', vosotros:'queríais',   ellos:'querían'},
+      future:    {yo:'querré',   tú:'querrás',   él:'querrá',   nosotros:'querremos', vosotros:'querréis',   ellos:'querrán'}
+    }
+  },
+  saber: {
+    meaning: 'to know (facts)', type: 'irregular',
+    tenses: {
+      present:   {yo:'sé',       tú:'sabes',     él:'sabe',     nosotros:'sabemos',   vosotros:'sabéis',     ellos:'saben'},
+      preterite: {yo:'supe',     tú:'supiste',   él:'supo',     nosotros:'supimos',   vosotros:'supisteis',  ellos:'supieron'},
+      imperfect: {yo:'sabía',    tú:'sabías',    él:'sabía',    nosotros:'sabíamos',  vosotros:'sabíais',    ellos:'sabían'},
+      future:    {yo:'sabré',    tú:'sabrás',    él:'sabrá',    nosotros:'sabremos',  vosotros:'sabréis',    ellos:'sabrán'}
+    }
+  },
+  ver: {
+    meaning: 'to see', type: 'irregular',
+    tenses: {
+      present:   {yo:'veo',      tú:'ves',       él:'ve',       nosotros:'vemos',     vosotros:'veis',       ellos:'ven'},
+      preterite: {yo:'vi',       tú:'viste',     él:'vio',      nosotros:'vimos',     vosotros:'visteis',    ellos:'vieron'},
+      imperfect: {yo:'veía',     tú:'veías',     él:'veía',     nosotros:'veíamos',   vosotros:'veíais',     ellos:'veían'},
+      future:    {yo:'veré',     tú:'verás',     él:'verá',     nosotros:'veremos',   vosotros:'veréis',     ellos:'verán'}
+    }
+  },
+  dar: {
+    meaning: 'to give', type: 'irregular',
+    tenses: {
+      present:   {yo:'doy',      tú:'das',       él:'da',       nosotros:'damos',     vosotros:'dais',       ellos:'dan'},
+      preterite: {yo:'di',       tú:'diste',     él:'dio',      nosotros:'dimos',     vosotros:'disteis',    ellos:'dieron'},
+      imperfect: {yo:'daba',     tú:'dabas',     él:'daba',     nosotros:'dábamos',   vosotros:'dabais',     ellos:'daban'},
+      future:    {yo:'daré',     tú:'darás',     él:'dará',     nosotros:'daremos',   vosotros:'daréis',     ellos:'darán'}
+    }
+  },
+  decir: {
+    meaning: 'to say / tell', type: 'irregular',
+    tenses: {
+      present:   {yo:'digo',     tú:'dices',     él:'dice',     nosotros:'decimos',   vosotros:'decís',      ellos:'dicen'},
+      preterite: {yo:'dije',     tú:'dijiste',   él:'dijo',     nosotros:'dijimos',   vosotros:'dijisteis',  ellos:'dijeron'},
+      imperfect: {yo:'decía',    tú:'decías',    él:'decía',    nosotros:'decíamos',  vosotros:'decíais',    ellos:'decían'},
+      future:    {yo:'diré',     tú:'dirás',     él:'dirá',     nosotros:'diremos',   vosotros:'diréis',     ellos:'dirán'}
+    }
+  },
+  venir: {
+    meaning: 'to come', type: 'irregular',
+    tenses: {
+      present:   {yo:'vengo',    tú:'vienes',    él:'viene',    nosotros:'venimos',   vosotros:'venís',      ellos:'vienen'},
+      preterite: {yo:'vine',     tú:'viniste',   él:'vino',     nosotros:'vinimos',   vosotros:'vinisteis',  ellos:'vinieron'},
+      imperfect: {yo:'venía',    tú:'venías',    él:'venía',    nosotros:'veníamos',  vosotros:'veníais',    ellos:'venían'},
+      future:    {yo:'vendré',   tú:'vendrás',   él:'vendrá',   nosotros:'vendremos', vosotros:'vendréis',   ellos:'vendrán'}
+    }
+  },
+  poner: {
+    meaning: 'to put / place', type: 'irregular',
+    tenses: {
+      present:   {yo:'pongo',    tú:'pones',     él:'pone',     nosotros:'ponemos',   vosotros:'ponéis',     ellos:'ponen'},
+      preterite: {yo:'puse',     tú:'pusiste',   él:'puso',     nosotros:'pusimos',   vosotros:'pusisteis',  ellos:'pusieron'},
+      imperfect: {yo:'ponía',    tú:'ponías',    él:'ponía',    nosotros:'poníamos',  vosotros:'poníais',    ellos:'ponían'},
+      future:    {yo:'pondré',   tú:'pondrás',   él:'pondrá',   nosotros:'pondremos', vosotros:'pondréis',   ellos:'pondrán'}
+    }
+  },
+  salir: {
+    meaning: 'to leave / go out', type: 'irregular',
+    tenses: {
+      present:   {yo:'salgo',    tú:'sales',     él:'sale',     nosotros:'salimos',   vosotros:'salís',      ellos:'salen'},
+      preterite: {yo:'salí',     tú:'saliste',   él:'salió',    nosotros:'salimos',   vosotros:'salisteis',  ellos:'salieron'},
+      imperfect: {yo:'salía',    tú:'salías',    él:'salía',    nosotros:'salíamos',  vosotros:'salíais',    ellos:'salían'},
+      future:    {yo:'saldré',   tú:'saldrás',   él:'saldrá',   nosotros:'saldremos', vosotros:'saldréis',   ellos:'saldrán'}
+    }
+  },
+  dormir: {
+    meaning: 'to sleep', type: 'stem-changing (o→ue)',
+    tenses: {
+      present:   {yo:'duermo',   tú:'duermes',   él:'duerme',   nosotros:'dormimos',  vosotros:'dormís',     ellos:'duermen'},
+      preterite: {yo:'dormí',    tú:'dormiste',  él:'durmió',   nosotros:'dormimos',  vosotros:'dormisteis', ellos:'durmieron'},
+      imperfect: {yo:'dormía',   tú:'dormías',   él:'dormía',   nosotros:'dormíamos', vosotros:'dormíais',   ellos:'dormían'},
+      future:    {yo:'dormiré',  tú:'dormirás',  él:'dormirá',  nosotros:'dormiremos',vosotros:'dormiréis',  ellos:'dormirán'}
+    }
+  },
+  pedir: {
+    meaning: 'to ask for / order', type: 'stem-changing (e→i)',
+    tenses: {
+      present:   {yo:'pido',     tú:'pides',     él:'pide',     nosotros:'pedimos',   vosotros:'pedís',      ellos:'piden'},
+      preterite: {yo:'pedí',     tú:'pediste',   él:'pidió',    nosotros:'pedimos',   vosotros:'pedisteis',  ellos:'pidieron'},
+      imperfect: {yo:'pedía',    tú:'pedías',    él:'pedía',    nosotros:'pedíamos',  vosotros:'pedíais',    ellos:'pedían'},
+      future:    {yo:'pediré',   tú:'pedirás',   él:'pedirá',   nosotros:'pediremos', vosotros:'pediréis',   ellos:'pedirán'}
+    }
+  },
+  conocer: {
+    meaning: 'to know (people/places)', type: 'irregular (yo: -zco)',
+    tenses: {
+      present:   {yo:'conozco',  tú:'conoces',   él:'conoce',   nosotros:'conocemos', vosotros:'conocéis',   ellos:'conocen'},
+      preterite: {yo:'conocí',   tú:'conociste', él:'conoció',  nosotros:'conocimos', vosotros:'conocisteis',ellos:'conocieron'},
+      imperfect: {yo:'conocía',  tú:'conocías',  él:'conocía',  nosotros:'conocíamos',vosotros:'conocíais',  ellos:'conocían'},
+      future:    {yo:'conoceré', tú:'conocerás', él:'conocerá', nosotros:'conoceremos',vosotros:'conoceréis', ellos:'conocerán'}
+    }
+  }
+};
+const CONJ_PRONOUNS = ['yo','tú','él','nosotros','vosotros','ellos'];
+const CONJ_TENSE_LABELS = {present:'Present',preterite:'Preterite',imperfect:'Imperfect',future:'Future'};
+let currentConjData = null;
+
 // ─── DIFFICULTY SYSTEM ─────────────────────────────────────────────────────────
 const DIFFICULTY_LEVELS = ['beg', 'int', 'adv'];
 const DIFFICULTY_LABELS = { beg: 'Beginner', int: 'Intermediate', adv: 'Advanced' };
@@ -3189,17 +3408,128 @@ function switchMode(mode, el) {
   mixedMode = false; // switching modes manually disables mixed
   document.getElementById('mixed-chip')?.classList.remove('active');
   nextExercise = null;
-  if (currentConcept) startExercise();
+  if (currentConcept || mode === 'conjugate') startExercise();
 }
 
 function startExercise() {
-  if (!currentConcept) return;
+  if (!currentConcept && currentMode !== 'conjugate') return;
   if (currentMode === 'pairs') loadPairs();
   else if (currentMode === 'examples') loadExamples();
   else if (currentMode === 'fillblank') loadFillBlank();
   else if (currentMode === 'builder') loadBuilder();
   else if (currentMode === 'translate') loadTranslation();
   else if (currentMode === 'story') loadStory();
+  else if (currentMode === 'conjugate') loadConjugate();
+}
+
+// ─── CONJUGATION DRILLS ───────────────────────────────────────────────────────
+function loadConjugate() {
+  exerciseAnswered = false;
+  lastCardId = null;
+  const verbKeys = Object.keys(CONJUGATIONS);
+  const verbKey = verbKeys[Math.floor(Math.random() * verbKeys.length)];
+  const verbData = CONJUGATIONS[verbKey];
+  const tenseKeys = Object.keys(verbData.tenses);
+  const tense = tenseKeys[Math.floor(Math.random() * tenseKeys.length)];
+  const pronoun = CONJ_PRONOUNS[Math.floor(Math.random() * CONJ_PRONOUNS.length)];
+  const answer = verbData.tenses[tense][pronoun];
+  currentConjData = { verbKey, tense, pronoun, answer, meaning: verbData.meaning, type: verbData.type };
+  const tenseLabel = CONJ_TENSE_LABELS[tense];
+
+  const area = document.getElementById('exercise-area');
+  area.innerHTML = `
+    <div class="conj-wrap">
+      <div class="q-round">🔤 Conjugation Drill</div>
+      <div class="conj-verb-card">
+        <div class="conj-verb-name">${verbKey.toUpperCase()}</div>
+        <div class="conj-verb-meta">${verbData.meaning} &nbsp;·&nbsp; <em>${verbData.type}</em></div>
+      </div>
+      <div class="conj-prompt">
+        Conjugate <strong>${verbKey}</strong> for <strong>${pronoun}</strong> in the <strong>${tenseLabel}</strong> tense
+      </div>
+      <div class="conj-input-row">
+        <input id="conj-inp" class="conj-inp" type="text" placeholder="type the conjugated form..."
+          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+          onkeydown="if(event.key==='Enter')checkConjugate()">
+        <button class="conj-check-btn" onclick="checkConjugate()">Check →</button>
+      </div>
+      <div class="conj-accents">
+        ${['á','é','í','ó','ú','ñ','ü'].map(c =>
+          `<button class="accent-btn" onclick="insertAccent('${c}')">${c}</button>`
+        ).join('')}
+      </div>
+      <div class="conj-result-bar" id="conj-result-bar">
+        <div class="conj-result-icon" id="conj-result-icon"></div>
+        <div class="conj-result-body">
+          <div class="conj-result-main" id="conj-result-main"></div>
+          <div class="conj-result-sub" id="conj-result-sub"></div>
+          <button class="conj-next-btn" onclick="loadConjugate()">Next drill →</button>
+        </div>
+      </div>
+      <div class="conj-table-hint">Accent helpers above · Press Enter to check</div>
+    </div>`;
+  document.getElementById('conj-inp')?.focus();
+}
+
+function checkConjugate() {
+  if (exerciseAnswered || !currentConjData) return;
+  const inp = document.getElementById('conj-inp');
+  if (!inp) return;
+  const val = inp.value.trim();
+  if (!val) {
+    inp.classList.add('shake');
+    setTimeout(() => inp.classList.remove('shake'), 400);
+    return;
+  }
+  exerciseAnswered = true;
+  inp.disabled = true;
+
+  const correct = currentConjData.answer;
+  const isCorrect = val.toLowerCase() === correct.toLowerCase();
+  const isAccentOnly = !isCorrect && stripAccents(val) === stripAccents(correct);
+
+  const bar = document.getElementById('conj-result-bar');
+  bar.classList.add('show');
+
+  if (isCorrect) {
+    bar.classList.add('correct-bar');
+    document.getElementById('conj-result-icon').textContent = '✅';
+    const streakBonus = streak >= 4 ? ` 🔥 ${streak + 1} in a row!` : '';
+    document.getElementById('conj-result-main').textContent = 'Correct!' + streakBonus;
+    document.getElementById('conj-result-sub').textContent = '';
+    const pts = 12 + Math.min(streak, 5) * 2;
+    addXP(pts);
+    updateStreak(true);
+    popXP('+' + pts + ' XP', null);
+  } else if (isAccentOnly) {
+    bar.classList.add('accent-bar');
+    document.getElementById('conj-result-icon').textContent = '⚠️';
+    document.getElementById('conj-result-main').textContent = 'Almost — missing or wrong accent mark.';
+    document.getElementById('conj-result-sub').textContent = 'You wrote: "' + val + '"  ·  Correct: "' + correct + '"';
+    addXP(6);
+    popXP('+6 XP', null);
+    // Don't break streak for accent-only errors
+  } else {
+    bar.classList.add('wrong-bar');
+    document.getElementById('conj-result-icon').textContent = '❌';
+    document.getElementById('conj-result-main').textContent = 'Not quite.';
+    document.getElementById('conj-result-sub').textContent = 'You wrote: "' + val + '"  ·  Correct: "' + correct + '"';
+    updateStreak(false);
+  }
+}
+
+function insertAccent(c) {
+  const inp = document.getElementById('conj-inp');
+  if (!inp || exerciseAnswered) return;
+  const start = inp.selectionStart;
+  const end = inp.selectionEnd;
+  inp.value = inp.value.slice(0, start) + c + inp.value.slice(end);
+  inp.selectionStart = inp.selectionEnd = start + 1;
+  inp.focus();
+}
+
+function stripAccents(s) {
+  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 }
 
 // ─── OLLAMA HELPERS ───────────────────────────────────────────────────────────
@@ -4177,588 +4507,4 @@ Mix REALISTIC and ABSURD elements — e.g., a plumber who fights dragons, a chef
 Make it memorable and slightly funny. The absurdity helps it stick in memory.
 Each sentence should feel natural and use vocabulary a B1 student would know.
 
-Then write 3 comprehension questions with 4 options each. The questions should test whether they understood the story AND the grammar concept.
-
-Respond with ONLY valid JSON:
-{
-  "title": "Story title (fun, 3-5 words)",
-  "sentences": [
-    {"es": "Spanish sentence 1", "en": "English translation"},
-    {"es": "Spanish sentence 2", "en": "English translation"},
-    {"es": "Spanish sentence 3", "en": "English translation"},
-    {"es": "Spanish sentence 4", "en": "English translation"}
-  ],
-  "questions": [
-    {
-      "q": "Question text",
-      "opts": ["option A", "option B", "option C", "option D"],
-      "correct": 0,
-      "why": "One sentence explaining why that answer is correct"
-    }
-  ]
-}
-
-Concept hint: use ${c.name} naturally in at least 3 of the 4 sentences.`;
-
-    const data = await ollamaJSONCreative(prompt, 1, 0.8);
-    renderStory(data);
-  } catch (err) {
-    showError(err.message, loadStory);
-  }
-}
-
-function renderStory(data) {
-  const area = document.getElementById('exercise-area');
-  const sentences = (data.sentences || []).map((s, i) => `
-    <div class="story-line" style="animation:fadeUp .3s ${i*0.08}s both">
-      <div class="story-sentence">${s.es}</div>
-      <div class="story-translation">${s.en}</div>
-    </div>`).join('');
-
-  const questions = (data.questions || []).map((q, qi) => {
-    const opts = q.opts.map((o, oi) =>
-      `<button class="story-opt" id="sq-${qi}-${oi}" onclick="pickStoryOpt(${qi}, ${oi}, ${q.correct}, '${escStr(q.why)}')">${o}</button>`
-    ).join('');
-    return `
-      <div class="story-q" id="sq-${qi}">
-        <div class="story-q-text">${qi + 1}. ${q.q}</div>
-        <div class="story-q-opts">${opts}</div>
-      </div>`;
-  }).join('');
-
-  area.innerHTML = `
-    <div class="story-wrap">
-      <div class="story-card">
-        <div class="story-header">
-          <div class="story-label">📖 Mini Story · ${currentConcept.name}</div>
-          <div class="story-concept">${data.title || 'A short story'}</div>
-        </div>
-        <div class="story-body">${sentences}</div>
-      </div>
-      <div class="story-section-label">Comprehension Questions</div>
-      <div class="story-questions">${questions}</div>
-      <div class="story-score" id="story-score"></div>
-      <div class="result-bar" id="result-bar" style="display:none">
-        <div class="result-icon" id="result-icon">📖</div>
-        <div class="result-body"><div class="result-main" id="result-main">Story complete!</div></div>
-        <button class="next-btn" id="next-btn" onclick="loadStory()">New Story →</button>
-      </div>
-    </div>`;
-}
-
-function pickStoryOpt(qIdx, optIdx, correct, why) {
-  const qBlock = document.getElementById(`sq-${qIdx}`);
-  if (!qBlock) return;
-  const opts = qBlock.querySelectorAll('.story-opt');
-  if (opts[0].classList.contains('disabled')) return; // already answered
-
-  const isCorrect = optIdx === correct;
-  opts.forEach((o, i) => {
-    o.classList.add('disabled');
-    if (i === correct) o.classList.add('correct');
-    else if (i === optIdx && !isCorrect) o.classList.add('wrong');
-  });
-
-  if (isCorrect) {
-    updateStreak(true);
-    addXP(8);
-    popXP('+8 XP', null);
-    recordMastery(true);
-  } else {
-    updateStreak(false, {
-      conceptName: currentConcept?.name,
-      question: qBlock.querySelector('.story-q-text')?.textContent || 'Story Q',
-      wrong: opts[optIdx]?.textContent || '?',
-      correct: opts[correct]?.textContent || '?'
-    });
-    recordMastery(false);
-  }
-
-  // Tooltip with explanation
-  const tip = document.createElement('div');
-  tip.style.cssText = 'padding:8px 18px 12px;font-size:12.5px;color:var(--text2);line-height:1.6;';
-  tip.innerHTML = (isCorrect ? '✅ ' : '❌ ') + (why || '');
-  qBlock.appendChild(tip);
-
-  storyQuestionsAnswered++;
-  const totalQs = document.querySelectorAll('[id^="sq-"]').length;
-  if (storyQuestionsAnswered >= totalQs) {
-    const scoreBox = document.getElementById('story-score');
-    if (scoreBox) {
-      scoreBox.textContent = `Story complete! Read it again — notice how ${currentConcept?.name} appears in each sentence.`;
-      scoreBox.classList.add('show');
-    }
-    const bar = document.getElementById('result-bar');
-    if (bar) { bar.style.display = 'flex'; bar.classList.add('show', 'correct-bar'); }
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// ── SPACED REPETITION REVIEW ──────────────────────────────────────────────────
-// ═══════════════════════════════════════════════════════════════════════════════
-
-function openReviewModal() {
-  if (wrongAnswers.length === 0) {
-    showToast('No mistakes to review yet — keep practicing!');
-    return;
-  }
-  const list = document.getElementById('review-list');
-  const sub = document.getElementById('review-modal-sub');
-  sub.textContent = `${wrongAnswers.length} question${wrongAnswers.length !== 1 ? 's' : ''} to review`;
-  list.innerHTML = wrongAnswers.map((w, i) => `
-    <div class="review-item">
-      <div class="review-item-concept">${w.conceptName}</div>
-      <div class="review-item-q">${w.question}</div>
-      <div class="review-item-wrong">✗ You chose: ${w.wrong}</div>
-      <div class="review-item-right">✓ Correct: ${w.correct}</div>
-    </div>`).join('');
-  document.getElementById('review-overlay').classList.add('open');
-}
-
-function closeReviewModal() {
-  document.getElementById('review-overlay').classList.remove('open');
-}
-
-function startReviewDrill() {
-  closeReviewModal();
-  if (wrongAnswers.length === 0) return;
-  // Find most-missed concept
-  const counts = {};
-  wrongAnswers.forEach(w => { counts[w.conceptName] = (counts[w.conceptName] || 0) + 1; });
-  const conceptName = Object.keys(counts).sort((a,b) => counts[b]-counts[a])[0];
-  const concept = CONCEPTS.find(c => c.name === conceptName) || CONCEPTS[0];
-  currentConcept = concept;
-  mixedMode = false;
-  // Highlight correct chip
-  document.querySelectorAll('.concept-chip').forEach(c => {
-    c.classList.toggle('active', c.dataset.key === concept.key);
-  });
-  document.getElementById('mixed-chip')?.classList.remove('active');
-  // Vary exercise mode for review (not always fill blank)
-  const reviewModes = ['pairs', 'fillblank'];
-  const mode = reviewModes[Math.floor(Math.random() * reviewModes.length)];
-  document.querySelectorAll('.mode-tab').forEach(t => {
-    t.classList.toggle('active', t.dataset.mode === mode);
-  });
-  currentMode = mode;
-  nextExercise = null;
-  wrongAnswers = []; // clear after starting drill
-  updateReviewBtn();
-  showToast(`🔄 Drilling "${conceptName}" (${counts[conceptName]} mistake${counts[conceptName]>1?'s':''}) — let's fix it!`, 3200);
-  startExercise();
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// ── THEME ──────────────────────────────────────────────────────────────────────
-// ═══════════════════════════════════════════════════════════════════════════════
-
-function toggleTheme() {
-  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  applyTheme();
-}
-
-function applyThemeChoice(val) {
-  currentTheme = val;
-  applyTheme();
-}
-
-function applyTheme() {
-  const isLight = currentTheme === 'light';
-  document.body.classList.toggle('light-theme', isLight);
-  const btn = document.getElementById('theme-btn');
-  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
-  const sel = document.getElementById('m-theme');
-  if (sel) sel.value = currentTheme;
-  localStorage.setItem('sl_theme', currentTheme);
-}
-
-// ─── SCORING & STATS ──────────────────────────────────────────────────────────
-const XP_PER_LEVEL = 100;
-
-function addXP(amount) {
-  xp += amount;
-  localStorage.setItem('sl_xp', xp);
-  updateStats();
-}
-
-function updateStreak(correct, wrongData) {
-  if (correct) {
-    streak++;
-    if (streak > bestStreak) {
-      bestStreak = streak;
-      localStorage.setItem('sl_best_streak', bestStreak);
-    }
-    sessionCorrect++;
-    if (streak === 5 || streak === 10 || streak === 20) showCombo(`🔥 ${streak} in a row!`);
-  } else {
-    streak = 0;
-    sessionWrong++;
-    if (wrongData) {
-      wrongAnswers.push(wrongData);
-      updateReviewBtn();
-      if (wrongAnswers.length === 10) {
-        setTimeout(() => {
-          showToast('📊 10 mistakes logged — review round available!', 3500);
-          openReviewModal();
-        }, 1200);
-      }
-    }
-  }
-  updateStats();
-}
-
-function updateReviewBtn() {
-  const btn = document.getElementById('review-btn');
-  const cnt = document.getElementById('review-count');
-  if (!btn || !cnt) return;
-  cnt.textContent = wrongAnswers.length;
-  if (wrongAnswers.length > 0) btn.classList.add('visible');
-  else btn.classList.remove('visible');
-}
-
-function recordMastery(correct) {
-  if (!currentConcept) return;
-  const key = currentConcept.key;
-  const prevAcc = conceptMastery[key]?.total > 0
-    ? Math.round(conceptMastery[key].correct / conceptMastery[key].total * 100) : 0;
-  if (!conceptMastery[key]) conceptMastery[key] = { correct: 0, total: 0 };
-  conceptMastery[key].total++;
-  if (correct) conceptMastery[key].correct++;
-  // Timestamp + SM-2
-  conceptMastery[key].lastPracticed = new Date().toISOString();
-  sm2Update(lastCardId, correct);
-  const newAcc = Math.round(conceptMastery[key].correct / conceptMastery[key].total * 100);
-  localStorage.setItem('sl_mastery', JSON.stringify(conceptMastery));
-  // Milestone: celebrate crossing 80% for first time
-  if (correct && prevAcc < 80 && newAcc >= 80 && conceptMastery[key].total >= 5) {
-    setTimeout(() => {
-      showCombo(`⭐ ${currentConcept.name} mastered!`);
-      showToast(`🎉 You've hit 80%+ on ${currentConcept.name}! Keep it up!`, 3500);
-    }, 600);
-  }
-  checkDifficultyAdvance(key, correct);
-  renderConceptBar();
-  // Re-mark active chip
-  if (mixedMode) {
-    document.getElementById('mixed-chip')?.classList.add('active');
-  } else {
-    const chip = document.querySelector(`.concept-chip[data-key="${key}"]`);
-    if (chip) chip.classList.add('active');
-  }
-}
-
-function updateStats() {
-  document.getElementById('streak-val').textContent = streak;
-  document.getElementById('xp-val').textContent = xp;
-  document.getElementById('s-correct').textContent = sessionCorrect;
-  document.getElementById('s-wrong').textContent = sessionWrong;
-
-  const total = sessionCorrect + sessionWrong;
-  // Update total exercises count if element exists
-  const totalEl = document.getElementById('s-total');
-  if (totalEl) totalEl.textContent = total;
-
-  if (total > 0) {
-    const acc = Math.round(sessionCorrect / total * 100);
-    document.getElementById('acc-val').textContent = acc + '%';
-    document.getElementById('s-acc').textContent = acc + '%';
-    document.getElementById('s-acc-wrap').style.display = 'flex';
-  }
-
-  const level = Math.floor(xp / XP_PER_LEVEL) + 1;
-  const xpInLevel = xp % XP_PER_LEVEL;
-  const pct = (xpInLevel / XP_PER_LEVEL) * 100;
-  document.getElementById('xp-bar').style.width = pct + '%';
-  document.getElementById('xp-label').textContent = `${xpInLevel} / ${XP_PER_LEVEL} XP to Level ${level + 1}`;
-  document.getElementById('lvl-badge').textContent = `Level ${level}`;
-  // SM-2 due count
-  const dueCount = getTotalDueCount();
-  const dueStat = document.getElementById('due-stat');
-  const dueVal = document.getElementById('due-val');
-  if (dueStat && dueVal) {
-    dueVal.textContent = dueCount;
-    dueStat.style.display = dueCount > 0 ? '' : 'none';
-  }
-}
-
-// ─── VISUAL EFFECTS ────────────────────────────────────────────────────────────
-function popXP(text, evtOrNull) {
-  const el = document.createElement('div');
-  el.className = 'xp-pop';
-  el.textContent = text;
-  const x = evtOrNull?.clientX || window.innerWidth / 2;
-  const y = evtOrNull?.clientY || window.innerHeight / 2;
-  el.style.left = (x - 20) + 'px';
-  el.style.top = (y - 10) + 'px';
-  el.style.color = text.startsWith('+') ? 'var(--amber)' : 'var(--green)';
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 1200);
-}
-
-let comboBannerTimer = null;
-function showCombo(text) {
-  const banner = document.getElementById('combo-banner');
-  banner.textContent = text;
-  banner.classList.add('show');
-  clearTimeout(comboBannerTimer);
-  comboBannerTimer = setTimeout(() => banner.classList.remove('show'), 2000);
-}
-
-function showToast(msg, duration = 2400) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
-}
-
-// ─── SETTINGS ─────────────────────────────────────────────────────────────────
-function openSettings() {
-  document.getElementById('m-ollama').value = ollamaUrl;
-  document.getElementById('m-name').value = localStorage.getItem('sl_name') || '';
-  if (document.getElementById('m-theme')) document.getElementById('m-theme').value = currentTheme;
-  document.getElementById('settings-modal').classList.add('open');
-  // Populate model list from live Ollama
-  refreshModelList();
-}
-
-function closeSettings() {
-  document.getElementById('settings-modal').classList.remove('open');
-}
-
-function saveSettingsModal() {
-  ollamaUrl = document.getElementById('m-ollama').value.trim() || 'http://localhost:11434';
-  const modelSel = document.getElementById('m-model');
-  if (modelSel?.value) selectedModel = modelSel.value;
-  const name = document.getElementById('m-name').value.trim();
-  localStorage.setItem('sl_ollama', ollamaUrl);
-  localStorage.setItem('sl_model', selectedModel);
-  if (name) localStorage.setItem('sl_name', name);
-  document.getElementById('ollama-inp').value = ollamaUrl;
-  // Clear pre-generated exercise since model changed
-  nextExercise = null;
-  saveAndRefreshName();
-  closeSettings();
-  checkOllama();
-  showToast('Settings saved ✓');
-}
-
-function saveSettings() {
-  localStorage.setItem('sl_ollama', ollamaUrl);
-}
-
-function setOllamaUrl(url) {
-  ollamaUrl = url.trim() || 'http://localhost:11434';
-  saveSettings();
-}
-
-// ─── OLLAMA STATUS & CONTROL ──────────────────────────────────────────────────
-let ollamaOnline = false;
-let reconnectTimer = null;
-
-async function checkOllama(silent = false) {
-  const dot = document.getElementById('cfg-dot');
-  const status = document.getElementById('cfg-status');
-  const startBtn = document.getElementById('start-ollama-btn');
-  if (!silent) { dot.className = 'cfg-dot off'; status.textContent = 'Checking...'; }
-  try {
-    const res = await fetch(`${ollamaUrl}/api/tags`, { signal: AbortSignal.timeout(4000) });
-    if (!res.ok) throw new Error('not ok');
-    const data = await res.json();
-    const models = data.models || [];
-    const count = models.length;
-    dot.className = 'cfg-dot on';
-    status.textContent = `Online · ${count} model${count !== 1 ? 's' : ''}`;
-    if (startBtn) startBtn.style.display = 'none';
-    const offBanner = document.getElementById('offline-banner');
-    if (offBanner) offBanner.style.display = 'none';
-
-    // First time coming online after offline: notify
-    if (!ollamaOnline && silent) showToast('Ollama reconnected ✓', 2000);
-    ollamaOnline = true;
-    clearInterval(reconnectTimer);
-    reconnectTimer = null;
-
-    // Auto-select model if current one isn't installed
-    if (count > 0 && !models.find(m => m.name.startsWith(selectedModel.split(':')[0]))) {
-      selectedModel = models[0].name;
-      localStorage.setItem('sl_model', selectedModel);
-    }
-    document.getElementById('m-model').value = selectedModel;
-  } catch {
-    dot.className = 'cfg-dot off';
-    status.textContent = 'Offline';
-    if (startBtn) startBtn.style.display = '';
-    const offBanner = document.getElementById('offline-banner');
-    if (offBanner) offBanner.style.display = 'flex';
-    ollamaOnline = false;
-    // Start polling for reconnect
-    if (!reconnectTimer) {
-      reconnectTimer = setInterval(() => checkOllama(true), 15000);
-    }
-  }
-}
-
-async function startOllama() {
-  const btn = document.getElementById('start-ollama-btn');
-  if (btn) { btn.textContent = '⏳'; btn.disabled = true; }
-  try {
-    const res = await fetch('http://localhost:8765/start-ollama', { method: 'POST' });
-    const data = await res.json();
-    showToast(data.message || 'Starting Ollama...', 3000);
-    // Wait 4s then re-check
-    setTimeout(() => checkOllama(), 4000);
-  } catch {
-    showToast('⚠️ Session server offline — start it manually', 3500);
-  } finally {
-    if (btn) { btn.textContent = '▶ Start'; btn.disabled = false; }
-  }
-}
-
-async function refreshModelList() {
-  const sel = document.getElementById('m-model');
-  const info = document.getElementById('model-info-line');
-  if (!sel) return;
-  sel.innerHTML = '<option>Loading...</option>';
-  try {
-    const res = await fetch(`${ollamaUrl}/api/tags`, { signal: AbortSignal.timeout(5000) });
-    const data = await res.json();
-    const models = data.models || [];
-    if (models.length === 0) {
-      sel.innerHTML = '<option value="">No models installed</option>';
-      if (info) info.textContent = 'Download a model below to get started';
-      return;
-    }
-    sel.innerHTML = models.map(m => {
-      const sizeLabel = m.size ? ` (${(m.size/1e9).toFixed(1)}GB)` : '';
-      return `<option value="${m.name}" ${m.name === selectedModel ? 'selected' : ''}>${m.name}${sizeLabel}</option>`;
-    }).join('');
-    if (info) info.textContent = `${models.length} model${models.length !== 1 ? 's' : ''} installed`;
-  } catch {
-    sel.innerHTML = `<option value="${selectedModel}">${selectedModel} (Ollama offline)</option>`;
-    if (info) info.textContent = 'Ollama offline — showing last used model';
-  }
-}
-
-async function pullModel() {
-  const nameEl = document.getElementById('m-pull-name');
-  const name = nameEl?.value?.trim();
-  if (!name) { showToast('Enter a model name first'); return; }
-
-  const progress = document.getElementById('pull-progress');
-  const bar = document.getElementById('pull-bar');
-  const statusEl = document.getElementById('pull-status');
-  if (progress) progress.style.display = 'block';
-  if (statusEl) statusEl.textContent = `Starting download of ${name}...`;
-
-  try {
-    const res = await fetch('http://localhost:8765/pull-model', {
-      method: 'POST',
-      body: new URLSearchParams({ model_name: name })
-    });
-    if (!res.ok) throw new Error('Server error');
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let lastPct = 0;
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      for (const line of decoder.decode(value).split('\n').filter(Boolean)) {
-        try {
-          const j = JSON.parse(line);
-          if (j.total && j.completed) {
-            const pct = Math.round(j.completed / j.total * 100);
-            if (bar) bar.style.width = pct + '%';
-            if (statusEl) statusEl.textContent = `${j.status || 'Downloading'} — ${pct}%`;
-            lastPct = pct;
-          } else if (j.status) {
-            if (statusEl) statusEl.textContent = j.status;
-            if (j.status.includes('success') || j.status.includes('done') || j.status === 'success') {
-              if (bar) bar.style.width = '100%';
-              if (statusEl) statusEl.textContent = `✓ ${name} downloaded!`;
-              setTimeout(() => { if (progress) progress.style.display = 'none'; }, 2500);
-              nameEl.value = '';
-              selectedModel = name;
-              localStorage.setItem('sl_model', name);
-              await refreshModelList();
-            }
-          }
-        } catch {}
-      }
-    }
-  } catch (err) {
-    if (statusEl) statusEl.textContent = `Error: ${err.message}`;
-  }
-}
-
-// ─── PROGRESS EXPORT ──────────────────────────────────────────────────────────
-function exportProgress() {
-  const payload = {
-    name: localStorage.getItem('sl_name') || '',
-    xp,
-    level: Math.floor(xp / XP_PER_LEVEL) + 1,
-    bestStreak,
-    sessionCorrect,
-    sessionWrong,
-    mastery: conceptMastery
-  };
-  const text = JSON.stringify(payload, null, 2);
-  navigator.clipboard.writeText(text)
-    .then(() => showToast('📋 Progress copied to clipboard', 2800))
-    .catch(() => {
-      // Fallback: open a data URI so they can copy manually
-      const w = window.open();
-      w.document.write(`<pre style="font:13px monospace;padding:16px">${text.replace(/</g,'&lt;')}</pre>`);
-      showToast('⚠ Clipboard blocked — data opened in new tab', 3500);
-    });
-}
-
-// ─── UTILS ───────────────────────────────────────────────────────────────────
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-function escStr(s) {
-  return (s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, ' ');
-}
-
-// ─── KEYBOARD SHORTCUTS ───────────────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  if (document.getElementById('settings-modal').classList.contains('open')) return;
-  if (document.getElementById('review-overlay').classList.contains('open')) return;
-  // Translate mode: Ctrl+Enter submits
-  if (currentMode === 'translate' && e.key === 'Enter' && e.ctrlKey) {
-    e.preventDefault();
-    if (!exerciseAnswered) document.getElementById('translate-go')?.click();
-    return;
-  }
-  // Don't intercept keys when translate input is focused
-  if (currentMode === 'translate' && document.activeElement?.id === 'translate-input') return;
-  if (exerciseAnswered) {
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') {
-      e.preventDefault();
-      document.getElementById('next-btn')?.click();
-    }
-  } else {
-    if (currentMode === 'pairs') {
-      if (e.key === '1' || e.key === 'a' || e.key === 'ArrowLeft') document.getElementById('card-0')?.click();
-      if (e.key === '2' || e.key === 'b' || e.key === 'ArrowRight') document.getElementById('card-1')?.click();
-    }
-    if (currentMode === 'fillblank') {
-      const map = { '1': 0, '2': 1, '3': 2, '4': 3 };
-      if (map[e.key] !== undefined) document.getElementById(`opt-${map[e.key]}`)?.click();
-    }
-    if (currentMode === 'builder' && e.key === 'Enter') {
-      document.getElementById('check-btn')?.click();
-    }
-    if (currentMode === 'story') {
-      // Number keys 1-4 answer the first unanswered story question
-      const numMap = { '1': 0, '2': 1, '3': 2, '4': 3 };
-      if (numMap[e.key] !== undefined) {
-        // Find first unanswered question
-        const allQBlocks = document.querySelectorAll('[id^="sq-"]:not([id*="-"])');
-        for (const block of allQBlocks) {
-          const opts = block.querySelectorAll('.story-o
+Then write 3 comprehension questions with 4 options each. The ques
