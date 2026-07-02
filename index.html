@@ -951,6 +951,18 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   .empty-icon { font-size: 38px; }
   .empty-title { font-size: 17px; }
 }
+
+/* Accessibility: respect the OS-level "reduce motion" setting. Overrides
+   every animation/transition in this stylesheet at once rather than hunting
+   down each of the ~65 individual rules. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -966,11 +978,11 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   </div>
 
   <div class="hd-stats">
-    <div class="hd-stat">
+    <div class="hd-stat" title="Your best streak ever is shown in parentheses">
       <span class="hd-stat-icon">🔥</span>
       <div>
         <div class="hd-stat-val" id="streak-val">0</div>
-        <div class="hd-stat-lbl">Streak</div>
+        <div class="hd-stat-lbl">Streak <span id="best-streak-val" style="opacity:.65">(best 0)</span></div>
       </div>
     </div>
     <div class="hd-stat">
@@ -1007,6 +1019,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
     <div class="pomo-bar" id="pomo-bar"><span>🍅</span><span class="pomo-time" id="pomo-time">25:00</span><button class="pomo-stop" onclick="stopPomodoro()" title="Stop">✕</button></div>
     <div class="lvl-badge" id="lvl-badge">Level 1</div>
     <button class="review-btn" id="review-btn" onclick="openReviewModal()">📊 Review <span id="review-count">0</span></button>
+    <button class="cfg-btn" onclick="reopenGateway()" title="Re-read the mental model for your current concept">🧠 Brief</button>
     <button class="cfg-btn" onclick="openCheatSheet()" title="Grammar reference — always available">📖 Cheat Sheet</button>
     <button class="cfg-btn" onclick="openHelp()" title="How to use this dashboard">❓ Help</button>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
@@ -1279,10 +1292,16 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
       <div class="cal-title">📅 Practice Calendar</div>
       <button class="cal-close" onclick="closeCalendar()">✕</button>
     </div>
-    <div class="cal-goal-row">
+    <div class="cal-goal-row" style="flex-wrap:wrap;">
       <label for="cal-goal-input">Daily XP goal:</label>
       <input class="cal-goal-input" id="cal-goal-input" type="number" min="5" max="500" step="5">
       <button class="cal-goal-save" onclick="saveGoal()">Save</button>
+      <div style="display:flex;gap:5px;width:100%;margin-top:2px;">
+        <button class="cal-goal-preset" onclick="setDailyGoalPreset(20)" style="padding:3px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;font-size:11.5px;">Light · 20</button>
+        <button class="cal-goal-preset" onclick="setDailyGoalPreset(30)" style="padding:3px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;font-size:11.5px;">Steady · 30</button>
+        <button class="cal-goal-preset" onclick="setDailyGoalPreset(50)" style="padding:3px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;font-size:11.5px;">Serious · 50</button>
+        <button class="cal-goal-preset" onclick="setDailyGoalPreset(75)" style="padding:3px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;font-size:11.5px;">Intense · 75</button>
+      </div>
     </div>
     <div class="cal-grid-label">Last 28 days</div>
     <div class="cal-grid" id="cal-grid"></div>
@@ -3632,6 +3651,9 @@ const DIFFICULTY_COLORS = { beg: '#3ecf8e', int: '#f6a623', adv: '#f45b69' };
 
 let conceptDifficulty = JSON.parse(localStorage.getItem('sl_difficulty') || '{}');
 let difficultyAccuracy  = JSON.parse(localStorage.getItem('sl_diff_acc')  || '{}');
+// 2026-07-01: in-memory only (deliberately not persisted) — just tracks
+// short-term momentum within a session for the auto-lower safety net below.
+let _consecutiveMisses = {};
 
 function getCurrentDifficulty(key) {
   return conceptDifficulty[key] || 'beg';
@@ -3644,6 +3666,30 @@ function checkDifficultyAdvance(key, correct) {
   difficultyAccuracy[accKey].total++;
   if (correct) difficultyAccuracy[accKey].correct++;
   localStorage.setItem('sl_diff_acc', JSON.stringify(difficultyAccuracy));
+
+  // Auto-LOWER on a real losing streak — this used to only ever ratchet
+  // difficulty UP (85%+ accuracy), with no safety net for a student who's
+  // struggling at the current level. 3 misses in a row steps back down one
+  // level; any correct answer resets the counter.
+  if (correct) {
+    _consecutiveMisses[key] = 0;
+  } else {
+    _consecutiveMisses[key] = (_consecutiveMisses[key] || 0) + 1;
+    const curIdx = DIFFICULTY_LEVELS.indexOf(difficulty);
+    if (_consecutiveMisses[key] >= 3 && curIdx > 0) {
+      const prevDiff = DIFFICULTY_LEVELS[curIdx - 1];
+      conceptDifficulty[key] = prevDiff;
+      localStorage.setItem('sl_difficulty', JSON.stringify(conceptDifficulty));
+      difficultyAccuracy[key + '_' + prevDiff] = difficultyAccuracy[key + '_' + prevDiff] || { correct: 0, total: 0 };
+      _consecutiveMisses[key] = 0;
+      nextExercise = null;
+      setTimeout(() => {
+        showToast(`📉 ${currentConcept?.name || key}: stepping back to ${DIFFICULTY_LABELS[prevDiff]} for now — you've got this`, 3500);
+        updateDifficultyBadge();
+      }, 800);
+      return;
+    }
+  }
 
   const { correct: c, total: t } = difficultyAccuracy[accKey];
   if (t >= 8) {
@@ -3752,6 +3798,9 @@ let conceptMastery = JSON.parse(localStorage.getItem('sl_mastery') || '{}');
 // ── NEW STATE ──────────────────────────────────────────────────────────────────
 let mixedMode = false;
 let lastUsedConceptKey = null;
+// 2026-07-01: rolling history of the last 2 concepts used in Mixed mode, so
+// interleaving avoids tight A-B-A-B clustering, not just an immediate repeat.
+let recentConceptKeys = [];
 let wrongAnswers = [];            // [{conceptName, question, wrong, correct}]
 let currentTheme = localStorage.getItem('sl_theme') || 'dark';
 let reviewDrillItems = [];        // subset of wrongAnswers being drilled
@@ -3815,15 +3864,40 @@ function init() {
   const logoSub = document.querySelector('.logo-sub');
   if (logoSub && savedName) logoSub.textContent = `Hola, ${savedName} 👋`;
   renderConceptBar();
+
+  // Restore last-used mode (before concept — selecting a concept triggers
+  // startExercise() using whatever currentMode already is at that point).
+  const lastMode = localStorage.getItem('sl_last_mode');
+  if (lastMode) {
+    const modeTab = document.querySelector(`.mode-tab[data-mode="${lastMode}"]`);
+    if (modeTab) {
+      document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+      modeTab.classList.add('active');
+      currentMode = lastMode;
+    }
+  }
+
   // Auto-select a starting concept so the app is never blank on first load.
   // Root cause fixed 2026-07-01: nothing was selected until a student clicked a
   // concept chip, which silently no-op'd every mode tab except Conjugate/Vocab/
   // Errors/Read (the only modes that don't require currentConcept) — that's why
   // clicking Conjugate first made every other tab look "broken."
+  // Prefer the student's last-used concept (continuity across visits); fall
+  // back to the first chip only if nothing was saved or it no longer exists.
   if (!currentConcept) {
+    const lastConceptKey = localStorage.getItem('sl_last_concept');
+    const lastChip = lastConceptKey && document.querySelector(`.concept-chip[data-key="${lastConceptKey}"]`);
     const firstChip = document.querySelector('.concept-chip[data-key]');
-    if (firstChip) selectConcept(firstChip.dataset.key, firstChip);
+    const chipToUse = lastChip || firstChip;
+    if (chipToUse) selectConcept(chipToUse.dataset.key, chipToUse);
   }
+
+  // One-time nudge for brand-new students who've never picked a concept before.
+  if (!localStorage.getItem('sl_seen_concept_tip')) {
+    localStorage.setItem('sl_seen_concept_tip', '1');
+    setTimeout(() => showToast('👆 Pick a concept above any time to change what you\'re practicing', 4000), 800);
+  }
+
   updateStats();
   checkOllama();
   // SM-2: notify if cards are due for review
@@ -3846,6 +3920,18 @@ function renderConceptBar() {
   const mixedChip = `<div class="concept-chip mixed-chip${mixedActive}" id="mixed-chip" onclick="selectMixedMode(this)">
     <span class="chip-emoji">🔀</span>Mixed
   </div>`;
+
+  // Suggest (don't force-select) the weakest concept with enough data to be
+  // meaningful — a subtle nudge, not another auto-selection decision.
+  let weakestKey = null, weakestAcc = 101;
+  CONCEPTS.forEach(c => {
+    const m = conceptMastery[c.key];
+    if (m && m.total >= 3) {
+      const acc = Math.round(m.correct / m.total * 100);
+      if (acc < weakestAcc) { weakestAcc = acc; weakestKey = c.key; }
+    }
+  });
+
   const conceptChips = CONCEPTS.map(c => {
     const m = conceptMastery[c.key] || { correct: 0, total: 0 };
     const acc = m.total > 0 ? Math.round(m.correct / m.total * 100) : null;
@@ -3855,9 +3941,12 @@ function renderConceptBar() {
       else if (acc >= 60) masteryMark = `<span class="chip-mastery">📈</span>`;
       else if (m.total > 0) masteryMark = `<span class="chip-mastery">🔴</span>`;
     }
+    const suggestBadge = (c.key === weakestKey)
+      ? `<span class="chip-mastery" title="Suggested — your weakest concept right now (${weakestAcc}% accuracy)">💪</span>`
+      : '';
     const tooltip = acc !== null ? `${acc}% accuracy (${m.correct}/${m.total})` : 'Not started';
     return `<div class="concept-chip" data-key="${c.key}" title="${tooltip}" onclick="selectConcept('${c.key}', this)">
-      <span class="chip-emoji">${c.emoji}</span>${c.name}${masteryMark}
+      <span class="chip-emoji">${c.emoji}</span>${c.name}${masteryMark}${suggestBadge}
     </div>`;
   }).join('');
   bar.innerHTML = mixedChip + conceptChips;
@@ -3869,6 +3958,7 @@ function selectConcept(key, el) {
   mixedMode = false; // manual concept selection turns off mixed mode
   currentConcept = CONCEPTS.find(c => c.key === key);
   nextExercise = null;
+  localStorage.setItem('sl_last_concept', key); // restored on next visit, see init()
   setTimeout(updateDifficultyBadge, 50);
 
   // Show concept gateway if first time this session
@@ -3902,6 +3992,25 @@ function closeGateway() {
     sessionSeenGateways.add(currentConcept.key);
     startExercise();
   }
+}
+
+// 2026-07-01: the concept brief used to only show once per session the first
+// time a concept was picked. Students should be able to re-read the mental
+// model any time they want a refresher, not just once.
+function reopenGateway() {
+  if (!currentConcept) { showToast('Pick a concept first', 2000); return; }
+  if (!GATEWAYS[currentConcept.key]) { showToast('No brief written for this concept yet', 2000); return; }
+  showGateway(currentConcept.key);
+}
+
+// Reuses the same "common mistake" text already written per concept in
+// GATEWAYS (idea: reinforce the concept-level pitfall every time a student
+// misses, same pattern as the accent tips above).
+function conceptMistakeTipHTML() {
+  if (!currentConcept) return '';
+  const gw = GATEWAYS[currentConcept.key];
+  if (!gw || !gw.mistake) return '';
+  return `<div class="accent-tip">📌 ${gw.mistake}</div>`;
 }
 
 // ─── CHEAT SHEET (2026-07-01) ─────────────────────────────────────────────────
@@ -4028,7 +4137,7 @@ function renderHelp() {
   body.innerHTML = `
     <div>
       <div style="font-weight:800;font-size:14px;margin-bottom:6px;">1. Pick a concept</div>
-      <div style="font-size:13px;line-height:1.5;">The row of chips at the top (⚖️ Ser vs Estar, 📸 Preterite vs Imperfect, etc.) is what most exercises practice. Pick one before switching modes — a concept is auto-selected for you on first visit, but you can always change it. 🔀 Mixed pulls from everything.</div>
+      <div style="font-size:13px;line-height:1.5;">The row of chips at the top (⚖️ Ser vs Estar, 📸 Preterite vs Imperfect, etc.) is what most exercises practice. Pick one before switching modes — a concept is auto-selected for you on first visit, but you can always change it. 🔀 Mixed pulls from everything. 🧠 Brief (top right) reopens the mental-model explanation for whichever concept you're on, any time you want a refresher.</div>
     </div>
     <div>
       <div style="font-weight:800;font-size:14px;margin-bottom:6px;">2. Pick a mode</div>
@@ -4049,6 +4158,22 @@ function renderHelp() {
     <div>
       <div style="font-weight:800;font-size:14px;margin-bottom:6px;">5. Cheat Sheet</div>
       <div style="font-size:13px;line-height:1.5;">📖 Cheat Sheet (top right) is a permanent, always-open grammar reference — concept explanations, verb conjugation tables, and accent rules. Use it to study before practicing, not as a way to skip thinking during an exercise — it won't make the streak/XP disappear, but looking up every answer means you're not actually building recall.</div>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:6px;">6. It remembers where you left off</div>
+      <div style="font-size:13px;line-height:1.5;">Your last concept and mode are saved automatically — next time you open the app, you'll land right back where you stopped. The 💪 badge on a concept chip is a suggestion (your weakest concept lately), not a requirement — pick whatever you want.</div>
+    </div>
+    <div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:6px;">⌨️ Keyboard shortcuts</div>
+      <div style="font-size:13px;line-height:1.6;">
+        <b>Enter</b>, <b>Space</b>, or <b>→</b> — move to the next question once you've answered.<br>
+        <b>Pairs:</b> 1 / a / ← for the left card, 2 / b / → for the right card.<br>
+        <b>Fill Blank:</b> number keys 1–4 pick the matching option.<br>
+        <b>Builder:</b> Enter checks your answer.<br>
+        <b>Story:</b> number keys 1–4 answer the current question.<br>
+        <b>Translate:</b> Ctrl+Enter submits.<br>
+        <b>Conjugate:</b> Enter checks your answer; the á/é/í/ó/ú/ñ/ü buttons insert accents without switching keyboards.
+      </div>
     </div>`;
 }
 
@@ -4060,6 +4185,7 @@ function switchMode(mode, el) {
   mixedMode = false; // switching modes manually disables mixed
   document.getElementById('mixed-chip')?.classList.remove('active');
   nextExercise = null;
+  localStorage.setItem('sl_last_mode', mode); // restored on next visit, see init()
   // 2026-07-01: this used to only exempt 'conjugate' from needing a concept,
   // so vocab/spottherror/readcomp (also concept-free per startExercise()'s own
   // noConceptModes list) silently did nothing when no concept was selected.
@@ -4076,20 +4202,29 @@ function startExercise() {
     showToast('👆 Pick a concept above to start practicing', 2500);
     return;
   }
-  if (currentMode === 'pairs') loadPairs();
-  else if (currentMode === 'examples') loadExamples();
-  else if (currentMode === 'fillblank') loadFillBlank();
-  else if (currentMode === 'builder') loadBuilder();
-  else if (currentMode === 'translate') loadTranslation();
-  else if (currentMode === 'story') loadStory();
-  else if (currentMode === 'conjugate') loadConjugate();
-  else if (currentMode === 'speak') loadSpeak();
-  else if (currentMode === 'missing') loadMissing();
-  else if (currentMode === 'worddrop') loadWordDrop();
-  else if (currentMode === 'dialogue') loadDialogue();
-  else if (currentMode === 'vocab') loadVocab();
-  else if (currentMode === 'spottherror') loadSpotError();
-  else if (currentMode === 'readcomp') loadReadComp();
+  const modeLoaders = {
+    pairs: loadPairs, examples: loadExamples, fillblank: loadFillBlank,
+    builder: loadBuilder, translate: loadTranslation, story: loadStory,
+    conjugate: loadConjugate, speak: loadSpeak, missing: loadMissing,
+    worddrop: loadWordDrop, dialogue: loadDialogue, vocab: loadVocab,
+    spottherror: loadSpotError, readcomp: loadReadComp,
+  };
+  const loader = modeLoaders[currentMode];
+  if (!loader) return;
+  // 2026-07-01: a bug in any single mode used to be able to freeze/silently
+  // break the whole page (see today's other fixes) — catch both sync throws
+  // and rejected promises (several loaders are async) so one broken mode
+  // can't take the rest of the app down with it.
+  const reportLoadError = (err) => {
+    console.error(`[startExercise] "${currentMode}" failed to load:`, err);
+    showToast(`⚠️ This mode hit an error — try another mode or reload the page`, 3200);
+  };
+  try {
+    const result = loader();
+    if (result && typeof result.catch === 'function') result.catch(reportLoadError);
+  } catch (err) {
+    reportLoadError(err);
+  }
 }
 
 // ─── CONJUGATION DRILLS ───────────────────────────────────────────────────────
@@ -4128,7 +4263,7 @@ function loadConjugate() {
           `<button class="accent-btn" onclick="insertAccent('${c}')">${c}</button>`
         ).join('')}
       </div>
-      <div class="conj-result-bar" id="conj-result-bar">
+      <div class="conj-result-bar" id="conj-result-bar" aria-live="polite">
         <div class="conj-result-icon" id="conj-result-icon"></div>
         <div class="conj-result-body">
           <div class="conj-result-main" id="conj-result-main"></div>
@@ -4571,7 +4706,7 @@ function renderPairs(data) {
           <div class="pair-reason">${data.cards[1].reason}</div>
         </div>
       </div>
-      <div class="result-bar" id="result-bar">
+      <div class="result-bar" id="result-bar" aria-live="polite">
         <div class="result-icon" id="result-icon"></div>
         <div class="result-body">
           <div class="result-main" id="result-main"></div>
@@ -4785,7 +4920,7 @@ async function loadFillBlank() {
         '<div style="display:flex;gap:8px;margin-top:10px;justify-content:center">' +
         '<button class="check-btn" onclick="checkFillBlankBankAnswer(' + JSON.stringify(ex.answer) + ',' + JSON.stringify(ex.explanation||'') + ')">Check</button>' +
         '</div>' +
-        '<div class="result-bar" id="result-bar"><div class="result-icon" id="result-icon"></div><div class="result-body"><div class="result-main" id="result-main"></div><div class="result-sub" id="result-sub"></div></div>' +
+        '<div class="result-bar" id="result-bar" aria-live="polite"><div class="result-icon" id="result-icon"></div><div class="result-body"><div class="result-main" id="result-main"></div><div class="result-sub" id="result-sub"></div></div>' +
         '<button class="next-btn" onclick="loadFillBlank()">Next →</button></div>';
       exerciseAnswered = false;
       const inp = document.getElementById('fill-input');
@@ -4846,7 +4981,7 @@ function renderFillBlank(data) {
         </div>
       </div>
       <div class="options-grid">${opts}</div>
-      <div class="result-bar" id="result-bar">
+      <div class="result-bar" id="result-bar" aria-live="polite">
         <div class="result-icon" id="result-icon"></div>
         <div class="result-body">
           <div class="result-main" id="result-main"></div>
@@ -5001,7 +5136,7 @@ function renderBuilder(data) {
         <button class="check-btn" id="check-btn" onclick="checkBuilderAnswer('${escStr(data.explanation || '')}')" disabled>Check Answer</button>
         <button class="clear-btn" onclick="clearBuilder()">↺ Clear</button>
       </div>
-      <div class="result-bar" id="result-bar">
+      <div class="result-bar" id="result-bar" aria-live="polite">
         <div class="result-icon" id="result-icon"></div>
         <div class="result-body">
           <div class="result-main" id="result-main"></div>
@@ -5071,7 +5206,7 @@ function checkBuilderAnswer(explanation) {
   bar.classList.add('show', isCorrect ? 'correct-bar' : 'wrong-bar');
   document.getElementById('result-icon').textContent = isCorrect ? '✅' : '❌';
   document.getElementById('result-main').textContent = isCorrect ? 'Perfect!' : `Correct: "${correctStr}"`;
-  document.getElementById('result-sub').innerHTML = (explanation || '') + accentTipHTML(correctStr);
+  document.getElementById('result-sub').innerHTML = (explanation || '') + accentTipHTML(correctStr) + (isCorrect ? '' : conceptMistakeTipHTML());
 
   if (isCorrect) {
     const pts = 15 + Math.min(streak, 5) * 2;
@@ -5104,12 +5239,19 @@ function selectMixedMode(el) {
   el.classList.add('active');
   mixedMode = true;
   lastUsedConceptKey = null;
+  recentConceptKeys = [];
   advanceMixedConcept();
 }
 
 function advanceMixedConcept() {
-  // Weight concepts by inverse mastery — weaker concepts appear more often
-  const pool = CONCEPTS.filter(c => c.key !== lastUsedConceptKey);
+  // Weight concepts by inverse mastery — weaker concepts appear more often.
+  // 2026-07-01: exclude the last 2 concepts used (not just the immediately
+  // previous one) so interleaving doesn't settle into tight A-B-A-B
+  // clustering between whichever 2 concepts happen to be weakest — real
+  // interleaving benefits from broader rotation, not a 2-concept ping-pong.
+  let pool = CONCEPTS.filter(c => !recentConceptKeys.includes(c.key));
+  if (pool.length === 0) pool = CONCEPTS.filter(c => c.key !== lastUsedConceptKey);
+  if (pool.length === 0) pool = CONCEPTS;
   const weighted = [];
   pool.forEach(c => {
     const m = conceptMastery[c.key];
@@ -5120,6 +5262,7 @@ function advanceMixedConcept() {
   });
   const next = weighted[Math.floor(Math.random() * weighted.length)];
   lastUsedConceptKey = next.key;
+  recentConceptKeys = [next.key, ...recentConceptKeys].slice(0, 2);
   currentConcept = next;
   nextExercise = null;
   setTimeout(updateDifficultyBadge, 50);
@@ -5224,7 +5367,7 @@ function renderTranslation(data) {
       <textarea class="translate-input" id="translate-input" placeholder="Write your Spanish translation here..." oninput="document.getElementById('translate-go').disabled=!this.value.trim()"></textarea>
       <button class="translate-submit" id="translate-go" onclick="submitTranslation()" disabled>Check my answer →</button>
       <div class="translate-feedback" id="translate-feedback"></div>
-      <div class="result-bar" id="result-bar" style="display:none">
+      <div class="result-bar" id="result-bar" style="display:none" aria-live="polite">
         <div class="result-icon" id="result-icon"></div>
         <div class="result-body">
           <div class="result-main" id="result-main"></div>
@@ -5403,7 +5546,7 @@ function renderStory(data) {
       <div class="story-section-label">Comprehension Questions</div>
       <div class="story-questions">${questions}</div>
       <div class="story-score" id="story-score"></div>
-      <div class="result-bar" id="result-bar" style="display:none">
+      <div class="result-bar" id="result-bar" style="display:none" aria-live="polite">
         <div class="result-icon" id="result-icon">📖</div>
         <div class="result-body"><div class="result-main" id="result-main">Story complete!</div></div>
         <button class="next-btn" id="next-btn" onclick="loadStory()">New Story →</button>
@@ -5540,7 +5683,27 @@ function applyTheme() {
 }
 
 // ─── SCORING & STATS ──────────────────────────────────────────────────────────
-const XP_PER_LEVEL = 100;
+const XP_PER_LEVEL = 100; // kept only as the level-1 cost baseline for getLevelInfo() below
+
+// 2026-07-01: XP curve now grows per level (was a flat 100 XP/level forever —
+// level 40 took exactly as much grinding as level 2). Early levels still come
+// fast; later ones take real practice to earn. Centralized here as the single
+// source of truth — this exact calculation used to be copy-pasted in 4
+// different places (updateStats, checkLevelUp, the beforeunload auto-export,
+// and exportProgress), which is the same "duplicated logic silently drifts"
+// pattern behind several bugs fixed earlier this session.
+function xpNeededForLevel(level) {
+  // XP required to go from `level` to `level + 1`.
+  return XP_PER_LEVEL + (level - 1) * 15;
+}
+function getLevelInfo(totalXP) {
+  let level = 1, xpLeft = totalXP;
+  while (xpLeft >= xpNeededForLevel(level)) {
+    xpLeft -= xpNeededForLevel(level);
+    level++;
+  }
+  return { level, xpInLevel: xpLeft, xpForThisLevel: xpNeededForLevel(level) };
+}
 
 function addXP(amount) {
   xp += amount;
@@ -5597,6 +5760,14 @@ function saveGoal() {
   updateDailyDisplay();
   renderCalendar();
   showToast(`🎯 Daily goal set to ${dailyGoal} XP`, 2000);
+}
+
+// 2026-07-01: one-click presets alongside the free-text input — lower
+// friction than typing a number for students who just want "about right."
+function setDailyGoalPreset(v) {
+  const inp = document.getElementById('cal-goal-input');
+  if (inp) inp.value = v;
+  saveGoal();
 }
 
 function renderCalendar() {
@@ -5732,6 +5903,8 @@ function recordMastery(correct) {
 
 function updateStats() {
   document.getElementById('streak-val').textContent = streak;
+  const bestEl = document.getElementById('best-streak-val');
+  if (bestEl) bestEl.textContent = `(best ${bestStreak})`;
   document.getElementById('xp-val').textContent = xp;
   document.getElementById('s-correct').textContent = sessionCorrect;
   document.getElementById('s-wrong').textContent = sessionWrong;
@@ -5748,11 +5921,10 @@ function updateStats() {
     document.getElementById('s-acc-wrap').style.display = 'flex';
   }
 
-  const level = Math.floor(xp / XP_PER_LEVEL) + 1;
-  const xpInLevel = xp % XP_PER_LEVEL;
-  const pct = (xpInLevel / XP_PER_LEVEL) * 100;
+  const { level, xpInLevel, xpForThisLevel } = getLevelInfo(xp);
+  const pct = (xpInLevel / xpForThisLevel) * 100;
   document.getElementById('xp-bar').style.width = pct + '%';
-  document.getElementById('xp-label').textContent = `${xpInLevel} / ${XP_PER_LEVEL} XP to Level ${level + 1}`;
+  document.getElementById('xp-label').textContent = `${xpInLevel} / ${xpForThisLevel} XP to Level ${level + 1}`;
   document.getElementById('lvl-badge').textContent = `Level ${level}`;
   // SM-2 due count
   const dueCount = getTotalDueCount();
@@ -5894,10 +6066,9 @@ function playSound(type) {
 }
 
 // ── #29 LEVEL-UP CEREMONY ─────────────────────────────────────────────────────
-let _lastLevelTracked = Math.floor((parseInt(localStorage.getItem('sl_xp') || '0')) / (typeof XP_PER_LEVEL !== 'undefined' ? XP_PER_LEVEL : 100)) + 1;
+let _lastLevelTracked = getLevelInfo(parseInt(localStorage.getItem('sl_xp') || '0')).level;
 function checkLevelUp(newXP) {
-  const lvl = typeof XP_PER_LEVEL !== 'undefined' ? XP_PER_LEVEL : 100;
-  const newLevel = Math.floor(newXP / lvl) + 1;
+  const newLevel = getLevelInfo(newXP).level;
   if (_lastLevelTracked && newLevel > _lastLevelTracked) triggerLevelUp(newLevel);
   _lastLevelTracked = newLevel;
 }
@@ -6167,7 +6338,7 @@ window.addEventListener('beforeunload', () => {
   try {
     const payload = {
       exportedAt: new Date().toISOString(),
-      xp, level: Math.floor(xp / XP_PER_LEVEL) + 1,
+      xp, level: getLevelInfo(xp).level,
       bestStreak, sessionCorrect, sessionWrong,
       mastery: conceptMastery,
       dailyLog
@@ -6366,7 +6537,7 @@ function loadSpeak() {
       <div class="speak-transcript" id="speak-transcript"></div>
       <div class="speak-result" id="speak-result" style="display:none"></div>
     </div>
-    <div id="result-bar" class="result-bar" style="display:none">
+    <div id="result-bar" class="result-bar" style="display:none" aria-live="polite">
       <div class="result-icon" id="result-icon"></div>
       <div class="result-body"><div class="result-main" id="result-main"></div></div>
       <button class="next-btn" id="next-btn" onclick="loadSpeak()">Next →</button>
@@ -6457,7 +6628,7 @@ function loadMissing() {
     <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
       <button class="check-btn" onclick="checkMissing('${escStr(answer)}')" id="missing-check-btn">Check</button>
     </div>
-    <div class="result-bar" id="result-bar" style="display:none">
+    <div class="result-bar" id="result-bar" style="display:none" aria-live="polite">
       <div class="result-icon" id="result-icon"></div>
       <div class="result-body"><div class="result-main" id="result-main"></div></div>
       <button class="next-btn" id="next-btn" onclick="loadMissing()">Next →</button>
@@ -6479,7 +6650,7 @@ function checkMissing(answer) {
   const main = document.getElementById('result-main');
   if (bar) bar.style.display = '';
   if (icon) icon.textContent = correct ? '✅' : '❌';
-  if (main) main.innerHTML = (correct ? 'Correct!' : 'Answer: "' + answer + '"') + accentTipHTML(answer);
+  if (main) main.innerHTML = (correct ? 'Correct!' : 'Answer: "' + answer + '"') + accentTipHTML(answer) + (correct ? '' : conceptMistakeTipHTML());
   if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(10); updateStreak(true); }
   else { updateStreak(false, { conceptName: currentConcept?.name, question: 'Missing word: ' + answer, wrong: input.value, correct: answer }); }
@@ -6518,7 +6689,7 @@ function renderWordDrop(data) {
       <button class="check-btn" id="check-btn" onclick="checkWordDrop('${escStr(data.explanation || '')}')">Check</button>
       <button class="clear-btn" onclick="resetWordDrop()">↺ Clear</button>
     </div>
-    <div class="result-bar" id="result-bar">
+    <div class="result-bar" id="result-bar" aria-live="polite">
       <div class="result-icon" id="result-icon"></div>
       <div class="result-body"><div class="result-main" id="result-main"></div><div class="result-sub" id="result-sub"></div></div>
       <button class="next-btn" id="next-btn" onclick="loadWordDrop()">Next →</button>
@@ -6567,7 +6738,7 @@ function checkWordDrop(explanation) {
   const sub = document.getElementById('result-sub');
   if (icon) icon.textContent = correct ? '✅' : '❌';
   if (main) main.textContent = correct ? 'Perfect!' : 'Correct: "' + correctStr + '"';
-  if (sub) sub.innerHTML = (explanation || '') + accentTipHTML(correctStr);
+  if (sub) sub.innerHTML = (explanation || '') + accentTipHTML(correctStr) + (correct ? '' : conceptMistakeTipHTML());
   if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(12); updateStreak(true); }
   else { updateStreak(false, { conceptName: currentConcept?.name, question: 'Word drop', wrong: placed.join(' '), correct: _dropAnswer.join(' ') }); }
@@ -6772,6 +6943,9 @@ document.addEventListener('click', e => {
 
 // ── #14 CONFIDENCE TRACKING ───────────────────────────────────────────────────
 let _confidenceData = JSON.parse(localStorage.getItem('sl_confidence') || '{}');
+// 2026-07-01: tracks "felt confident (4-5) but was wrong" per concept — a
+// sharper metacognition signal than accuracy or confidence alone.
+let _overconfidenceTaxonomy = JSON.parse(localStorage.getItem('sl_overconfidence') || '{}');
 
 function showConfidenceRating(conceptKey) {
   const bar = document.getElementById('result-bar');
@@ -6788,12 +6962,22 @@ function showConfidenceRating(conceptKey) {
 
 function recordConfidence(conceptKey, score, btn) {
   if (!_confidenceData[conceptKey]) _confidenceData[conceptKey] = [];
-  _confidenceData[conceptKey].push({ score, ts: Date.now() });
+  const bar = document.getElementById('result-bar');
+  const wasWrong = bar ? bar.classList.contains('wrong-bar') : false;
+  _confidenceData[conceptKey].push({ score, ts: Date.now(), wasWrong });
   if (_confidenceData[conceptKey].length > 50) _confidenceData[conceptKey] = _confidenceData[conceptKey].slice(-50);
   localStorage.setItem('sl_confidence', JSON.stringify(_confidenceData));
   btn.closest('.confidence-row').querySelectorAll('.conf-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
   if (score <= 2) showToast('📌 Flagged for extra practice', 1500);
+  // 2026-07-01: the sharpest metacognition signal isn't "wrong" or "low
+  // confidence" alone — it's feeling SURE and being wrong. That gap between
+  // perceived and actual knowledge is exactly what's worth flagging.
+  if (score >= 4 && wasWrong) {
+    _overconfidenceTaxonomy[conceptKey] = (_overconfidenceTaxonomy[conceptKey] || 0) + 1;
+    localStorage.setItem('sl_overconfidence', JSON.stringify(_overconfidenceTaxonomy));
+    showToast('🎯 Worth a second look — you felt sure, but this one was off', 2500);
+  }
 }
 
 // Hook into result-bar show to add confidence rating
@@ -6833,26 +7017,12 @@ function recordErrorTaxonomy(conceptKey, errorText) {
 // Error-taxonomy recording on every answer: folded into updateStreak() directly (see 2026-07-01 note)
 
 // ── #9 DIFFICULTY INTERLEAVING ────────────────────────────────────────────────
-// Adds smart difficulty selection: after 2 easy exercises, pick a hard one
-let _diffStreak = 0;
-
-function getDifficultyScore(conceptKey) {
-  const m = conceptMastery[conceptKey];
-  if (!m || m.total < 3) return 0.5; // Unknown = medium
-  return 1 - (m.correct / m.total); // Higher = harder
-}
-
-function selectConceptWithInterleaving() {
-  if (!CONCEPTS || !CONCEPTS.length) return null;
-  const withScores = CONCEPTS.map(c => ({ ...c, diff: getDifficultyScore(c.key) }));
-  withScores.sort((a, b) => b.diff - a.diff);
-  _diffStreak++;
-  // Every 3rd exercise: pick hardest concept not currently selected
-  if (_diffStreak % 3 === 0 && withScores[0].key !== currentConcept?.key) {
-    return withScores[0]; // Hardest concept
-  }
-  return null; // Let normal selection continue
-}
+// Removed 2026-07-01: getDifficultyScore()/selectConceptWithInterleaving() were
+// written for this but never actually wired up anywhere (found via the same
+// "is this defined-but-orphaned" check that caught the init() bug) — dead code
+// for as long as this batch existed. advanceMixedConcept() already does live,
+// working weighted-by-weakness concept selection for Mixed mode; that's now
+// also been upgraded to avoid tight A-B-A-B clustering (see recentConceptKeys).
 
 // ── #20 VOCABULARY MODE ───────────────────────────────────────────────────────
 const VOCAB_LIST = [
@@ -7069,7 +7239,7 @@ function loadSpotError() {
         `<button class="ste-opt" onclick="checkSpotError(this,'${escStr(ex.options[0])}','${escStr(ex.explanation)}')">${opt}</button>`
       ).join('')}
     </div>
-    <div class="result-bar" id="result-bar">
+    <div class="result-bar" id="result-bar" aria-live="polite">
       <div class="result-icon" id="result-icon"></div>
       <div class="result-body"><div class="result-main" id="result-main"></div><div class="result-sub" id="result-sub"></div></div>
       <button class="next-btn" id="next-btn" onclick="loadSpotError()">Next →</button>
@@ -7158,7 +7328,7 @@ function loadReadComp() {
         </div>`).join('')}
     </div>
     <button class="check-btn" onclick="checkReadComp(${ex.questions.length})">Check Answers</button>
-    <div class="result-bar" id="result-bar">
+    <div class="result-bar" id="result-bar" aria-live="polite">
       <div class="result-icon" id="result-icon"></div>
       <div class="result-body"><div class="result-main" id="result-main"></div></div>
       <button class="next-btn" id="next-btn" onclick="loadReadComp()">Next →</button>
@@ -7288,11 +7458,15 @@ async function loadStaticExerciseBank() {
     const resp = await fetch('./exercises.json');
     if (!resp.ok) { console.log('[Bank] exercises.json not found, using built-in data'); return; }
     const data = await resp.json();
-    if (!data.concepts) return;
+    if (!data.concepts || typeof data.concepts !== 'object') {
+      console.warn('[Bank] exercises.json has no "concepts" object — nothing loaded. Check the file structure.');
+      return;
+    }
     let loaded = 0;
+    const unknownKeys = [];
     Object.entries(data.concepts).forEach(([conceptKey, modes]) => {
       const concept = CONCEPTS.find(c => c.key === conceptKey);
-      if (!concept) return;
+      if (!concept) { unknownKeys.push(conceptKey); return; }
       if (!concept.exercises) concept.exercises = [];
       // Merge pairs as exercise objects
       if (modes.pairs) {
@@ -7325,6 +7499,14 @@ async function loadStaticExerciseBank() {
     });
     console.log('[Bank] Loaded ' + loaded + ' exercises from exercises.json');
     if (loaded > 0) showToast('📚 ' + loaded + ' exercises loaded', 1500);
+    if (unknownKeys.length) {
+      console.warn('[Bank] exercises.json has concept keys that don\'t match any entry in CONCEPTS (typo, or content for a concept that no longer exists): ' + unknownKeys.join(', '));
+    }
+    // Visibility into content-authoring gaps (idea: prioritize by actual gap, not guesswork)
+    const noFillblankBank = CONCEPTS.filter(c => !c.fillblankBank || !c.fillblankBank.length).map(c => c.key);
+    if (noFillblankBank.length) {
+      console.log('[Bank] Concepts with no static Fill-Blank bank yet (falls back to live AI generation): ' + noFillblankBank.join(', '));
+    }
   } catch(e) {
     console.warn('[Bank] Could not load exercises.json:', e.message);
   }
@@ -7348,7 +7530,7 @@ function checkFillBlankBankAnswer(answer, explanation) {
   const sub = document.getElementById('result-sub');
   if (icon) icon.textContent = correct ? '✅' : '❌';
   if (main) main.textContent = correct ? 'Correct!' : 'Answer: ' + answer;
-  if (sub) sub.innerHTML = (explanation || '') + accentTipHTML(answer);
+  if (sub) sub.innerHTML = (explanation || '') + accentTipHTML(answer) + (correct ? '' : conceptMistakeTipHTML());
   if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(10); updateStreak(true); }
   else { updateStreak(false, { conceptName: currentConcept?.name, question: answer, wrong: inp.value, correct: answer }); }
@@ -7499,7 +7681,7 @@ function exportProgress() {
   const payload = {
     name: localStorage.getItem('sl_name') || '',
     xp,
-    level: Math.floor(xp / XP_PER_LEVEL) + 1,
+    level: getLevelInfo(xp).level,
     bestStreak,
     sessionCorrect,
     sessionWrong,
