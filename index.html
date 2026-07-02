@@ -80,6 +80,7 @@ header {
 .cal-day.practiced { background:rgba(91,141,238,.25); color:var(--accent); }
 .cal-day.goal-met { background:rgba(74,222,128,.25); color:#4ade80; }
 .cal-day.today { outline:2px solid var(--accent); outline-offset:1px; }
+.cal-day.frozen { background:rgba(125,211,252,.18); color:#7dd3fc; font-size:12px; }
 .cal-legend { display:flex; gap:14px; font-size:11px; color:var(--text3); }
 .cal-legend-dot { width:10px; height:10px; border-radius:3px; display:inline-block; margin-right:4px; }
 .cal-streak-row { margin-top:16px; padding-top:14px; border-top:1px solid var(--border); display:flex; gap:24px; font-size:12px; }
@@ -1091,6 +1092,8 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   <div class="mode-tab" data-mode="vocab" onclick="switchMode('vocab', this)">📖 Vocab</div>
   <div class="mode-tab" data-mode="spottherror" onclick="switchMode('spottherror', this)">🐛 Errors</div>
   <div class="mode-tab" data-mode="readcomp" onclick="switchMode('readcomp', this)">📚 Read</div>
+  <div class="mode-tab" data-mode="review" onclick="switchMode('review', this)">📅 Review<span id="review-mode-due" style="opacity:.7"></span></div>
+  <div class="mode-tab" data-mode="sprint" onclick="switchMode('sprint', this)">⏱️ Sprint</div>
 </div>
 
 <!-- EXERCISE AREA -->
@@ -1311,6 +1314,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
       <span><span class="cal-legend-dot" style="background:var(--surface2)"></span>No practice</span>
       <span><span class="cal-legend-dot" style="background:rgba(91,141,238,.4)"></span>Practiced</span>
       <span><span class="cal-legend-dot" style="background:rgba(74,222,128,.4)"></span>Goal met ✓</span>
+      <span><span class="cal-legend-dot" style="background:rgba(125,211,252,.4)"></span>🧊 Frozen</span>
     </div>
     <div class="cal-streak-row">
       <div class="cal-streak-item">
@@ -1328,6 +1332,10 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
       <div class="cal-streak-item">
         <span class="cal-streak-num" id="cal-goals-hit">0</span>
         <span class="cal-streak-lbl">Goals hit</span>
+      </div>
+      <div class="cal-streak-item" title="Earn 1 every 7-day streak (max 2 saved) — auto-used if you miss a day">
+        <span class="cal-streak-num" id="cal-freeze-count">0</span>
+        <span class="cal-streak-lbl">🧊 Freezes</span>
       </div>
     </div>
   </div>
@@ -3920,6 +3928,12 @@ let storyQuestionsAnswered = 0;   // how many story questions done this round
 let dailyGoal = parseInt(localStorage.getItem('sl_daily_goal') || '30');
 let dailyLog  = JSON.parse(localStorage.getItem('sl_daily_log')  || '{}');
 let _todayGoalCelebrated = false; // prevent repeat celebration per session
+// ── STREAK FREEZE STATE ────────────────────────────────────────────────────────
+// Duolingo-style token that protects a student's day streak if life gets in
+// the way. Auto-applied at init (no manual toggle) — the target users are
+// students juggling school, not people optimizing a game economy.
+let streakFreezes = parseInt(localStorage.getItem('sl_streak_freezes') || '1'); // start with 1 free
+let frozenDays = JSON.parse(localStorage.getItem('sl_frozen_days') || '[]');
 // ── SM-2 SPACED REPETITION ────────────────────────────────────────────────────
 let sm2State = JSON.parse(localStorage.getItem('sl_sm2') || '{}');
 let lastCardId = null; // ID of the most recently shown static exercise
@@ -4021,8 +4035,14 @@ function init() {
   // SM-2: notify if cards are due for review
   const due = getTotalDueCount();
   if (due > 0) {
-    setTimeout(() => showToast(`📚 ${due} card${due > 1 ? 's' : ''} due for review today — they'll appear first as you practice!`, 4000), 1500);
+    setTimeout(() => showToast(`📚 ${due} card${due > 1 ? 's' : ''} due for review today — hit the 📅 Review tab, or they'll surface first in Pairs/Fill Blank too.`, 4500), 1500);
   }
+  updateReviewModeBadge();
+  applyStreakFreezes();
+  // Award check must run here, not only inside renderCalendar() — most
+  // students never open the calendar modal, so a token earned mid-streak
+  // needs to surface on ordinary page load too.
+  checkStreakFreezeAward(getCurrentDayStreak());
 }
 
 function saveAndRefreshName() {
@@ -4312,7 +4332,7 @@ function switchMode(mode, el) {
 }
 
 function startExercise() {
-  const noConceptModes = ['conjugate','vocab','spottherror','readcomp'];
+  const noConceptModes = ['conjugate','vocab','spottherror','readcomp','review','sprint'];
   if (!currentConcept && !noConceptModes.includes(currentMode)) {
     // Defensive fallback: if this state is ever reached (should no longer happen
     // now that init() auto-selects a concept), tell the student why instead of
@@ -4325,7 +4345,8 @@ function startExercise() {
     builder: loadBuilder, translate: loadTranslation, story: loadStory,
     conjugate: loadConjugate, speak: loadSpeak, missing: loadMissing,
     worddrop: loadWordDrop, dialogue: loadDialogue, vocab: loadVocab,
-    spottherror: loadSpotError, readcomp: loadReadComp,
+    spottherror: loadSpotError, readcomp: loadReadComp, review: loadReview,
+    sprint: enterSprintMode,
   };
   const loader = modeLoaders[currentMode];
   if (!loader) return;
@@ -4795,10 +4816,35 @@ const VARIETY_THEMES = [
   'planning a weekend trip', 'a lazy Sunday at home', 'a work meeting', 'walking the dog',
   'a phone call with grandma', 'cooking dinner together', 'the first day of school',
   'watching a soccer match', 'running errands downtown', 'a rainy day at a café',
-  'a road trip with friends', 'studying for an exam', 'fixing something around the house'
+  'a road trip with friends', 'studying for an exam', 'fixing something around the house',
+  // 2026-07-01 expansion (task #40 — deepen the "infinite scenario" feel):
+  'haggling at a street market', 'a power outage at home', 'getting lost in a new city',
+  'a surprise visit from relatives', 'waiting at the DMV', 'a rooftop party',
+  'a video call gone wrong', 'training a new pet', 'a school field trip',
+  'ordering the wrong dish at a restaurant', 'a broken-down car on a road trip',
+  'a neighborhood block party', 'packing for a move abroad', 'a late-night snack run',
+  'a misunderstanding over text', 'volunteering at a shelter', 'a surprise engagement',
+  'losing your phone at a festival', 'a heated debate over dinner', 'a snow day'
 ];
 function pickTheme() {
   return VARIETY_THEMES[Math.floor(Math.random() * VARIETY_THEMES.length)];
+}
+// Second, independent randomization axis (who the scenario is about/told
+// from). Combining theme × character multiplies the number of distinct
+// prompt contexts instead of just adding to one list — pushes generated
+// exercises further from ever converging on "the same one every time."
+const VARIETY_CHARACTERS = [
+  'a nervous teenager', 'two old friends catching up', 'a tired parent', 'an excited tourist',
+  'a grumpy coworker', 'a curious child', 'a new employee', 'a strict teacher',
+  'someone running late', 'a proud grandparent', 'a nosy neighbor', 'a shy student',
+  'a confident salesperson', 'a worried patient', 'two siblings arguing', 'a chatty taxi driver',
+  'a homesick exchange student', 'a determined athlete', 'a forgetful roommate', 'a patient nurse'
+];
+function pickCharacter() {
+  return VARIETY_CHARACTERS[Math.floor(Math.random() * VARIETY_CHARACTERS.length)];
+}
+function pickScenario() {
+  return `${pickTheme()}, seen from the perspective of ${pickCharacter()}`;
 }
 let _recentGenerated = {}; // { [conceptKey_mode]: ['sentence', ...] }, most recent first
 function trackRecent(trackKey, sentence, max = 8) {
@@ -4829,7 +4875,7 @@ async function generatePairData() {
   }
   _useStaticNext = true;
 
-  const theme = pickTheme();
+  const theme = pickScenario();
   const trackKey = c.key + '_pairs';
   const prompt = `You are a Spanish teacher creating a minimal pairs exercise.
 Concept: ${c.name}
@@ -5104,7 +5150,7 @@ async function generateFillBlankData() {
   }
   _useStaticNext = true;
 
-  const theme = pickTheme();
+  const theme = pickScenario();
   const trackKey = c.key + '_fillblank';
   const prompt = `You are a Spanish teacher creating a fill-in-the-blank exercise.
 Concept: ${c.name}
@@ -5293,7 +5339,7 @@ function pickOption(idx, correct) {
 
 async function generateBuilderData() {
   const c = currentConcept;
-  const theme = pickTheme();
+  const theme = pickScenario();
   const trackKey = c.key + '_builder';
   const prompt = `You are a Spanish teacher creating a sentence arrangement exercise.
 Concept: ${c.name}
@@ -5610,7 +5656,7 @@ async function loadTranslation() {
   _useTranslateStatic = true;
   showLoading('Generating sentence...', 'Building a translation challenge');
   try {
-    const theme = pickTheme();
+    const theme = pickScenario();
     const trackKey = c.key + '_translate';
     const prompt = `You are a Spanish teacher creating a translation exercise.
 Concept: ${c.name}
@@ -5762,7 +5808,7 @@ async function loadStory() {
   showLoading('Writing a story...', 'Mixing realistic and absurd for neuroplasticity');
   try {
     const c = currentConcept;
-    const theme = pickTheme();
+    const theme = pickScenario();
     const trackKey = c.key + '_story';
     const prompt = `You are a creative Spanish teacher writing a mini story for students.
 Concept to feature: ${c.name}
@@ -5947,6 +5993,194 @@ function startReviewDrill() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// ── REVIEW MODE — spaced-repetition due items (2026-07-01) ────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// SM-2 (sm2State/sm2Update) already tracked due dates for every STATIC_EXERCISES
+// pairs/fillblank item, but the only surface for it was a passive toast on
+// load ("N cards due today") with no way to actually drill just those. This
+// reuses the existing renderPairs/renderFillBlank + pickCard/pickOption flow
+// (so scoring, XP, and SM-2 rescheduling all keep working exactly as they
+// already do) and just redirects the "Next" button through the due-items
+// queue instead of generating a fresh exercise for the current concept.
+let _reviewQueue = [];
+function getAllDueItems() {
+  const today = getTodayStr();
+  const due = [];
+  Object.entries(STATIC_EXERCISES).forEach(([conceptKey, data]) => {
+    (data.pairs || []).forEach(e => {
+      if (e._id && sm2State[e._id] && sm2State[e._id].nextDue <= today) due.push({ ...e, _conceptKey: conceptKey, _kind: 'pairs' });
+    });
+    (data.fillblank || []).forEach(e => {
+      if (e._id && sm2State[e._id] && sm2State[e._id].nextDue <= today) due.push({ ...e, _conceptKey: conceptKey, _kind: 'fillblank' });
+    });
+  });
+  due.sort((a, b) => sm2State[a._id].nextDue.localeCompare(sm2State[b._id].nextDue));
+  return due;
+}
+function updateReviewModeBadge() {
+  const el = document.getElementById('review-mode-due');
+  if (!el) return;
+  const n = getTotalDueCount();
+  el.textContent = n > 0 ? ` (${n})` : '';
+}
+function loadReview() {
+  exerciseAnswered = false;
+  clearErrorBox();
+  if (!_reviewQueue.length) _reviewQueue = getAllDueItems();
+  const area = document.getElementById('exercise-area');
+  if (!_reviewQueue.length) {
+    area.innerHTML = `
+      <div class="mode-empty">
+        <div class="empty-icon">✅</div>
+        <div class="empty-title">Nothing due right now</div>
+        <div class="empty-sub">Keep practicing any concept — items land here automatically as they come due for spaced review. Check back tomorrow, or pick a concept above to keep going.</div>
+      </div>`;
+    return;
+  }
+  const item = _reviewQueue.shift();
+  const concept = CONCEPTS.find(c => c.key === item._conceptKey);
+  currentConcept = concept || currentConcept;
+  lastCardId = item._id;
+  if (item._kind === 'pairs') renderPairs(item);
+  else renderFillBlank(item);
+  const nextBtn = document.getElementById('next-btn');
+  if (nextBtn) nextBtn.setAttribute('onclick', 'loadReview()');
+  updateReviewModeBadge();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── SPRINT MODE — 60-second timed challenge (2026-07-01) ───────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// Motivation/engagement feature requested alongside teacher visibility and
+// review. Reuses renderPairs/renderFillBlank + the existing scoring pipeline
+// exactly like Review mode above (same reasoning: scoring, XP, and SM-2
+// rescheduling all keep working unmodified) — Sprint just supplies a
+// shuffled, all-concept, time-boxed queue and layers a countdown + results
+// screen on top.
+let sprintActive = false;
+let sprintTimeLeft = 60;
+let sprintScore = 0;
+let sprintAnswered = 0;
+let sprintQueue = [];
+let sprintTimerId = null;
+let _sprintCurrentItem = null;
+let sprintBest = parseInt(localStorage.getItem('sl_sprint_best') || '0');
+
+function buildSprintQueue() {
+  const pool = [];
+  Object.entries(STATIC_EXERCISES).forEach(([conceptKey, data]) => {
+    (data.pairs || []).forEach(e => pool.push({ ...e, _conceptKey: conceptKey, _kind: 'pairs' }));
+    (data.fillblank || []).forEach(e => pool.push({ ...e, _conceptKey: conceptKey, _kind: 'fillblank' }));
+  });
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool;
+}
+
+function showSprintStartScreen() {
+  const area = document.getElementById('exercise-area');
+  area.innerHTML = `
+    <div class="mode-empty">
+      <div class="empty-icon">⏱️</div>
+      <div class="empty-title">60-Second Sprint</div>
+      <div class="empty-sub">Answer as many mixed questions as you can before time runs out. Best so far: <strong>${sprintBest}</strong> correct.</div>
+      <button class="next-btn" style="margin-top:14px" onclick="startSprint()">Start Sprint →</button>
+    </div>`;
+}
+
+function startSprint() {
+  sprintActive = true;
+  sprintScore = 0;
+  sprintAnswered = 0;
+  sprintTimeLeft = 60;
+  sprintQueue = buildSprintQueue();
+  clearInterval(sprintTimerId);
+  sprintTimerId = setInterval(sprintTick, 1000);
+  loadSprintItem();
+}
+
+function sprintTick() {
+  if (currentMode !== 'sprint') {
+    // Student navigated to another tab mid-round — end quietly rather than
+    // slamming a results screen into whatever they're doing now.
+    clearInterval(sprintTimerId);
+    sprintTimerId = null;
+    sprintActive = false;
+    if (sprintScore > sprintBest) { sprintBest = sprintScore; localStorage.setItem('sl_sprint_best', sprintBest); }
+    if (sprintScore > 0) addXP(sprintScore * 2);
+    return;
+  }
+  sprintTimeLeft--;
+  renderSprintTimerBar();
+  if (sprintTimeLeft <= 0) endSprint();
+}
+
+function renderSprintTimerBar() {
+  const el = document.getElementById('sprint-timer');
+  if (!el) return;
+  el.textContent = `⏱️ ${sprintTimeLeft}s  ·  ✅ ${sprintScore} correct`;
+}
+
+// Shared render step used both when advancing to a new item and when
+// re-entering the Sprint tab mid-round (resume without skipping a card).
+function renderSprintItem(item) {
+  _sprintCurrentItem = item;
+  const concept = CONCEPTS.find(c => c.key === item._conceptKey);
+  currentConcept = concept || currentConcept;
+  lastCardId = item._id;
+  if (item._kind === 'pairs') renderPairs(item);
+  else renderFillBlank(item);
+  const area = document.getElementById('exercise-area');
+  const bar = document.createElement('div');
+  bar.id = 'sprint-timer';
+  bar.style.cssText = 'text-align:center;font-weight:700;font-size:13px;color:var(--accent);margin-bottom:8px;';
+  area.prepend(bar);
+  renderSprintTimerBar();
+  const nextBtn = document.getElementById('next-btn');
+  if (nextBtn) nextBtn.setAttribute('onclick', 'loadSprintItem()');
+}
+
+function loadSprintItem() {
+  if (!sprintActive) return;
+  exerciseAnswered = false;
+  clearErrorBox();
+  if (!sprintQueue.length) sprintQueue = buildSprintQueue(); // reshuffle rather than run dry mid-round
+  renderSprintItem(sprintQueue.shift());
+}
+
+function enterSprintMode() {
+  if (sprintActive && _sprintCurrentItem) {
+    renderSprintItem(_sprintCurrentItem); // resume in place, don't advance the queue
+    return;
+  }
+  showSprintStartScreen();
+}
+
+function endSprint() {
+  clearInterval(sprintTimerId);
+  sprintTimerId = null;
+  sprintActive = false;
+  const isNewBest = sprintScore > sprintBest;
+  if (isNewBest) {
+    sprintBest = sprintScore;
+    localStorage.setItem('sl_sprint_best', sprintBest);
+  }
+  const bonusXP = sprintScore * 2;
+  if (bonusXP > 0) addXP(bonusXP);
+  const area = document.getElementById('exercise-area');
+  area.innerHTML = `
+    <div class="mode-empty">
+      <div class="empty-icon">${isNewBest ? '🏆' : '⏱️'}</div>
+      <div class="empty-title">${isNewBest ? 'New best!' : "Time's up!"}</div>
+      <div class="empty-sub">${sprintScore} correct out of ${sprintAnswered} answered (+${bonusXP} XP). Best: ${sprintBest}.</div>
+      <button class="next-btn" style="margin-top:14px" onclick="startSprint()">Sprint again →</button>
+    </div>`;
+  showToast(isNewBest ? `🏆 New Sprint best: ${sprintScore}!` : `⏱️ Sprint done — ${sprintScore} correct, +${bonusXP} XP`, 3500);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // ── THEME ──────────────────────────────────────────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -6030,6 +6264,51 @@ function updateDailyDisplay() {
   stat && stat.classList.toggle('goal-hit', todayXP >= dailyGoal);
 }
 
+// ── STREAK FREEZE ────────────────────────────────────────────────────────────
+function saveStreakFreezeState() {
+  localStorage.setItem('sl_streak_freezes', streakFreezes);
+  localStorage.setItem('sl_frozen_days', JSON.stringify(frozenDays));
+}
+
+function dateStrOffset(offsetDays) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  return d.toISOString().slice(0, 10);
+}
+
+// Called once at init: walks backward from yesterday, spending freeze tokens
+// to "heal" missed days, stopping at the first day with real practice (the
+// streak's true anchor) or when tokens run out.
+function applyStreakFreezes() {
+  let healed = 0;
+  for (let i = -1; i >= -60; i--) {
+    const d = dateStrOffset(i);
+    if ((dailyLog[d] || 0) > 0) break;      // real activity — streak anchored here
+    if (frozenDays.includes(d)) continue;    // already healed in a prior session
+    if (streakFreezes <= 0) break;           // out of tokens — streak breaks here
+    frozenDays.push(d);
+    streakFreezes--;
+    healed++;
+  }
+  if (healed > 0) {
+    saveStreakFreezeState();
+    setTimeout(() => showToast(`🧊 Streak freeze used — ${healed} missed day${healed > 1 ? 's' : ''} protected. Your streak is safe!`, 4000), 600);
+  }
+}
+
+// Earns a new freeze token at every 7-day active-streak milestone (reserve capped at 2).
+function checkStreakFreezeAward(curStreak) {
+  if (curStreak > 0 && curStreak % 7 === 0) {
+    const awardKey = 'sl_freeze_award_' + curStreak + '_' + dateStrOffset(0);
+    if (!localStorage.getItem(awardKey) && streakFreezes < 2) {
+      streakFreezes++;
+      localStorage.setItem(awardKey, '1');
+      saveStreakFreezeState();
+      setTimeout(() => showToast(`🧊 Streak freeze earned! ${curStreak}-day streak — ${streakFreezes} in reserve now.`, 4000), 900);
+    }
+  }
+}
+
 function openCalendar() {
   renderCalendar();
   const inp = document.getElementById('cal-goal-input');
@@ -6060,6 +6339,22 @@ function setDailyGoalPreset(v) {
   saveGoal();
 }
 
+// Single source of truth for the day-streak count (consecutive days ending
+// today with any XP, or a frozen day). Was previously computed inline only
+// inside renderCalendar(), which meant checkStreakFreezeAward() only ever
+// fired when a student opened the calendar modal — most students never would,
+// so earned tokens silently never appeared. Pulled out so init() can call it
+// on every load regardless of whether the calendar's been opened.
+function getCurrentDayStreak() {
+  let curStreak = 0;
+  for (let i = 0; i < 60; i++) {
+    const d = dateStrOffset(-i);
+    if ((dailyLog[d] || 0) > 0 || frozenDays.includes(d)) curStreak++;
+    else break;
+  }
+  return curStreak;
+}
+
 function renderCalendar() {
   const grid = document.getElementById('cal-grid');
   if (!grid) return;
@@ -6083,30 +6378,28 @@ function renderCalendar() {
   grid.innerHTML = cells.map(d => {
     if (!d) return `<div class="cal-day empty"></div>`;
     const xpThat = dailyLog[d] || 0;
+    const isFrozen = xpThat === 0 && frozenDays.includes(d);
     let cls = 'no-data';
     if (xpThat > 0) cls = xpThat >= dailyGoal ? 'goal-met' : 'practiced';
+    else if (isFrozen) cls = 'frozen';
     const todayCls = d === todayStr ? ' today' : '';
     const dayNum = parseInt(d.slice(8));
-    return `<div class="cal-day ${cls}${todayCls}" title="${d}: ${xpThat} XP">${dayNum}</div>`;
+    const title = isFrozen ? `${d}: protected by streak freeze` : `${d}: ${xpThat} XP`;
+    return `<div class="cal-day ${cls}${todayCls}" title="${title}">${isFrozen ? '🧊' : dayNum}</div>`;
   }).join('');
 
   // Summary stats
   const daysPracticed = days.filter(d => (dailyLog[d] || 0) > 0).length;
   const goalsHit = days.filter(d => (dailyLog[d] || 0) >= dailyGoal).length;
 
-  // Current streak (consecutive days ending today with any XP)
-  let curStreak = 0;
-  for (let i = 0; i < days.length; i++) {
-    const d = days[days.length - 1 - i];
-    if ((dailyLog[d] || 0) > 0) curStreak++;
-    else break;
-  }
+  const curStreak = getCurrentDayStreak();
 
   const el = id => document.getElementById(id);
   if (el('cal-cur-streak'))   el('cal-cur-streak').textContent   = curStreak;
   if (el('cal-best-streak'))  el('cal-best-streak').textContent  = bestStreak;
   if (el('cal-days-practiced')) el('cal-days-practiced').textContent = daysPracticed;
   if (el('cal-goals-hit'))    el('cal-goals-hit').textContent    = goalsHit;
+  if (el('cal-freeze-count')) el('cal-freeze-count').textContent = streakFreezes;
 }
 
 function updateStreak(correct, wrongData) {
@@ -6135,6 +6428,7 @@ function updateStreak(correct, wrongData) {
     }
   }
   updateStats();
+  updateReviewModeBadge();
   // Consolidated 2026-07-01: folds in what used to be 3 separate monkey-patches
   // (Batch E checkBadges, Batch "Live" writeLiveFeed, Batch F taxonomy) that were
   // each redeclaring `function updateStreak`. Because function declarations hoist,
@@ -6160,6 +6454,11 @@ function updateReviewBtn() {
 
 function recordMastery(correct) {
   if (!currentConcept) return;
+  if (sprintActive) {
+    sprintAnswered++;
+    if (correct) sprintScore++;
+    renderSprintTimerBar();
+  }
   const key = currentConcept.key;
   const prevAcc = conceptMastery[key]?.total > 0
     ? Math.round(conceptMastery[key].correct / conceptMastery[key].total * 100) : 0;
@@ -6179,6 +6478,7 @@ function recordMastery(correct) {
     }, 600);
   }
   checkDifficultyAdvance(key, correct);
+  syncProgressToTeacher();
   renderConceptBar();
   // Re-mark active chip
   if (mixedMode) {
@@ -6635,7 +6935,51 @@ window.addEventListener('beforeunload', () => {
     };
     localStorage.setItem('sl_last_export', JSON.stringify(payload));
   } catch(e) {}
+  syncProgressToTeacher(true); // force, bypassing the throttle — last chance before the tab closes
 });
+
+// ─── TEACHER SYNC (2026-07-01) ─────────────────────────────────────────────────
+// Sends a small progress snapshot to netlify/functions/progress.js (Netlify
+// Blobs), so Felipe can see student progress remotely via teacher-progress.html
+// instead of only via the old same-device "shared localStorage" assumption or
+// a manual clipboard export. Fire-and-forget: never blocks or interrupts the
+// student's session if the network call fails.
+function getStudentId() {
+  let id = localStorage.getItem('sl_student_id');
+  if (!id) {
+    id = 'stu_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+    localStorage.setItem('sl_student_id', id);
+  }
+  return id;
+}
+let _lastSyncAt = 0;
+function syncProgressToTeacher(force = false) {
+  const now = Date.now();
+  if (!force && now - _lastSyncAt < 60000) return; // throttle to at most once/minute — keeps Netlify credit usage negligible
+  _lastSyncAt = now;
+  const payload = {
+    studentId: getStudentId(),
+    name: localStorage.getItem('sl_name') || 'Unnamed student',
+    xp,
+    level: getLevelInfo(xp).level,
+    bestStreak,
+    mastery: conceptMastery,
+    dueCount: getTotalDueCount(),
+    lastActive: new Date().toISOString()
+  };
+  try {
+    if (force && navigator.sendBeacon) {
+      // sendBeacon survives the page actually unloading; a normal fetch may get cancelled.
+      navigator.sendBeacon('/api/progress', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+    } else {
+      fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(() => {});
+    }
+  } catch (e) {}
+}
 
 // ── #6 EXERCISE VALIDATOR ─────────────────────────────────────────────────────
 function validateExercise(data, mode) {

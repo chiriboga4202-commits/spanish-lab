@@ -1,0 +1,8 @@
+{
+  "name": "spanish-lab",
+  "private": true,
+  "description": "Serverless function dependencies for spanish-lab (Gemini AI proxy + teacher progress sync via Netlify Blobs). No build step needed for the static site itself.",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
