@@ -1125,7 +1125,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
     <div class="ss" id="s-acc-wrap" style="display:none">🎯 <b id="s-acc">—</b></div>
     <div class="ss" style="color:var(--text3)">📝 <b id="s-total">0</b></div>
   </div>
-  <div class="ollama-cfg">
+  <div class="ollama-cfg" id="ollama-dev-panel" style="display:none">
     <div class="cfg-dot off" id="cfg-dot"></div>
     <span id="cfg-status">Offline</span>
     <input class="cfg-inp" id="ollama-inp" value="http://localhost:11434" oninput="ollamaUrl=this.value;saveSettings()">
@@ -1139,6 +1139,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   <div class="modal" style="width:380px;max-height:90vh;overflow-y:auto;">
     <div class="modal-title">⚙ Settings</div>
 
+    <div id="ollama-dev-settings" style="display:none">
     <div class="modal-row">
       <div class="modal-lbl">Ollama URL</div>
       <input class="modal-inp" id="m-ollama" value="http://localhost:11434">
@@ -1168,6 +1169,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
         </div>
         <div id="pull-status" style="font-size:11px;color:var(--text3);margin-top:4px">Starting download...</div>
       </div>
+    </div>
     </div>
 
     <div class="modal-row">
@@ -3899,7 +3901,15 @@ function init() {
   }
 
   updateStats();
-  checkOllama();
+  // Ollama status polling only matters in the hidden dev-only backend mode —
+  // under the default Gemini backend there's no local server to check.
+  if (aiBackend === 'ollama') {
+    const devPanel = document.getElementById('ollama-dev-panel');
+    if (devPanel) devPanel.style.display = 'flex';
+    const devSettings = document.getElementById('ollama-dev-settings');
+    if (devSettings) devSettings.style.display = '';
+    checkOllama();
+  }
   // SM-2: notify if cards are due for review
   const due = getTotalDueCount();
   if (due > 0) {
@@ -4454,7 +4464,77 @@ function speakSpanish(text) {
   else window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.onvoiceschanged = null; trySpeak(); };
 }
 
-// ─── OLLAMA HELPERS ───────────────────────────────────────────────────────────
+// ─── AI BACKEND ───────────────────────────────────────────────────────────────
+// Gemini (via netlify/functions/ai.js) is the default and only backend real
+// students hit — it's a serverless proxy so GEMINI_API_KEY never reaches
+// client JS. Ollama is preserved below as a hidden dev-only fallback for local
+// testing on Felipe's own machine; it's never shown in the visible Settings UI
+// and never polled/started unless explicitly enabled via:
+//   localStorage.setItem('sl_ai_backend', 'ollama')
+// (2026-07-01: the ~500-entry static exercise bank already covers Pairs/
+// Fill-blank without any AI call — this backend only matters for Builder,
+// Translate, Story, Dialogue, and rich-error explanations.)
+let aiBackend = localStorage.getItem('sl_ai_backend') === 'ollama' ? 'ollama' : 'gemini';
+
+function aiModelLabel() {
+  return aiBackend === 'ollama' ? selectedModel : 'Gemini';
+}
+
+async function geminiCall(prompt, system, temp, jsonMode) {
+  const res = await fetch('/api/ai', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ system, prompt, temperature: temp, json_mode: jsonMode })
+  });
+  if (!res.ok) {
+    const errText = await res.text().catch(() => '');
+    throw new Error(`Gemini error (HTTP ${res.status})${errText ? ': ' + errText.slice(0, 200) : ''}`);
+  }
+  const data = await res.json();
+  return data.content || '';
+}
+
+function parseJSONLoose(text) {
+  try {
+    const parsed = JSON.parse(text);
+    if (Object.keys(parsed).length === 0) throw new Error('Empty JSON object');
+    return parsed;
+  } catch {
+    const match = text.match(/\{[\s\S]*\}/);
+    if (match) return JSON.parse(match[0]);
+    throw new Error('JSON parse failed');
+  }
+}
+
+async function geminiJSON(prompt, system, temp, retries) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const text = await geminiCall(prompt, system, temp, true);
+      return parseJSONLoose(text);
+    } catch (err) {
+      if (attempt === retries) throw err;
+      await new Promise(r => setTimeout(r, 1000));
+    }
+  }
+}
+
+// Gemini has no simple client-facing streaming endpoint through a single
+// Netlify Function without extra infra, so we fetch the full response once
+// and reveal it progressively client-side — visually the same typing effect
+// as a real stream, one network call instead of a persistent connection.
+async function geminiFakeStream(prompt, onChunk, temp) {
+  const text = await geminiCall(prompt, SYSTEM_CREATIVE, temp, false);
+  const tokens = text.split(/(\s+)/);
+  let full = '';
+  for (const t of tokens) {
+    full += t;
+    onChunk(full);
+    if (t.trim()) await new Promise(r => setTimeout(r, 16));
+  }
+  return full;
+}
+
+// ─── OLLAMA HELPERS (hidden dev-only backend — see aiBackend above) ───────────
 const SYSTEM_EXERCISE = `You are a precise Spanish language teacher generating exercises. CRITICAL RULES:
 1. Return ONLY valid JSON — no extra text, no markdown, no explanation outside the JSON.
 2. Every field in the schema is required. Never omit a field.
@@ -4465,6 +4545,11 @@ const SYSTEM_CREATIVE = `You are a warm, creative Spanish teacher. Write natural
 When returning JSON, return ONLY valid JSON — no markdown fences, no extra text.`;
 
 async function ollamaJSON(prompt, retries = 2, temp = 0.3) {
+  if (aiBackend !== 'ollama') return geminiJSON(prompt, SYSTEM_EXERCISE, temp, retries);
+  return _ollamaJSONRaw(prompt, retries, temp);
+}
+
+async function _ollamaJSONRaw(prompt, retries = 2, temp = 0.3) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const res = await fetch(`${ollamaUrl}/api/chat`, {
@@ -4484,16 +4569,7 @@ async function ollamaJSON(prompt, retries = 2, temp = 0.3) {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       const text = data.message?.content || '';
-      try {
-        const parsed = JSON.parse(text);
-        // Validate the response has actual content
-        if (Object.keys(parsed).length === 0) throw new Error('Empty JSON object');
-        return parsed;
-      } catch {
-        const match = text.match(/\{[\s\S]*\}/);
-        if (match) return JSON.parse(match[0]);
-        throw new Error('JSON parse failed');
-      }
+      return parseJSONLoose(text);
     } catch (err) {
       if (attempt === retries) throw err;
       await new Promise(r => setTimeout(r, 1000));
@@ -4502,6 +4578,11 @@ async function ollamaJSON(prompt, retries = 2, temp = 0.3) {
 }
 
 async function ollamaJSONCreative(prompt, retries = 1, temp = 0.75) {
+  if (aiBackend !== 'ollama') return geminiJSON(prompt, SYSTEM_CREATIVE, temp, retries);
+  return _ollamaJSONCreativeRaw(prompt, retries, temp);
+}
+
+async function _ollamaJSONCreativeRaw(prompt, retries = 1, temp = 0.75) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const res = await fetch(`${ollamaUrl}/api/chat`, {
@@ -4521,12 +4602,7 @@ async function ollamaJSONCreative(prompt, retries = 1, temp = 0.75) {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       const text = data.message?.content || '';
-      try { return JSON.parse(text); }
-      catch {
-        const match = text.match(/\{[\s\S]*\}/);
-        if (match) return JSON.parse(match[0]);
-        throw new Error('JSON parse failed');
-      }
+      return parseJSONLoose(text);
     } catch (err) {
       if (attempt === retries) throw err;
       await new Promise(r => setTimeout(r, 1000));
@@ -4535,6 +4611,11 @@ async function ollamaJSONCreative(prompt, retries = 1, temp = 0.75) {
 }
 
 async function ollamaStream(prompt, onChunk, temp = 0.65) {
+  if (aiBackend !== 'ollama') return geminiFakeStream(prompt, onChunk, temp);
+  return _ollamaStreamRaw(prompt, onChunk, temp);
+}
+
+async function _ollamaStreamRaw(prompt, onChunk, temp = 0.65) {
   const res = await fetch(`${ollamaUrl}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -4570,7 +4651,7 @@ function clearErrorBox() {
   const box = document.getElementById('error-explain-box');
   if (box) { box.classList.remove('show'); box.remove(); }
 }
-function showLoading(msg = 'Generating exercise...', sub = `Using ${selectedModel}`) {
+function showLoading(msg = 'Generating exercise...', sub = `Using ${aiModelLabel()}`) {
   document.getElementById('exercise-area').innerHTML = `
     <div class="loading-exercise">
       <div class="loading-ring"></div>
@@ -4584,7 +4665,7 @@ function showError(msg, retryFn) {
     <div class="mode-empty">
       <div class="empty-icon">⚠️</div>
       <div class="empty-title">Generation failed</div>
-      <div class="empty-sub">${msg}<br><br>Make sure Ollama is running: <code style="color:var(--accent)">ollama serve</code></div>
+      <div class="empty-sub">${msg}<br><br>${aiBackend === 'ollama' ? 'Make sure Ollama is running: <code style="color:var(--accent)">ollama serve</code>' : 'This might be a temporary connection issue — give it another try.'}</div>
       <button class="start-btn" onclick="(${retryFn.toString()})()">Try Again</button>
     </div>`;
 }
@@ -4649,7 +4730,7 @@ async function loadPairs() {
     renderPairs(data);
   } else {
     showLoading(ollamaOnline ? 'Generating exercise...' : '📚 Loading exercise...',
-                ollamaOnline ? `Using ${selectedModel}` : 'Using built-in exercise bank');
+                ollamaOnline ? `Using ${aiModelLabel()}` : 'Using built-in exercise bank');
     try {
       data = await generatePairData();
       renderPairs(data);
@@ -4847,7 +4928,7 @@ Mix "beg" and "int" levels. Make explanations insightful, not just "this uses se
     });
     list.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   } catch (err) {
-    showToast('⚠️ Generation failed — check Ollama');
+    showToast(aiBackend === 'ollama' ? '⚠️ Generation failed — check Ollama' : '⚠️ Generation failed — try again in a moment');
   }
 }
 
@@ -4937,7 +5018,7 @@ async function loadFillBlank() {
     renderFillBlank(data);
   } else {
     showLoading(ollamaOnline ? 'Generating exercise...' : '📚 Loading exercise...',
-                ollamaOnline ? `Using ${selectedModel}` : 'Using built-in exercise bank');
+                ollamaOnline ? `Using ${aiModelLabel()}` : 'Using built-in exercise bank');
     try {
       data = await generateFillBlankData();
       fbData = data;
@@ -5459,7 +5540,7 @@ Respond with ONLY valid JSON:
     }
     btn.textContent = 'Done';
   } catch (err) {
-    feedback.innerHTML = `<div class="fb-grade poor">Grading failed</div><div>Ollama error: ${err.message}. The correct answer was: <b>${data?.es}</b></div>`;
+    feedback.innerHTML = `<div class="fb-grade poor">Grading failed</div><div>${err.message}. The correct answer was: <b>${data?.es}</b></div>`;
     btn.textContent = 'Try again';
     btn.disabled = false;
     exerciseAnswered = false;
@@ -5976,8 +6057,8 @@ function openSettings() {
   document.getElementById('m-name').value = localStorage.getItem('sl_name') || '';
   if (document.getElementById('m-theme')) document.getElementById('m-theme').value = currentTheme;
   document.getElementById('settings-modal').classList.add('open');
-  // Populate model list from live Ollama
-  refreshModelList();
+  // Populate model list from live Ollama (dev-only backend)
+  if (aiBackend === 'ollama') refreshModelList();
 }
 
 function closeSettings() {
@@ -5997,7 +6078,7 @@ function saveSettingsModal() {
   nextExercise = null;
   saveAndRefreshName();
   closeSettings();
-  checkOllama();
+  if (aiBackend === 'ollama') checkOllama();
   showToast('Settings saved ✓');
 }
 
@@ -6803,16 +6884,21 @@ ${history}
 
 Respond only with the Spanish dialogue — no labels, no English, no extra commentary.`;
   try {
-    const resp = await fetch(ollamaUrl + '/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: selectedModel, prompt, stream: false })
-    });
-    if (resp.ok) {
-      const data = await resp.json();
-      appendDialogueMsg(data.response?.trim() || '...', 'ai');
+    if (aiBackend === 'ollama') {
+      const resp = await fetch(ollamaUrl + '/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: selectedModel, prompt, stream: false })
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        appendDialogueMsg(data.response?.trim() || '...', 'ai');
+      } else {
+        appendDialogueMsg('[Ollama offline — practice responses by yourself!]', 'ai');
+      }
     } else {
-      appendDialogueMsg('[Ollama offline — practice responses by yourself!]', 'ai');
+      const text = await geminiCall(prompt, SYSTEM_CREATIVE, 0.7, false);
+      appendDialogueMsg(text.trim() || '...', 'ai');
     }
   } catch(e) {
     appendDialogueMsg('[Offline — keep writing! Practice is still valuable.]', 'ai');
@@ -7537,8 +7623,11 @@ function checkFillBlankBankAnswer(answer, explanation) {
   logAnswerHistory('Fill blank: ' + answer, correct);
   checkBadges();
 }
-// ─── OLLAMA STATUS & CONTROL ──────────────────────────────────────────────────
-let ollamaOnline = false;
+// ─── OLLAMA STATUS & CONTROL (hidden dev-only backend) ────────────────────────
+// Gemini runs server-side via /api/ai and needs no "is it running" poll, so
+// ollamaOnline just reflects that: true under the default Gemini backend,
+// and only checkOllama()-managed (starts false, dev-mode only) under Ollama.
+let ollamaOnline = (aiBackend !== 'ollama');
 let reconnectTimer = null;
 
 async function checkOllama(silent = false) {
