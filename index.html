@@ -4627,7 +4627,7 @@ function checkConjugate() {
   } else {
     bar.classList.add('wrong-bar');
     document.getElementById('conj-result-icon').textContent = '❌';
-    document.getElementById('conj-result-main').textContent = 'Not quite.';
+    document.getElementById('conj-result-main').textContent = "Not quite — you're close!";
     document.getElementById('conj-result-sub').innerHTML = 'You wrote: "' + val + '"  ·  Correct: "' + correct + '"' + accentTipHTML(correct);
     updateStreak(false);
   }
@@ -5087,7 +5087,7 @@ function pickScenario() {
 // from 8 to 40 also lets it double as the shared static+AI dedup history used
 // by getStaticPair/getStaticFillBlank via alreadyRecent() below.
 let _recentGenerated = JSON.parse(localStorage.getItem('sl_recent_gen') || '{}'); // { [conceptKey_mode]: ['sentence', ...] }, most recent first
-function trackRecent(trackKey, sentence, max = 40) {
+function trackRecent(trackKey, sentence, max = 80) { // 2026-07-03: 40→80 to cut repetition — remember more so both the AI avoid-list and static dedup skip further back
   if (!sentence) return;
   if (!_recentGenerated[trackKey]) _recentGenerated[trackKey] = [];
   _recentGenerated[trackKey] = [sentence, ..._recentGenerated[trackKey]].slice(0, max);
@@ -5111,7 +5111,7 @@ function recentAvoidLine(trackKey) {
   // Only surface the most recent ~15 in-prompt (the full persisted list keeps
   // growing well past that) — enough for the model to steer away from without
   // bloating the prompt or drowning out the actual instructions.
-  return `\nAlready used recently (do NOT repeat these or anything very similar): ${list.slice(0, 15).join(' | ')}`;
+  return `\nAlready used recently (do NOT repeat these or anything very similar): ${list.slice(0, 25).join(' | ')}`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -5245,14 +5245,14 @@ function renderPairs(data) {
         <div class="q-text">${data.question}</div>
       </div>
       <div class="pair-grid">
-        <div class="pair-card" id="card-0" onclick="pickCard(0, ${data.correct}, '${escStr(data.cards[0].reason)}', '${escStr(data.explanation)}')">
+        <div class="pair-card" id="card-0" onclick="pickCard(0)">
           <button class="speak-btn pair-speak" onclick="event.stopPropagation();speakSpanish('${escStr(data.cards[0].es)}')" title="Hear pronunciation">🔊</button>
           <div class="pair-letter">A</div>
           <div class="pair-es">${data.cards[0].es}</div>
           <div class="pair-en">${data.cards[0].en}</div>
           <div class="pair-reason">${data.cards[0].reason}</div>
         </div>
-        <div class="pair-card" id="card-1" onclick="pickCard(1, ${data.correct}, '${escStr(data.cards[1].reason)}', '${escStr(data.explanation)}')">
+        <div class="pair-card" id="card-1" onclick="pickCard(1)">
           <button class="speak-btn pair-speak" onclick="event.stopPropagation();speakSpanish('${escStr(data.cards[1].es)}')" title="Hear pronunciation">🔊</button>
           <div class="pair-letter">B</div>
           <div class="pair-es">${data.cards[1].es}</div>
@@ -5273,9 +5273,15 @@ function renderPairs(data) {
   showDiffHint(currentConcept.key + '_pairs_' + pairSentenceText(data));
 }
 
-function pickCard(idx, correct, reason, explanation) {
+function pickCard(idx) {
   if (exerciseAnswered) return;
   exerciseAnswered = true;
+  // 2026-07-03: read correct-index + explanation from currentPairData rather
+  // than onclick args, keeping AI-generated text out of the HTML handler
+  // attribute (same double-quote-breaks-onclick bug fixed in Spot-the-Error).
+  const d = currentPairData || {};
+  const correct = d.correct;
+  const explanation = d.explanation || '';
   const isCorrect = idx === correct;
   // 2026-07-03: was built but never called anywhere — see showDiffHint in renderPairs
   trackExerciseAttempt(currentConcept.key + '_pairs_' + pairSentenceText(currentPairData), isCorrect);
@@ -5292,7 +5298,7 @@ function pickCard(idx, correct, reason, explanation) {
   document.getElementById('result-icon').textContent = isCorrect ? '✅' : '❌';
   document.getElementById('result-main').textContent = isCorrect
     ? streak >= 4 ? `🔥 Correct! ${streak + 1} in a row!` : 'Correct!'
-    : 'Not quite.';
+    : "Not quite — you're close!";
   document.getElementById('result-sub').textContent = explanation;
 
   // Scoring
@@ -5592,7 +5598,7 @@ function pickOption(idx, correct) {
   const bar = document.getElementById('result-bar');
   bar.classList.add('show', isCorrect ? 'correct-bar' : 'wrong-bar');
   document.getElementById('result-icon').textContent = isCorrect ? '✅' : '❌';
-  document.getElementById('result-main').textContent = isCorrect ? 'Correct!' : `Correct: "${fbData.options[correct]}"`;
+  document.getElementById('result-main').textContent = isCorrect ? 'Correct!' : `Not quite — it's "${fbData.options[correct]}"`;
   document.getElementById('result-sub').textContent = fbData.explanation || '';
 
   if (isCorrect) {
@@ -8763,6 +8769,7 @@ async function preGenerateSpotError() {
   finally { isPreGenerating = false; }
 }
 
+let _steCurrent = null; // the exercise currently on screen (read by checkSpotError)
 function renderSpotError(ex) {
   const area = document.getElementById('exercise-area');
   exerciseAnswered = false;
@@ -8775,6 +8782,16 @@ function renderSpotError(ex) {
     else { if (area) area.innerHTML = '<div class="prompt-box"><div class="prompt-lbl">Could not load exercise — tap Next.</div></div><div class="result-bar show"><button class="next-btn" onclick="loadSpotError()">Next →</button></div>'; return; }
   }
   const staticBadge = ex._static ? ' <span title="Built-in exercise" style="font-size:9px;opacity:.6;font-weight:500;background:rgba(91,141,238,.15);padding:1px 5px;border-radius:3px;vertical-align:middle;">📚</span>' : '';
+  // 2026-07-03: THE real "errors section stops clicking after two" bug. The old
+  // code interpolated AI-generated text into the button's onclick attribute via
+  // escStr — but escStr's \" is a JS-string escape, and inside an HTML attribute
+  // (onclick="…") a double quote in the AI's option/explanation still closes the
+  // attribute, truncating the handler so the button does nothing. Fix: store the
+  // exercise in _steCurrent and pass ZERO AI text through the handler — the click
+  // handler reads the correct answer/explanation from state. Option display text
+  // is also HTML-escaped so an AI-authored angle bracket can't break markup.
+  _steCurrent = ex;
+  const htmlEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   area.innerHTML = `
     <div class="prompt-box" style="margin-bottom:14px">
       <div class="prompt-lbl">🐛 Find and fix the grammar error${staticBadge}</div>
@@ -8782,7 +8799,7 @@ function renderSpotError(ex) {
     <div class="ste-sentence">${ex.sentence}</div>
     <div class="ste-options" id="ste-options">
       ${shuffle([...ex.options]).map(opt =>
-        `<button class="ste-opt" onclick="checkSpotError(this,'${escStr(ex.options[0])}','${escStr(ex.explanation)}')">${opt}</button>`
+        `<button class="ste-opt" onclick="checkSpotError(this)">${htmlEsc(opt)}</button>`
       ).join('')}
     </div>
     <div class="result-bar" id="result-bar" aria-live="polite">
@@ -8792,9 +8809,15 @@ function renderSpotError(ex) {
     </div>`;
 }
 
-function checkSpotError(btn, correctOption, explanation) {
+function checkSpotError(btn) {
   if (exerciseAnswered) return;
   exerciseAnswered = true;
+  // 2026-07-03: reads correct answer + explanation from _steCurrent (set in
+  // renderSpotError) instead of from onclick args — no AI text ever touches the
+  // handler attribute, so no character in a generated option can break clicking.
+  const ex = _steCurrent || {};
+  const correctOption = (ex.options && ex.options[0] != null) ? String(ex.options[0]) : '';
+  const explanation = ex.explanation || '';
   const allBtns = document.querySelectorAll('.ste-opt');
   allBtns.forEach(b => b.disabled = true);
   const correct = btn.textContent.trim() === correctOption.trim();
@@ -8807,7 +8830,7 @@ function checkSpotError(btn, correctOption, explanation) {
   const main = document.getElementById('result-main');
   const sub = document.getElementById('result-sub');
   if (icon) icon.textContent = correct ? '✅' : '❌';
-  if (main) main.textContent = correct ? 'Correct!' : 'Wrong — correct was: ' + correctOption;
+  if (main) main.textContent = correct ? 'Correct!' : 'Not quite — the fix is: ' + correctOption;
   if (sub) sub.textContent = explanation;
   if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(15); updateStreak(true); }
