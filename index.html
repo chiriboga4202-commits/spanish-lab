@@ -8253,6 +8253,7 @@ let _vocabXpAwarded = new Set(); // indices already credited this deck pass — 
 // nothing. This means Vocab mode navigation has never actually worked in production.
 // Fix: mirror the current list on a real global the onclick strings can reach.
 let _vocabCurrentList = [];
+let _vocabGenerating = false;
 
 function loadVocab() {
   const shuffled = shuffle([...VOCAB_LIST]);
@@ -8291,7 +8292,16 @@ function renderVocabCard(list) {
       <button onclick="_vocabIdx--;if(_vocabIdx<0)_vocabIdx=_vocabCurrentList.length-1;renderVocabCard(_vocabCurrentList)">← Prev</button>
       <button onclick="markVocabKnown('${escStr(word.es)}');_vocabIdx++;renderVocabCard(_vocabCurrentList)" style="background:rgba(62,207,142,.12);border-color:#3ecf8e;color:#3ecf8e">✓ Know it</button>
       <button onclick="_vocabIdx++;renderVocabCard(_vocabCurrentList)" style="background:rgba(244,91,105,.06);border-color:#f45b69;color:#f45b69">✗ Review</button>
+    </div>
+    <div style="text-align:center;margin-top:10px">
+      <button id="vocab-more-btn" class="more-btn" onclick="generateMoreVocab(false)"><span>⚡</span> More words (AI)</button>
     </div>`;
+  // 2026-07-03: keep the deck feeling infinite — silently top it up with fresh
+  // AI-generated cards (concept-aware) as the student nears the end of the deck,
+  // so Vocab stops being a fixed finite list. See generateMoreVocab below.
+  if (ollamaOnline && !_vocabGenerating && !isGeminiRateLimited() && (total - (_vocabIdx % total)) <= 2) {
+    generateMoreVocab(true);
+  }
   // 2026-07-03: this used to fire unconditionally on every render, including
   // "← Prev" navigating back over already-seen cards — since Prev/Next both just
   // call renderVocabCard again, a student could click back and forth to farm
@@ -8311,6 +8321,56 @@ function revealVocab() {
 function markVocabKnown(esText) {
   if (!_vocabSeen.includes(esText)) _vocabSeen.push(esText);
   localStorage.setItem('sl_vocab_seen', JSON.stringify(_vocabSeen));
+}
+
+// 2026-07-03: AI top-up for Vocab. VOCAB_LIST is a fixed static deck, so Vocab
+// felt finite. This appends fresh, concept-aware, de-duplicated cards to the
+// live deck — called both explicitly (the "More words" button) and silently
+// from renderVocabCard as the student nears the end, so the deck never dead-ends.
+async function generateMoreVocab(silent) {
+  if (_vocabGenerating || !ollamaOnline || isGeminiRateLimited()) {
+    if (!silent) showToast('⚠️ High demand right now — try again in a moment', 1800);
+    return;
+  }
+  _vocabGenerating = true;
+  const btn = document.getElementById('vocab-more-btn');
+  if (btn && !silent) { btn.disabled = true; btn.innerHTML = 'Generating…'; }
+  try {
+    const c = currentConcept;
+    const focus = c
+      ? `Focus on vocabulary useful for practicing "${c.name}" (${c.context}).`
+      : 'Mix verbs, nouns, adjectives, adverbs and useful everyday expressions.';
+    const have = _vocabCurrentList.slice(0, 60).map(w => w.es).join(', ');
+    const prompt = `You are a Spanish teacher building vocabulary flashcards.
+${focus}
+Generate 8 useful, common Spanish vocabulary items a learner should know, varying the part of speech.
+Do NOT repeat any of these already-used words: ${have}.
+
+Respond with ONLY a valid JSON array (no markdown, no extra text):
+[{ "es": "word or short phrase", "en": "English meaning", "pos": "verb|noun|adj|adv|phrase", "ex": "one short, natural example sentence in Spanish that uses the word" }]
+
+Rules:
+- Exactly 8 items. Real, correct Spanish. No duplicates of the used words above.
+- "ex" must be a natural everyday sentence that actually uses the word.`;
+    const data = await ollamaJSONCreative(prompt, 1, 0.7);
+    const items = Array.isArray(data) ? data : (data && Array.isArray(data.items) ? data.items : []);
+    const existing = new Set(_vocabCurrentList.map(w => (w.es || '').toLowerCase()));
+    const fresh = items
+      .filter(w => w && w.es && w.en && !existing.has(String(w.es).toLowerCase()))
+      .map(w => ({ es: w.es, en: w.en, pos: w.pos || 'word', ex: w.ex || '', _ai: true }));
+    if (fresh.length) {
+      _vocabCurrentList = [..._vocabCurrentList, ...fresh];
+      if (!silent) { _vocabIdx++; renderVocabCard(_vocabCurrentList); showToast(`＋${fresh.length} new words`, 1500); }
+    } else if (!silent) {
+      showToast('Could not generate new words — try again', 1800);
+    }
+  } catch {
+    if (!silent) showToast('⚠️ High demand right now — try again in a moment', 1800);
+  } finally {
+    _vocabGenerating = false;
+    const b = document.getElementById('vocab-more-btn');
+    if (b) { b.disabled = false; b.innerHTML = '<span>⚡</span> More words (AI)'; }
+  }
 }
 
 // ── #21 SPOT THE ERROR MODE ───────────────────────────────────────────────────
