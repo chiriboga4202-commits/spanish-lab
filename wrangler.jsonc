@@ -5,5 +5,11 @@
   "main": "./dist/worker/index.js",
   "assets": {
     "directory": "."
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "PROGRESS_KV",
+      "id": "10d3826b0ecf4b389def7c2bb24d5657"
+    }
+  ]
 }
