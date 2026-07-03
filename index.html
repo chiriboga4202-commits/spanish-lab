@@ -4728,7 +4728,9 @@ async function geminiCall(prompt, system, temp, jsonMode) {
   });
   if (!res.ok) {
     const errText = await res.text().catch(() => '');
-    throw new Error(`Gemini error (HTTP ${res.status})${errText ? ': ' + errText.slice(0, 200) : ''}`);
+    const err = new Error(`Gemini error (HTTP ${res.status})${errText ? ': ' + errText.slice(0, 200) : ''}`);
+    err.status = res.status;
+    throw err;
   }
   const data = await res.json();
   return data.content || '';
@@ -4747,13 +4749,27 @@ function parseJSONLoose(text) {
 }
 
 async function geminiJSON(prompt, system, temp, retries) {
-  for (let attempt = 0; attempt <= retries; attempt++) {
+  // 2026-07-03: live-tested during a real rate-limit event (Gemini free-tier
+  // 429s hit hard while both Felipe and I were testing simultaneously). The
+  // old flat "1000ms then give up" retry meant a single burst of traffic
+  // permanently failed every generation mode for the next several requests
+  // even though Gemini's per-minute quota resets fast. Fixes: (1) always
+  // retry at least twice regardless of what a thin call site passed in —
+  // Examples mode was calling this with retries=1, i.e. one single retry
+  // total, (2) back off much harder specifically on 429 (2s/4s/8s + jitter)
+  // vs other errors (flat 1s), since a 429 means "you WILL fail again
+  // immediately," not "maybe a fluke."
+  const effectiveRetries = Math.max(retries, 2);
+  for (let attempt = 0; attempt <= effectiveRetries; attempt++) {
     try {
       const text = await geminiCall(prompt, system, temp, true);
       return parseJSONLoose(text);
     } catch (err) {
-      if (attempt === retries) throw err;
-      await new Promise(r => setTimeout(r, 1000));
+      if (attempt === effectiveRetries) throw err;
+      const isRateLimited = err.status === 429;
+      const base = isRateLimited ? 2000 * Math.pow(2, attempt) : 1000;
+      const jitter = Math.random() * 400;
+      await new Promise(r => setTimeout(r, base + jitter));
     }
   }
 }
@@ -7414,6 +7430,7 @@ function loadSpeak() {
       <button class="speak-record-btn" id="speak-btn" onclick="toggleSpeaking('${escStr(es)}')">🎙️ Tap to speak</button>
       <div class="speak-transcript" id="speak-transcript"></div>
       <div class="speak-result" id="speak-result" style="display:none"></div>
+      <button class="skip-btn" id="speak-skip-btn" onclick="loadSpeak()" style="margin-top:14px;background:none;border:none;color:var(--text3);text-decoration:underline;cursor:pointer;font-size:.85rem">Skip / Next word →</button>
     </div>
     <div id="result-bar" class="result-bar" style="display:none" aria-live="polite">
       <div class="result-icon" id="result-icon"></div>
