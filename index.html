@@ -4105,7 +4105,11 @@ function renderConceptBar() {
     const acc = m.total > 0 ? Math.round(m.correct / m.total * 100) : null;
     let masteryMark = '';
     if (acc !== null) {
-      if (acc >= 80) masteryMark = `<span class="chip-mastery">⭐</span>`;
+      // 2026-07-03: was flat "acc >= 80" with no minimum-attempts floor, so a
+      // single lucky guess (1/1) earned the ⭐ "mastered" mark. isMasteryThresholdMet()
+      // already existed (per-concept attempt floors of 8-25 + 80% accuracy) but was
+      // never wired in — use it here instead of re-deriving the threshold inline.
+      if (isMasteryThresholdMet(c.key)) masteryMark = `<span class="chip-mastery">⭐</span>`;
       else if (acc >= 60) masteryMark = `<span class="chip-mastery">📈</span>`;
       else if (m.total > 0) masteryMark = `<span class="chip-mastery">🔴</span>`;
     }
@@ -5067,12 +5071,16 @@ function renderPairs(data) {
         <button class="next-btn" id="next-btn" onclick="loadPairs()">Next →</button>
       </div>
     </div>`;
+  // 2026-07-03: showDiffHint() existed (renders a "tricky one" note) but was never called
+  showDiffHint(currentConcept.key + '_pairs_' + pairSentenceText(data));
 }
 
 function pickCard(idx, correct, reason, explanation) {
   if (exerciseAnswered) return;
   exerciseAnswered = true;
   const isCorrect = idx === correct;
+  // 2026-07-03: was built but never called anywhere — see showDiffHint in renderPairs
+  trackExerciseAttempt(currentConcept.key + '_pairs_' + pairSentenceText(currentPairData), isCorrect);
 
   // Style cards
   document.getElementById('card-0').classList.add('disabled');
@@ -5381,12 +5389,14 @@ function renderFillBlank(data) {
         <button class="next-btn" id="next-btn" onclick="loadFillBlank()">Next →</button>
       </div>
     </div>`;
+  showDiffHint(currentConcept.key + '_fillblank_' + fillBlankSentenceText(data));
 }
 
 function pickOption(idx, correct) {
   if (exerciseAnswered) return;
   exerciseAnswered = true;
   const isCorrect = idx === correct;
+  trackExerciseAttempt(currentConcept.key + '_fillblank_' + fillBlankSentenceText(fbData), isCorrect);
   const slot = document.getElementById('blank-slot');
   const chosenText = fbData.options[idx];
 
@@ -5548,6 +5558,7 @@ function renderBuilder(data) {
         <button class="next-btn" id="next-btn" onclick="loadBuilder()">Next →</button>
       </div>
     </div>`;
+  showDiffHint(currentConcept.key + '_builder_' + builderAnswer.join(' '));
 }
 
 function placeTile(idx) {
@@ -5599,6 +5610,7 @@ function checkBuilderAnswer(explanation) {
   // 2026-07-01: accent-only differences now get full credit (this mode tests
   // word order, not accent memorization) — see explainAccent() for the tip.
   const isCorrect = stripAccents(attemptStr) === stripAccents(correctStr);
+  trackExerciseAttempt(currentConcept.key + '_builder_' + correctStr, isCorrect);
 
   const area = document.getElementById('answer-area');
   area.className = `answer-area ${isCorrect ? 'correct-answer' : 'wrong-answer'}`;
@@ -6621,7 +6633,13 @@ function updateStats() {
   updateDailyDisplay();
   // Consolidated 2026-07-01 (was a separate monkey-patch — see note near updateStreak)
   const _total = sessionCorrect + sessionWrong;
-  if (_total > 0 && _total % 20 === 0) checkBadges();
+  if (_total > 0 && _total % 20 === 0) {
+    checkBadges();
+    // 2026-07-03: showSessionGrade() was built (grade-overlay HTML + closeGrade()
+    // both exist and work) but nothing ever called it — the comment below claiming
+    // it was "folded in" only ever covered checkBadges(). Actually wire it up.
+    showSessionGrade();
+  }
 }
 
 // ─── VISUAL EFFECTS ────────────────────────────────────────────────────────────

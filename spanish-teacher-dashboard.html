@@ -1,0 +1,3148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spanish Concept Lab — Teacher Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15.4/dist/browser/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.15.4/dist/browser/index.js"></script>
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #13161e;
+  --surface2: #1a1d27;
+  --surface3: #21253300;
+  --border: #2a2d3a;
+  --border2: #353848;
+  --accent: #5b8dee;
+  --accent2: #3d6ad6;
+  --green: #3ecf8e;
+  --amber: #f6a623;
+  --red: #f45b69;
+  --purple: #a855f7;
+  --cyan: #22d3ee;
+  --text: #e2e4ed;
+  --text2: #9397a8;
+  --text3: #5c6070;
+  --beginner: #3ecf8e;
+  --intermediate: #f6a623;
+  --r: 8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body {
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 52px 1fr;
+  grid-template-columns: 248px 1fr 310px;
+  grid-template-areas: "hd hd hd" "sb mn pn";
+}
+
+/* ── HEADER ── */
+header {
+  grid-area: hd;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+.logo { width:30px;height:30px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0; }
+.hd-left { display:flex;align-items:center;gap:10px; }
+.hd-title { font-size:14px;font-weight:700;letter-spacing:-.3px; }
+.hd-sub { font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px; }
+.hd-center { display:flex;align-items:center;gap:6px; }
+.mode-bar { display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:7px;overflow:hidden; }
+.mode-btn { padding:5px 13px;font-size:11.5px;font-weight:600;border:none;background:transparent;cursor:pointer;color:var(--text3);transition:all .15s;white-space:nowrap; }
+.mode-btn.active { background:var(--accent);color:#fff; }
+.mode-btn:hover:not(.active) { color:var(--text2); }
+.hd-right { display:flex;align-items:center;gap:10px; }
+.lvl-toggle { display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:6px;overflow:hidden; }
+.lvl-btn { padding:4px 11px;font-size:11px;font-weight:600;border:none;background:transparent;cursor:pointer;color:var(--text3);transition:all .15s; }
+.lvl-btn.beg { background:var(--beginner);color:#000; }
+.lvl-btn.int { background:var(--intermediate);color:#000; }
+.timer { font-family:monospace;font-size:17px;font-weight:700;color:var(--accent);letter-spacing:2px;min-width:56px;text-align:right; }
+.tbtn { padding:4px 10px;font-size:11px;font-weight:600;border-radius:5px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s; }
+.tbtn:hover { border-color:var(--accent);color:var(--accent); }
+.tbtn.running { border-color:var(--red);color:var(--red); }
+.date-chip { font-size:10px;color:var(--text3);padding:3px 7px;background:var(--surface2);border-radius:4px;border:1px solid var(--border); }
+
+/* ── SIDEBAR ── */
+aside {
+  grid-area: sb;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.sb-hd { padding:12px 14px 8px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between; }
+.sb-hd span { font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.7px; }
+.prog-lbl { font-size:10px;color:var(--accent); }
+.curriculum { flex:1;overflow-y:auto;padding:6px 0; }
+.curriculum::-webkit-scrollbar{width:3px;}
+.curriculum::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+.module { margin:2px 7px;border-radius:7px;border:1px solid transparent;cursor:pointer;transition:all .15s;overflow:hidden; }
+.module:hover { border-color:var(--border2);background:var(--surface2); }
+.module.active { border-color:var(--accent);background:rgba(91,141,238,.07); }
+.module-hd { display:flex;align-items:center;gap:8px;padding:9px 10px; }
+.mod-num { width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;background:var(--surface2);border:1.5px solid var(--border2);color:var(--text3); }
+.module.active .mod-num { background:var(--accent);border-color:var(--accent);color:#fff; }
+.module.done .mod-num { background:var(--green);border-color:var(--green);color:#000; }
+.mod-info { flex:1;min-width:0; }
+.mod-title { font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.module.active .mod-title { color:var(--accent); }
+.mod-tag { font-size:10px;color:var(--text3);margin-top:1px; }
+.lvl-dots { display:flex;gap:3px; }
+.dot { width:5px;height:5px;border-radius:50%;background:var(--border2); }
+.dot.beg { background:var(--beginner); }
+.dot.int { background:var(--intermediate); }
+.mod-lessons { display:none;padding:0 10px 7px 38px;flex-direction:column;gap:3px; }
+.module.active .mod-lessons { display:flex; }
+.lesson-item { font-size:11px;color:var(--text3);padding:3px 7px;border-radius:4px;cursor:pointer;border-left:2px solid transparent;transition:all .12s; }
+.lesson-item:hover { color:var(--text2);border-left-color:var(--accent);background:rgba(91,141,238,.05); }
+.lesson-item.current { color:var(--accent);border-left-color:var(--accent);background:rgba(91,141,238,.08); }
+
+/* ── MAIN ── */
+main {
+  grid-area: mn;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+main::-webkit-scrollbar{width:4px;}
+main::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+.main-inner { padding:18px;display:flex;flex-direction:column;gap:14px;flex:1; }
+
+/* ── PANEL ── */
+.panel {
+  grid-area: pn;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.panel-tabs { display:flex;border-bottom:1px solid var(--border); }
+.ptab { flex:1;padding:10px 6px;font-size:11.5px;font-weight:600;text-align:center;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s; }
+.ptab:hover { color:var(--text2); }
+.ptab.active { color:var(--accent);border-bottom-color:var(--accent); }
+.panel-body { flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px; }
+.panel-body::-webkit-scrollbar{width:3px;}
+.panel-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+.pane { display:none;flex-direction:column;gap:10px; }
+.pane.active { display:flex; }
+
+/* ── SHARED COMPONENTS ── */
+.card { background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden; }
+.card-hd { padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between; }
+.card-title { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3); }
+.card-body { padding:14px; }
+.tag { font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;border:1px solid;letter-spacing:.3px;text-transform:uppercase; }
+.tag-beg{color:var(--beginner);border-color:rgba(62,207,142,.3);background:rgba(62,207,142,.07);}
+.tag-int{color:var(--intermediate);border-color:rgba(246,166,35,.3);background:rgba(246,166,35,.07);}
+.tag-concept{color:var(--accent);border-color:rgba(91,141,238,.3);background:rgba(91,141,238,.07);}
+.tag-core{color:var(--purple);border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.07);}
+.btn { padding:6px 12px;font-size:12px;font-weight:600;border-radius:6px;border:1px solid;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px; }
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn-primary:hover{background:var(--accent2);border-color:var(--accent2);}
+.btn-ghost{background:transparent;border-color:var(--border2);color:var(--text2);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-green{background:var(--green);border-color:var(--green);color:#000;}
+.btn-amber{background:var(--amber);border-color:var(--amber);color:#000;}
+label-txt { font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px; }
+.lbl { font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px; }
+.inp { width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;padding:7px 9px;font-size:12px;color:var(--text);font-family:inherit;outline:none;transition:border-color .15s; }
+.inp:focus{border-color:var(--accent);}
+.inp::placeholder{color:var(--text3);}
+textarea.inp{resize:vertical;min-height:56px;}
+select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235c6070'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;padding-right:26px;cursor:pointer;}
+.divider{height:1px;background:var(--border);margin:2px 0;}
+.spinner{width:13px;height:13px;border:2px solid rgba(91,141,238,.25);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ai-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ai-output{background:var(--surface2);border:1px solid var(--border);border-radius:6px;min-height:80px;padding:11px;font-size:12px;line-height:1.7;color:var(--text2);white-space:pre-wrap;overflow-y:auto;max-height:300px;}
+.ai-output::-webkit-scrollbar{width:3px;}
+.ai-output::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+.ai-output.empty{display:flex;align-items:center;justify-content:center;text-align:center;color:var(--text3);font-size:11.5px;}
+.ai-thinking{display:flex;align-items:center;gap:7px;color:var(--accent);font-size:11.5px;}
+.gen-btn{width:100%;padding:9px;font-size:12px;font-weight:700;border-radius:6px;border:none;background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s;}
+.gen-btn:hover{opacity:.87;}
+.gen-btn:disabled{opacity:.45;cursor:not-allowed;}
+.out-actions{display:flex;gap:5px;}
+.out-btn{flex:1;padding:5px;font-size:10.5px;font-weight:600;border-radius:5px;border:1px solid var(--border2);background:var(--surface2);color:var(--text3);cursor:pointer;transition:all .15s;}
+.out-btn:hover{border-color:var(--accent);color:var(--accent);}
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.type-btn{padding:7px 8px;font-size:11px;font-weight:600;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text3);cursor:pointer;transition:all .15s;text-align:center;}
+.type-btn:hover{border-color:var(--accent);color:var(--accent);}
+.type-btn.sel{border-color:var(--accent);background:rgba(91,141,238,.1);color:var(--accent);}
+.quick-item{display:flex;align-items:center;gap:7px;padding:6px 9px;background:var(--surface2);border-radius:5px;border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:11.5px;color:var(--text2);}
+.quick-item:hover{border-color:var(--accent);background:rgba(91,141,238,.06);}
+.quick-item .qi-arrow{color:var(--text3);font-size:10px;margin-left:auto;}
+.status-bar{padding:5px 12px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface2);}
+.status-dot{width:5px;height:5px;border-radius:50%;}
+.status-dot.on{background:var(--green);}
+.status-dot.off{background:var(--red);}
+.si{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--text3);}
+
+/* ── CONCEPT VIEW ── */
+.concept-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.concept-title{font-size:20px;font-weight:800;letter-spacing:-.4px;line-height:1.2;}
+.concept-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.ctags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;}
+.mental-card{background:linear-gradient(135deg,rgba(91,141,238,.08),rgba(168,85,247,.05));border:1px solid rgba(91,141,238,.2);border-radius:var(--r);}
+.mental-card .card-hd{border-color:rgba(91,141,238,.15);}
+.mental-card .card-title{color:var(--accent);}
+.model-icon{font-size:24px;margin-bottom:6px;}
+.model-text{font-size:13.5px;line-height:1.75;color:var(--text);}
+.model-text strong{color:var(--accent);}
+.model-text em{color:var(--cyan);font-style:normal;font-weight:600;}
+.contrast-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.cbox{padding:10px;border-radius:6px;}
+.cbox.en{background:rgba(244,91,105,.06);border:1px solid rgba(244,91,105,.18);}
+.cbox.es{background:rgba(62,207,142,.06);border:1px solid rgba(62,207,142,.18);}
+.clbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;}
+.cbox.en .clbl{color:var(--red);}
+.cbox.es .clbl{color:var(--green);}
+.cpt{font-size:12px;color:var(--text2);line-height:1.55;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.cpt:last-child{border-bottom:none;}
+.ex-block{padding:11px 13px;border-radius:6px;border-left:3px solid;background:var(--surface2);}
+.ex-block.beg{border-left-color:var(--beginner);}
+.ex-block.int{border-left-color:var(--intermediate);}
+.ex-lvl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.ex-block.beg .ex-lvl{color:var(--beginner);}
+.ex-block.int .ex-lvl{color:var(--intermediate);}
+.ex-es{font-size:14px;font-weight:600;color:var(--text);font-family:monospace;margin-bottom:2px;}
+.ex-en{font-size:11.5px;color:var(--text3);margin-bottom:5px;}
+.ex-why{font-size:11.5px;color:var(--text2);line-height:1.5;padding-top:5px;border-top:1px solid var(--border);}
+.mistake-item{padding:9px 11px;background:rgba(244,91,105,.05);border:1px solid rgba(244,91,105,.14);border-radius:6px;display:flex;gap:8px;}
+.mistake-text{font-size:12px;color:var(--text2);line-height:1.5;}
+.mistake-text strong{color:var(--red);}
+.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.ref-card{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:9px 11px;cursor:pointer;transition:all .15s;}
+.ref-card:hover{border-color:var(--accent);background:rgba(91,141,238,.05);}
+.ref-title{font-size:11.5px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.ref-desc{font-size:10px;color:var(--text3);}
+
+/* ── MINIMAL PAIRS ── */
+.drill-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.drill-score{font-size:13px;font-weight:700;color:var(--text2);}
+.pair-arena{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px;}
+.pair-card{background:var(--surface2);border:2px solid var(--border);border-radius:10px;padding:18px;cursor:pointer;transition:all .2s;position:relative;min-height:160px;display:flex;flex-direction:column;justify-content:space-between;}
+.pair-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.pair-card.selected-correct{border-color:var(--green);background:rgba(62,207,142,.07);}
+.pair-card.selected-wrong{border-color:var(--red);background:rgba(244,91,105,.07);animation:shake .3s;}
+.pair-card.reveal{border-color:var(--green);background:rgba(62,207,142,.07);}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.pair-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:10px;}
+.pair-sentence{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3;}
+.pair-translation{font-size:12px;color:var(--text3);}
+.pair-concept{font-size:11.5px;color:var(--accent);margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:none;}
+.pair-card.reveal .pair-concept,.pair-card.selected-correct .pair-concept{display:block;}
+.drill-q{font-size:14px;font-weight:600;color:var(--text2);text-align:center;padding:12px;background:var(--surface2);border-radius:7px;border:1px solid var(--border);}
+.drill-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.pair-counter{font-size:11px;color:var(--text3);}
+.concept-select-row{display:flex;gap:7px;flex-wrap:wrap;}
+.concept-chip{padding:5px 11px;font-size:11px;font-weight:600;border-radius:5px;border:1px solid var(--border2);background:var(--surface2);color:var(--text3);cursor:pointer;transition:all .15s;}
+.concept-chip:hover{border-color:var(--accent);color:var(--accent);}
+.concept-chip.active{border-color:var(--accent);background:rgba(91,141,238,.1);color:var(--accent);}
+
+/* ── STORY MODE ── */
+.story-config{display:flex;flex-direction:column;gap:12px;}
+.concept-checks{display:flex;flex-wrap:wrap;gap:7px;}
+.cc-item{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:5px;border:1px solid var(--border2);background:var(--surface2);cursor:pointer;font-size:11.5px;color:var(--text3);transition:all .15s;user-select:none;}
+.cc-item:hover{border-color:var(--accent);}
+.cc-item.checked{border-color:var(--green);color:var(--green);background:rgba(62,207,142,.07);}
+.cc-item.checked::before{content:"✓ ";}
+.story-output{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:18px;font-size:14px;line-height:1.85;color:var(--text);min-height:120px;position:relative;}
+.story-output.empty{color:var(--text3);font-size:12px;display:flex;align-items:center;justify-content:center;}
+.concept-highlight{border-radius:3px;padding:1px 3px;font-weight:600;}
+.hl-ser{background:rgba(91,141,238,.2);color:var(--accent);}
+.hl-tense{background:rgba(62,207,142,.2);color:var(--green);}
+.hl-gender{background:rgba(168,85,247,.2);color:var(--purple);}
+.hl-subj{background:rgba(246,166,35,.2);color:var(--amber);}
+.hl-prep{background:rgba(244,91,105,.2);color:var(--red);}
+.legend{display:flex;flex-wrap:wrap;gap:6px;}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:10.5px;color:var(--text3);}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+
+/* ── SENTENCE BUILDER ── */
+.builder-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.bc-group{display:flex;flex-direction:column;gap:5px;}
+.bc-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);}
+.built-sentence{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:18px;min-height:80px;}
+.bs-display{font-size:20px;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.4;font-family:monospace;}
+.bs-parts{display:flex;flex-wrap:wrap;gap:8px;}
+.bs-part{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.bs-word{font-size:14px;font-weight:700;color:var(--text);padding:4px 8px;border-radius:5px;border:1px solid var(--border2);}
+.bs-word.subj-part{border-color:rgba(91,141,238,.4);background:rgba(91,141,238,.1);color:var(--accent);}
+.bs-word.verb-part{border-color:rgba(62,207,142,.4);background:rgba(62,207,142,.1);color:var(--green);}
+.bs-word.obj-part{border-color:rgba(246,166,35,.4);background:rgba(246,166,35,.1);color:var(--amber);}
+.bs-word.adj-part{border-color:rgba(168,85,247,.4);background:rgba(168,85,247,.1);color:var(--purple);}
+.bs-word.prep-part{border-color:rgba(244,91,105,.4);background:rgba(244,91,105,.1);color:var(--red);}
+.bs-word.art-part{border-color:rgba(34,211,238,.4);background:rgba(34,211,238,.1);color:var(--cyan);}
+.bs-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;}
+.bs-explanation{margin-top:14px;display:flex;flex-direction:column;gap:6px;}
+.bs-exp-item{font-size:12px;color:var(--text2);line-height:1.5;padding:6px 9px;background:var(--surface);border-radius:5px;border-left:2px solid var(--accent);}
+.bs-placeholder{color:var(--text3);font-size:13px;text-align:center;padding:24px;}
+
+/* ── ERROR AUTOPSY ── */
+.autopsy-form{display:flex;flex-direction:column;gap:9px;}
+.autopsy-output{display:flex;flex-direction:column;gap:7px;margin-top:4px;}
+.autopsy-block{padding:10px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);}
+.ab-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.ab-wrong{color:var(--red);}
+.ab-right{color:var(--green);}
+.ab-cause{color:var(--amber);}
+.ab-explain{color:var(--accent);}
+.ab-content{font-size:12.5px;line-height:1.55;color:var(--text2);}
+.ab-sentence{font-size:14px;font-weight:700;font-family:monospace;color:var(--text);}
+
+/* ── SESSION MODE ── */
+.session-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.session-full{display:flex;flex-direction:column;gap:14px;}
+.rec-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.rec-body{padding:16px;display:flex;flex-direction:column;gap:12px;}
+.rec-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.rec-btn{width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.rec-btn.idle{background:var(--red);box-shadow:0 0 0 0 rgba(244,91,105,.4);}
+.rec-btn.recording{background:var(--red);box-shadow:0 0 0 8px rgba(244,91,105,.2);animation:rec-pulse 1.2s infinite;}
+@keyframes rec-pulse{0%{box-shadow:0 0 0 0 rgba(244,91,105,.5)}70%{box-shadow:0 0 0 12px rgba(244,91,105,0)}100%{box-shadow:0 0 0 0 rgba(244,91,105,0)}}
+.rec-info{flex:1;}
+.rec-status{font-size:13px;font-weight:700;color:var(--text);}
+.rec-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.rec-timer-display{font-family:monospace;font-size:22px;font-weight:700;color:var(--red);letter-spacing:2px;min-width:68px;text-align:right;}
+.drop-zone{border:2px dashed var(--border2);border-radius:7px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--accent);background:rgba(91,141,238,.05);}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.drop-icon{font-size:24px;margin-bottom:6px;}
+.drop-txt{font-size:12.5px;font-weight:600;color:var(--text2);}
+.drop-sub{font-size:11px;color:var(--text3);margin-top:3px;}
+.audio-preview{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 12px;display:flex;align-items:center;gap:10px;}
+.audio-preview audio{flex:1;height:32px;}
+.transcribe-btn{padding:10px 18px;font-size:13px;font-weight:700;border-radius:6px;border:none;background:linear-gradient(135deg,var(--green),#2ba870);color:#000;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .15s;white-space:nowrap;}
+.transcribe-btn:hover{opacity:.85;}
+.transcribe-btn:disabled{opacity:.4;cursor:not-allowed;}
+.transcript-box{background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:14px;min-height:100px;max-height:220px;overflow-y:auto;font-size:13px;line-height:1.75;color:var(--text2);white-space:pre-wrap;}
+.transcript-box::-webkit-scrollbar{width:4px;}
+.transcript-box::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+.transcript-box.empty{color:var(--text3);font-size:12px;display:flex;align-items:center;justify-content:center;text-align:center;}
+.transcript-meta{display:flex;gap:10px;font-size:11px;color:var(--text3);}
+.tmeta-item{display:flex;align-items:center;gap:4px;}
+.output-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);border-radius:var(--r) var(--r) 0 0;}
+.out-tab{flex:1;padding:9px 6px;font-size:11.5px;font-weight:600;text-align:center;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;}
+.out-tab:hover{color:var(--text2);}
+.out-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.out-pane{display:none;padding:14px;flex-direction:column;gap:10px;}
+.out-pane.active{display:flex;}
+.process-btn{padding:8px 14px;font-size:12px;font-weight:700;border-radius:6px;border:none;background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .15s;}
+.process-btn:hover{opacity:.85;}
+.process-btn:disabled{opacity:.4;cursor:not-allowed;}
+.out-content{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:12px;min-height:80px;font-size:12.5px;line-height:1.75;color:var(--text2);white-space:pre-wrap;max-height:360px;overflow-y:auto;}
+.out-content::-webkit-scrollbar{width:4px;}
+.out-content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+.out-content.empty{color:var(--text3);font-size:11.5px;display:flex;align-items:center;justify-content:center;text-align:center;}
+.mindmap-wrap{background:var(--surface2);border:1px solid var(--border);border-radius:7px;overflow:hidden;position:relative;}
+.mindmap-wrap svg{width:100%;height:380px;background:var(--surface2);}
+.mindmap-empty{height:380px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px;text-align:center;}
+.lang-select-row{display:flex;align-items:center;gap:8px;}
+.server-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:4px;border:1px solid var(--border2);background:var(--surface2);font-size:10.5px;color:var(--text3);}
+.server-badge.on{border-color:rgba(62,207,142,.3);color:var(--green);}
+.server-badge.off{border-color:rgba(244,91,105,.3);color:var(--red);}
+
+
+/* ── BATCH E: TEACHER FEATURES ── */
+.live-feed-item { display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:6px; background:var(--surface2); font-size:12px; }
+.live-feed-item .lfi-icon { font-size:16px; flex-shrink:0; }
+.live-feed-item .lfi-text { flex:1; color:var(--text2); }
+.live-feed-item .lfi-mode { font-size:10px; color:var(--text3); }
+.live-dot-active { background:#4ade80 !important; box-shadow:0 0 6px rgba(74,222,128,.5); animation:livepulse 1.5s infinite; }
+@keyframes livepulse { 0%,100%{opacity:1}50%{opacity:.5} }
+.lib-concept-item { border-radius:8px; border:1px solid var(--border2); overflow:hidden; }
+.lib-concept-hdr { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; cursor:pointer; background:var(--surface2); }
+.lib-concept-body { padding:8px 12px; font-size:12px; color:var(--text2); display:none; background:var(--surface); }
+.lib-concept-body.open { display:block; }
+.lib-ex-chip { display:inline-block; padding:2px 7px; border-radius:4px; background:rgba(91,141,238,.12); color:var(--accent); font-size:11px; margin:2px; }
+.create-field { margin-bottom:8px; }
+.create-field label { font-size:11px; color:var(--text3); display:block; margin-bottom:3px; }
+.create-field input, .create-field textarea { width:100%; padding:7px 9px; border-radius:6px; border:1px solid var(--border2); background:var(--surface2); color:var(--text); font-size:13px; font-family:inherit; }
+.create-field textarea { resize:vertical; min-height:60px; }
+.custom-ex-item { display:flex; align-items:center; gap:6px; padding:5px 8px; border-radius:6px; background:var(--surface2); font-size:11.5px; }
+.queue-concept-btn { padding:5px 10px; border-radius:16px; border:1px solid var(--border2); background:var(--surface2); color:var(--text2); font-size:11.5px; cursor:pointer; transition:all .15s; }
+.queue-concept-btn:hover { border-color:var(--accent); color:var(--accent); }
+.queue-item { display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:6px; background:var(--surface2); font-size:12px; }
+.queue-item-badge { font-size:10px; padding:1px 5px; border-radius:3px; background:rgba(91,141,238,.15); color:var(--accent); }
+.gw-config-row { display:flex; gap:6px; align-items:center; font-size:12px; }
+.gw-config-row input { width:50px; padding:3px 6px; border-radius:5px; border:1px solid var(--border2); background:var(--surface2); color:var(--text); font-size:12px; }
+/* ── TOAST ── */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--surface2);border:1px solid var(--border2);border-radius:7px;padding:10px 14px;font-size:12px;color:var(--text);display:flex;align-items:center;gap:7px;box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:100;transform:translateY(70px);opacity:0;transition:all .25s;}
+.toast.show{transform:translateY(0);opacity:1;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hd-left">
+    <div class="logo">ES</div>
+    <div>
+      <div class="hd-title">Spanish Concept Lab</div>
+      <div class="hd-sub">Teacher Dashboard</div>
+    </div>
+  </div>
+
+  <div class="hd-center">
+    <div class="mode-bar">
+      <button class="mode-btn active" data-mode-key="concept" onclick="switchMode('concept',this)">📚 Concept</button>
+      <button class="mode-btn" data-mode-key="drill" onclick="switchMode('drill',this)">⚡ Minimal Pairs</button>
+      <button class="mode-btn" data-mode-key="story" onclick="switchMode('story',this)">📖 Story Mode</button>
+      <button class="mode-btn" data-mode-key="builder" onclick="switchMode('builder',this)">🔨 Builder</button>
+      <button class="mode-btn" data-mode-key="session" id="mode-session" onclick="switchMode('session',this)">🎙 Session</button>
+    </div>
+  </div>
+
+  <div class="hd-right">
+    <button class="tbtn" id="lang-toggle" onclick="toggleUILang()" title="Switch UI language / Cambiar idioma de la interfaz" style="font-size:13px;padding:4px 10px;font-weight:700;letter-spacing:.5px;">🇺🇸 EN</button>
+    <div class="lvl-toggle">
+      <button class="lvl-btn beg" data-level-key="beginner" onclick="setLevel('beginner',this)">Beginner</button>
+      <button class="lvl-btn" data-level-key="intermediate" onclick="setLevel('intermediate',this)">Intermediate</button>
+      <button class="lvl-btn" data-level-key="both" onclick="setLevel('both',this)">Both</button>
+    </div>
+    <div class="date-chip" id="date-chip"></div>
+    <div class="timer" id="timer">00:00</div>
+    <button class="tbtn" id="tbtn" onclick="toggleTimer()">▶ Start</button>
+    <button class="tbtn" onclick="resetTimer()">↺</button>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside>
+  <div class="sb-hd">
+    <span data-i18n="curriculum">Curriculum</span>
+    <span class="prog-lbl" id="prog-lbl">0 / 7</span>
+  </div>
+  <div class="curriculum" id="curriculum"></div>
+</aside>
+
+<!-- MAIN -->
+<main>
+  <div class="main-inner" id="main-inner">
+    <!-- injected by JS -->
+  </div>
+</main>
+
+<!-- RIGHT PANEL -->
+<div class="panel">
+  <div class="panel-tabs">
+    <div class="ptab active" onclick="switchPanel('gen',this)" data-i18n="aiGenTitle">⚡ AI Generator</div>
+    <div class="ptab" onclick="switchPanel('autopsy',this)" data-i18n="autopsyTitle">🔬 Error Autopsy</div>
+    <div class="ptab" onclick="switchPanel('student',this);refreshStudentProgress()">👤 Student</div>
+    <div class="ptab" onclick="switchPanel('live',this);startLiveFeed()">📡 Live</div>
+    <div class="ptab" onclick="switchPanel('library',this)">📚 Library</div>
+    <div class="ptab" onclick="switchPanel('create',this)">✏️ Create</div>
+    <div class="ptab" onclick="switchPanel('queue',this);renderQueue()">📋 Queue</div>
+  </div>
+
+  <!-- AI GENERATOR PANE -->
+  <div class="panel-body">
+    <div class="pane active" id="pane-gen">
+
+      <div><span class="lbl" data-i18n="modelLabel">Model</span>
+        <select class="inp" id="model-select">
+          <option value="llama3.1:8b">llama3.1:8b (recommended)</option>
+          <option value="llama3.2:3b">llama3.2:3b (lighter)</option>
+          <option value="qwen2.5:7b">qwen2.5:7b</option>
+          <option value="qwen:1.5b">qwen:1.5b (fast)</option>
+          <option value="mistral:7b">mistral:7b</option>
+          <option value="gemma2:2b">gemma2:2b</option>
+        </select>
+      </div>
+
+      <div><span class="lbl" data-i18n="topicLabel">Topic / Concept</span>
+        <textarea class="inp" id="gen-topic" data-i18n-placeholder="topicPlaceholder" placeholder="e.g. ser vs estar, preterite vs imperfect, subjunctive..."></textarea>
+      </div>
+
+      <div><span class="lbl" data-i18n="genLabel">Generate</span>
+        <div class="type-grid">
+          <button class="type-btn sel" data-type="concept" onclick="selType(this)" data-i18n="genTypes.concept">🧠 Concept</button>
+          <button class="type-btn" data-type="exercises" onclick="selType(this)" data-i18n="genTypes.exercises">✏️ Exercises</button>
+          <button class="type-btn" data-type="mistakes" onclick="selType(this)" data-i18n="genTypes.mistakes">⚠️ Mistakes</button>
+          <button class="type-btn" data-type="cultural" onclick="selType(this)" data-i18n="genTypes.cultural">🌎 Cultural</button>
+        </div>
+      </div>
+
+      <div><span class="lbl" data-i18n="levelLabel">Level</span>
+        <div class="type-grid">
+          <button class="type-btn sel" data-level="both" onclick="selGenLvl(this)" data-i18n="genBoth">Both</button>
+          <button class="type-btn" data-level="beginner" onclick="selGenLvl(this)" data-i18n="genBeg">Beginners</button>
+        </div>
+      </div>
+
+      <button class="gen-btn" id="gen-btn" onclick="generateContent()">
+        <span id="gen-btn-txt" data-i18n="genBtnLabel">⚡ Generate</span>
+      </button>
+
+      <div class="divider"></div>
+
+      <div class="ai-output empty" id="ai-output" data-i18n="outputEmpty">Generate content using the controls above. Streams live from your local Ollama.</div>
+      <div class="out-actions" id="out-actions" style="display:none">
+        <button class="out-btn" onclick="copyOut()" data-i18n="copylbl">📋 Copy</button>
+        <button class="out-btn" onclick="exportToDocs('ai')" id="docs-btn" style="background:rgba(26,115,232,.15);border-color:rgba(26,115,232,.4);color:#4a9ef8;">📄 Google Docs</button>
+        <button class="out-btn" onclick="clearOut()" data-i18n="clearlbl">✕ Clear</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <span class="lbl" data-i18n="quickLoadLabel">Quick Load</span>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="quick-item" onclick="quickLoad('ser vs estar — the two meanings of to be')">
+          <span>⚡</span><span>Ser vs Estar</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="quickLoad('preterite vs imperfect — snapshot vs movie')">
+          <span>⚡</span><span>Preterite vs Imperfect</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="quickLoad('subjunctive mood — doubt, desire, emotion')">
+          <span>⚡</span><span>Subjunctive Mood</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="quickLoad('por vs para — process vs purpose')">
+          <span>⚡</span><span>Por vs Para</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="quickLoad('reflexive verbs — actions that loop back to the subject')">
+          <span>⚡</span><span>Reflexive Verbs</span><span class="qi-arrow">→</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <span class="lbl">📄 Resource Generator</span>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="quick-item" onclick="generateResource('gender-agreement')" style="border-color:rgba(26,115,232,.3);background:rgba(26,115,232,.07);">
+          <span>📝</span><span>Gender &amp; Agreement Sheet</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="generateResource('ser-estar')" style="border-color:rgba(26,115,232,.3);background:rgba(26,115,232,.07);">
+          <span>📝</span><span>Ser / Estar Vocab List</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="generateResource('preterite')" style="border-color:rgba(26,115,232,.3);background:rgba(26,115,232,.07);">
+          <span>📝</span><span>Preterite Irregular Verbs</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="generateResource('common-vocab')" style="border-color:rgba(26,115,232,.3);background:rgba(26,115,232,.07);">
+          <span>📝</span><span>50 Nouns + 50 Adjectives</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="generateResource('custom')" style="border-color:rgba(26,115,232,.3);background:rgba(26,115,232,.07);">
+          <span>📝</span><span>Custom Resource (use topic above)</span><span class="qi-arrow">→</span>
+        </div>
+      </div>
+      <div class="ai-output empty" id="resource-output" style="margin-top:8px;max-height:160px;display:none;"></div>
+      <div id="resource-actions" style="display:none;gap:5px;margin-top:5px;flex-direction:row;">
+        <button class="out-btn" onclick="copyResource()">📋 Copy</button>
+        <button class="out-btn" onclick="exportToDocs('resource')" style="background:rgba(26,115,232,.15);border-color:rgba(26,115,232,.4);color:#4a9ef8;">📄 Export to Google Docs</button>
+      </div>
+    </div>
+
+    <!-- ERROR AUTOPSY PANE -->
+    <div class="pane" id="pane-autopsy">
+      <div style="font-size:12px;color:var(--text3);line-height:1.6;" data-i18n="autopsyDesc">
+        Type what a student said wrong. AI will diagnose the root cause, show the correct version, and explain why the mistake happens.
+      </div>
+
+      <div class="autopsy-form">
+        <div>
+          <span class="lbl" data-i18n="wrongLabel">❌ What the student said</span>
+          <input class="inp" id="autopsy-wrong" data-i18n-placeholder="wrongPlaceholder" placeholder='e.g. "Yo soy cansado"' />
+        </div>
+        <div>
+          <span class="lbl" data-i18n="contextLabel">Context (concept being practiced)</span>
+          <input class="inp" id="autopsy-context" data-i18n-placeholder="contextPlaceholder" placeholder='e.g. ser vs estar, feelings' />
+        </div>
+        <button class="gen-btn" id="autopsy-btn" onclick="runAutopsy()">
+          <span id="autopsy-btn-txt" data-i18n="runAutopsy">🔬 Run Autopsy</span>
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div id="autopsy-output" class="ai-output empty" style="max-height:none;min-height:100px;">
+        Error analysis will appear here.
+      </div>
+      <div class="out-actions" id="autopsy-out-actions" style="display:none">
+        <button class="out-btn" onclick="copyAutopsy()" data-i18n="copylbl">📋 Copy</button>
+        <button class="out-btn" onclick="clearAutopsy()" data-i18n="clearlbl">✕ Clear</button>
+      </div>
+
+      <div class="divider"></div>
+      <span class="lbl" data-i18n="commonErrorsLabel">Common Student Errors</span>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="quick-item" onclick="loadError('Yo soy cansado','ser vs estar')">
+          <span>⚡</span><span>"Yo soy cansado"</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="loadError('Ayer yo comí pizza cuando llovió','preterite vs imperfect')">
+          <span>⚡</span><span>"...cuando llovió"</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="loadError('Necesito que tú vas al mercado','subjunctive')">
+          <span>⚡</span><span>"...que tú vas"</span><span class="qi-arrow">→</span>
+        </div>
+        <div class="quick-item" onclick="loadError('Compré el regalo por mi madre','por vs para')">
+          <span>⚡</span><span>"...regalo por mi madre"</span><span class="qi-arrow">→</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDENT PROGRESS PANE -->
+    <div class="pane" id="pane-student">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span class="lbl" style="margin:0">Student Progress</span>
+        <button onclick="refreshStudentProgress()" style="font-size:11px;background:none;border:1px solid var(--border2);color:var(--text3);border-radius:5px;padding:2px 8px;cursor:pointer">↺ Refresh</button>
+      </div>
+      <div id="sp-name" style="font-size:13px;font-weight:600;color:var(--text1);margin-bottom:4px">—</div>
+      <div id="sp-meta" style="font-size:11.5px;color:var(--text3);margin-bottom:12px">Open the student dashboard to start a session</div>
+      <div id="sp-concepts"></div>
+      <div id="sp-empty" style="font-size:12px;color:var(--text3);text-align:center;padding:24px 0;display:none">
+        No mastery data yet — student hasn't practiced any concepts.
+      </div>
+      <!-- #37 Custom Gateway Requirements -->
+      <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+        <div class="lbl" style="margin-bottom:8px">Custom Gateway Requirements (#37)</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px">Override min exercises &amp; accuracy per concept. Saved to shared localStorage.</div>
+        <div id="gw-config-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px"></div>
+        <button onclick="addGatewayRow()" style="font-size:11px;padding:4px 10px;border-radius:5px;border:1px dashed var(--border2);background:none;color:var(--accent);cursor:pointer">+ Add concept override</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LIVE FEED PANE (#31) ── -->
+  <div class="pane" id="pane-live">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <span class="lbl" style="margin:0">📡 Live Student Feed</span>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div id="live-dot" style="width:8px;height:8px;border-radius:50%;background:#6b7280"></div>
+        <span id="live-status-txt" style="font-size:11px;color:var(--text3)">Not watching</span>
+        <button onclick="toggleLiveFeed()" id="live-toggle-btn" style="font-size:11px;padding:3px 8px;border-radius:5px;border:1px solid var(--border2);background:none;color:var(--accent);cursor:pointer">▶ Start</button>
+      </div>
+    </div>
+    <div id="live-current" style="background:var(--surface2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:13px;min-height:60px">
+      <div style="color:var(--text3);font-size:12px">Waiting for student activity...</div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-bottom:6px;font-weight:600">Recent answers</div>
+    <div id="live-feed-list" style="display:flex;flex-direction:column;gap:4px;max-height:280px;overflow-y:auto"></div>
+  </div>
+
+  <!-- ── LIBRARY PANE (#32) ── -->
+  <div class="pane" id="pane-library">
+    <div style="margin-bottom:10px">
+      <span class="lbl" style="margin:0">📚 Exercise Library</span>
+    </div>
+    <input id="lib-search" class="inp" placeholder="Search exercises..." style="width:100%;margin-bottom:10px" oninput="filterLibrary(this.value)">
+    <div style="font-size:11px;color:var(--text3);margin-bottom:8px">Showing built-in exercise bank. Click a concept to preview exercises.</div>
+    <div id="lib-list" style="display:flex;flex-direction:column;gap:6px;max-height:360px;overflow-y:auto"></div>
+  </div>
+
+  <!-- ── CREATE PANE (#34) ── -->
+  <div class="pane" id="pane-create">
+    <div style="margin-bottom:10px">
+      <span class="lbl" style="margin:0">✏️ Custom Exercise Authoring</span>
+    </div>
+    <select class="inp" id="create-type" style="width:100%;margin-bottom:8px" onchange="renderCreateForm(this.value)">
+      <option value="pairs">Vocabulary Pairs</option>
+      <option value="fillblank">Fill in the Blank</option>
+      <option value="translate">Translation</option>
+      <option value="story">Mini Story</option>
+    </select>
+    <select class="inp" id="create-concept" style="width:100%;margin-bottom:10px">
+      <option value="present">Present Tense</option>
+      <option value="ser-estar">Ser vs Estar</option>
+      <option value="pret-imp">Preterite vs Imperfect</option>
+      <option value="subjunctive">Subjunctive</option>
+      <option value="por-para">Por vs Para</option>
+      <option value="gender">Noun Gender</option>
+      <option value="reflexive">Reflexive Verbs</option>
+      <option value="gustar">Gustar Pattern</option>
+      <option value="word-order">Word Order</option>
+      <option value="obj-pronouns">Object Pronouns</option>
+    </select>
+    <div id="create-form-area"></div>
+    <div style="display:flex;gap:6px;margin-top:10px">
+      <button onclick="saveCustomExercise()" style="flex:1;padding:8px;border-radius:7px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer">💾 Save Exercise</button>
+      <button onclick="exportCustomExercises()" style="padding:8px 12px;border-radius:7px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);font-size:12px;cursor:pointer">Export JSON</button>
+    </div>
+    <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">
+      <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Saved custom exercises (<span id="custom-ex-count">0</span>)</div>
+      <div id="custom-ex-list" style="max-height:160px;overflow-y:auto;display:flex;flex-direction:column;gap:4px"></div>
+    </div>
+  </div>
+
+  <!-- ── QUEUE PANE (#33) ── -->
+  <div class="pane" id="pane-queue">
+    <div style="margin-bottom:10px">
+      <span class="lbl" style="margin:0">📋 Concept Assignment Queue</span>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-bottom:10px">Queue concepts for the student to prioritize. Stored in shared localStorage.</div>
+    <div id="queue-concept-btns" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px"></div>
+    <div style="font-size:11px;color:var(--text3);margin-bottom:6px;font-weight:600">Current Queue</div>
+    <div id="queue-list" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;margin-bottom:10px"></div>
+    <button onclick="clearQueue()" style="font-size:11px;padding:4px 10px;border-radius:5px;border:1px solid var(--border2);background:none;color:#f87171;cursor:pointer">🗑 Clear queue</button>
+  </div>
+
+  <div class="status-bar">
+    <div class="si">
+      <div class="status-dot off" id="ollama-dot"></div>
+      <span id="ollama-txt">Checking Ollama...</span>
+    </div>
+    <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;">
+      <input id="ollama-url-input" class="inp" value="http://localhost:11434" style="font-size:10px;padding:2px 6px;width:155px;" title="Ollama URL" onchange="setOllamaUrl(this.value)">
+      <button class="out-btn" style="padding:2px 7px;font-size:10px;" onclick="checkOllama()">↺</button>
+      <input id="docs-script-url" class="inp" value="" placeholder="Apps Script URL (for Google Docs)" style="font-size:10px;padding:2px 6px;width:195px;" title="Paste your Google Apps Script Web App URL here" onchange="saveDocsUrl(this.value)">
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── CURRICULUM DATA ──────────────────────────────────────────────────────────
+
+const CURRICULUM = [
+  {
+    id:0, title:"Two Ways to Be", tag:"Ser vs Estar", today:true, levels:["beg"],
+    lessons:["Ser: identity, classification, definition","Estar: states, positions, conditions","When same adjective means different things","The 'permanent' rule and why it fails"],
+    concept:{
+      name:"Ser vs. Estar", subtitle:"Two ways of 'being' — classification vs. condition",
+      tags:["Beginner","Core Concept"],
+      mentalModel:{icon:"⚖️", text:`The classic rule is "ser = permanent, estar = temporary." <strong>That rule fails constantly.</strong>\n\nThe actual distinction:\n\n<em>Ser</em> answers: What IS this thing? It defines, classifies, identifies. It answers the question of <strong>essence or category</strong>.\n\n<em>Estar</em> answers: How IS this thing RIGHT NOW? It describes a <strong>state, position, or condition</strong> the subject is currently in.\n\nDeath is "permanent" but "está muerto" uses estar because it's a STATE. A mountain's location never changes but "está en Chile" uses estar because location is always estar.`},
+      mentalModelES:`La regla clásica dice "ser = permanente, estar = temporal." <strong>Esa regla falla constantemente.</strong>\n\nLa distinción real:\n\n<em>Ser</em> responde: ¿QUÉ ES esta cosa? Define, clasifica, identifica. Responde la pregunta de <strong>esencia o categoría</strong>.\n\n<em>Estar</em> responde: ¿CÓMO ESTÁ esta cosa AHORA MISMO? Describe un <strong>estado, posición o condición</strong> en la que se encuentra el sujeto en este momento.\n\nLa muerte es "permanente" pero "está muerto" usa estar porque es un ESTADO. La ubicación de una montaña nunca cambia, pero "está en Chile" usa estar porque la ubicación siempre se expresa con estar.`,
+      contrast:{
+        englishES:["Un solo verbo 'to be' lo cubre todo","El contexto determina si es permanente o temporal","'He is tall' y 'he is sick' usan el mismo verbo","No existe distinción entre esencia y condición","Los adjetivos no cambian de significado según el verbo"],
+        spanishES:["Ser = clasifica, define e identifica la cosa","Estar = describe el estado o posición actuales","Incluso cosas 'permanentes' usan estar (ubicaciones)","'Es aburrido' (persona aburrida) vs 'Está aburrido' (tiene aburrimiento ahora)","El significado del adjetivo cambia según cuál verbo se usa"],
+        english:["One verb 'to be' handles everything","Context determines permanent vs. temporary","'He is tall' and 'he is sick' use same verb","No distinction between essence and condition","Adjectives don't change meaning based on verb"],
+        spanish:["Ser = classifies/defines/identifies the thing","Estar = describes current state or position","Even 'permanent' things can use estar (locations)","'Es aburrido' (boring person) vs 'Está aburrido' (bored)","Adjective meaning shifts depending on which verb"]
+      },
+      examples:[
+        {level:"beg",es:"Es médico. / Está cansado.",en:"He is a doctor. / He is tired.",why:"Doctor = category, classification → ser. Tired = a temporary state he's in right now → estar.",whyES:"Médico = categoría, clasificación → ser. Cansado = un estado temporal en el que está en este momento → estar."},
+        {level:"beg",es:"El café está frío. / El café es colombiano.",en:"The coffee is cold (right now). / The coffee is Colombian.",why:"Cold = current state of the coffee. Colombian = its origin/identity. Same noun, different 'to be.'",whyES:"Frío = estado actual del café. Colombiano = su origen e identidad. El mismo sustantivo, diferente verbo 'to be'."},
+        {level:"beg",es:"Está muerto. / Es un muerto.",en:"He is dead (in the state of being dead). / He is a dead man.",why:"Estar for the state. Ser to classify. 'Permanent' doesn't matter — what matters is: state or classification?",whyES:"Estar para el estado. Ser para clasificar. La 'permanencia' no importa — lo que importa es: ¿estado o clasificación?"}
+      ],
+      mistakes:[
+        {text:"<strong>Over-applying 'permanent = ser'</strong> — location is never permanent yet always uses estar: 'La torre está en París.'",textES:"<strong>Aplicar demasiado 'permanente = ser'</strong> — la ubicación nunca es permanente y aun así siempre usa estar: 'La torre está en París.'"},
+        {text:"<strong>Using ser for emotional/physical states</strong> — 'Estoy feliz' (I feel happy now) vs 'Soy una persona feliz' (I'm a happy person by nature).",textES:"<strong>Usar ser para estados emocionales o físicos</strong> — 'Estoy feliz' (me siento feliz ahora) vs 'Soy una persona feliz' (soy feliz por naturaleza)."},
+        {text:"<strong>Forgetting adjectives change meaning</strong>: 'Es listo' (he's clever) vs 'Está listo' (he's ready). 'Es malo' vs 'Está malo' (he's sick).",textES:"<strong>Olvidar que los adjetivos cambian de significado</strong>: 'Es listo' (es inteligente) vs 'Está listo' (está preparado). 'Es malo' vs 'Está malo' (está enfermo)."}
+      ]
+    }
+  },
+  {
+    id:1, title:"Gender & Agreement", tag:"Noun System", levels:["beg"],
+    lessons:["Every noun has a gender — why?","Agreement: adjectives, articles, pronouns","Patterns that help predict gender","When gender changes meaning"],
+    concept:{
+      name:"Gender & Agreement", subtitle:"A classification system, not a biological judgment",
+      tags:["Beginner"],
+      mentalModel:{icon:"🔗", text:`Noun gender in Spanish is <strong>not about biology</strong> — it's a grammatical classification system inherited from Latin.\n\nThink of gender as a <strong>label that triggers a chain reaction</strong>: once you know a noun's gender, its article, adjectives, and pronouns all have to match.\n\nThis agreement system is actually what gives Spanish sentences their coherence — you always know which words belong together because they share the same gender and number.`},
+      mentalModelES:`El género de los sustantivos en español <strong>no tiene que ver con la biología</strong> — es un sistema de clasificación gramatical heredado del latín.\n\nPiensa en el género como una <strong>etiqueta que desencadena una reacción en cadena</strong>: una vez que conoces el género de un sustantivo, el artículo, los adjetivos y los pronombres deben concordar con él.\n\nEste sistema de concordancia es lo que da coherencia a las oraciones en español — siempre sabes qué palabras van juntas porque comparten el mismo género y número.`,
+      contrast:{
+        english:["No grammatical gender for objects/concepts","Adjectives don't change form","One definite article: 'the'","Pronouns don't reflect noun gender","No agreement system needed"],
+        englishES:["Sin género gramatical para objetos o conceptos","Los adjetivos no cambian de forma","Un solo artículo definido: 'the'","Los pronombres no reflejan el género del sustantivo","No hay sistema de concordancia"],
+        spanish:["Every noun is masculine or feminine","Adjectives must match noun in gender & number","Four forms of 'the': el, la, los, las","Pronouns echo the noun's gender","Agreement creates cohesion across the sentence"],
+        spanishES:["Todo sustantivo es masculino o femenino","Los adjetivos deben concordar en género y número","Cuatro formas de 'the': el, la, los, las","Los pronombres reflejan el género del sustantivo","La concordancia da cohesión a toda la oración"]
+      },
+      examples:[
+        {level:"beg",es:"El libro rojo / La casa roja",en:"The red book / The red house",why:"'Rojo' becomes 'roja' to match 'casa' (feminine). The adjective shifts form because of the noun's gender — this is agreement.",whyES:"'Rojo' se convierte en 'roja' para concordar con 'casa' (femenino). El adjetivo cambia de forma según el género del sustantivo — esto es la concordancia."},
+        {level:"beg",es:"un problema difícil / una solución difícil",en:"a difficult problem / a difficult solution",why:"'Problema' ends in -a but is masculine (Greek-origin words). 'Difícil' doesn't change here — it's the same for both genders.",whyES:"'Problema' termina en -a pero es masculino (palabras de origen griego). 'Difícil' no cambia aquí — es igual para ambos géneros."},
+        {level:"beg",es:"El agua fría / Las aguas frías",en:"The cold water / The cold waters",why:"'Agua' is feminine but uses 'el' in singular to avoid the 'la a' sound clash. Adjective 'fría' stays feminine.",whyES:"'Agua' es femenino pero usa 'el' en singular para evitar el choque sonoro de 'la a'. El adjetivo 'fría' se mantiene femenino."}
+      ],
+      mistakes:[
+        {text:"<strong>Defaulting to masculine for everything</strong> — 'la cosa importante' not 'el cosa importante'. Gender must be consistent.",textES:"<strong>Usar el masculino para todo</strong> — 'la cosa importante' no 'el cosa importante'. El género debe ser consistente."},
+        {text:"<strong>Thinking -o = masculine always</strong> — 'la mano' is feminine despite ending in -o. 'la foto' too.",textES:"<strong>Creer que -o siempre es masculino</strong> — 'la mano' es femenino aunque termina en -o. 'La foto' también."},
+        {text:"<strong>Forgetting to update adjective AND article</strong> — 'la libro roja' (double error). Gender must be consistent across article + noun + adjective.",textES:"<strong>Olvidar actualizar el adjetivo Y el artículo</strong> — 'la libro roja' (doble error). El género debe ser consistente en artículo + sustantivo + adjetivo."}
+      ]
+    }
+  },
+  {
+    id:2, title:"The Living Verb", tag:"Tense & Aspect", levels:["beg","int"],
+    lessons:["Present tense: habits, facts, near future","Preterite: the 'snapshot' past","Imperfect: the 'movie' past","Future: prediction vs. 'going to'"],
+    concept:{
+      name:"Preterite vs. Imperfect", subtitle:"Not simple vs. continuous — how the speaker frames the action",
+      tags:["Beginner","Intermediate","Core Concept"],
+      mentalModel:{icon:"📸", text:`English has simple past and past continuous. Spanish has <em>preterite</em> and <em>imperfect</em> — and the difference isn't about completion vs. continuity. It's about <strong>how the speaker frames the action</strong>.\n\n<em>Preterite = PHOTO</em>. A bounded moment with a clear beginning and end. The action is seen as a finished event from the outside.\n\n<em>Imperfect = MOVIE</em>. The camera was rolling. Background, habits, ongoing states — the action is seen from the inside, with no visible start or end.\n\nThe same event can be described with either tense — it changes what you're focusing on.`},
+      mentalModelES:`El inglés tiene pasado simple y pasado continuo. El español tiene <em>pretérito indefinido</em> e <em>imperfecto</em> — y la diferencia no es sobre completado vs. continuidad. Es sobre <strong>cómo el hablante enmarca la acción</strong>.\n\n<em>Pretérito = FOTO</em>. Un momento delimitado con un comienzo y un final claros. La acción se ve como un evento terminado desde afuera.\n\n<em>Imperfecto = PELÍCULA</em>. La cámara estaba grabando. Trasfondo, hábitos, estados continuos — la acción se ve desde adentro, sin inicio ni final visible.\n\nEl mismo evento se puede describir con cualquiera de los dos tiempos — lo que cambia es en qué estás enfocando.`,
+      contrast:{
+        english:["Simple past for both completed & habitual","'Used to' for past habits (extra verb)","Past continuous for ongoing actions","One past tense for background AND foreground","'Was' for all past states"],
+        englishES:["Pasado simple para acciones completadas y hábitos","'Used to' para hábitos pasados (verbo extra)","Pasado continuo para acciones en curso","Un solo tiempo pasado para el trasfondo Y primer plano","'Was/were' para todos los estados pasados"],
+        spanish:["Preterite = the event, bounded, complete","Imperfect = past habits built in (comía = used to eat)","Imperfect for ongoing situations (background)","Two gears: narrative foreground vs. background","Imperfect for past states (era, tenía, quería)"],
+        spanishES:["Indefinido = el evento, delimitado, completo","Imperfecto = hábitos pasados integrados (comía = solía comer)","Imperfecto para situaciones en curso (trasfondo)","Dos marchas: primer plano narrativo vs. trasfondo","Imperfecto para estados pasados (era, tenía, quería)"]
+      },
+      examples:[
+        {level:"beg",es:"Comí una pizza. / Comía pizza todos los viernes.",en:"I ate a pizza (one time). / I used to eat pizza every Friday.",why:"Comí = one bounded event. Comía = a recurring past habit. Same verb, different lens.",whyES:"Comí = un evento delimitado. Comía = un hábito pasado recurrente. El mismo verbo, distinto enfoque."},
+        {level:"beg",es:"Llegué cuando llovía.",en:"I arrived when it was raining.",why:"Llegué (preterite) = the arriving happened. Llovía (imperfect) = the ongoing background rain.",whyES:"Llegué (indefinido) = el llegar ocurrió. Llovía (imperfecto) = la lluvia de fondo que continuaba."},
+        {level:"int",es:"Conocí a Ana. / Conocía a Ana.",en:"I met Ana (for the first time). / I knew Ana (ongoing).",why:"Same verb, different tense = completely different meaning. Preterite = moment of meeting. Imperfect = state of knowing her.",whyES:"El mismo verbo, distinto tiempo = significado completamente diferente. Indefinido = momento del encuentro. Imperfecto = el estado de conocerla."}
+      ],
+      mistakes:[
+        {text:"<strong>Using preterite for everything past</strong> — states of being almost always use imperfect: era, estaba, tenía, sabía, quería.",textES:"<strong>Usar el indefinido para todo el pasado</strong> — los estados casi siempre usan imperfecto: era, estaba, tenía, sabía, quería."},
+        {text:"<strong>Forgetting imperfect for background</strong>: 'Ayer llovió todo el día' works, but 'llovía' is more natural when the rain is background.",textES:"<strong>Olvidar el imperfecto para el trasfondo</strong>: 'Ayer llovió todo el día' funciona, pero 'llovía' es más natural cuando la lluvia es el contexto de fondo."},
+        {text:"<strong>Translating 'used to' as 'solía'</strong> — imperfect already carries that meaning: 'Jugaba fútbol' = I used to play soccer.",textES:"<strong>Traducir 'used to' como 'solía'</strong> — el imperfecto ya lleva ese significado: 'Jugaba fútbol' = solía jugar fútbol."}
+      ]
+    }
+  },
+  {
+    id:3, title:"Mood & Reality", tag:"Subjunctive", levels:["int"],
+    lessons:["Indicative = asserting reality","Subjunctive = doubt, desire, emotion","Trigger structures (WEIRDO)","Present vs. past subjunctive"],
+    concept:{
+      name:"The Subjunctive Mood", subtitle:"Not a grammar rule — a way of marking how real something is",
+      tags:["Intermediate","Core Concept"],
+      mentalModel:{icon:"🌫️", text:`English has almost no subjunctive left. Spanish uses it constantly.\n\n<em>Indicative</em> = "I'm asserting this as real." You're stating a fact.\n\n<em>Subjunctive</em> = "Reality is in question here." You're expressing doubt, desire, emotion, uncertainty, or hypothetical situations.\n\nWhenever the speaker <strong>steps away from asserting facts</strong> and enters the realm of wanting, doubting, fearing, or imagining — Spanish switches to subjunctive.\n\nKey trigger: a <strong>change of subject</strong> + a <strong>subjunctive trigger verb</strong> (want, hope, doubt, feel, demand...).`},
+      mentalModelES:`El inglés casi no usa el subjuntivo. El español lo usa constantemente.\n\n<em>Indicativo</em> = "Afirmo esto como real." Estás enunciando un hecho.\n\n<em>Subjuntivo</em> = "La realidad está en cuestión aquí." Expresas duda, deseo, emoción, incertidumbre o situaciones hipotéticas.\n\nCada vez que el hablante <strong>deja de afirmar hechos</strong> y entra en el terreno de querer, dudar, temer o imaginar — el español cambia al subjuntivo.\n\nDetonante clave: un <strong>cambio de sujeto</strong> + un <strong>verbo que activa el subjuntivo</strong> (querer, esperar, dudar, sentir, exigir...).`,
+      contrast:{
+        english:["Almost no subjunctive in everyday speech","'I hope he comes' — no verb change","Uncertainty expressed with auxiliaries (might, may)","Same form for fact and wish","No intuition for it"],
+        englishES:["Casi no hay subjuntivo en el habla cotidiana","'I hope he comes' — el verbo no cambia","La incertidumbre se expresa con auxiliares (might, may)","Misma forma para hechos y deseos","No existe intuición para ello"],
+        spanish:["Subjunctive used in everyday speech constantly","'Espero que venga' — verb shifts to subjunctive","The verb form itself encodes unreality","Verb change signals: this isn't a fact yet","Once felt, becomes natural"],
+        spanishES:["El subjuntivo se usa constantemente en el habla cotidiana","'Espero que venga' — el verbo cambia a subjuntivo","La forma verbal en sí codifica la irrealidad","El cambio de verbo señala: esto aún no es un hecho","Una vez que se siente, se vuelve natural"]
+      },
+      examples:[
+        {level:"int",es:"Sé que viene. / Espero que venga.",en:"I know he's coming. / I hope he comes.",why:"Sé = certainty → indicative. Espero = desire, not yet real → subjunctive. Same action, speaker's certainty changes the verb.",whyES:"Sé = certeza → indicativo. Espero = deseo, aún no es real → subjuntivo. La misma acción, pero la certeza del hablante cambia el verbo."},
+        {level:"int",es:"Es importante que estudies.",en:"It's important that you study.",why:"'Es importante que' = impersonal expression of value → triggers subjunctive. The studying isn't a fact — it's what's being demanded.",whyES:"'Es importante que' = expresión impersonal de valor → activa el subjuntivo. El estudiar no es un hecho — es lo que se está exigiendo."},
+        {level:"int",es:"Busco a alguien que hable chino. / ...que habla chino.",en:"I'm looking for someone who speaks Chinese (unknown). / ...a specific person who speaks Chinese.",why:"Subjunctive = person may not exist (indefinite). Indicative = I know such a person exists.",whyES:"Subjuntivo = la persona puede no existir (indefinida). Indicativo = sé que existe esa persona."}
+      ],
+      mistakes:[
+        {text:"<strong>Indicative after 'que' with trigger verb</strong>: 'Quiero que tú vas' → should be 'vayas'.",textES:"<strong>Indicativo después de 'que' con verbo detonante</strong>: 'Quiero que tú vas' → debe ser 'vayas'."},
+        {text:"<strong>Confusing 'aunque' triggers</strong>: 'aunque es tarde' (I know it's late) vs 'aunque sea tarde' (even if it's late — hypothetical).",textES:"<strong>Confundir los detonantes de 'aunque'</strong>: 'aunque es tarde' (sé que es tarde) vs 'aunque sea tarde' (incluso si fuera tarde — hipotético)."},
+        {text:"<strong>Same-subject sentences don't need subjunctive</strong>: 'Quiero estudiar' → infinitive, not subjunctive, because there's only ONE subject.",textES:"<strong>Las oraciones de mismo sujeto no necesitan subjuntivo</strong>: 'Quiero estudiar' → infinitivo, no subjuntivo, porque solo hay UN sujeto."}
+      ]
+    }
+  },
+  {
+    id:4, title:"Preposition Logic", tag:"Por, Para & More", levels:["int"],
+    lessons:["Por: process, exchange, cause, duration","Para: destination, purpose, recipient","A: direction and indirect object","En, De, Con: their conceptual meanings"],
+    concept:{
+      name:"Por vs. Para", subtitle:"Not 'for' vs. 'for' — process vs. purpose",
+      tags:["Intermediate"],
+      mentalModel:{icon:"🧭", text:`Both translate to "for" in English. But they encode <strong>completely different relationships</strong>:\n\n<em>Por</em> looks <strong>backward or inward</strong>: cause, means, exchange, gratitude, the process of how something moves.\n\n<em>Para</em> looks <strong>forward or outward</strong>: purpose, destination, recipient, deadline, the goal the action aims at.\n\nSimple test: Is this about HOW/WHY something happened (por), or WHERE it's going / WHO it's for / WHAT it aims to achieve (para)?`},
+      mentalModelES:`Ambas se traducen como "for" en inglés. Pero codifican <strong>relaciones completamente distintas</strong>:\n\n<em>Por</em> mira <strong>hacia atrás o hacia adentro</strong>: causa, medio, intercambio, gratitud, el proceso de cómo algo se mueve.\n\n<em>Para</em> mira <strong>hacia adelante o hacia afuera</strong>: propósito, destino, receptor, plazo, el objetivo al que apunta la acción.\n\nPrueba simple: ¿Es sobre CÓMO/POR QUÉ ocurrió algo (por), o hacia DÓNDE va / PARA QUIÉN es / QUÉ busca lograr (para)?`,
+      contrast:{
+        english:["'For' covers both por and para","No distinction between cause and purpose","Context carries all the meaning","'I bought it for you' — ambiguous","Prepositions don't encode direction of intent"],
+        englishES:["'For' cubre tanto por como para","No hay distinción entre causa y propósito","El contexto lleva todo el significado","'I bought it for you' — ambiguo","Las preposiciones no codifican la dirección de la intención"],
+        spanish:["Por = the path, the exchange, the cause","Para = the destination, the goal, the recipient","The choice itself encodes your meaning","'Lo compré por ti' (because of you) vs 'para ti' (as a gift)","Speakers know immediately what relationship is meant"],
+        spanishES:["Por = el camino, el intercambio, la causa","Para = el destino, el objetivo, el receptor","La elección en sí misma codifica tu significado","'Lo compré por ti' (a causa de ti) vs 'para ti' (como regalo)","Los hablantes saben de inmediato qué relación se expresa"]
+      },
+      examples:[
+        {level:"int",es:"Lo hice por ti. / Lo hice para ti.",en:"I did it because of you. / I did it for you (as a gift).",why:"Por ti = you were the CAUSE. Para ti = you are the RECIPIENT.",whyES:"Por ti = tú fuiste la CAUSA. Para ti = tú eres el RECEPTOR."},
+        {level:"int",es:"Caminé por el parque. / Salgo para el parque.",en:"I walked through the park. / I'm leaving for the park.",why:"Por = moving THROUGH (park is the path). Para = moving TOWARD (park is the destination).",whyES:"Por = moverse A TRAVÉS DE (el parque es el camino). Para = moverse HACIA (el parque es el destino)."},
+        {level:"int",es:"Lo cambié por €20. / Trabajo para ganar dinero.",en:"I exchanged it for €20. / I work to earn money.",why:"Por = exchange. Para + infinitive = purpose (the goal).",whyES:"Por = intercambio. Para + infinitivo = propósito (el objetivo)."}
+      ],
+      mistakes:[
+        {text:"<strong>Using 'por' for deadlines</strong>: 'Lo necesito para el lunes' (by Monday = destination in time → para).",textES:"<strong>Usar 'por' para plazos</strong>: 'Lo necesito para el lunes' (para el lunes = destino en el tiempo → para)."},
+        {text:"<strong>Using 'para' for duration</strong>: 'Estudié por tres horas' (for three hours = duration → por).",textES:"<strong>Usar 'para' para duración</strong>: 'Estudié por tres horas' (durante tres horas = duración → por)."},
+        {text:"<strong>Mixing movement prepositions</strong>: through/around a place = por. Headed toward = para.",textES:"<strong>Confundir las preposiciones de movimiento</strong>: a través de/alrededor de un lugar = por. Dirigirse hacia = para."}
+      ]
+    }
+  },
+  {
+    id:5, title:"The Flexible Sentence", tag:"Word Order", levels:["int"],
+    lessons:["Topic-comment structure","New information comes last","Questions and inversion","Negation patterns"],
+    concept:{
+      name:"Word Order & Emphasis", subtitle:"Spanish word order isn't random — it's expressive",
+      tags:["Intermediate"],
+      mentalModel:{icon:"🎯", text:`English word order is <strong>grammatical</strong>: changing it breaks the sentence. Spanish word order is <strong>pragmatic</strong>: changing it changes the focus.\n\nThe general pattern: <em>known information first, new information last</em>.\n\nThe end of a Spanish sentence is the most emphatic position — that's where you put what you want to highlight. The beginning is for what the listener already knows (the topic).\n\nThis is why Spanish can sound like it's "inverted" — it's not inverted, it's <strong>optimized for what you want to emphasize</strong>.`},
+      mentalModelES:`El orden de las palabras en inglés es <strong>gramatical</strong>: cambiarlo rompe la oración. El orden en español es <strong>pragmático</strong>: cambiarlo cambia el énfasis.\n\nEl patrón general: <em>información conocida primero, información nueva al final</em>.\n\nEl final de una oración en español es la posición más enfática — ahí se pone lo que quieres destacar. El inicio es para lo que el oyente ya sabe (el tema).\n\nPor eso el español puede parecer "invertido" — no está invertido, está <strong>optimizado para lo que quieres enfatizar</strong>.`,
+      contrast:{
+        english:["Word order is fixed: S-V-O always","Emphasis through STRESS or CAPS","'John saw Mary' ≠ 'Mary John saw' (ungrammatical)","Passive voice often used to shift focus","Fronting requires complex structures"],
+        englishES:["El orden es fijo: S-V-O siempre","El énfasis se logra mediante ACENTO o MAYÚSCULAS","'John saw Mary' ≠ 'Mary John saw' (agramatical)","Se usa la voz pasiva para desplazar el foco","El fronting requiere estructuras complejas"],
+        spanish:["Word order is flexible: emphasis-driven","What comes LAST gets natural emphasis","'A María la vio Pedro' = Pedro (not someone else) saw her","No passive voice needed — just reorder","Fronting is natural and common"],
+        spanishES:["El orden es flexible: orientado al énfasis","Lo que va AL FINAL recibe énfasis natural","'A María la vio Pedro' = fue Pedro (no otro) quien la vio","No hace falta la voz pasiva — basta con reordenar","El fronting es natural y frecuente"]
+      },
+      examples:[
+        {level:"int",es:"Pedro vio a María. / A María la vio Pedro.",en:"Pedro saw María. / It was Pedro who saw María.",why:"Same event, different emphases. Second: María is known topic (front), Pedro is new info (end = emphasis).",whyES:"El mismo evento, distinto énfasis. En la segunda: María es el tema conocido (al frente), Pedro es información nueva (al final = énfasis)."},
+        {level:"int",es:"¿Qué comió Juan? / Juan, ¿qué comió?",en:"What did Juan eat? / Juan — what did he eat?",why:"Juan as topic is fronted to signal 'we're talking about Juan' before asking the question.",whyES:"Juan como tema se coloca al frente para señalar 'estamos hablando de Juan' antes de hacer la pregunta."},
+        {level:"int",es:"No lo sé yo. / Yo no lo sé.",en:"I (specifically) don't know it. / I don't know it (neutral).",why:"'Yo' at the end = emphatic, contrastive. Front = neutral topic.",whyES:"'Yo' al final = enfático, contrastivo. Al frente = tema neutro."}
+      ],
+      mistakes:[
+        {text:"<strong>Thinking 'inverted' sentences are errors</strong> — they're often more natural than standard S-V-O.",textES:"<strong>Pensar que las oraciones 'invertidas' son errores</strong> — a menudo son más naturales que el S-V-O estándar."},
+        {text:"<strong>Missing topic-comment in reading</strong> — when a sentence starts with an object, look for the subject at the end.",textES:"<strong>No reconocer la estructura tema-comentario al leer</strong> — cuando una oración empieza con un objeto, busca el sujeto al final."},
+        {text:"<strong>Neglecting emphatic 'sí'</strong>: 'Sí que lo sé' (I DO know it) — word order + sí create strong affirmation.",textES:"<strong>Ignorar el 'sí' enfático</strong>: 'Sí que lo sé' (yo SÍ lo sé) — el orden de palabras + sí crean una afirmación fuerte."}
+      ]
+    }
+  },
+  {
+    id:6, title:"The Spanish Mind", tag:"Orientation", levels:["beg","int"],
+    lessons:["Spanish ≠ English with different words","The verb is the heart of the sentence","Subjects are optional (pro-drop)","Word order expresses emphasis"],
+    concept:{
+      name:"The Spanish Mind", subtitle:"How Spanish speakers actually encode reality",
+      tags:["Beginner","Intermediate","Core Concept"],
+      mentalModel:{icon:"🧠", text:`Spanish isn't just a code-switch from English. It's a <strong>different lens</strong> on reality.\n\nIn English, the structure is rigid: Subject → Verb → Object. The sentence architecture itself carries meaning.\n\nIn Spanish, the <em>verb does almost everything</em>. It tells you who acted, when, how the speaker feels about it, and whether it's real or hypothetical — all inside a single word.\n\nThe sentence structure is flexible because it doesn't need to carry grammar. Instead, <strong>word order expresses emphasis</strong>: what comes last is what's "new" or important.\n\nThat's the first mental shift your students need: Spanish is verb-centric, not structure-centric.`},
+      mentalModelES:`El español no es solo un cambio de código desde el inglés. Es una <strong>lente distinta</strong> para ver la realidad.\n\nEn inglés, la estructura es rígida: Sujeto → Verbo → Objeto. La arquitectura de la oración es la que lleva el significado.\n\nEn español, el <em>verbo hace casi todo</em>. Indica quién actuó, cuándo, cómo se siente el hablante al respecto y si es real o hipotético — todo dentro de una sola palabra.\n\nLa estructura de la oración es flexible porque no necesita cargar la gramática. En cambio, <strong>el orden de las palabras expresa énfasis</strong>: lo que va al final es lo "nuevo" o importante.\n\nEse es el primer cambio mental que necesitan tus estudiantes: el español es verbo-céntrico, no estructura-céntrico.`,
+      contrast:{
+        english:["Rigid S-V-O word order","Subject pronouns are mandatory","One verb 'to be' for most situations","Tense = 'when in time' something happened","Adjectives come before nouns"],
+        englishES:["Orden S-V-O rígido","Los pronombres de sujeto son obligatorios","Un solo verbo 'to be' para la mayoría de situaciones","Tiempo verbal = 'cuándo en el tiempo' ocurrió algo","Los adjetivos van antes del sustantivo"],
+        spanish:["Flexible order — position signals emphasis","Subject pronouns often omitted (hablas = you speak)","Two 'to be' verbs (ser/estar) for different meanings","Tense + Aspect = speaker's relationship to the action","Adjectives follow nouns (most of the time)"],
+        spanishES:["Orden flexible — la posición señala el énfasis","Los pronombres de sujeto se omiten frecuentemente (hablas = you speak)","Dos verbos 'to be' (ser/estar) con significados distintos","Tiempo + Aspecto = relación del hablante con la acción","Los adjetivos van después del sustantivo (la mayoría de veces)"]
+      },
+      examples:[
+        {level:"beg",es:"Hablas muy bien.",en:"You speak very well.",why:"No 'tú' needed — the verb ending '-as' already says 'you'. The subject is baked into the verb (pro-drop).",whyES:"No hace falta 'tú' — la terminación verbal '-as' ya dice 'you'. El sujeto está integrado en el verbo (pro-drop)."},
+        {level:"beg",es:"Lo vi yo.",en:"I saw it.",why:"'Yo' at the end adds emphasis: 'It was ME who saw it.' In English you'd use stress. Spanish uses word order.",whyES:"'Yo' al final añade énfasis: 'Fui YO quien lo vi.' En inglés usarías acento. El español usa el orden de las palabras."},
+        {level:"int",es:"A María la llamó Pedro.",en:"Pedro called María.",why:"María comes first despite being the object. Front-loads the topic; Pedro (new info) goes last for emphasis.",whyES:"María va primero aunque es el objeto. Se pone el tema al frente; Pedro (información nueva) va al final para dar énfasis."}
+      ],
+      mistakes:[
+        {text:"<strong>Translating word-by-word from English</strong> — breaks at every structural divergence.",textES:"<strong>Traducir palabra por palabra desde el inglés</strong> — se rompe en cada divergencia estructural."},
+        {text:"<strong>Always using subject pronouns</strong> — 'Yo tengo, yo como, yo vivo...' sounds unnatural and overly emphatic.",textES:"<strong>Usar siempre los pronombres de sujeto</strong> — 'Yo tengo, yo como, yo vivo...' suena artificial y demasiado enfático."},
+        {text:"<strong>Treating word order as random</strong> — it's communicative. Where you put words changes what you're emphasizing.",textES:"<strong>Tratar el orden de palabras como aleatorio</strong> — es comunicativo. Dónde colocas las palabras cambia lo que estás enfatizando."}
+      ]
+    }
+  }
+];
+
+// ─── MINIMAL PAIRS DATA ────────────────────────────────────────────────────────
+
+const PAIRS = {
+  'ser-estar': [
+    {q:"Which one means he IS boring as a personality trait?", a:0, cards:[
+      {es:"Es aburrido.", en:"He is boring (as a person).", concept:"Ser = defining characteristic / personality"},
+      {es:"Está aburrido.", en:"He is bored (right now).", concept:"Estar = current emotional state"}
+    ]},
+    {q:"Which one means she is ready RIGHT NOW?", a:1, cards:[
+      {es:"Es lista.", en:"She is clever.", concept:"Ser = defining intellectual trait"},
+      {es:"Está lista.", en:"She is ready.", concept:"Estar = current state of readiness"}
+    ]},
+    {q:"Which one means the food tastes bad (gone off)?", a:1, cards:[
+      {es:"Es malo.", en:"He/it is bad/evil.", concept:"Ser = inherent quality or moral character"},
+      {es:"Está malo.", en:"He is sick / it tastes bad.", concept:"Estar = current condition"}
+    ]},
+    {q:"Which one classifies Juan as a doctor?", a:0, cards:[
+      {es:"Juan es médico.", en:"Juan is a doctor.", concept:"Ser = profession/classification"},
+      {es:"Juan está médico.", en:"(ungrammatical)", concept:"Professions always use ser"}
+    ]},
+    {q:"Which one says the coffee is cold RIGHT NOW?", a:1, cards:[
+      {es:"El café es frío.", en:"Coffee (as a category) is cold.", concept:"Ser = inherent property of the category"},
+      {es:"El café está frío.", en:"The coffee is cold right now.", concept:"Estar = current temperature state"}
+    ]}
+  ],
+  'pret-imp': [
+    {q:"Which one describes a SINGLE completed past event?", a:0, cards:[
+      {es:"Comí una pizza.", en:"I ate a pizza (once, done).", concept:"Preterite = bounded, completed event"},
+      {es:"Comía pizza.", en:"I used to eat pizza / I was eating pizza.", concept:"Imperfect = habit or ongoing past state"}
+    ]},
+    {q:"Which one sets the scene/background?", a:1, cards:[
+      {es:"Llegué.", en:"I arrived (the event).", concept:"Preterite = the foreground event that happened"},
+      {es:"Llovía.", en:"It was raining (the background).", concept:"Imperfect = the scene, the backdrop"}
+    ]},
+    {q:"Which one means 'I met Ana for the first time'?", a:0, cards:[
+      {es:"Conocí a Ana.", en:"I met Ana (for the first time).", concept:"Preterite = moment of meeting / beginning"},
+      {es:"Conocía a Ana.", en:"I knew Ana (ongoing).", concept:"Imperfect = ongoing state of knowing someone"}
+    ]},
+    {q:"Which one describes a childhood habit?", a:1, cards:[
+      {es:"Jugué al fútbol.", en:"I played soccer (one specific time).", concept:"Preterite = a specific, bounded game"},
+      {es:"Jugaba al fútbol.", en:"I used to play soccer.", concept:"Imperfect = recurring past habit"}
+    ]}
+  ],
+  'por-para': [
+    {q:"Which one means 'I bought this as a gift FOR you'?", a:1, cards:[
+      {es:"Lo compré por ti.", en:"I bought it because of you / for your sake.", concept:"Por = cause or motivation"},
+      {es:"Lo compré para ti.", en:"I bought it for you (it's yours).", concept:"Para = recipient / destination"}
+    ]},
+    {q:"Which one means 'I walked THROUGH the park'?", a:0, cards:[
+      {es:"Caminé por el parque.", en:"I walked through the park.", concept:"Por = movement through a space"},
+      {es:"Caminé para el parque.", en:"I headed toward the park.", concept:"Para = destination / direction toward"}
+    ]},
+    {q:"Which one expresses the DEADLINE 'by Monday'?", a:1, cards:[
+      {es:"Lo necesito por el lunes.", en:"(less natural for deadline)", concept:"Por = exchange, duration, cause"},
+      {es:"Lo necesito para el lunes.", en:"I need it by Monday.", concept:"Para = deadline (temporal destination)"}
+    ]},
+    {q:"Which one means you studied for THREE HOURS?", a:0, cards:[
+      {es:"Estudié por tres horas.", en:"I studied for three hours (duration).", concept:"Por = duration of time"},
+      {es:"Estudié para tres horas.", en:"(unnatural for duration)", concept:"Para = purpose/goal, not duration"}
+    ]}
+  ]
+};
+
+// ─── SENTENCE BUILDER DATA ────────────────────────────────────────────────────
+
+const BUILDER_DATA = {
+  subjects: {
+    "yo": {label:"Yo", type:"subj", note:"First person singular — often dropped in speech"},
+    "tú": {label:"Tú", type:"subj", note:"Second person informal — dropped when obvious"},
+    "ella": {label:"Ella", type:"subj", note:"Third person feminine singular"},
+    "nosotros": {label:"Nosotros", type:"subj", note:"First person plural — 'we'"},
+    "ellos": {label:"Ellos", type:"subj", note:"Third person plural — 'they' (masc/mixed)"}
+  },
+  concepts: {
+    "ser-prof": {label:"Ser (profession)", template: buildSerProf},
+    "ser-adj": {label:"Ser (adjective)", template: buildSerAdj},
+    "estar-state": {label:"Estar (state)", template: buildEstarState},
+    "estar-loc": {label:"Estar (location)", template: buildEstarLoc},
+    "pret-simple": {label:"Preterite (action)", template: buildPret},
+    "imp-habit": {label:"Imperfect (habit)", template: buildImp}
+  }
+};
+
+function buildSerProf(subject) {
+  const profs = {yo:["médico/a","estudiante","profesor/a"],tú:["médico/a","cocinero/a","abogado/a"],ella:["médica","actriz","enfermera"],nosotros:["profesores","médicos","estudiantes"],ellos:["ingenieros","actores","abogados"]};
+  const p = profs[subject]?.[0] || "médico";
+  const verbMap = {yo:"soy",tú:"eres",ella:"es",nosotros:"somos",ellos:"son"};
+  const v = verbMap[subject];
+  return {
+    sentence: `${subject} ${v} ${p}.`,
+    parts:[
+      {word:subject,type:"subj",label:"Subject"},
+      {word:v,type:"verb",label:"Ser (verb)"},
+      {word:p,type:"obj",label:"Profession (no article!)"}
+    ],
+    explanations:[
+      `<strong>Ser</strong> is used here because profession = classification. It tells us what category this person belongs to.`,
+      `In Spanish, professions after ser <strong>don't take an article</strong>: 'Soy médico' not 'Soy un médico' (unless you add an adjective).`,
+      `The verb ending <strong>'-${v.slice(-2)}'</strong> already encodes the subject — you could drop '${subject}' in natural speech.`
+    ]
+  };
+}
+
+function buildSerAdj(subject) {
+  const adjs = {yo:"inteligente",tú:"simpático/a",ella:"alta",nosotros:"trabajadores",ellos:"creativos"};
+  const adj = adjs[subject] || "inteligente";
+  const verbMap = {yo:"soy",tú:"eres",ella:"es",nosotros:"somos",ellos:"son"};
+  const v = verbMap[subject];
+  return {
+    sentence:`${subject} ${v} ${adj}.`,
+    parts:[
+      {word:subject,type:"subj",label:"Subject"},
+      {word:v,type:"verb",label:"Ser (verb)"},
+      {word:adj,type:"adj",label:"Trait adjective"}
+    ],
+    explanations:[
+      `<strong>Ser</strong> + adjective = defining characteristic. This trait is seen as part of the person's identity, not a temporary state.`,
+      `Compare: 'Es aburrido' (boring person) vs 'Está aburrido' (bored right now). Same adjective, completely different meaning based on the verb.`,
+      `Agreement: the adjective '${adj}' matches the subject's gender and number. This is <strong>mandatory</strong> in Spanish.`
+    ]
+  };
+}
+
+function buildEstarState(subject) {
+  const states = {yo:"cansado/a",tú:"nervioso/a",ella:"emocionada",nosotros:"ocupados",ellos:"contentos"};
+  const st = states[subject] || "cansado";
+  const verbMap = {yo:"estoy",tú:"estás",ella:"está",nosotros:"estamos",ellos:"están"};
+  const v = verbMap[subject];
+  return {
+    sentence:`${subject} ${v} ${st}.`,
+    parts:[
+      {word:subject,type:"subj",label:"Subject"},
+      {word:v,type:"verb",label:"Estar (verb)"},
+      {word:st,type:"adj",label:"State adjective"}
+    ],
+    explanations:[
+      `<strong>Estar</strong> + adjective = current state or condition. This is how the person feels or is RIGHT NOW.`,
+      `'${st}' is a state, not a trait. The same person who 'está cansado' today might be full of energy tomorrow.`,
+      `Key contrast: if you used 'ser' here — 'Es cansado' — it would mean they're a boring/tiresome person by nature.`
+    ]
+  };
+}
+
+function buildEstarLoc(subject) {
+  const locs = {yo:"en casa",tú:"en el trabajo",ella:"en la escuela",nosotros:"en el parque",ellos:"en el mercado"};
+  const loc = locs[subject] || "en casa";
+  const verbMap = {yo:"estoy",tú:"estás",ella:"está",nosotros:"estamos",ellos:"están"};
+  const v = verbMap[subject];
+  return {
+    sentence:`${subject} ${v} ${loc}.`,
+    parts:[
+      {word:subject,type:"subj",label:"Subject"},
+      {word:v,type:"verb",label:"Estar (verb)"},
+      {word:"en",type:"prep",label:"Preposition"},
+      {word:loc.split(" ").slice(1).join(" "),type:"obj",label:"Location"}
+    ],
+    explanations:[
+      `<strong>Location always uses estar</strong> — even if a building has been in the same spot for 500 years. Location = a state.`,
+      `The preposition <strong>en</strong> = in/at for locations. 'En casa' = at home. 'En el trabajo' = at work.`,
+      `Exception: ser is used for locations of events: 'La reunión es en la sala'. Events use ser; people/objects use estar.`
+    ]
+  };
+}
+
+function buildPret(subject) {
+  const verbs = {yo:["comí","vi","llegué"],tú:["comiste","viste","llegaste"],ella:["comió","vio","llegó"],nosotros:["comimos","vimos","llegamos"],ellos:["comieron","vieron","llegaron"]};
+  const v = verbs[subject]?.[0] || "comió";
+  const objs = {yo:"una pizza",tú:"la película",ella:"tarde",nosotros:"juntos",ellos:"temprano"};
+  const obj = objs[subject] || "una pizza";
+  return {
+    sentence:`${subject} ${v} ${obj}.`,
+    parts:[
+      {word:subject,type:"subj",label:"Subject"},
+      {word:v,type:"verb",label:"Preterite verb"},
+      {word:obj,type:"obj",label:"Object / complement"}
+    ],
+    explanations:[
+      `<strong>Preterite</strong> = a bounded, completed past event. Think of it as a snapshot — one specific moment with a clear beginning and end.`,
+      `The ending signals preterite. Accent marks often appear in 3rd person singular.`,
+      `This event is NOT about what was ongoing or habitual. It's the EVENT that happened. For background/habits, you'd use imperfect.`
+    ]
+  };
+}
+
+function buildImp(subject) {
+  const verbs = {yo:"comía",tú:"jugabas",ella:"vivía",nosotros:"íbamos",ellos:"estudiaban"};
+  const v = verbs[subject] || "comía";
+  const adv = "todos los días";
+  return {
+    sentence:`${subject} ${v} ${adv}.`,
+    parts:[
+      {word:subject,type:"subj",label:"Subject"},
+      {word:v,type:"verb",label:"Imperfect verb"},
+      {word:adv,type:"obj",label:"Habitual marker"}
+    ],
+    explanations:[
+      `<strong>Imperfect</strong> = past habits, repeated actions, ongoing states. Think of it as a movie playing — no clear start or end visible.`,
+      `'${adv}' (every day) is a classic imperfect trigger. Other triggers: siempre, cada semana, de niño, antes.`,
+      `The ending signals imperfect. -ar verbs use -aba/-abas; -er/-ir verbs use -ía/-ías.`
+    ]
+  };
+}
+
+// ─── i18n ─────────────────────────────────────────────────────────────────────
+
+let uiLang = 'en';
+
+const STRINGS = {
+  en: {
+    dashboard:"Teacher Dashboard", curriculum:"Curriculum", progress:"progress",
+    modes:{ concept:"📚 Concept", drill:"⚡ Minimal Pairs", story:"📖 Story Mode", builder:"🔨 Builder", session:"🎙 Session" },
+    levels:{ beginner:"Beginner", intermediate:"Intermediate", both:"Both" },
+    timer:{ start:"▶ Start", pause:"⏸ Pause" },
+    mentalModelTitle:"🧠 Mental Model — How to Think About This",
+    contrastTitle:"⚡ English vs. Spanish",
+    examplesTitle:"📖 Examples",
+    mistakesTitle:"⚠️ Common Mistakes",
+    lessonsTitle:"📋 Lesson Topics",
+    markDone:"✓ Done", nextBtn:"Next →",
+    englishCol:"🇬🇧 English", spanishCol:"🇪🇸 Spanish",
+    begLabel:"🟢 Beginner", intLabel:"🟡 Intermediate",
+    filterAll:"All",
+    drillTitle:"⚡ Minimal Pairs",
+    drillSub:"Spot the difference — same structure, different meaning",
+    optionLabel:"Option",
+    reveal:"👁 Reveal", prev:"← Prev",
+    genPairsTitle:"🤖 Generate New Pairs with AI",
+    pairTopicPlaceholder:"Enter concept for AI to generate pairs...",
+    storyTitle:"📖 Story Mode",
+    storySub:"AI generates a micro-story using ONLY the concepts you've taught so far",
+    coveredTitle:"✓ Concepts Covered So Far",
+    coverHint:"Click concepts to toggle. Story will only use selected concepts.",
+    storyOutputTitle:"📖 Generated Story",
+    discussionTitle:"🎯 Discussion Questions",
+    generateStory:"⚡ Generate Story", regenerate:"↺ Regenerate",
+    storyDiff:{ beginner:"Beginner story", intermediate:"Intermediate", mixed:"Mixed levels" },
+    storyEmpty:"Select covered concepts above, then click Generate Story.",
+    discussionEmpty:"Generate a story first, then discussion questions will appear here.",
+    builderTitle:"🔨 Sentence Builder",
+    builderSub:"Build sentences step by step — see exactly how each part works",
+    builderControls:"Controls",
+    builderSubject:"Subject", builderConcept:"Concept", builderActions:"Actions",
+    buildBtn:"↺ Build", builtTitle:"Built Sentence",
+    customBuilderTitle:"🤖 Custom Builder — AI Powered",
+    customPlaceholder:'e.g. "Sentence with subjunctive + por"',
+    sessionTitle:"🎙 Session Recorder",
+    sessionSub:"Record or upload audio → transcribe locally → generate notes, summary, mind map, student recap",
+    serverOnline:"● Session Server Online", serverOffline:"● Server Offline — run start-session-server.bat",
+    recordTitle:"🎤 Record Session",
+    readyRec:"Ready to record", clickStart:"Click the button to start",
+    recLive:"● Recording...", clickStop:"Click stop when finished",
+    recSaved:"Recording saved", playback:"Play back above, then click Transcribe",
+    uploadTitle:"📁 Upload Audio File",
+    dragDrop:"Drag & drop or click to select", anyAudio:"WAV, MP3, M4A, OGG — any audio format",
+    transcriptionTitle:"🔤 Transcription",
+    langLabel:"Language", transcribeBtn:"▶ Transcribe", transcribingBtn:"⏳ Transcribing...",
+    transcriptTitle:"📝 Transcript",
+    transcriptEmpty:"Transcript will appear here after you record or upload audio and click Transcribe.",
+    editHint:"💡 You can edit the transcript directly before generating outputs. The text box is editable.",
+    notesTab:"📝 Notes", summaryTab:"📄 Summary", mindmapTab:"🗺 Mind Map", studentTab:"👨‍🎓 Student Recap",
+    notesDesc:"Structured teacher notes from the session — concepts, examples, struggles, follow-up.",
+    summaryDesc:"A journal-style recap of how the session went.",
+    mindmapDesc:"Interactive visual map of concepts covered and how they connect.",
+    studentDesc:"A student-facing message summarizing today's class — ready to copy & send.",
+    genNotes:"⚡ Generate Notes", genSummary:"⚡ Generate Summary", genMap:"⚡ Generate Map", genRecap:"⚡ Generate Recap",
+    notesEmpty:"Generate to see structured notes from the session.",
+    summaryEmpty:"Generate to see a session summary.",
+    mindmapMainEmpty:"Generate to see an interactive mind map of the session.",
+    studentEmpty:"Generate to see a student-facing session recap.",
+    rawMd:"📄 Raw markdown source", downloadSvg:"⬇ SVG",
+    aiGenTitle:"⚡ AI Generator", autopsyTitle:"🔬 Error Autopsy",
+    modelLabel:"Model", topicLabel:"Topic / Concept",
+    genLabel:"Generate",
+    genTypes:{ concept:"🧠 Concept", exercises:"✏️ Exercises", mistakes:"⚠️ Mistakes", cultural:"🌎 Cultural" },
+    levelLabel:"Target level", genBoth:"Both", genBeg:"Beginners",
+    genBtnLabel:"⚡ Generate", generating:"Generating...",
+    quickLoadLabel:"Quick Load",
+    autopsyDesc:"Type what a student said wrong. AI will diagnose the root cause, show the correct version, and explain why the mistake happens.",
+    wrongLabel:"❌ What the student said", contextLabel:"Context (concept being practiced)",
+    runAutopsy:"🔬 Run Autopsy", analyzing:"Analyzing...",
+    commonErrorsLabel:"Common Student Errors",
+    topicPlaceholder:"e.g. ser vs estar, preterite vs imperfect, subjunctive...",
+    wrongPlaceholder:'e.g. "Yo soy cansado"', contextPlaceholder:'e.g. ser vs estar, feelings',
+    outputEmpty:"Generate content using the controls above. Streams live from your local Ollama.",
+    ollamaOnline:"Ollama online", ollamaOffline:"Ollama offline — run: ollama serve",
+    copylbl:"📋 Copy", clearlbl:"✕ Clear",
+  },
+  es: {
+    dashboard:"Panel del Profesor", curriculum:"Plan de Estudios", progress:"progreso",
+    modes:{ concept:"📚 Concepto", drill:"⚡ Pares Mínimos", story:"📖 Historias", builder:"🔨 Constructor", session:"🎙 Sesión" },
+    levels:{ beginner:"Principiante", intermediate:"Intermedio", both:"Ambos" },
+    timer:{ start:"▶ Iniciar", pause:"⏸ Pausar" },
+    mentalModelTitle:"🧠 Modelo Mental — Cómo Pensar en Esto",
+    contrastTitle:"⚡ Inglés vs. Español",
+    examplesTitle:"📖 Ejemplos",
+    mistakesTitle:"⚠️ Errores Comunes",
+    lessonsTitle:"📋 Temas de la Lección",
+    markDone:"✓ Completado", nextBtn:"Siguiente →",
+    englishCol:"🇬🇧 Inglés", spanishCol:"🇪🇸 Español",
+    begLabel:"🟢 Principiante", intLabel:"🟡 Intermedio",
+    filterAll:"Todos",
+    drillTitle:"⚡ Pares Mínimos",
+    drillSub:"Encuentra la diferencia — misma estructura, significado distinto",
+    optionLabel:"Opción",
+    reveal:"👁 Revelar", prev:"← Anterior",
+    genPairsTitle:"🤖 Generar Nuevos Pares con IA",
+    pairTopicPlaceholder:"Escribe el concepto para que la IA genere pares...",
+    storyTitle:"📖 Modo Historia",
+    storySub:"La IA genera una micro-historia usando SOLO los conceptos que ya enseñaste",
+    coveredTitle:"✓ Conceptos Cubiertos Hasta Ahora",
+    coverHint:"Haz clic para activar/desactivar. La historia solo usará los conceptos seleccionados.",
+    storyOutputTitle:"📖 Historia Generada",
+    discussionTitle:"🎯 Preguntas para Discusión",
+    generateStory:"⚡ Generar Historia", regenerate:"↺ Regenerar",
+    storyDiff:{ beginner:"Historia para principiantes", intermediate:"Intermedio", mixed:"Niveles mixtos" },
+    storyEmpty:"Selecciona los conceptos cubiertos y haz clic en Generar Historia.",
+    discussionEmpty:"Primero genera una historia; luego aparecerán las preguntas de discusión.",
+    builderTitle:"🔨 Constructor de Oraciones",
+    builderSub:"Construye oraciones paso a paso — ve exactamente cómo funciona cada parte",
+    builderControls:"Controles",
+    builderSubject:"Sujeto", builderConcept:"Concepto", builderActions:"Acciones",
+    buildBtn:"↺ Construir", builtTitle:"Oración Construida",
+    customBuilderTitle:"🤖 Constructor Personalizado — Con IA",
+    customPlaceholder:'ej. "Oración con subjuntivo + por"',
+    sessionTitle:"🎙 Grabadora de Sesión",
+    sessionSub:"Graba o sube audio → transcribe localmente → genera notas, resumen, mapa mental, resumen para alumnos",
+    serverOnline:"● Servidor de Sesión Activo", serverOffline:"● Servidor Inactivo — ejecuta start-session-server.bat",
+    recordTitle:"🎤 Grabar Sesión",
+    readyRec:"Listo para grabar", clickStart:"Haz clic en el botón para comenzar",
+    recLive:"● Grabando...", clickStop:"Haz clic para detener cuando termines",
+    recSaved:"Grabación guardada", playback:"Reproduce arriba y luego haz clic en Transcribir",
+    uploadTitle:"📁 Subir Archivo de Audio",
+    dragDrop:"Arrastra y suelta o haz clic para seleccionar", anyAudio:"WAV, MP3, M4A, OGG — cualquier formato",
+    transcriptionTitle:"🔤 Transcripción",
+    langLabel:"Idioma", transcribeBtn:"▶ Transcribir", transcribingBtn:"⏳ Transcribiendo...",
+    transcriptTitle:"📝 Transcripción",
+    transcriptEmpty:"La transcripción aparecerá aquí después de grabar o subir audio y hacer clic en Transcribir.",
+    editHint:"💡 Puedes editar la transcripción directamente antes de generar resultados. El cuadro de texto es editable.",
+    notesTab:"📝 Notas", summaryTab:"📄 Resumen", mindmapTab:"🗺 Mapa Mental", studentTab:"👨‍🎓 Resumen Alumno",
+    notesDesc:"Notas estructuradas del profesor — conceptos, ejemplos, dificultades, seguimiento.",
+    summaryDesc:"Un resumen estilo diario de cómo fue la sesión.",
+    mindmapDesc:"Mapa visual interactivo de los conceptos cubiertos y cómo se conectan.",
+    studentDesc:"Un mensaje para los alumnos con el resumen de la clase — listo para copiar y enviar.",
+    genNotes:"⚡ Generar Notas", genSummary:"⚡ Generar Resumen", genMap:"⚡ Generar Mapa", genRecap:"⚡ Generar Resumen",
+    notesEmpty:"Genera para ver notas estructuradas de la sesión.",
+    summaryEmpty:"Genera para ver un resumen de la sesión.",
+    mindmapMainEmpty:"Genera para ver un mapa mental interactivo de la sesión.",
+    studentEmpty:"Genera para ver un resumen dirigido a los alumnos.",
+    rawMd:"📄 Markdown fuente", downloadSvg:"⬇ SVG",
+    aiGenTitle:"⚡ Generador IA", autopsyTitle:"🔬 Autopsia de Errores",
+    modelLabel:"Modelo", topicLabel:"Tema / Concepto",
+    genLabel:"Generar",
+    genTypes:{ concept:"🧠 Concepto", exercises:"✏️ Ejercicios", mistakes:"⚠️ Errores", cultural:"🌎 Cultural" },
+    levelLabel:"Nivel objetivo", genBoth:"Ambos", genBeg:"Principiantes",
+    genBtnLabel:"⚡ Generar", generating:"Generando...",
+    quickLoadLabel:"Carga Rápida",
+    autopsyDesc:"Escribe lo que dijo mal un alumno. La IA diagnosticará la causa raíz, mostrará la versión correcta y explicará por qué ocurrió el error.",
+    wrongLabel:"❌ Lo que dijo el alumno", contextLabel:"Contexto (concepto practicado)",
+    runAutopsy:"🔬 Ejecutar Autopsia", analyzing:"Analizando...",
+    commonErrorsLabel:"Errores Frecuentes de Alumnos",
+    topicPlaceholder:"ej. ser vs estar, pretérito vs imperfecto, subjuntivo...",
+    wrongPlaceholder:'ej. "Yo soy cansado"', contextPlaceholder:'ej. ser vs estar, sentimientos',
+    outputEmpty:"Genera contenido usando los controles de arriba. Se transmite en vivo desde tu Ollama local.",
+    ollamaOnline:"Ollama activo", ollamaOffline:"Ollama inactivo — ejecuta: ollama serve",
+    copylbl:"📋 Copiar", clearlbl:"✕ Limpiar",
+  }
+};
+
+function t(key) {
+  const parts = key.split('.');
+  let obj = STRINGS[uiLang] || STRINGS.en;
+  for (const p of parts) { obj = obj?.[p]; if (obj === undefined) break; }
+  if (obj === undefined) {
+    let fb = STRINGS.en;
+    for (const p of parts) { fb = fb?.[p]; if (fb === undefined) break; }
+    return fb ?? key;
+  }
+  return obj;
+}
+
+function toggleUILang() {
+  uiLang = uiLang === 'en' ? 'es' : 'en';
+  const btn = document.getElementById('lang-toggle');
+  if (btn) btn.textContent = uiLang === 'es' ? '🇪🇸 ES' : '🇺🇸 EN';
+  const sub = document.querySelector('.hd-sub');
+  if (sub) sub.textContent = t('dashboard');
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    const m = b.getAttribute('data-mode-key');
+    if (m) b.textContent = t(`modes.${m}`);
+  });
+  document.querySelectorAll('.lvl-btn').forEach(b => {
+    const lk = b.getAttribute('data-level-key');
+    if (lk) b.textContent = t(`levels.${lk}`);
+  });
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    el.textContent = t(key);
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+  });
+  renderMode();
+  showToast(uiLang === 'es' ? '🇪🇸 Interfaz en Español' : '🇺🇸 Interface in English');
+}
+
+// ─── GOOGLE DOCS URL ─────────────────────────────────────────────────────────
+
+let docsScriptUrl = localStorage.getItem('docsScriptUrl') || '';
+
+function saveDocsUrl(url) {
+  url = url.trim();
+  docsScriptUrl = url;
+  localStorage.setItem('docsScriptUrl', url);
+  if (url) showToast('📄 Google Docs URL saved');
+}
+
+async function exportToDocs(mode) {
+  if (!docsScriptUrl) {
+    showToast('⚠️ Paste your Apps Script URL in the status bar first');
+    return;
+  }
+  const btn = mode === 'resource'
+    ? document.querySelector('#resource-actions .out-btn:last-child')
+    : document.getElementById('docs-btn');
+  const origText = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Creating doc...'; }
+
+  const topic = document.getElementById('gen-topic')?.value || 'Spanish Content';
+  const content = mode === 'resource'
+    ? (document.getElementById('resource-output')?.textContent || '')
+    : (document.getElementById('ai-output')?.textContent || '');
+
+  if (!content || content.length < 10) {
+    showToast('Nothing to export — generate content first');
+    if (btn) { btn.disabled = false; btn.textContent = origText; }
+    return;
+  }
+
+  try {
+    const res = await fetch(docsScriptUrl, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: `${topic} — ${new Date().toLocaleDateString()}`,
+        content,
+        type: mode === 'resource' ? 'resource' : 'content'
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    showToast('📄 Doc created — opening...');
+    window.open(data.url, '_blank');
+  } catch (err) {
+    showToast(`⚠️ Docs error: ${err.message}`);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = origText; }
+  }
+}
+
+// ─── RESOURCE GENERATOR ──────────────────────────────────────────────────────
+
+const RESOURCE_PROMPTS = {
+  'gender-agreement': `You are a Spanish teacher creating a student reference sheet.
+Generate a structured vocabulary resource for practicing GENDER & ADJECTIVE AGREEMENT in Spanish.
+
+Format exactly like this:
+
+## 50 Nouns (with gender and plural)
+| Noun | Article | Plural | English |
+(list 50 common nouns students can practice with)
+
+---
+
+## 50 Adjectives (all 4 forms)
+| Adjective | Masc. Sing. | Fem. Sing. | Masc. Pl. | Fem. Pl. | English |
+(list 50 descriptive adjectives)
+
+---
+
+## 10 Practice Combinations
+(Show 10 noun + adjective combos with all forms: "el libro rojo / la mesa roja / los libros rojos / las mesas rojas")
+
+Keep it dense and practical. Students will use this as a reference while practicing.`,
+
+  'ser-estar': `Create a student reference sheet for SER vs ESTAR in Spanish.
+
+## Ser — 30 Examples by Use Case
+Group by: profession/identity, origin, characteristics, time/dates, material, events
+Format: | Spanish | English | Rule |
+
+---
+
+## Estar — 30 Examples by Use Case
+Group by: location, emotional states, physical states, progressive actions, results
+Format: | Spanish | English | Rule |
+
+---
+
+## 20 Adjectives That Change Meaning (ser vs estar)
+Format: | Adjective | With Ser | With Estar |
+(e.g. listo = clever / ready, bueno = good person / tastes good, malo = evil / sick)`,
+
+  'preterite': `Create a student reference card for PRETERITE IRREGULAR VERBS in Spanish.
+
+## The 10 "Must-Know" Completely Irregular Verbs
+(ser/ir, dar, ver, hacer, tener, estar, poder, poner, saber, venir)
+For each: full preterite conjugation table (yo/tú/él/nosotros/vosotros/ellos)
+
+---
+
+## U-Stem Irregulars (6 verbs)
+(andar, caber, estar, haber, poder, poner, saber, tener)
+Format: infinitive → preterite stem → yo form example
+
+---
+
+## Spelling-Change Verbs (-car/-gar/-zar)
+Format: verb → yo change → example sentence
+
+---
+
+## 15 Preterite Practice Sentences (mixed)
+Include the verb in infinitive brackets, student fills in correct preterite form`,
+
+  'common-vocab': `Generate a practical Spanish vocabulary reference sheet for beginners/intermediate students.
+
+## 50 Essential Nouns (with gender)
+Organized by category: Body, Home, Food, City, Nature, School, Work, Family
+Format: | Noun | el/la | Plural | English |
+
+---
+
+## 50 High-Frequency Adjectives (4 forms each)
+Organized by type: Physical description, Personality, Size/quantity, Emotions, Colors
+Format: | M.Sg. | F.Sg. | M.Pl. | F.Pl. | English |
+
+---
+
+## 20 Essential Adverbs & Connectors
+(siempre, nunca, también, pero, sin embargo, aunque, porque, etc.)
+Format: | Spanish | English | Example sentence |`
+};
+
+async function generateResource(type) {
+  const out = document.getElementById('resource-output');
+  const actions = document.getElementById('resource-actions');
+  out.style.display = 'block';
+  out.className = 'ai-output';
+  out.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Building resource sheet...</div>';
+  actions.style.display = 'none';
+
+  let prompt;
+  if (type === 'custom') {
+    const topic = document.getElementById('gen-topic')?.value.trim();
+    if (!topic) { showToast('Enter a topic in the Topic field above first'); out.style.display = 'none'; return; }
+    prompt = `Create a comprehensive student reference sheet for Spanish learners on the topic: "${topic}".
+Include vocabulary lists, key grammar patterns, and example sentences.
+Format with clear sections using ## headers and tables where appropriate.
+Make it dense and practical — students will use this while doing exercises.`;
+  } else {
+    prompt = RESOURCE_PROMPTS[type];
+  }
+
+  await streamToElement(prompt, out);
+  actions.style.display = 'flex';
+}
+
+function copyResource() {
+  const text = document.getElementById('resource-output')?.textContent || '';
+  navigator.clipboard.writeText(text).then(() => showToast('Resource copied'));
+}
+
+// ─── OLLAMA URL ───────────────────────────────────────────────────────────────
+
+let ollamaUrl = sessionStorage.getItem('ollamaUrl') || 'http://localhost:11434';
+
+function setOllamaUrl(url) {
+  url = url.trim().replace(/\/$/, '');
+  if (!url) return;
+  ollamaUrl = url;
+  sessionStorage.setItem('ollamaUrl', url);
+  checkOllama();
+  showToast(`Ollama URL → ${url}`);
+}
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+
+let activeModule = 0;
+let activeLesson = 0;
+let currentMode = 'concept';
+let currentPanel = 'gen';
+let genType = 'concept';
+let genLevel = 'both';
+let timerSecs = 0;
+let timerRunning = false;
+let timerInterval = null;
+let completedModules = new Set();
+let activePairSet = 'ser-estar';
+let currentPairIdx = 0;
+let drillScore = {correct:0, total:0};
+let pairAnswered = false;
+let coveredConcepts = new Set(['ser-estar']);
+let builderSubject = 'yo';
+let builderConcept = 'ser-prof';
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('date-chip').textContent = new Date().toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  const savedUrl = sessionStorage.getItem('ollamaUrl');
+  if (savedUrl) {
+    const inp = document.getElementById('ollama-url-input');
+    if (inp) inp.value = savedUrl;
+  }
+  const savedDocsUrl = localStorage.getItem('docsScriptUrl');
+  if (savedDocsUrl) {
+    docsScriptUrl = savedDocsUrl;
+    const docsInp = document.getElementById('docs-script-url');
+    if (docsInp) docsInp.value = savedDocsUrl;
+  }
+  renderCurriculum();
+  loadModule(2);
+  checkOllama();
+});
+
+// ─── MODE SWITCHING ───────────────────────────────────────────────────────────
+
+function switchMode(mode, btn) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMode();
+}
+
+function renderMode() {
+  if (currentMode === 'concept') {
+    renderConcept(CURRICULUM[activeModule]);
+  } else if (currentMode === 'drill') {
+    renderDrill();
+  } else if (currentMode === 'story') {
+    renderStory();
+  } else if (currentMode === 'builder') {
+    renderBuilder();
+  } else if (currentMode === 'session') {
+    renderSession();
+  }
+}
+
+// ─── CURRICULUM ───────────────────────────────────────────────────────────────
+
+function renderCurriculum() {
+  const el = document.getElementById('curriculum');
+  el.innerHTML = '';
+  CURRICULUM.forEach((mod, idx) => {
+    const isActive = idx === activeModule;
+    const isDone = completedModules.has(idx);
+    const todayBadge = mod.today ? `<span style="font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;background:rgba(246,166,35,.15);color:var(--amber);border:1px solid rgba(246,166,35,.3);margin-left:3px;">TODAY</span>` : '';
+    const levelDots = mod.levels.map(l => `<div class="dot ${l}"></div>`).join('');
+    const lessonItems = mod.lessons.map((l, li) =>
+      `<div class="lesson-item${isActive && li === activeLesson ? ' current' : ''}" onclick="event.stopPropagation();loadLesson(${idx},${li})">${l}</div>`
+    ).join('');
+    const div = document.createElement('div');
+    div.className = `module${isActive?' active':''}${isDone?' done':''}`;
+    div.onclick = () => loadModule(idx);
+    div.innerHTML = `
+      <div class="module-hd">
+        <div class="mod-num">${isDone ? '✓' : idx}</div>
+        <div class="mod-info">
+          <div class="mod-title">${mod.title}${todayBadge}</div>
+          <div class="mod-tag">${mod.tag}</div>
+        </div>
+        <div class="lvl-dots">${levelDots}</div>
+      </div>
+      <div class="mod-lessons">${lessonItems}</div>`;
+    el.appendChild(div);
+  });
+  document.getElementById('prog-lbl').textContent = `${completedModules.size} / ${CURRICULUM.length}`;
+}
+
+function loadModule(idx) {
+  activeModule = idx;
+  activeLesson = 0;
+  renderCurriculum();
+  document.getElementById('gen-topic').value = CURRICULUM[idx].concept.name;
+  if (currentMode === 'concept') renderConcept(CURRICULUM[idx]);
+}
+
+function loadLesson(modIdx, lessonIdx) {
+  activeModule = modIdx;
+  activeLesson = lessonIdx;
+  renderCurriculum();
+  if (currentMode === 'concept') renderConcept(CURRICULUM[modIdx]);
+}
+
+// ─── CONCEPT VIEW ─────────────────────────────────────────────────────────────
+
+function renderConcept(mod) {
+  const c = mod.concept;
+  const tags = c.tags.map(tg => {
+    const cls = tg==='Beginner'?'tag-beg':tg==='Intermediate'?'tag-int':tg==='Core Concept'?'tag-core':'tag-concept';
+    return `<span class="tag ${cls}">${tg}</span>`;
+  }).join('');
+
+  const enCol = (uiLang==='es' && c.contrast.englishES) ? c.contrast.englishES : c.contrast.english;
+  const esCol = (uiLang==='es' && c.contrast.spanishES) ? c.contrast.spanishES : c.contrast.spanish;
+  const contrastEn = enCol.map(p => `<div class="cpt">${p}</div>`).join('');
+  const contrastEs = esCol.map(p => `<div class="cpt">${p}</div>`).join('');
+
+  const examples = c.examples.map(ex => `
+    <div class="ex-block ${ex.level}" data-level="${ex.level}">
+      <div class="ex-lvl">${ex.level==='beg'?t('begLabel'):t('intLabel')}</div>
+      <div class="ex-es">${ex.es}</div>
+      <div class="ex-en">${ex.en}</div>
+      <div class="ex-why">💡 ${(uiLang==='es' && ex.whyES) ? ex.whyES : ex.why}</div>
+    </div>`).join('');
+
+  const mistakes = c.mistakes.map(m =>
+    `<div class="mistake-item"><span>⚠️</span><div class="mistake-text">${(uiLang==='es' && m.textES) ? m.textES : m.text}</div></div>`
+  ).join('');
+
+  const refCards = mod.lessons.map((l,i) =>
+    `<div class="ref-card${i===activeLesson?' active':''}">
+      <div class="ref-title">${l}</div>
+      <div class="ref-desc" style="font-size:10px;color:var(--text3);">Lesson ${i+1}</div>
+    </div>`
+  ).join('');
+
+  document.getElementById('main-inner').innerHTML = `
+    <div class="concept-hd">
+      <div>
+        <div class="concept-title">${c.name}</div>
+        <div class="concept-sub">${c.subtitle}</div>
+        <div class="ctags">${tags}</div>
+      </div>
+      <div style="display:flex;gap:7px;flex-shrink:0;">
+        <button class="btn btn-ghost" onclick="markDone()">${t('markDone')}</button>
+        <button class="btn btn-primary" onclick="loadModule((activeModule+1)%${CURRICULUM.length})">${t('nextBtn')}</button>
+      </div>
+    </div>
+
+    <div class="card mental-card">
+      <div class="card-hd"><span class="card-title">${t('mentalModelTitle')}</span></div>
+      <div class="card-body">
+        <div class="model-icon">${c.mentalModel.icon}</div>
+        <div class="model-text">${(uiLang === 'es' && c.mentalModelES ? c.mentalModelES : c.mentalModel.text).replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">
+        <span class="card-title">${t('contrastTitle')}</span>
+        <div style="display:flex;gap:5px;">
+          <span class="tag tag-beg" style="cursor:pointer" onclick="filterEx('beg')">${t('begLabel').split(' ').pop()}</span>
+          <span class="tag tag-int" style="cursor:pointer" onclick="filterEx('int')">${t('intLabel').split(' ').pop()}</span>
+          <span class="tag tag-concept" style="cursor:pointer" onclick="filterEx('all')">${t('filterAll')}</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="contrast-grid">
+          <div class="cbox en"><div class="clbl">${t('englishCol')}</div>${contrastEn}</div>
+          <div class="cbox es"><div class="clbl">${t('spanishCol')}</div>${contrastEs}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd"><span class="card-title">${t('examplesTitle')}</span></div>
+      <div class="card-body"><div style="display:flex;flex-direction:column;gap:9px" id="ex-grid">${examples}</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd"><span class="card-title">${t('mistakesTitle')}</span></div>
+      <div class="card-body"><div style="display:flex;flex-direction:column;gap:7px">${mistakes}</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd"><span class="card-title">${t('lessonsTitle')}</span></div>
+      <div class="card-body"><div class="ref-grid">${refCards}</div></div>
+    </div>
+  `;
+}
+
+function filterEx(level) {
+  document.querySelectorAll('.ex-block').forEach(el => {
+    el.style.display = level === 'all' || el.dataset.level === level ? '' : 'none';
+  });
+}
+
+function markDone() {
+  completedModules.add(activeModule);
+  renderCurriculum();
+  showToast(`✓ "${CURRICULUM[activeModule].title}" marked complete`);
+}
+
+// ─── MINIMAL PAIRS DRILL ─────────────────────────────────────────────────────
+
+function renderDrill() {
+  const inner = document.getElementById('main-inner');
+  const pairSets = [
+    {key:'ser-estar', label:'Ser vs Estar'},
+    {key:'pret-imp', label:'Preterite vs Imperfect'},
+    {key:'por-para', label:'Por vs Para'}
+  ];
+  const chipHtml = pairSets.map(s =>
+    `<div class="concept-chip${activePairSet===s.key?' active':''}" onclick="setPairSet('${s.key}')">${s.label}</div>`
+  ).join('');
+
+  inner.innerHTML = `
+    <div class="drill-top">
+      <div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.3px">${t('drillTitle')}</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:2px">${t('drillSub')}</div>
+      </div>
+      <div class="drill-score">✓ ${drillScore.correct} / ${drillScore.total}</div>
+    </div>
+    <div class="concept-select-row">${chipHtml}</div>
+    <div id="drill-q" class="drill-q">Loading...</div>
+    <div class="pair-arena" id="pair-arena"></div>
+    <div class="drill-nav">
+      <span class="pair-counter" id="pair-counter"></span>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-ghost" onclick="prevPair()">${t('prev')}</button>
+        <button class="btn btn-ghost" onclick="revealPair()">${t('reveal')}</button>
+        <button class="btn btn-primary" onclick="nextPair()">${t('nextBtn')}</button>
+      </div>
+    </div>
+    <div class="card" style="margin-top:4px;">
+      <div class="card-hd"><span class="card-title">${t('genPairsTitle')}</span></div>
+      <div class="card-body" style="display:flex;gap:8px;align-items:center;">
+        <input class="inp" id="pair-topic" placeholder="${t('pairTopicPlaceholder')}" style="flex:1;">
+        <button class="btn btn-primary" onclick="generatePairs()">Generate</button>
+      </div>
+      <div id="gen-pairs-output" style="display:none;padding:0 14px 14px;">
+        <div class="ai-output empty" id="gen-pairs-out"></div>
+      </div>
+    </div>
+  `;
+  renderPair();
+}
+
+function setPairSet(key) {
+  activePairSet = key;
+  currentPairIdx = 0;
+  pairAnswered = false;
+  renderDrill();
+}
+
+function renderPair() {
+  const pairs = PAIRS[activePairSet];
+  if (!pairs) return;
+  const pair = pairs[currentPairIdx];
+  document.getElementById('drill-q').textContent = pair.q;
+  document.getElementById('pair-counter').textContent = `${currentPairIdx + 1} / ${pairs.length}`;
+  const arena = document.getElementById('pair-arena');
+  arena.innerHTML = pair.cards.map((card, i) => `
+    <div class="pair-card" id="pair-card-${i}" onclick="selectPair(${i}, ${pair.a})">
+      <div>
+        <div class="pair-label">${t('optionLabel')} ${String.fromCharCode(65+i)}</div>
+        <div class="pair-sentence">${card.es}</div>
+        <div class="pair-translation">${card.en}</div>
+      </div>
+      <div class="pair-concept">💡 ${card.concept}</div>
+    </div>`
+  ).join('');
+  pairAnswered = false;
+}
+
+function selectPair(selected, correct) {
+  if (pairAnswered) return;
+  pairAnswered = true;
+  drillScore.total++;
+  const selCard = document.getElementById(`pair-card-${selected}`);
+  const corrCard = document.getElementById(`pair-card-${correct}`);
+  if (selected === correct) {
+    drillScore.correct++;
+    selCard.classList.add('selected-correct');
+    showToast('✓ Correct!');
+  } else {
+    selCard.classList.add('selected-wrong');
+    corrCard.classList.add('reveal');
+    showToast('Not quite — see the correct one');
+  }
+  document.getElementById('pair-arena').querySelectorAll('.pair-card').forEach(c => {
+    c.querySelector('.pair-concept').style.display = 'block';
+  });
+  document.querySelector('.drill-score').textContent = `✓ ${drillScore.correct} / ${drillScore.total}`;
+}
+
+function revealPair() {
+  pairAnswered = true;
+  document.getElementById('pair-arena').querySelectorAll('.pair-card').forEach((c, i) => {
+    if (i === PAIRS[activePairSet][currentPairIdx].a) c.classList.add('reveal');
+    c.querySelector('.pair-concept').style.display = 'block';
+  });
+}
+
+function nextPair() {
+  const pairs = PAIRS[activePairSet];
+  currentPairIdx = (currentPairIdx + 1) % pairs.length;
+  renderPair();
+}
+
+function prevPair() {
+  const pairs = PAIRS[activePairSet];
+  currentPairIdx = (currentPairIdx - 1 + pairs.length) % pairs.length;
+  renderPair();
+}
+
+async function generatePairs() {
+  const topic = document.getElementById('pair-topic').value.trim();
+  if (!topic) { showToast('Enter a topic first'); return; }
+  const out = document.getElementById('gen-pairs-out');
+  const wrap = document.getElementById('gen-pairs-output');
+  wrap.style.display = 'block';
+  out.className = 'ai-output';
+  out.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Generating pairs...</div>';
+  const prompt = `Create 4 minimal pair exercises for the Spanish concept: "${topic}".
+For each pair, write:
+QUESTION: [question asking which sentence demonstrates a specific usage]
+A: [Spanish sentence] | [English translation] | [concept name]
+B: [Spanish sentence] | [English translation] | [concept name]
+ANSWER: [A or B]
+Focus on pairs where the same word or structure creates completely different meanings.`;
+  await streamToElement(prompt, out);
+}
+
+// ─── STORY MODE ──────────────────────────────────────────────────────────────
+
+function renderStory() {
+  const concepts = [
+    {key:'ser-estar', label:'Ser / Estar'},
+    {key:'gender', label:'Gender & Agreement'},
+    {key:'preterite', label:'Preterite'},
+    {key:'imperfect', label:'Imperfect'},
+    {key:'present', label:'Present Tense'},
+    {key:'subjunctive', label:'Subjunctive'},
+    {key:'reflexive', label:'Reflexive Verbs'},
+    {key:'por-para', label:'Por / Para'}
+  ];
+  const checksHtml = concepts.map(c =>
+    `<div class="cc-item${coveredConcepts.has(c.key)?' checked':''}" onclick="toggleConcept('${c.key}',this)">${c.label}</div>`
+  ).join('');
+
+  document.getElementById('main-inner').innerHTML = `
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+      <div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.3px">${t('storyTitle')}</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:2px">${t('storySub')}</div>
+      </div>
+      <button class="btn btn-primary" onclick="generateStory()">${t('generateStory')}</button>
+    </div>
+    <div class="card">
+      <div class="card-hd"><span class="card-title">${t('coveredTitle')}</span></div>
+      <div class="card-body">
+        <div class="concept-checks">${checksHtml}</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:10px;">${t('coverHint')}</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd">
+        <span class="card-title">${t('storyOutputTitle')}</span>
+        <div style="display:flex;gap:6px;">
+          <select class="inp" id="story-difficulty" style="width:auto;padding:3px 8px;font-size:11px;">
+            <option value="beginner">${t('storyDiff.beginner')}</option>
+            <option value="intermediate">${t('storyDiff.intermediate')}</option>
+            <option value="mixed">${t('storyDiff.mixed')}</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="story-output empty" id="story-output">${t('storyEmpty')}</div>
+        <div class="out-actions" id="story-actions" style="display:none;margin-top:10px;">
+          <button class="out-btn" onclick="copyStory()">📋 Copy</button>
+          <button class="out-btn" onclick="generateStory()">${t('regenerate')}</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><span class="card-title">${t('discussionTitle')}</span></div>
+      <div class="card-body">
+        <div class="ai-output empty" id="story-questions" style="max-height:none;">${t('discussionEmpty')}</div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleConcept(key, el) {
+  if (coveredConcepts.has(key)) { coveredConcepts.delete(key); el.classList.remove('checked'); }
+  else { coveredConcepts.add(key); el.classList.add('checked'); }
+}
+
+async function generateStory() {
+  if (coveredConcepts.size === 0) { showToast('Select at least one concept'); return; }
+  const difficulty = document.getElementById('story-difficulty').value;
+  const concepts = [...coveredConcepts].join(', ');
+  const out = document.getElementById('story-output');
+  const qOut = document.getElementById('story-questions');
+  out.className = 'story-output';
+  out.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Writing story...</div>';
+  qOut.className = 'ai-output';
+  qOut.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Generating questions...</div>';
+  document.getElementById('story-actions').style.display = 'none';
+
+  const prompt = `You are a Spanish language teacher creating a teaching story.
+Write a short, engaging micro-story in Spanish (100-130 words) that EXCLUSIVELY uses these grammar concepts: ${concepts}.
+Requirements:
+- ${difficulty === 'beginner' ? 'Simple vocabulary, short sentences, common everyday situations' : difficulty === 'intermediate' ? 'More complex sentences, varied vocabulary' : 'Mix of simple and complex structures'}
+- Every sentence should clearly demonstrate one of the covered concepts
+- Use a fun, memorable scene (café, market, school, family dinner, etc.)
+- After the story, add an English translation
+Then on a new line write:
+DISCUSSION QUESTIONS:
+Write 4 short discussion questions a teacher can ask students about the story.`;
+
+  const model = document.getElementById('model-select').value;
+  try {
+    const response = await fetch(`${ollamaUrl}/api/chat`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({model, messages:[{role:'user',content:prompt}], stream:true})
+    });
+    if (!response.ok) throw new Error(`Ollama error ${response.status}`);
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let full = '';
+    out.innerHTML = '';
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      const lines = decoder.decode(value).split('\n').filter(l=>l.trim());
+      for (const line of lines) {
+        try {
+          const j = JSON.parse(line);
+          if (j.message?.content) {
+            full += j.message.content;
+            const split = full.split('DISCUSSION QUESTIONS:');
+            out.textContent = split[0].trim();
+            if (split[1]) { qOut.textContent = split[1].trim(); }
+          }
+        } catch {}
+      }
+    }
+    document.getElementById('story-actions').style.display = 'flex';
+  } catch(err) {
+    out.textContent = `⚠️ ${err.message}\n\nMake sure Ollama is running.`;
+    qOut.textContent = 'Could not generate questions.';
+  }
+}
+
+function copyStory() {
+  navigator.clipboard.writeText(document.getElementById('story-output').textContent).then(()=>showToast('Story copied'));
+}
+
+// ─── SENTENCE BUILDER ────────────────────────────────────────────────────────
+
+function renderBuilder() {
+  const subjects = Object.entries(BUILDER_DATA.subjects).map(([k,v]) =>
+    `<option value="${k}"${k===builderSubject?' selected':''}>${v.label}</option>`
+  ).join('');
+  const concepts = Object.entries(BUILDER_DATA.concepts).map(([k,v]) =>
+    `<option value="${k}"${k===builderConcept?' selected':''}>${v.label}</option>`
+  ).join('');
+
+  document.getElementById('main-inner').innerHTML = `
+    <div>
+      <div style="font-size:18px;font-weight:800;letter-spacing:-.3px">${t('builderTitle')}</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:2px">${t('builderSub')}</div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><span class="card-title">${t('builderControls')}</span></div>
+      <div class="card-body">
+        <div class="builder-controls">
+          <div class="bc-group">
+            <div class="bc-label">${t('builderSubject')}</div>
+            <select class="inp" id="bs-subject" onchange="builderSubject=this.value;buildSentence()">
+              ${subjects}
+            </select>
+          </div>
+          <div class="bc-group">
+            <div class="bc-label">${t('builderConcept')}</div>
+            <select class="inp" id="bs-concept" onchange="builderConcept=this.value;buildSentence()">
+              ${concepts}
+            </select>
+          </div>
+          <div class="bc-group">
+            <div class="bc-label">${t('builderActions')}</div>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="buildSentence()">${t('buildBtn')}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="built-card">
+      <div class="card-hd"><span class="card-title">${t('builtTitle')}</span></div>
+      <div class="card-body">
+        <div class="built-sentence" id="built-output">
+          <div class="bs-placeholder">${t('builderSub')}</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><span class="card-title">${t('customBuilderTitle')}</span></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:8px;">
+          <input class="inp" id="custom-sentence-topic" placeholder="${t('customPlaceholder')}" style="flex:1;">
+          <button class="btn btn-primary" onclick="buildCustomSentence()">${t('buildBtn')}</button>
+        </div>
+        <div class="ai-output empty" id="custom-build-out">AI will build and label the sentence here.</div>
+      </div>
+    </div>
+  `;
+  buildSentence();
+}
+
+function buildSentence() {
+  const subject = document.getElementById('bs-subject')?.value || builderSubject;
+  const concept = document.getElementById('bs-concept')?.value || builderConcept;
+  builderSubject = subject;
+  builderConcept = concept;
+  const templateFn = BUILDER_DATA.concepts[concept]?.template;
+  if (!templateFn) return;
+  const data = templateFn(subject);
+  const partsHtml = data.parts.map(p => `
+    <div class="bs-part">
+      <div class="bs-word ${p.type}-part">${p.word}</div>
+      <div class="bs-lbl">${p.label}</div>
+    </div>`).join('<div style="display:flex;align-items:flex-start;padding-top:4px;color:var(--text3);font-size:14px;"> </div>');
+  const expsHtml = data.explanations.map(e => `<div class="bs-exp-item">${e}</div>`).join('');
+  const out = document.getElementById('built-output');
+  if (out) out.innerHTML = `
+    <div class="bs-display">${data.sentence}</div>
+    <div class="bs-parts">${partsHtml}</div>
+    <div class="bs-explanation">${expsHtml}</div>
+    <div style="margin-top:12px;display:flex;gap:7px;">
+      <button class="btn btn-ghost" style="font-size:11px;" onclick="navigator.clipboard.writeText('${data.sentence.replace(/'/g,"\\'")}').then(()=>showToast('Copied'))">📋 Copy sentence</button>
+    </div>
+  `;
+}
+
+async function buildCustomSentence() {
+  const topic = document.getElementById('custom-sentence-topic').value.trim();
+  if (!topic) { showToast('Enter a topic or description'); return; }
+  const out = document.getElementById('custom-build-out');
+  out.className = 'ai-output';
+  out.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Building...</div>';
+  const prompt = `You are a Spanish teacher building a labeled sentence example.
+Request: "${topic}"
+1. Write one clear Spanish sentence that demonstrates the requested concept
+2. Write the English translation
+3. Label each word/phrase in the sentence with its grammatical role
+4. For each labeled part, write one sentence explaining what role it plays and WHY it's constructed that way conceptually
+Format:
+SENTENCE: [Spanish sentence]
+TRANSLATION: [English]
+PARTS: [word] → [label]: [explanation]`;
+  await streamToElement(prompt, out);
+}
+
+// ─── ERROR AUTOPSY ────────────────────────────────────────────────────────────
+
+async function runAutopsy() {
+  const wrong = document.getElementById('autopsy-wrong').value.trim();
+  const context = document.getElementById('autopsy-context').value.trim();
+  if (!wrong) { showToast('Enter the wrong sentence first'); return; }
+  const btn = document.getElementById('autopsy-btn');
+  const out = document.getElementById('autopsy-output');
+  btn.disabled = true;
+  document.getElementById('autopsy-btn-txt').textContent = t('analyzing');
+  out.className = 'ai-output';
+  out.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Running autopsy...</div>';
+  document.getElementById('autopsy-out-actions').style.display = 'none';
+  const prompt = `You are an expert Spanish teacher doing an error analysis.
+A student said: "${wrong}"
+${context ? `The concept being practiced: ${context}` : ''}
+Perform a clear error autopsy:
+1. ❌ WHAT'S WRONG: Identify the exact error
+2. ✅ CORRECT VERSION: Show the correct sentence
+3. ⚠️ ROOT CAUSE: Explain WHY this error happens — usually a false equivalence with English or a misunderstood concept
+4. 💡 THE FIX: In one or two sentences, explain the underlying concept that fixes this
+Be direct and concise.`;
+  await streamToElement(prompt, out);
+  btn.disabled = false;
+  document.getElementById('autopsy-btn-txt').textContent = t('runAutopsy');
+  document.getElementById('autopsy-out-actions').style.display = 'flex';
+}
+
+function loadError(wrong, context) {
+  document.getElementById('autopsy-wrong').value = wrong;
+  document.getElementById('autopsy-context').value = context;
+  runAutopsy();
+}
+
+function copyAutopsy() {
+  navigator.clipboard.writeText(document.getElementById('autopsy-output').textContent).then(()=>showToast('Copied'));
+}
+function clearAutopsy() {
+  const out = document.getElementById('autopsy-output');
+  out.className = 'ai-output empty';
+  out.textContent = 'Error analysis will appear here.';
+  document.getElementById('autopsy-out-actions').style.display = 'none';
+}
+
+// ─── AI GENERATION ────────────────────────────────────────────────────────────
+
+function selType(btn) {
+  document.querySelectorAll('.type-btn[data-type]').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  genType = btn.dataset.type;
+}
+
+function selGenLvl(btn) {
+  document.querySelectorAll('.type-btn[data-level]').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  genLevel = btn.dataset.level;
+}
+
+function quickLoad(topic) {
+  document.getElementById('gen-topic').value = topic;
+  generateContent();
+}
+
+function buildPrompt(topic, type, level) {
+  const lvlCtx = level === 'both'
+    ? 'Include examples for both beginner and intermediate learners.'
+    : `Focus on ${level} level learners.`;
+  const prompts = {
+    concept:`You are an expert Spanish language teacher and linguist.
+Explain the concept of: "${topic}"
+Do NOT just list grammar rules. Instead:
+1. Explain the UNDERLYING CONCEPT — how do Spanish speakers actually think about this?
+2. Give a memorable mental model or analogy
+3. Contrast with how English handles the same idea
+4. Provide 3 concrete examples with full conceptual explanation
+5. One key insight that makes this click
+${lvlCtx}
+Be concise and insightful. Max 300 words.`,
+    exercises:`Create 5 targeted practice exercises for: "${topic}"
+For each:
+- Write a clear exercise prompt
+- Provide the answer
+- Briefly explain WHY that answer demonstrates the concept
+${lvlCtx} Make exercises progressively harder.`,
+    mistakes:`List the 5 most common mistakes English speakers make with: "${topic}"
+For each mistake:
+- Show the ERROR (wrong sentence) and the CORRECT version
+- Explain the ROOT CAUSE (usually a false English equivalence)
+- Give the fix in one clear sentence
+${lvlCtx}`,
+    cultural:`Explain the cultural and linguistic context behind: "${topic}"
+Cover:
+1. Why does Spanish work this way? (historical/linguistic reason, briefly)
+2. How does this feature reflect how Spanish speakers perceive reality?
+3. Regional differences if relevant (Spain vs. Latin America)
+4. Why does this make Spanish expressive in ways English can't replicate?
+Max 180 words. Make it interesting.`
+  };
+  return prompts[type] || prompts.concept;
+}
+
+async function generateContent() {
+  const topic = document.getElementById('gen-topic').value.trim();
+  if (!topic) { showToast('Enter a topic first'); return; }
+  const btn = document.getElementById('gen-btn');
+  const out = document.getElementById('ai-output');
+  btn.disabled = true;
+  document.getElementById('gen-btn-txt').textContent = t('generating');
+  out.className = 'ai-output';
+  out.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Thinking...</div>';
+  document.getElementById('out-actions').style.display = 'none';
+  const prompt = buildPrompt(topic, genType, genLevel);
+  await streamToElement(prompt, out);
+  btn.disabled = false;
+  document.getElementById('gen-btn-txt').textContent = t('genBtnLabel');
+  document.getElementById('out-actions').style.display = 'flex';
+}
+
+async function streamToElement(prompt, el) {
+  const model = document.getElementById('model-select').value;
+  try {
+    const res = await fetch(`${ollamaUrl}/api/chat`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({model, messages:[{role:'user',content:prompt}], stream:true})
+    });
+    if (!res.ok) throw new Error(`Ollama error ${res.status}`);
+    el.innerHTML = '';
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let full = '';
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      const lines = decoder.decode(value).split('\n').filter(l=>l.trim());
+      for (const line of lines) {
+        try {
+          const j = JSON.parse(line);
+          if (j.message?.content) {
+            full += j.message.content;
+            el.textContent = full;
+            el.scrollTop = el.scrollHeight;
+          }
+        } catch {}
+      }
+    }
+  } catch(err) {
+    el.innerHTML = `<span style="color:var(--red)">⚠️ ${err.message}\n\nCheck Ollama is running:\n  ollama serve\n\nCheck model is available:\n  ollama list</span>`;
+  }
+}
+
+function copyOut() {
+  navigator.clipboard.writeText(document.getElementById('ai-output').textContent).then(()=>showToast('Copied'));
+}
+function clearOut() {
+  const out = document.getElementById('ai-output');
+  out.className = 'ai-output empty';
+  out.textContent = 'Generate content using the controls above.';
+  document.getElementById('out-actions').style.display = 'none';
+}
+
+// ─── PANEL TABS ───────────────────────────────────────────────────────────────
+
+function switchPanel(pane, tab) {
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById(`pane-${pane}`).classList.add('active');
+  currentPanel = pane;
+}
+
+// ─── STUDENT PROGRESS ────────────────────────────────────────────────────────
+const STUDENT_CONCEPTS = [
+  { key:'ser-estar',    name:'Ser vs Estar' },
+  { key:'pret-imp',     name:'Preterite vs Imperfect' },
+  { key:'subjunctive',  name:'Subjunctive' },
+  { key:'por-para',     name:'Por vs Para' },
+  { key:'gender',       name:'Gender & Agreement' },
+  { key:'reflexive',    name:'Reflexive Verbs' },
+  { key:'present',      name:'Present Tense' },
+  { key:'gustar',       name:'Gustar-type Verbs' },
+  { key:'word-order',   name:'Word Order' },
+  { key:'obj-pronouns', name:'Object Pronouns' }
+];
+
+function refreshStudentProgress() {
+  const mastery = JSON.parse(localStorage.getItem('sl_mastery') || '{}');
+  const xp      = parseInt(localStorage.getItem('sl_xp')          || '0');
+  const name    = localStorage.getItem('sl_name') || '';
+  const best    = parseInt(localStorage.getItem('sl_best_streak')  || '0');
+  const level   = Math.floor(xp / 100) + 1;
+
+  document.getElementById('sp-name').textContent =
+    name ? `${name} · Level ${level} · ${xp} XP` : `Level ${level} · ${xp} XP`;
+  document.getElementById('sp-meta').textContent =
+    `Best streak: ${best} 🔥`;
+
+  const practiced = STUDENT_CONCEPTS.filter(c => mastery[c.key]?.total > 0);
+  const container = document.getElementById('sp-concepts');
+  const empty     = document.getElementById('sp-empty');
+
+  if (practiced.length === 0) {
+    container.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  container.innerHTML = STUDENT_CONCEPTS.map(c => {
+    const m = mastery[c.key];
+    if (!m || m.total === 0) return '';
+    const acc   = Math.round(m.correct / m.total * 100);
+    const color = acc >= 80 ? '#4ade80' : acc >= 60 ? '#f6a623' : '#ff6b6b';
+    const star  = acc >= 80 ? ' ⭐' : acc >= 60 ? ' 📈' : ' 🔴';
+    return `
+      <div style="margin-bottom:9px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;margin-bottom:3px">
+          <span style="color:var(--text1);font-weight:500">${c.name}${star}</span>
+          <span style="color:${color};font-weight:700;font-size:13px">${acc}%</span>
+        </div>
+        <div style="height:5px;background:var(--border2);border-radius:3px;overflow:hidden">
+          <div style="height:100%;width:${acc}%;background:${color};border-radius:3px;transition:width .4s"></div>
+        </div>
+        <div style="font-size:10.5px;color:var(--text3);margin-top:2px">${m.correct}/${m.total} correct</div>
+      </div>`;
+  }).join('');
+}
+
+// ─── TIMER ───────────────────────────────────────────────────────────────────
+
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('tbtn').textContent = t('timer.start');
+    document.getElementById('tbtn').classList.remove('running');
+  } else {
+    timerInterval = setInterval(()=>{ timerSecs++; updateTimer(); }, 1000);
+    timerRunning = true;
+    document.getElementById('tbtn').textContent = t('timer.pause');
+    document.getElementById('tbtn').classList.add('running');
+  }
+}
+function resetTimer() {
+  clearInterval(timerInterval); timerRunning = false; timerSecs = 0; updateTimer();
+  document.getElementById('tbtn').textContent = t('timer.start');
+  document.getElementById('tbtn').classList.remove('running');
+}
+function updateTimer() {
+  const m = Math.floor(timerSecs/60).toString().padStart(2,'0');
+  const s = (timerSecs%60).toString().padStart(2,'0');
+  document.getElementById('timer').textContent = `${m}:${s}`;
+}
+
+// ─── LEVEL ───────────────────────────────────────────────────────────────────
+
+function setLevel(level, btn) {
+  document.querySelectorAll('.lvl-btn').forEach(b=>{ b.className='lvl-btn'; });
+  btn.classList.add(level === 'beginner' ? 'beg' : level === 'intermediate' ? 'int' : '');
+  if (currentMode === 'concept') renderConcept(CURRICULUM[activeModule]);
+}
+
+// ─── OLLAMA STATUS ────────────────────────────────────────────────────────────
+
+async function checkOllama() {
+  const dot = document.getElementById('ollama-dot');
+  const txt = document.getElementById('ollama-txt');
+  try {
+    const res = await fetch(`${ollamaUrl}/api/tags`, {signal: AbortSignal.timeout(3000)});
+    if (res.ok) {
+      const data = await res.json();
+      const models = data.models || [];
+      dot.className = 'status-dot on';
+      txt.textContent = `${t('ollamaOnline')} · ${models.length} model${models.length!==1?'s':''}`;
+      if (models.length > 0) {
+        const sel = document.getElementById('model-select');
+        const cur = sel.value;
+        sel.innerHTML = models.map(m=>`<option value="${m.name}">${m.name}</option>`).join('');
+        if ([...sel.options].some(o=>o.value===cur)) sel.value = cur;
+      }
+    } else throw new Error('not ok');
+  } catch {
+    dot.className = 'status-dot off';
+    txt.textContent = t('ollamaOffline');
+  }
+}
+
+// ─── SESSION MODE ────────────────────────────────────────────────────────────
+
+let sessionAudioBlob = null;
+let sessionTranscript = '';
+let sessionRecording = false;
+let sessionRecSecs = 0;
+let sessionRecInterval = null;
+let sessionMediaRecorder = null;
+let sessionAudioChunks = [];
+let sessionServerOnline = false;
+let activeOutTab = 'notes';
+let sessionOutputs = { notes:'', summary:'', mindmap:'', student:'' };
+
+async function checkSessionServer() {
+  try {
+    const res = await fetch('http://localhost:8765/health', { signal: AbortSignal.timeout(2000) });
+    if (res.ok) {
+      sessionServerOnline = true;
+      const badge = document.getElementById('session-server-badge');
+      if (badge) { badge.className = 'server-badge on'; badge.innerHTML = `<span>●</span> ${t('serverOnline').replace('● ','')}`; }
+      return true;
+    }
+  } catch {}
+  sessionServerOnline = false;
+  const badge = document.getElementById('session-server-badge');
+  if (badge) { badge.className = 'server-badge off'; badge.innerHTML = `<span>●</span> ${t('serverOffline').replace('● ','')}`; }
+  return false;
+}
+
+function renderSession() {
+  document.getElementById('main-inner').innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:-.3px">${t('sessionTitle')}</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:2px">${t('sessionSub')}</div>
+      </div>
+      <div id="session-server-badge" class="server-badge">● Checking server...</div>
+    </div>
+
+    <div class="session-grid">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="rec-panel">
+          <div class="card-hd"><span class="card-title">${t('recordTitle')}</span></div>
+          <div class="rec-body">
+            <div class="rec-controls">
+              <button class="rec-btn idle" id="rec-btn" onclick="toggleRecording()">🎙</button>
+              <div class="rec-info">
+                <div class="rec-status" id="rec-status">${t('readyRec')}</div>
+                <div class="rec-sub" id="rec-sub">${t('clickStart')}</div>
+              </div>
+              <div class="rec-timer-display" id="rec-timer">00:00</div>
+            </div>
+            <div id="rec-audio-preview" style="display:none;">
+              <div class="audio-preview">
+                <audio id="rec-audio-player" controls></audio>
+                <button class="btn btn-ghost" onclick="clearRecording()" style="flex-shrink:0;font-size:11px;">${t('clearlbl')}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rec-panel">
+          <div class="card-hd"><span class="card-title">${t('uploadTitle')}</span></div>
+          <div class="rec-body">
+            <div class="drop-zone" id="drop-zone" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+              <input type="file" accept="audio/*,.wav,.mp3,.m4a,.ogg,.webm" onchange="onFileSelect(event)">
+              <div class="drop-icon">🎵</div>
+              <div class="drop-txt">${t('dragDrop')}</div>
+              <div class="drop-sub">${t('anyAudio')}</div>
+            </div>
+            <div id="upload-preview" style="display:none;">
+              <div class="audio-preview">
+                <audio id="upload-audio-player" controls></audio>
+                <button class="btn btn-ghost" onclick="clearUpload()" style="flex-shrink:0;font-size:11px;">${t('clearlbl')}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rec-panel">
+          <div class="card-hd"><span class="card-title">${t('transcriptionTitle')}</span></div>
+          <div class="rec-body">
+            <div class="lang-select-row">
+              <span class="lbl" style="margin:0;white-space:nowrap;">${t('langLabel')}</span>
+              <select class="inp" id="transcribe-lang" style="flex:1;">
+                <option value="auto">Auto-detect</option>
+                <option value="es">Spanish (es)</option>
+                <option value="en">English (en)</option>
+                <option value="es+en">Mixed (detect per segment)</option>
+              </select>
+              <button class="transcribe-btn" id="transcribe-btn" onclick="transcribeAudio()">
+                <span id="transcribe-btn-txt">${t('transcribeBtn')}</span>
+              </button>
+            </div>
+            <div class="transcript-meta" id="transcript-meta" style="display:none;">
+              <div class="tmeta-item">⏱ <span id="meta-duration">-</span></div>
+              <div class="tmeta-item">🔤 <span id="meta-words">-</span> words</div>
+              <div class="tmeta-item">🌐 <span id="meta-lang">-</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="rec-panel" style="flex:1;">
+          <div class="card-hd" style="justify-content:space-between;">
+            <span class="card-title">${t('transcriptTitle')}</span>
+            <div style="display:flex;gap:6px;">
+              <button class="out-btn" onclick="copyTranscript()" style="padding:3px 8px;">${t('copylbl')}</button>
+              <button class="out-btn" onclick="clearTranscript()" style="padding:3px 8px;">${t('clearlbl')}</button>
+            </div>
+          </div>
+          <div style="padding:12px;">
+            <div class="transcript-box empty" id="transcript-box">${t('transcriptEmpty')}</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);padding:0 4px;">${t('editHint')}</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:2px;">
+      <!-- #35 Session Debrief AI -->
+    <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px;padding:0 2px">
+      <button onclick="generateDebrief()" style="flex:1;padding:7px 10px;border-radius:7px;background:linear-gradient(135deg,rgba(91,141,238,.2),rgba(168,85,247,.15));color:var(--accent);border:1px solid rgba(91,141,238,.3);font-size:12px;font-weight:700;cursor:pointer">🎓 Generate Session Debrief</button>
+      <button onclick="detectErrorPatterns()" style="flex:1;padding:7px 10px;border-radius:7px;background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(251,146,60,.08));color:#fb923c;border:1px solid rgba(239,68,68,.25);font-size:12px;font-weight:700;cursor:pointer">🔬 Error Patterns</button>
+    </div>
+    <div class="output-tabs">
+        <div class="out-tab active" data-tab="notes" onclick="switchOutTab('notes',this)">${t('notesTab')}</div>
+        <div class="out-tab" data-tab="summary" onclick="switchOutTab('summary',this)">${t('summaryTab')}</div>
+        <div class="out-tab" data-tab="mindmap" onclick="switchOutTab('mindmap',this)">${t('mindmapTab')}</div>
+        <div class="out-tab" data-tab="student" onclick="switchOutTab('student',this)">${t('studentTab')}</div>
+      </div>
+      <div class="out-pane active" id="out-pane-notes">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <div style="font-size:12px;color:var(--text3);">${t('notesDesc')}</div>
+          <div style="display:flex;gap:6px;flex-shrink:0;">
+            <button class="out-btn" onclick="copyOutput('notes')" style="padding:4px 9px;">📋</button>
+            <button class="process-btn" id="process-notes-btn" onclick="processTranscript('notes')">${t('genNotes')}</button>
+          </div>
+        </div>
+        <div class="out-content empty" id="out-notes">${t('notesEmpty')}</div>
+      </div>
+      <div class="out-pane" id="out-pane-summary">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <div style="font-size:12px;color:var(--text3);">${t('summaryDesc')}</div>
+          <div style="display:flex;gap:6px;flex-shrink:0;">
+            <button class="out-btn" onclick="copyOutput('summary')" style="padding:4px 9px;">📋</button>
+            <button class="process-btn" id="process-summary-btn" onclick="processTranscript('summary')">${t('genSummary')}</button>
+          </div>
+        </div>
+        <div class="out-content empty" id="out-summary">${t('summaryEmpty')}</div>
+      </div>
+      <div class="out-pane" id="out-pane-mindmap">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <div style="font-size:12px;color:var(--text3);">${t('mindmapDesc')}</div>
+          <div style="display:flex;gap:6px;flex-shrink:0;">
+            <button class="out-btn" onclick="copyOutput('mindmap')" style="padding:4px 9px;">📋 MD</button>
+            <button class="out-btn" onclick="downloadMindmap()" style="padding:4px 9px;">${t('downloadSvg')}</button>
+            <button class="process-btn" id="process-mindmap-btn" onclick="processTranscript('mindmap')">${t('genMap')}</button>
+          </div>
+        </div>
+        <div class="mindmap-wrap" id="mindmap-wrap">
+          <div class="mindmap-empty" id="mindmap-empty">${t('mindmapMainEmpty')}</div>
+          <svg id="mindmap-svg" style="display:none;"></svg>
+        </div>
+        <details style="margin-top:8px;">
+          <summary style="font-size:11px;color:var(--text3);cursor:pointer;">${t('rawMd')}</summary>
+          <div class="out-content" id="out-mindmap" style="margin-top:6px;font-family:monospace;font-size:11px;max-height:160px;"></div>
+        </details>
+      </div>
+      <div class="out-pane" id="out-pane-student">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <div style="font-size:12px;color:var(--text3);">${t('studentDesc')}</div>
+          <div style="display:flex;gap:6px;flex-shrink:0;">
+            <button class="out-btn" onclick="copyOutput('student')" style="padding:4px 9px;">${t('copylbl')}</button>
+            <button class="process-btn" id="process-student-btn" onclick="processTranscript('student')">${t('genRecap')}</button>
+          </div>
+        </div>
+        <div class="out-content empty" id="out-student">${t('studentEmpty')}</div>
+      </div>
+    </div>
+  `;
+  setTimeout(() => {
+    const box = document.getElementById('transcript-box');
+    if (sessionTranscript && box) {
+      box.className = 'transcript-box';
+      box.textContent = sessionTranscript;
+      box.contentEditable = 'true';
+      document.getElementById('transcript-meta').style.display = 'flex';
+    }
+  }, 50);
+  checkSessionServer();
+}
+
+async function toggleRecording() {
+  if (!sessionRecording) { await startRecording(); } else { stopRecording(); }
+}
+
+async function startRecording() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    sessionAudioChunks = [];
+    sessionMediaRecorder = new MediaRecorder(stream);
+    sessionMediaRecorder.ondataavailable = e => { if (e.data.size > 0) sessionAudioChunks.push(e.data); };
+    sessionMediaRecorder.onstop = () => {
+      const blob = new Blob(sessionAudioChunks, { type: 'audio/webm' });
+      sessionAudioBlob = blob;
+      const url = URL.createObjectURL(blob);
+      const player = document.getElementById('rec-audio-player');
+      if (player) { player.src = url; document.getElementById('rec-audio-preview').style.display = 'block'; }
+      stream.getTracks().forEach(tr => tr.stop());
+    };
+    sessionMediaRecorder.start(1000);
+    sessionRecording = true;
+    sessionRecSecs = 0;
+    sessionRecInterval = setInterval(() => {
+      sessionRecSecs++;
+      const m = Math.floor(sessionRecSecs/60).toString().padStart(2,'0');
+      const s = (sessionRecSecs%60).toString().padStart(2,'0');
+      const el = document.getElementById('rec-timer');
+      if (el) el.textContent = `${m}:${s}`;
+    }, 1000);
+    const btn = document.getElementById('rec-btn');
+    if (btn) { btn.className = 'rec-btn recording'; btn.textContent = '⏹'; }
+    const st = document.getElementById('rec-status');
+    if (st) st.textContent = t('recLive');
+    const sub = document.getElementById('rec-sub');
+    if (sub) sub.textContent = t('clickStop');
+  } catch(err) {
+    showToast('Microphone access denied — check browser permissions');
+  }
+}
+
+function stopRecording() {
+  if (sessionMediaRecorder && sessionMediaRecorder.state !== 'inactive') sessionMediaRecorder.stop();
+  clearInterval(sessionRecInterval);
+  sessionRecording = false;
+  const btn = document.getElementById('rec-btn');
+  if (btn) { btn.className = 'rec-btn idle'; btn.textContent = '🎙'; }
+  const st = document.getElementById('rec-status');
+  if (st) st.textContent = t('recSaved');
+  const sub = document.getElementById('rec-sub');
+  if (sub) sub.textContent = t('playback');
+}
+
+function clearRecording() {
+  sessionAudioBlob = null;
+  sessionRecSecs = 0;
+  document.getElementById('rec-audio-preview').style.display = 'none';
+  document.getElementById('rec-status').textContent = t('readyRec');
+  document.getElementById('rec-sub').textContent = t('clickStart');
+  document.getElementById('rec-timer').textContent = '00:00';
+}
+
+function onDragOver(e) { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-over'); }
+function onDragLeave(e) { document.getElementById('drop-zone').classList.remove('drag-over'); }
+function onDrop(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) loadUploadedFile(file);
+}
+function onFileSelect(e) { const file = e.target.files[0]; if (file) loadUploadedFile(file); }
+function loadUploadedFile(file) {
+  sessionAudioBlob = file;
+  const url = URL.createObjectURL(file);
+  const player = document.getElementById('upload-audio-player');
+  if (player) { player.src = url; document.getElementById('upload-preview').style.display = 'block'; }
+  showToast(`Loaded: ${file.name} (${(file.size/1024/1024).toFixed(1)} MB)`);
+}
+function clearUpload() {
+  sessionAudioBlob = null;
+  document.getElementById('upload-preview').style.display = 'none';
+}
+
+async function transcribeAudio() {
+  if (!sessionAudioBlob) { showToast('No audio — record or upload first'); return; }
+  const online = await checkSessionServer();
+  if (!online) { showToast('⚠️ Session server offline — run start-session-server.bat'); return; }
+  const btn = document.getElementById('transcribe-btn');
+  const btnTxt = document.getElementById('transcribe-btn-txt');
+  const box = document.getElementById('transcript-box');
+  btn.disabled = true;
+  btnTxt.textContent = t('transcribingBtn');
+  box.className = 'transcript-box';
+  box.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Sending to Whisper...</div>';
+  box.contentEditable = 'false';
+  const lang = document.getElementById('transcribe-lang').value;
+  const formData = new FormData();
+  formData.append('audio', sessionAudioBlob, sessionAudioBlob.name || 'recording.wav');
+  formData.append('language', lang === 'es+en' ? 'auto' : lang);
+  try {
+    const res = await fetch('http://localhost:8765/transcribe', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    sessionTranscript = data.transcript;
+    box.className = 'transcript-box';
+    box.textContent = sessionTranscript;
+    box.contentEditable = 'true';
+    document.getElementById('transcript-meta').style.display = 'flex';
+    document.getElementById('meta-duration').textContent =
+      data.duration > 60 ? `${Math.floor(data.duration/60)}m ${Math.floor(data.duration%60)}s` : `${data.duration}s`;
+    document.getElementById('meta-words').textContent = data.word_count || data.transcript.split(' ').length;
+    document.getElementById('meta-lang').textContent = data.language || 'auto';
+    showToast(`✓ Transcription complete — ${data.word_count} words`);
+  } catch(err) {
+    box.innerHTML = `<span style="color:var(--red)">⚠️ ${err.message}</span>`;
+    showToast('Transcription failed — check server');
+  } finally {
+    btn.disabled = false;
+    btnTxt.textContent = t('transcribeBtn');
+  }
+}
+
+function copyTranscript() {
+  const box = document.getElementById('transcript-box');
+  const text = box ? (box.textContent || sessionTranscript) : sessionTranscript;
+  navigator.clipboard.writeText(text).then(() => showToast('Transcript copied'));
+}
+function clearTranscript() {
+  sessionTranscript = '';
+  const box = document.getElementById('transcript-box');
+  if (box) { box.className = 'transcript-box empty'; box.textContent = 'Transcript cleared.'; box.contentEditable = 'false'; }
+  document.getElementById('transcript-meta').style.display = 'none';
+}
+
+function switchOutTab(tab, el) {
+  document.querySelectorAll('.out-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.out-pane').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(`out-pane-${tab}`).classList.add('active');
+  activeOutTab = tab;
+}
+
+async function processTranscript(mode) {
+  const box = document.getElementById('transcript-box');
+  const transcript = box ? box.textContent.trim() : sessionTranscript.trim();
+  if (!transcript || transcript.length < 20) { showToast('Transcript is empty — transcribe audio first'); return; }
+  const online = await checkSessionServer();
+  if (!online) { showToast('⚠️ Session server offline — run start-session-server.bat'); return; }
+  const ollama_model = document.getElementById('model-select').value;
+  const btn = document.getElementById(`process-${mode}-btn`);
+  if (btn) btn.disabled = true;
+  if (mode === 'mindmap') {
+    const mdEl = document.getElementById('out-mindmap');
+    mdEl.className = 'out-content';
+    mdEl.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Generating mind map...</div>';
+    document.getElementById('mindmap-empty').style.display = 'none';
+    document.getElementById('mindmap-svg').style.display = 'none';
+  } else {
+    const el = document.getElementById(`out-${mode}`);
+    el.className = 'out-content';
+    el.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Processing with Ollama...</div>';
+  }
+  const formData = new FormData();
+  formData.append('transcript', transcript);
+  formData.append('mode', mode);
+  formData.append('ollama_model', ollama_model);
+  try {
+    const res = await fetch('http://localhost:8765/process', { method: 'POST', body: formData });
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let full = '';
+    if (mode === 'mindmap') {
+      const mdEl = document.getElementById('out-mindmap');
+      mdEl.textContent = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        full += decoder.decode(value);
+        mdEl.textContent = full;
+      }
+      sessionOutputs.mindmap = full;
+      renderMindmap(full);
+    } else {
+      const el = document.getElementById(`out-${mode}`);
+      el.textContent = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        full += decoder.decode(value);
+        el.textContent = full;
+        el.scrollTop = el.scrollHeight;
+      }
+      sessionOutputs[mode] = full;
+    }
+    showToast(`✓ ${mode.charAt(0).toUpperCase() + mode.slice(1)} generated`);
+  } catch(err) {
+    const el = document.getElementById(mode === 'mindmap' ? 'out-mindmap' : `out-${mode}`);
+    if (el) el.innerHTML = `<span style="color:var(--red)">⚠️ ${err.message}</span>`;
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+function renderMindmap(markdown) {
+  try {
+    const { Transformer, Markmap } = window.markmap;
+    const transformer = new Transformer();
+    const { root } = transformer.transform(markdown);
+    const svg = document.getElementById('mindmap-svg');
+    svg.style.display = 'block';
+    svg.innerHTML = '';
+    document.getElementById('mindmap-empty').style.display = 'none';
+    svg.style.background = 'var(--surface2, #1a1d27)';
+    Markmap.create(svg, {
+      color: ['#5b8dee', '#3ecf8e', '#f6a623', '#a855f7', '#22d3ee', '#f45b69'],
+      duration: 400, maxWidth: 300, zoom: true, pan: true,
+    }, root);
+  } catch(err) {
+    document.getElementById('mindmap-empty').style.display = 'flex';
+    document.getElementById('mindmap-empty').textContent = `Mind map error: ${err.message}`;
+  }
+}
+
+function copyOutput(mode) {
+  const text = mode === 'mindmap'
+    ? document.getElementById('out-mindmap').textContent
+    : document.getElementById(`out-${mode}`).textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied'));
+}
+
+function downloadMindmap() {
+  const svg = document.getElementById('mindmap-svg');
+  if (!svg || svg.style.display === 'none') { showToast('Generate a mind map first'); return; }
+  const blob = new Blob([svg.outerHTML], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'mindmap.svg'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── BATCH E: TEACHER DASHBOARD FEATURES ──────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+// ── #31 LIVE FEED ─────────────────────────────────────────────────────────────
+let _liveFeedInterval = null;
+let _liveWatching = false;
+
+function startLiveFeed() { if (!_liveWatching) renderLiveFeed(); }
+
+function toggleLiveFeed() {
+  _liveWatching = !_liveWatching;
+  const btn = document.getElementById('live-toggle-btn');
+  const dot = document.getElementById('live-dot');
+  const txt = document.getElementById('live-status-txt');
+  if (_liveWatching) {
+    btn.textContent = '⏹ Stop';
+    dot.classList.add('live-dot-active');
+    txt.textContent = 'Watching live...';
+    _liveFeedInterval = setInterval(renderLiveFeed, 2000);
+    renderLiveFeed();
+  } else {
+    btn.textContent = '▶ Start';
+    dot.classList.remove('live-dot-active');
+    txt.textContent = 'Not watching';
+    clearInterval(_liveFeedInterval);
+  }
+}
+
+function renderLiveFeed() {
+  const current = document.getElementById('live-current');
+  const list = document.getElementById('live-feed-list');
+  if (!current || !list) return;
+  // Read from shared localStorage
+  const feedRaw = localStorage.getItem('sl_live_feed');
+  const histRaw = localStorage.getItem('sl_live_history');
+  if (feedRaw) {
+    try {
+      const f = JSON.parse(feedRaw);
+      const age = Math.round((Date.now() - f.ts) / 1000);
+      const ageStr = age < 60 ? age + 's ago' : Math.round(age/60) + 'm ago';
+      current.innerHTML = `
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+          <strong style="font-size:13px">${f.concept || '—'}</strong>
+          <span style="font-size:10px;color:var(--text3)">${ageStr}</span>
+        </div>
+        <div style="font-size:12px;color:var(--text2)">Mode: <strong>${f.mode || '?'}</strong> · XP: <strong>${f.xp || 0}</strong> · Streak: <strong>${f.streak || 0}</strong></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px">Level ${f.level || 1}</div>`;
+    } catch(e) { current.innerHTML = '<div style="color:var(--text3);font-size:12px">No active student data found.</div>'; }
+  } else {
+    current.innerHTML = '<div style="color:var(--text3);font-size:12px">No live data — student dashboard not open.</div>';
+  }
+  if (histRaw) {
+    try {
+      const hist = JSON.parse(histRaw).slice(-20).reverse();
+      list.innerHTML = hist.map(h => `
+        <div class="live-feed-item">
+          <div class="lfi-icon">${h.correct ? '✅' : '❌'}</div>
+          <div class="lfi-text">${h.question || '?'}</div>
+          <div class="lfi-mode">${h.mode || ''}</div>
+        </div>`).join('');
+    } catch(e) { list.innerHTML = ''; }
+  }
+}
+
+// ── #32 EXERCISE LIBRARY ──────────────────────────────────────────────────────
+const LIBRARY_DATA = [
+  { key:'present', name:'Present Tense', emoji:'⚡', modes:['pairs','fillblank','translate','conjugate','speak','missing'], count:{pairs:12,fillblank:8,translate:10,conjugate:30} },
+  { key:'ser-estar', name:'Ser vs Estar', emoji:'🧠', modes:['pairs','fillblank','translate','builder','missing'], count:{pairs:14,fillblank:10,translate:12,builder:6} },
+  { key:'pret-imp', name:'Preterite vs Imperfect', emoji:'⏰', modes:['pairs','fillblank','translate','builder','story'], count:{pairs:12,fillblank:10,translate:10,story:5} },
+  { key:'subjunctive', name:'Subjunctive', emoji:'🔮', modes:['pairs','fillblank','translate','builder'], count:{pairs:10,fillblank:8,translate:8} },
+  { key:'por-para', name:'Por vs Para', emoji:'🔀', modes:['pairs','fillblank','translate','builder'], count:{pairs:14,fillblank:8,translate:10} },
+  { key:'gender', name:'Noun Gender', emoji:'🏷️', modes:['pairs','fillblank','builder'], count:{pairs:16,fillblank:12} },
+  { key:'reflexive', name:'Reflexive Verbs', emoji:'🪞', modes:['pairs','fillblank','translate','conjugate'], count:{pairs:12,fillblank:8,translate:8} },
+  { key:'gustar', name:'Gustar Pattern', emoji:'❤️', modes:['pairs','fillblank','translate'], count:{pairs:10,fillblank:8,translate:8} },
+  { key:'word-order', name:'Word Order', emoji:'📐', modes:['pairs','fillblank','builder','worddrop'], count:{pairs:10,fillblank:8,builder:6} },
+  { key:'obj-pronouns', name:'Object Pronouns', emoji:'👉', modes:['pairs','fillblank','translate','builder'], count:{pairs:12,fillblank:8} },
+];
+
+function filterLibrary(q) { renderLibrary(q); }
+
+function renderLibrary(q='') {
+  const el = document.getElementById('lib-list');
+  if (!el) return;
+  const filtered = q ? LIBRARY_DATA.filter(c => c.name.toLowerCase().includes(q.toLowerCase())) : LIBRARY_DATA;
+  el.innerHTML = filtered.map(c => `
+    <div class="lib-concept-item">
+      <div class="lib-concept-hdr" onclick="this.nextElementSibling.classList.toggle('open')">
+        <span style="font-size:13px;font-weight:600">${c.emoji} ${c.name}</span>
+        <span style="font-size:11px;color:var(--text3)">${c.modes.length} modes ›</span>
+      </div>
+      <div class="lib-concept-body">
+        <div style="margin-bottom:4px">Modes: ${c.modes.map(m=>`<span class="lib-ex-chip">${m}</span>`).join('')}</div>
+        <div>Exercises: ${Object.entries(c.count).map(([m,n])=>`<strong>${n}</strong> ${m}`).join(' · ')}</div>
+        <div style="margin-top:6px">
+          <button onclick="queueConcept('${c.key}','${c.name}')" style="font-size:10px;padding:2px 8px;border-radius:4px;border:1px solid var(--accent);color:var(--accent);background:none;cursor:pointer">+ Add to Queue</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ── #34 CUSTOM EXERCISE AUTHORING ────────────────────────────────────────────
+function renderCreateForm(type) {
+  const area = document.getElementById('create-form-area');
+  if (!area) return;
+  const forms = {
+    pairs: `
+      <div class="create-field"><label>Spanish (es)</label><input id="cf-es" placeholder="e.g. hablar"></div>
+      <div class="create-field"><label>English (en)</label><input id="cf-en" placeholder="e.g. to speak"></div>
+      <div class="create-field"><label>Explanation (optional)</label><textarea id="cf-exp" rows="2" placeholder="Grammar note..."></textarea></div>`,
+    fillblank: `
+      <div class="create-field"><label>Sentence with ___</label><textarea id="cf-q" rows="2" placeholder="Yo ___ estudiante. (ser)"></textarea></div>
+      <div class="create-field"><label>Answer</label><input id="cf-ans" placeholder="soy"></div>
+      <div class="create-field"><label>English hint</label><input id="cf-hint" placeholder="I am a student."></div>
+      <div class="create-field"><label>Explanation</label><textarea id="cf-exp" rows="2" placeholder="Use 'ser' for profession/identity."></textarea></div>`,
+    translate: `
+      <div class="create-field"><label>English sentence</label><textarea id="cf-en" rows="2" placeholder="I used to eat dinner at 8."></textarea></div>
+      <div class="create-field"><label>Spanish translation</label><textarea id="cf-es" rows="2" placeholder="Cenaba a las 8."></textarea></div>
+      <div class="create-field"><label>Explanation</label><textarea id="cf-exp" rows="2" placeholder="Imperfect for habitual past."></textarea></div>`,
+    story: `
+      <div class="create-field"><label>Story title</label><input id="cf-title" placeholder="Un día en Madrid"></div>
+      <div class="create-field"><label>Story text (Spanish)</label><textarea id="cf-story" rows="4" placeholder="Write a short story..."></textarea></div>
+      <div class="create-field"><label>Follow-up question (English)</label><input id="cf-q" placeholder="What did the character do?"></div>
+      <div class="create-field"><label>Answer keywords (comma-separated)</label><input id="cf-ans" placeholder="fue, compró, volvió"></div>`,
+  };
+  area.innerHTML = forms[type] || '';
+}
+
+function saveCustomExercise() {
+  const type = document.getElementById('create-type')?.value;
+  const concept = document.getElementById('create-concept')?.value;
+  let ex = { type, concept, createdAt: new Date().toISOString() };
+  if (type === 'pairs') {
+    ex.es = document.getElementById('cf-es')?.value?.trim();
+    ex.en = document.getElementById('cf-en')?.value?.trim();
+    ex.explanation = document.getElementById('cf-exp')?.value?.trim();
+    if (!ex.es || !ex.en) { showToast('Fill in Spanish and English fields', 2000); return; }
+  } else if (type === 'fillblank') {
+    ex.question = document.getElementById('cf-q')?.value?.trim();
+    ex.answer = document.getElementById('cf-ans')?.value?.trim();
+    ex.hint = document.getElementById('cf-hint')?.value?.trim();
+    ex.explanation = document.getElementById('cf-exp')?.value?.trim();
+    if (!ex.question || !ex.answer) { showToast('Fill in sentence and answer', 2000); return; }
+  } else if (type === 'translate') {
+    ex.en = document.getElementById('cf-en')?.value?.trim();
+    ex.es = document.getElementById('cf-es')?.value?.trim();
+    ex.explanation = document.getElementById('cf-exp')?.value?.trim();
+    if (!ex.en || !ex.es) { showToast('Fill in both languages', 2000); return; }
+  } else if (type === 'story') {
+    ex.title = document.getElementById('cf-title')?.value?.trim();
+    ex.story = document.getElementById('cf-story')?.value?.trim();
+    ex.question = document.getElementById('cf-q')?.value?.trim();
+    ex.answer = document.getElementById('cf-ans')?.value?.trim();
+    if (!ex.story) { showToast('Story text required', 2000); return; }
+  }
+  const existing = JSON.parse(localStorage.getItem('sl_custom_exercises') || '[]');
+  existing.push(ex);
+  localStorage.setItem('sl_custom_exercises', JSON.stringify(existing));
+  showToast('Exercise saved!', 2000);
+  renderCustomExList();
+}
+
+function renderCustomExList() {
+  const list = document.getElementById('custom-ex-list');
+  const count = document.getElementById('custom-ex-count');
+  const exs = JSON.parse(localStorage.getItem('sl_custom_exercises') || '[]');
+  if (count) count.textContent = exs.length;
+  if (!list) return;
+  list.innerHTML = exs.slice(-10).reverse().map((ex, i) => `
+    <div class="custom-ex-item">
+      <span style="font-size:11px;color:var(--text3)">${ex.type}</span>
+      <span style="flex:1;color:var(--text2)">${ex.es || ex.question || ex.title || '?'}</span>
+      <span style="font-size:10px;background:rgba(91,141,238,.12);color:var(--accent);padding:1px 5px;border-radius:3px">${ex.concept}</span>
+      <button onclick="deleteCustomEx(${exs.length - 1 - i})" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:13px">×</button>
+    </div>`).join('');
+}
+
+function deleteCustomEx(idx) {
+  const exs = JSON.parse(localStorage.getItem('sl_custom_exercises') || '[]');
+  exs.splice(idx, 1);
+  localStorage.setItem('sl_custom_exercises', JSON.stringify(exs));
+  renderCustomExList();
+}
+
+function exportCustomExercises() {
+  const exs = localStorage.getItem('sl_custom_exercises') || '[]';
+  const blob = new Blob([exs], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'custom_exercises.json'; a.click();
+}
+
+// ── #33 CONCEPT ASSIGNMENT QUEUE ─────────────────────────────────────────────
+const ALL_CONCEPTS = [
+  {key:'present',name:'Present'},{key:'ser-estar',name:'Ser/Estar'},{key:'pret-imp',name:'Pret/Imp'},
+  {key:'subjunctive',name:'Subjunctive'},{key:'por-para',name:'Por/Para'},{key:'gender',name:'Gender'},
+  {key:'reflexive',name:'Reflexive'},{key:'gustar',name:'Gustar'},{key:'word-order',name:'Word Order'},
+  {key:'obj-pronouns',name:'Obj Pronouns'},
+];
+
+function renderQueue() {
+  const btns = document.getElementById('queue-concept-btns');
+  const list = document.getElementById('queue-list');
+  if (btns) btns.innerHTML = ALL_CONCEPTS.map(c =>
+    `<button class="queue-concept-btn" onclick="queueConcept('${c.key}','${c.name}')">${c.name}</button>`
+  ).join('');
+  if (list) refreshQueueList();
+}
+
+function queueConcept(key, name) {
+  const q = JSON.parse(localStorage.getItem('sl_teacher_queue') || '[]');
+  if (!q.find(c => c.key === key)) {
+    q.push({ key, name, addedAt: new Date().toISOString() });
+    localStorage.setItem('sl_teacher_queue', JSON.stringify(q));
+  }
+  refreshQueueList();
+  showToast(`"${name}" added to queue`, 1500);
+}
+
+function refreshQueueList() {
+  const list = document.getElementById('queue-list');
+  if (!list) return;
+  const q = JSON.parse(localStorage.getItem('sl_teacher_queue') || '[]');
+  if (!q.length) { list.innerHTML = '<div style="font-size:12px;color:var(--text3);text-align:center;padding:12px">Queue is empty — click a concept above to add it</div>'; return; }
+  list.innerHTML = q.map((c, i) => `
+    <div class="queue-item">
+      <span style="font-size:11px;color:var(--text3);width:16px">${i+1}</span>
+      <span style="flex:1;font-size:13px">${c.name}</span>
+      <span class="queue-item-badge">queued</span>
+      <button onclick="dequeueConceptAt(${i})" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:14px">×</button>
+    </div>`).join('');
+}
+
+function dequeueConceptAt(i) {
+  const q = JSON.parse(localStorage.getItem('sl_teacher_queue') || '[]');
+  q.splice(i, 1);
+  localStorage.setItem('sl_teacher_queue', JSON.stringify(q));
+  refreshQueueList();
+}
+
+function clearQueue() {
+  localStorage.removeItem('sl_teacher_queue');
+  refreshQueueList();
+  showToast('Queue cleared', 1500);
+}
+
+// ── #37 CUSTOM GATEWAY REQUIREMENTS ──────────────────────────────────────────
+function renderGatewayConfig() {
+  const el = document.getElementById('gw-config-list');
+  if (!el) return;
+  const cfg = JSON.parse(localStorage.getItem('sl_custom_gateways') || '{}');
+  el.innerHTML = Object.entries(cfg).map(([key, v]) => `
+    <div class="gw-config-row">
+      <span style="flex:1;font-size:12px;font-weight:600">${key}</span>
+      <label style="font-size:10px;color:var(--text3)">Min ex</label>
+      <input type="number" value="${v.minEx||10}" min="1" max="100" onchange="saveGatewayCfg('${key}','minEx',this.value)">
+      <label style="font-size:10px;color:var(--text3)">Accuracy%</label>
+      <input type="number" value="${v.minAccuracy||80}" min="50" max="100" onchange="saveGatewayCfg('${key}','minAccuracy',this.value)">
+      <button onclick="removeGatewayCfg('${key}')" style="background:none;border:none;color:#f87171;cursor:pointer">×</button>
+    </div>`).join('') || '<div style="font-size:12px;color:var(--text3)">No custom overrides yet.</div>';
+}
+
+function addGatewayRow() {
+  const key = prompt('Enter concept key (e.g. subjunctive, ser-estar, pret-imp):');
+  if (!key) return;
+  const cfg = JSON.parse(localStorage.getItem('sl_custom_gateways') || '{}');
+  if (!cfg[key]) cfg[key] = { minEx: 10, minAccuracy: 80 };
+  localStorage.setItem('sl_custom_gateways', JSON.stringify(cfg));
+  renderGatewayConfig();
+}
+
+function saveGatewayCfg(key, field, val) {
+  const cfg = JSON.parse(localStorage.getItem('sl_custom_gateways') || '{}');
+  if (!cfg[key]) cfg[key] = {};
+  cfg[key][field] = parseInt(val);
+  localStorage.setItem('sl_custom_gateways', JSON.stringify(cfg));
+  showToast('Gateway config saved', 1200);
+}
+
+function removeGatewayCfg(key) {
+  const cfg = JSON.parse(localStorage.getItem('sl_custom_gateways') || '{}');
+  delete cfg[key];
+  localStorage.setItem('sl_custom_gateways', JSON.stringify(cfg));
+  renderGatewayConfig();
+}
+
+// ── #35 SESSION DEBRIEF AI ────────────────────────────────────────────────────
+async function generateDebrief() {
+  const transcript = document.getElementById('transcript-box')?.textContent?.trim();
+  if (!transcript || transcript.includes('Transcript cleared') || transcript.length < 50) {
+    showToast('Add a transcript first', 2000); return;
+  }
+  showToast('Generating session debrief...', 3000);
+  const prompt = `Analyze this Spanish class session transcript and provide a structured debrief for the teacher.
+
+TRANSCRIPT:
+${transcript.slice(0, 3000)}
+
+Provide:
+1. **Concepts Covered**: List which Spanish grammar concepts came up
+2. **Student Strengths**: What the student did well
+3. **Error Patterns**: Recurring mistake types (be specific about grammar)
+4. **Key Errors**: Up to 5 specific examples with corrections
+5. **Recommendations**: 2-3 concrete follow-up exercises to assign
+6. **Next Session Focus**: Top priority concept to work on next
+
+Keep it practical and actionable for the teacher.`;
+  try {
+    const url = document.getElementById('ollama-url-input')?.value || 'http://localhost:11434';
+    const model = document.getElementById('model-select')?.value || 'llama3.1:8b';
+    const resp = await fetch(url + '/api/generate', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model, prompt, stream: false }) });
+    if (resp.ok) {
+      const data = await resp.json();
+      // Show debrief in the student recap tab
+      const outEl = document.getElementById('out-student');
+      if (outEl) { outEl.textContent = data.response?.trim() || 'No response'; outEl.classList.remove('empty'); }
+      switchOutTab('student', document.querySelector('[data-tab="student"]'));
+      showToast('Debrief generated!', 2000);
+    } else { showToast('Ollama error: ' + resp.status, 3000); }
+  } catch(e) { showToast('Ollama offline', 2000); }
+}
+
+// ── #36 ERROR PATTERN DETECTION ──────────────────────────────────────────────
+async function detectErrorPatterns() {
+  const transcript = document.getElementById('transcript-box')?.textContent?.trim();
+  if (!transcript || transcript.length < 50) { showToast('Add a transcript first', 2000); return; }
+  showToast('Analyzing error patterns...', 3000);
+  const prompt = `Analyze this Spanish lesson transcript for grammar error patterns.
+
+TRANSCRIPT:
+${transcript.slice(0, 3000)}
+
+Categorize errors into these types and give counts + examples:
+- Conjugation errors (wrong verb endings)
+- Ser/Estar confusion
+- Gender agreement (el/la, adjective agreement)
+- Preterite/Imperfect confusion
+- Por/Para confusion
+- Word order issues
+- Pronoun placement
+- Subjunctive mistakes
+- Vocabulary errors
+
+Format as a concise table: Error Type | Count | Example Error | Correct Form
+Then add a 2-sentence summary of the biggest pattern to address.`;
+  try {
+    const url = document.getElementById('ollama-url-input')?.value || 'http://localhost:11434';
+    const model = document.getElementById('model-select')?.value || 'llama3.1:8b';
+    const resp = await fetch(url + '/api/generate', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model, prompt, stream: false }) });
+    if (resp.ok) {
+      const data = await resp.json();
+      const outEl = document.getElementById('autopsy-output');
+      if (outEl) { outEl.textContent = data.response?.trim() || 'No response'; outEl.classList.remove('empty'); }
+      showToast('Error patterns ready in Error Autopsy tab!', 2000);
+    }
+  } catch(e) { showToast('Ollama offline', 2000); }
+}
+
+// ── INIT NEW FEATURES ────────────────────────────────────────────────────────
+(function initBatchE() {
+  renderCreateForm('pairs');
+  renderCustomExList();
+  renderLibrary();
+  renderGatewayConfig();
+})();
+// ─── TOAST ─────────────────────────────────────────────────────────────────────────────
+
+function showToast(msg, duration) {
+  duration = duration || 2200;
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(function() { el.classList.remove('show'); }, duration);
+}
+
+</script>
+</body>
+</html>
