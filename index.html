@@ -4720,6 +4720,20 @@ function aiModelLabel() {
   return aiBackend === 'ollama' ? selectedModel : 'Gemini';
 }
 
+// 2026-07-03: companion to the geminiJSON backoff fix below. Root-caused
+// during the same rate-limit incident that every exercise render (Pairs/Fill
+// Blank/Builder) *also* silently kicks off a background preGenerate*() call
+// for the NEXT exercise — meaning real API volume is roughly double what a
+// student's visible activity suggests. That's fine under normal quota, but
+// during an active 429 storm those silent background calls just add fuel:
+// each one still burns 2-3 retries with backoff before giving up (`catch{}`,
+// so the student never even sees it happen). This short in-memory cooldown
+// lets any caller cheaply check "are we currently rate-limited?" so the
+// preload functions can skip themselves entirely instead of quietly hammering
+// an API that just told us to back off.
+let _geminiRateLimitedUntil = 0;
+function isGeminiRateLimited() { return Date.now() < _geminiRateLimitedUntil; }
+
 async function geminiCall(prompt, system, temp, jsonMode) {
   const res = await fetch('/api/ai', {
     method: 'POST',
@@ -4730,6 +4744,7 @@ async function geminiCall(prompt, system, temp, jsonMode) {
     const errText = await res.text().catch(() => '');
     const err = new Error(`Gemini error (HTTP ${res.status})${errText ? ': ' + errText.slice(0, 200) : ''}`);
     err.status = res.status;
+    if (res.status === 429) _geminiRateLimitedUntil = Date.now() + 15000;
     throw err;
   }
   const data = await res.json();
@@ -4917,11 +4932,20 @@ function showLoading(msg = 'Generating exercise...', sub = `Using ${aiModelLabel
 }
 
 function showError(msg, retryFn) {
+  // 2026-07-03: distinguish "Gemini is rate-limited" from a generic failure —
+  // it's a different, more honest message (this WILL resolve itself in
+  // seconds, it's not a connection problem) and matches the same isRateLimited
+  // signal geminiCall/geminiJSON already track.
+  const isRateLimit = /HTTP 429/.test(msg);
+  const title = isRateLimit ? 'High demand right now' : 'Generation failed';
+  const sub = isRateLimit
+    ? "We've hit Gemini's rate limit for a moment — this usually clears up within a few seconds. Give it another try."
+    : `${msg}<br><br>${aiBackend === 'ollama' ? 'Make sure Ollama is running: <code style="color:var(--accent)">ollama serve</code>' : 'This might be a temporary connection issue — give it another try.'}`;
   document.getElementById('exercise-area').innerHTML = `
     <div class="mode-empty">
       <div class="empty-icon">⚠️</div>
-      <div class="empty-title">Generation failed</div>
-      <div class="empty-sub">${msg}<br><br>${aiBackend === 'ollama' ? 'Make sure Ollama is running: <code style="color:var(--accent)">ollama serve</code>' : 'This might be a temporary connection issue — give it another try.'}</div>
+      <div class="empty-title">${title}</div>
+      <div class="empty-sub">${sub}</div>
       <button class="start-btn" onclick="(${retryFn.toString()})()">Try Again</button>
     </div>`;
 }
@@ -5027,7 +5051,7 @@ async function generatePairData() {
   // mix in static content only occasionally (~20%) purely for variety/cost,
   // and every static draw is still registered in the shared recent-history so
   // the AI won't independently regenerate something a student just saw.
-  if (!ollamaOnline || (staticEx && staticEx._dueCard)) {
+  if (!ollamaOnline || isGeminiRateLimited() || (staticEx && staticEx._dueCard)) {
     if (staticEx) {
       staticEx._static = true;
       trackRecent(trackKey, pairSentenceText(staticEx));
@@ -5112,7 +5136,7 @@ async function loadPairs() {
 }
 
 async function preGeneratePairs() {
-  if (isPreGenerating || !currentConcept) return;
+  if (isPreGenerating || !currentConcept || isGeminiRateLimited()) return;
   isPreGenerating = true;
   try {
     nextExercise = await generatePairData();
@@ -5242,6 +5266,13 @@ async function loadExamples() {
 
 async function loadMoreExamples() {
   const btn = document.getElementById('more-btn');
+  // 2026-07-03: fail fast instead of showing a spinner doomed to end in the
+  // generic toast — Examples has no static fallback (fully generative), and
+  // if we already know Gemini just 429'd there's no point waiting through it.
+  if (isGeminiRateLimited() && aiBackend !== 'ollama') {
+    showToast('⚠️ High demand right now — wait a few seconds and try again');
+    return;
+  }
   btn.disabled = true;
   btn.innerHTML = '<div class="loading-ring" style="width:18px;height:18px;border-width:2px;"></div> Generating...';
   await appendExamples();
@@ -5305,7 +5336,9 @@ Mix "beg" and "int" levels. Make explanations insightful, not just "this uses se
     });
     list.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   } catch (err) {
-    showToast(aiBackend === 'ollama' ? '⚠️ Generation failed — check Ollama' : '⚠️ Generation failed — try again in a moment');
+    if (aiBackend === 'ollama') showToast('⚠️ Generation failed — check Ollama');
+    else if (err.status === 429) showToast('⚠️ High demand right now — wait a few seconds and try again');
+    else showToast('⚠️ Generation failed — try again in a moment');
   }
 }
 
@@ -5328,7 +5361,7 @@ async function generateFillBlankData() {
   // forced only when offline or serving a genuinely-due SM-2 card, otherwise
   // mixed in ~20% of the time purely for variety, with every static draw
   // logged into the same shared recent-history AI generation checks against.
-  if (!ollamaOnline || (staticEx && staticEx._dueCard)) {
+  if (!ollamaOnline || isGeminiRateLimited() || (staticEx && staticEx._dueCard)) {
     if (staticEx) {
       staticEx._static = true;
       trackRecent(trackKey, fillBlankSentenceText(staticEx));
@@ -5443,7 +5476,7 @@ async function loadFillBlank() {
 }
 
 async function preGenerateFillBlank() {
-  if (isPreGenerating || !currentConcept) return;
+  if (isPreGenerating || !currentConcept || isGeminiRateLimited()) return;
   isPreGenerating = true;
   try { nextExercise = await generateFillBlankData(); } catch {}
   finally { isPreGenerating = false; }
@@ -5612,7 +5645,7 @@ async function loadBuilder() {
 }
 
 async function preGenerateBuilder() {
-  if (isPreGenerating || !currentConcept) return;
+  if (isPreGenerating || !currentConcept || isGeminiRateLimited()) return;
   isPreGenerating = true;
   try { nextExercise = await generateBuilderData(); } catch {}
   finally { isPreGenerating = false; }
@@ -5852,6 +5885,20 @@ async function loadTranslation() {
   currentTranslateData = null;
   const c = currentConcept;
   const bank = c && c.translateBank;
+  // 2026-07-03: force static when we know Gemini is rate-limited, regardless
+  // of whose "turn" it is in the alternation — no reason to eat another 429
+  // (and the multi-second backoff that comes with it) when we already know
+  // the answer. Doesn't consume the alternation's turn (`_useTranslateStatic`
+  // untouched) so the very next call still alternates normally once healthy.
+  if (bank && bank.length && isGeminiRateLimited() && !_useTranslateStatic) {
+    const idxKey = c.key + '_tr';
+    if (_staticIdx[idxKey] === undefined) _staticIdx[idxKey] = Math.floor(Math.random() * bank.length);
+    const ex = bank[_staticIdx[idxKey] % bank.length];
+    _staticIdx[idxKey]++;
+    currentTranslateData = { en: ex.en, es: ex.es, acceptVariants: [], hint: '', explanation: ex.explanation || '', _static: true };
+    renderTranslation(currentTranslateData);
+    return;
+  }
   if (bank && bank.length && _useTranslateStatic) {
     _useTranslateStatic = false;
     const idxKey = c.key + '_tr';
@@ -6012,7 +6059,13 @@ Respond with ONLY valid JSON:
     }
     btn.textContent = 'Done';
   } catch (err) {
-    feedback.innerHTML = `<div class="fb-grade poor">Grading failed</div><div>${err.message}. The correct answer was: <b>${data?.es}</b></div>`;
+    // 2026-07-03: same "never leave a student stuck" principle as the Speak
+    // skip button — grading is a single AI call with no static fallback, so
+    // a persistent 429 shouldn't be able to trap someone here indefinitely.
+    // The correct answer is already shown, so give an explicit way past it
+    // alongside the retry option rather than only offering retry.
+    const rateLimited = err.status === 429;
+    feedback.innerHTML = `<div class="fb-grade poor">${rateLimited ? 'High demand right now' : 'Grading failed'}</div><div>${rateLimited ? 'Gemini is briefly rate-limited.' : err.message + '.'} The correct answer was: <b>${data?.es}</b></div><div style="margin-top:8px"><span onclick="loadTranslation()" style="color:var(--text3);text-decoration:underline;cursor:pointer;font-size:.85rem">Skip / Next sentence →</span></div>`;
     btn.textContent = 'Try again';
     btn.disabled = false;
     exerciseAnswered = false;
@@ -6026,6 +6079,14 @@ Respond with ONLY valid JSON:
 async function loadStory() {
   storyQuestionsAnswered = 0;
   clearErrorBox();
+  // 2026-07-03: Story has no static fallback (it's fully generative) — rather
+  // than showing a multi-second loading spinner that's doomed to end in the
+  // generic "Generation failed" (because we already know Gemini just 429'd),
+  // fail fast with an honest, specific reason.
+  if (isGeminiRateLimited() && aiBackend !== 'ollama') {
+    showError('High demand right now (Gemini rate limit) — wait a few seconds and try again.', loadStory);
+    return;
+  }
   showLoading('Writing a story...', 'Mixing realistic and absurd for neuroplasticity');
   try {
     const c = currentConcept;
