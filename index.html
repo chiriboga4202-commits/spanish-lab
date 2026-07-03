@@ -746,7 +746,7 @@ body.focus-mode header { min-height:auto; }
 body.light-theme {
   --bg: #f4f6fb; --surface: #ffffff; --surface2: #eef0f7;
   --border: #dde0ec; --border2: #c8cce0;
-  --text: #1a1d2e; --text2: #4a4f6e; --text3: #8a90b0;
+  --text: #1a1d2e; --text2: #4a4f6e; --text3: #5b6180; /* 2026-07-03: was #8a90b0 (~2.9:1 vs bg, fails WCAG AA's 4.5:1); darkened to ~5.7:1 while keeping it visibly muted vs --text2 */
 }
 body.light-theme .pair-card { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
 body.light-theme header, body.light-theme .bottom-bar { box-shadow: 0 1px 4px rgba(0,0,0,.08); }
@@ -1213,6 +1213,9 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
       </label>
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer" title="Accent marks are always graded leniently — this only controls whether the short 'why this word has an accent' tip is shown">
         <input type="checkbox" id="m-accent-tips" onchange="setAccentTips(this.checked)" checked> 💡 Accent tips
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer" title="Say 'siguiente' / 'next' out loud to advance to the next exercise, hands-free. Off by default — turns on your microphone only if you enable this.">
+        <input type="checkbox" id="m-voice-next" onchange="setVoiceNextEnabled(this.checked)"> 🎙️ Voice "next"
       </label>
     </div>
 
@@ -6898,13 +6901,34 @@ function dismissOneMore(cont) {
 }
 
 // ── #47 VOICE "NEXT" / "SIGUIENTE" COMMAND ────────────────────────────────────
+// 2026-07-03: this was fully built (SpeechRecognition wiring, "siguiente"/"next"
+// detection) but had ZERO UI entry point anywhere — no settings toggle, no
+// button — meaning it could only ever have been triggered by hand-calling
+// initVoiceNext() from devtools. Never auto-start a microphone with no visible
+// opt-in; that's a real privacy/UX problem, not just a wiring gap. Added a
+// Settings checkbox (off by default) plus a real stop path — previously there
+// was no way to turn recognition back off once started, since onend() blindly
+// restarted it, which would fight a toggle-off.
 let _voiceRecog = null;
 let _voiceInited = false;
+let _voiceNextWanted = false;
+function voiceNextEnabled() {
+  return localStorage.getItem('sl_voice_next') === 'on';
+}
+function setVoiceNextEnabled(on) {
+  localStorage.setItem('sl_voice_next', on ? 'on' : 'off');
+  if (on) initVoiceNext(); else stopVoiceNext();
+}
+function stopVoiceNext() {
+  _voiceNextWanted = false;
+  if (_voiceRecog) { try { _voiceRecog.stop(); } catch(e) {} }
+}
 function initVoiceNext() {
-  if (_voiceInited) return;
+  _voiceNextWanted = true;
+  if (_voiceInited) { try { _voiceRecog.start(); } catch(e) {} return; }
   _voiceInited = true;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) return;
+  if (!SR) { showToast('Voice commands aren\'t supported in this browser', 3000); return; }
   _voiceRecog = new SR();
   _voiceRecog.continuous = true;
   _voiceRecog.lang = 'es-ES';
@@ -6916,7 +6940,9 @@ function initVoiceNext() {
     }
   };
   _voiceRecog.onerror = () => {};
-  _voiceRecog.onend = () => { try { _voiceRecog.start(); } catch(e) {} };
+  // Only auto-restart while the student still wants it on — otherwise stopVoiceNext()
+  // calling .stop() would just get immediately undone by this handler.
+  _voiceRecog.onend = () => { if (_voiceNextWanted) { try { _voiceRecog.start(); } catch(e) {} } };
   try { _voiceRecog.start(); } catch(e) {}
 }
 
@@ -7001,6 +7027,9 @@ function adjustFont(dir) {
   if (focusCb) focusCb.checked = document.body.classList.contains('focus-mode');
   const accentCb = document.getElementById('m-accent-tips');
   if (accentCb) accentCb.checked = accentTipsEnabled();
+  const voiceCb = document.getElementById('m-voice-next');
+  if (voiceCb) voiceCb.checked = voiceNextEnabled();
+  if (voiceNextEnabled()) initVoiceNext(); // respect a prior opt-in across reloads
 })();
 
 
@@ -8031,6 +8060,14 @@ const VOCAB_LIST = [
 let _vocabIdx = 0;
 let _vocabSeen = JSON.parse(localStorage.getItem('sl_vocab_seen') || '[]');
 let _vocabXpAwarded = new Set(); // indices already credited this deck pass — see renderVocabCard
+// 2026-07-03: CRITICAL BUG (live-tested, found via console errors) — Prev/Know-it/Review
+// buttons below build onclick="...renderVocabCard(list)"/"...=total-1..." as literal HTML
+// attribute text. `list` and `total` are renderVocabCard's local parameter/const — inline
+// onclick handlers execute in global scope and can NOT see them, so every click threw
+// "ReferenceError: list is not defined" / "total is not defined" in the console and did
+// nothing. This means Vocab mode navigation has never actually worked in production.
+// Fix: mirror the current list on a real global the onclick strings can reach.
+let _vocabCurrentList = [];
 
 function loadVocab() {
   const shuffled = shuffle([...VOCAB_LIST]);
@@ -8051,6 +8088,7 @@ function loadVocab() {
 function renderVocabCard(list) {
   const area = document.getElementById('exercise-area');
   if (!area) return;
+  _vocabCurrentList = list; // see the CRITICAL BUG note above _vocabCurrentList's declaration
   const total = list.length;
   const idx = _vocabIdx % total;
   const word = list[idx];
@@ -8065,9 +8103,9 @@ function renderVocabCard(list) {
       <div class="vocab-example" id="vocab-ex">${word.ex}</div>
     </div>
     <div class="vocab-nav">
-      <button onclick="_vocabIdx--;if(_vocabIdx<0)_vocabIdx=total-1;renderVocabCard(list)">← Prev</button>
-      <button onclick="markVocabKnown('${escStr(word.es)}');_vocabIdx++;renderVocabCard(list)" style="background:rgba(62,207,142,.12);border-color:#3ecf8e;color:#3ecf8e">✓ Know it</button>
-      <button onclick="_vocabIdx++;renderVocabCard(list)" style="background:rgba(244,91,105,.06);border-color:#f45b69;color:#f45b69">✗ Review</button>
+      <button onclick="_vocabIdx--;if(_vocabIdx<0)_vocabIdx=_vocabCurrentList.length-1;renderVocabCard(_vocabCurrentList)">← Prev</button>
+      <button onclick="markVocabKnown('${escStr(word.es)}');_vocabIdx++;renderVocabCard(_vocabCurrentList)" style="background:rgba(62,207,142,.12);border-color:#3ecf8e;color:#3ecf8e">✓ Know it</button>
+      <button onclick="_vocabIdx++;renderVocabCard(_vocabCurrentList)" style="background:rgba(244,91,105,.06);border-color:#f45b69;color:#f45b69">✗ Review</button>
     </div>`;
   // 2026-07-03: this used to fire unconditionally on every render, including
   // "← Prev" navigating back over already-seen cards — since Prev/Next both just
