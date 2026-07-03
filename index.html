@@ -4090,7 +4090,12 @@ let lastUsedConceptKey = null;
 // 2026-07-01: rolling history of the last 2 concepts used in Mixed mode, so
 // interleaving avoids tight A-B-A-B clustering, not just an immediate repeat.
 let recentConceptKeys = [];
-let wrongAnswers = [];            // [{conceptName, question, wrong, correct}]
+// 2026-07-03: persisted (was in-memory only, so mistakes vanished on every
+// reload — student feedback #34). Now survives reloads and the Review flow can
+// resurface them across sessions.
+let wrongAnswers = JSON.parse(localStorage.getItem('sl_mistakes') || '[]'); // [{conceptName, question, wrong, correct}]
+function saveMistakes() { try { localStorage.setItem('sl_mistakes', JSON.stringify(wrongAnswers.slice(-60))); } catch {} }
+setTimeout(() => { try { updateReviewBtn(); } catch {} }, 800); // reflect persisted mistakes in the review badge after load
 let currentTheme = localStorage.getItem('sl_theme') || 'dark';
 let reviewDrillItems = [];        // subset of wrongAnswers being drilled
 let reviewDrillIndex = 0;
@@ -4262,7 +4267,11 @@ function renderConceptBar() {
       <span class="chip-emoji">${c.emoji}</span>${c.name}${masteryMark}${suggestBadge}
     </div>`;
   }).join('');
-  bar.innerHTML = mixedChip + conceptChips;
+  // 2026-07-03: visible mastery headline (student feedback #39) — a clear
+  // "N / 11 mastered" so progress isn't buried in per-chip marks.
+  const masteredCount = CONCEPTS.filter(c => { try { return isMasteryThresholdMet(c.key); } catch { return false; } }).length;
+  const masteryHeadline = `<div class="mastery-headline" title="Concepts where you've hit the mastery bar (80%+ with enough practice)" style="flex-basis:100%;font-size:11px;font-weight:600;opacity:.75;padding:0 2px 6px;">⭐ ${masteredCount} / ${CONCEPTS.length} concepts mastered</div>`;
+  bar.innerHTML = masteryHeadline + mixedChip + conceptChips;
 }
 
 function selectConcept(key, el) {
@@ -6368,7 +6377,7 @@ function startReviewDrill() {
   });
   currentMode = mode;
   nextExercise = null;
-  wrongAnswers = []; // clear after starting drill
+  wrongAnswers = []; saveMistakes(); // clear after starting drill
   updateReviewBtn();
   showToast(`🔄 Drilling "${conceptName}" (${counts[conceptName]} mistake${counts[conceptName]>1?'s':''}) — let's fix it!`, 3200);
   startExercise();
@@ -6800,6 +6809,8 @@ function updateStreak(correct, wrongData) {
     sessionWrong++;
     if (wrongData) {
       wrongAnswers.push(wrongData);
+      if (wrongAnswers.length > 60) wrongAnswers.shift();
+      saveMistakes();
       updateReviewBtn();
       if (wrongAnswers.length === 10) {
         setTimeout(() => {
