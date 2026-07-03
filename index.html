@@ -4803,11 +4803,24 @@ let _geminiRateLimitedUntil = 0;
 function isGeminiRateLimited() { return Date.now() < _geminiRateLimitedUntil; }
 
 async function geminiCall(prompt, system, temp, jsonMode) {
-  const res = await fetch('/api/ai', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ system, prompt, temperature: temp, json_mode: jsonMode })
-  });
+  // 2026-07-03: hard timeout so no AI call can hang forever. If /api/ai stalls,
+  // this aborts at 12s and rejects — every mode's catch then falls back to its
+  // static bank or shows a retry, instead of leaving the student on an endless
+  // spinner (the "the app looks broken" failure). Protects all modes at once.
+  let res;
+  try {
+    res = await fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system, prompt, temperature: temp, json_mode: jsonMode }),
+      signal: AbortSignal.timeout(12000)
+    });
+  } catch (e) {
+    if (e && (e.name === 'TimeoutError' || e.name === 'AbortError')) {
+      throw new Error('Generation timed out — try again');
+    }
+    throw e;
+  }
   if (!res.ok) {
     const errText = await res.text().catch(() => '');
     const err = new Error(`Gemini error (HTTP ${res.status})${errText ? ': ' + errText.slice(0, 200) : ''}`);
@@ -5800,15 +5813,31 @@ function checkBuilderAnswer(explanation) {
   const isCorrect = stripAccents(attemptStr) === stripAccents(correctStr);
   trackExerciseAttempt(currentConcept.key + '_builder_' + correctStr, isCorrect);
 
+  // 2026-07-03: position-level partial credit (student feedback #16). Instead
+  // of a blunt all-or-nothing "wrong", colour each tile by whether it's in the
+  // right slot (green) or misplaced (amber) so the student sees exactly what to
+  // fix, and award partial XP for what they got right — one slip on an 8-word
+  // sentence no longer means zero.
+  const posOK = i => stripAccents((attempt[i] || '').toLowerCase()) === stripAccents((builderAnswer[i] || '').toLowerCase());
+  const nCorrectPos = attempt.reduce((n, _w, i) => n + (posOK(i) ? 1 : 0), 0);
+  const nearMiss = !isCorrect && nCorrectPos >= Math.ceil(builderAnswer.length * 0.6);
+
   const area = document.getElementById('answer-area');
   area.className = `answer-area ${isCorrect ? 'correct-answer' : 'wrong-answer'}`;
-  document.querySelectorAll('.placed-tile').forEach(t => t.classList.add('locked'));
-  document.getElementById('check-btn').disabled = true;
+  area.innerHTML = attempt.map((w, i) => {
+    const style = posOK(i)
+      ? 'background:rgba(62,207,142,.18);border-color:#3ecf8e;color:#3ecf8e'
+      : 'background:rgba(244,168,54,.16);border-color:#f4a836;color:#f4a836';
+    return `<div class="placed-tile locked" style="${style}">${w}</div>`;
+  }).join('');
+  const cb = document.getElementById('check-btn'); if (cb) cb.disabled = true;
 
   const bar = document.getElementById('result-bar');
   bar.classList.add('show', isCorrect ? 'correct-bar' : 'wrong-bar');
-  document.getElementById('result-icon').textContent = isCorrect ? '✅' : '❌';
-  document.getElementById('result-main').textContent = isCorrect ? 'Perfect!' : `Correct: "${correctStr}"`;
+  document.getElementById('result-icon').textContent = isCorrect ? '✅' : (nearMiss ? '🟡' : '↔️');
+  document.getElementById('result-main').textContent = isCorrect
+    ? 'Perfect!'
+    : `So close — ${nCorrectPos}/${builderAnswer.length} words already in place. It's: "${correctStr}"`;
   document.getElementById('result-sub').innerHTML = (explanation || '') + accentTipHTML(correctStr) + (isCorrect ? '' : conceptMistakeTipHTML());
 
   if (isCorrect) {
@@ -5819,6 +5848,9 @@ function checkBuilderAnswer(explanation) {
     recordMastery(true);
     if (mixedMode) setTimeout(() => advanceMixedConcept(), 1800);
   } else {
+    // Never punish a near-miss with zero — partial XP for correct positions.
+    const partial = Math.round((nCorrectPos / Math.max(1, builderAnswer.length)) * 8);
+    if (partial > 0) { addXP(partial); try { popXP(`+${partial} XP`, event); } catch {} }
     const wrongData = {
       conceptName: currentConcept.name,
       question: 'Sentence arrangement',
@@ -7868,12 +7900,28 @@ function checkWordDrop(explanation) {
   const icon = document.getElementById('result-icon');
   const main = document.getElementById('result-main');
   const sub = document.getElementById('result-sub');
-  if (icon) icon.textContent = correct ? '✅' : '❌';
-  if (main) main.textContent = correct ? 'Perfect!' : 'Correct: "' + correctStr + '"';
+  // 2026-07-03: position-level partial credit (same as Builder). Colour each
+  // placed word by whether it's in the right slot, and give partial XP for a
+  // near-miss instead of a flat zero.
+  const posOK = i => stripAccents((placed[i] || '').toLowerCase()) === stripAccents((_dropAnswer[i] || '').toLowerCase());
+  const nCorrect = placed.reduce((n, _w, i) => n + (posOK(i) ? 1 : 0), 0);
+  const nearMiss = !correct && nCorrect >= Math.ceil(_dropAnswer.length * 0.6);
+  if (target) target.innerHTML = placed.map((w, i) => {
+    const style = posOK(i)
+      ? 'background:rgba(62,207,142,.18);border-color:#3ecf8e;color:#3ecf8e'
+      : 'background:rgba(244,168,54,.16);border-color:#f4a836;color:#f4a836';
+    return `<div class="drop-slot" style="${style}">${w}</div>`;
+  }).join('');
+  if (icon) icon.textContent = correct ? '✅' : (nearMiss ? '🟡' : '↔️');
+  if (main) main.textContent = correct ? 'Perfect!' : `So close — ${nCorrect}/${_dropAnswer.length} in place. It's: "${correctStr}"`;
   if (sub) sub.innerHTML = (explanation || '') + accentTipHTML(correctStr) + (correct ? '' : conceptMistakeTipHTML());
   if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(12); updateStreak(true); }
-  else { updateStreak(false, { conceptName: currentConcept?.name, question: 'Word drop', wrong: placed.join(' '), correct: _dropAnswer.join(' ') }); }
+  else {
+    const partial = Math.round((nCorrect / Math.max(1, _dropAnswer.length)) * 6);
+    if (partial > 0) addXP(partial);
+    updateStreak(false, { conceptName: currentConcept?.name, question: 'Word drop', wrong: placed.join(' '), correct: _dropAnswer.join(' ') });
+  }
   // 2026-07-03: same gap as Missing mode — Word Drop is concept-scoped but never
   // called recordMastery(), so it never counted toward concept accuracy/mastery.
   recordMastery(correct);
