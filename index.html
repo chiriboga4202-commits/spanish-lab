@@ -8669,6 +8669,20 @@ Rules:
 
   try {
     const data = await ollamaJSON(prompt, 2, 0.7);
+    // 2026-07-03: THE "errors section stops after a few" bug. The AI (a thinking
+    // model) intermittently returns JSON missing `options` or with options as a
+    // non-array. renderSpotError then does [...ex.options] / ex.options[0],
+    // which throws — and because that throw happens inside an un-awaited render,
+    // the whole mode freezes with no error shown. Validate here and fall back to
+    // the static bank on any malformed response instead of returning it.
+    const valid = data && typeof data.sentence === 'string' && data.sentence.trim()
+      && Array.isArray(data.options) && data.options.length >= 2
+      && data.options.every(o => typeof o === 'string' && o.trim());
+    if (!valid) {
+      if (staticEx) { staticEx._static = true; trackRecent(trackKey, steText(staticEx)); return staticEx; }
+      throw new Error('Malformed spot-error response');
+    }
+    if (typeof data.explanation !== 'string') data.explanation = '';
     if (alreadyRecent(trackKey, steText(data)) && staticEx) {
       staticEx._static = true; trackRecent(trackKey, steText(staticEx)); return staticEx;
     }
@@ -8704,6 +8718,14 @@ async function preGenerateSpotError() {
 function renderSpotError(ex) {
   const area = document.getElementById('exercise-area');
   exerciseAnswered = false;
+  // 2026-07-03: backstop — never let a malformed exercise (missing/!array
+  // options) reach the template below, where [...ex.options] would throw and
+  // freeze the mode. Swap in a guaranteed-valid static one instead.
+  if (!ex || typeof ex.sentence !== 'string' || !Array.isArray(ex.options) || ex.options.length < 2) {
+    const fb = getStaticSpotError();
+    if (fb && Array.isArray(fb.options)) { fb._static = true; ex = fb; }
+    else { if (area) area.innerHTML = '<div class="prompt-box"><div class="prompt-lbl">Could not load exercise — tap Next.</div></div><div class="result-bar show"><button class="next-btn" onclick="loadSpotError()">Next →</button></div>'; return; }
+  }
   const staticBadge = ex._static ? ' <span title="Built-in exercise" style="font-size:9px;opacity:.6;font-weight:500;background:rgba(91,141,238,.15);padding:1px 5px;border-radius:3px;vertical-align:middle;">📚</span>' : '';
   area.innerHTML = `
     <div class="prompt-box" style="margin-bottom:14px">
