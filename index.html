@@ -5569,8 +5569,24 @@ function pickOption(idx, correct) {
 
 async function generateBuilderData() {
   const c = currentConcept;
-  const theme = pickScenario();
+  const staticEx = getStaticBuilderEntry();
   const trackKey = c.key + '_builder';
+
+  // 2026-07-03: converted to the same AI-first pattern as generatePairData.
+  // Builder used to serve static FIRST (loadBuilder short-circuited straight to
+  // the 15/concept BUILDER_BANK), so it always felt finite regardless of AI
+  // health — the opposite of Pairs. Now AI leads: static is forced only when
+  // offline / rate-limited / serving a genuinely-due SM-2 card, mixed in ~20%
+  // of the time purely for variety/cost otherwise, and used as the fallback on
+  // any generation failure. Every static draw is logged into the shared
+  // recent-history so the AI won't independently regenerate something just seen.
+  if (!ollamaOnline || isGeminiRateLimited() || (staticEx && staticEx._dueCard)) {
+    if (staticEx) { staticEx._static = true; trackRecent(trackKey, staticEx.words?.join(' ')); return staticEx; }
+  } else if (staticEx && Math.random() < 0.2) {
+    staticEx._static = true; trackRecent(trackKey, staticEx.words?.join(' ')); return staticEx;
+  }
+
+  const theme = pickScenario();
   const prompt = `You are a Spanish teacher creating a sentence arrangement exercise.
 Concept: ${c.name}
 Context: ${c.context}
@@ -5594,9 +5610,17 @@ Rules:
 - The sentence must clearly require knowing ${c.name} to get the order right.
 - Make it a natural, everyday sentence.`;
 
-  const data = await ollamaJSON(prompt);
-  trackRecent(trackKey, data?.words?.join(' '));
-  return data;
+  try {
+    const data = await ollamaJSON(prompt, 2, 0.7);
+    if (alreadyRecent(trackKey, data?.words?.join(' ')) && staticEx) {
+      staticEx._static = true; trackRecent(trackKey, staticEx.words?.join(' ')); return staticEx;
+    }
+    trackRecent(trackKey, data?.words?.join(' '));
+    return data;
+  } catch (err) {
+    if (staticEx) { staticEx._static = true; trackRecent(trackKey, staticEx.words?.join(' ')); return staticEx; }
+    throw err;
+  }
 }
 
 function getStaticBuilderEntry() {
@@ -5618,21 +5642,18 @@ async function loadBuilder() {
   clearErrorBox();
   placedWords = [];
 
-  // Static bank — instant, no AI needed
-  const staticData = getStaticBuilderEntry();
-  if (staticData) {
-    renderBuilder(staticData);
-    return;
-  }
-
-  // AI fallback for concepts not yet in the bank
+  // 2026-07-03: was static-first (returned a BUILDER_BANK entry immediately and
+  // only used AI for concepts with no bank) — that's why Builder felt finite.
+  // Now AI-first via generateBuilderData(), which handles static fallback/mixing
+  // internally (see its header), matching loadPairs.
   let data;
   if (nextExercise) {
     data = nextExercise;
     nextExercise = null;
     renderBuilder(data);
   } else {
-    showLoading();
+    showLoading(ollamaOnline ? 'Generating exercise...' : '📚 Loading exercise...',
+                ollamaOnline ? `Using ${aiModelLabel()}` : 'Using built-in exercise bank');
     try {
       data = await generateBuilderData();
       renderBuilder(data);
@@ -7561,14 +7582,82 @@ function gradeSpeaking(transcript, expected) {
 }
 
 // ── #24 WHAT'S MISSING MODE ──────────────────────────────────────────────────
-function loadMissing() {
+// 2026-07-03: Missing was static-only — it picked from currentConcept.exercises
+// (a finite bank), so it felt repetitive. Now AI-first: generateMissingData()
+// produces a fresh {es,en} sentence via Gemini (concept-aware), with the bank as
+// the offline/failure fallback + ~20% variety mix, and anti-repeat tracking.
+async function generateMissingData() {
+  const c = currentConcept;
+  const trackKey = c.key + '_missing';
+  const pool = c.exercises || [];
+  const staticPick = () => {
+    if (!pool.length) return null;
+    const ex = pool[Math.floor(Math.random() * pool.length)];
+    const es = ex.es || ex.cards?.[0]?.es || '';
+    const en = ex.en || ex.cards?.[0]?.en || '';
+    return es ? { es, en, _static: true } : null;
+  };
+  const staticEx = staticPick();
+
+  if (!ollamaOnline || isGeminiRateLimited()) {
+    if (staticEx) { trackRecent(trackKey, staticEx.es); return staticEx; }
+  } else if (staticEx && Math.random() < 0.2) {
+    trackRecent(trackKey, staticEx.es); return staticEx;
+  }
+
+  const theme = pickScenario();
+  const prompt = `You are a Spanish teacher writing a sentence for a fill-in-the-missing-word exercise.
+Concept: ${c.name}
+Context: ${c.context}
+Set it in the context of: ${theme}.
+
+Write ONE natural everyday Spanish sentence (5-10 words) that clearly relies on ${c.name}, plus its English translation.${recentAvoidLine(trackKey)}
+
+Respond with ONLY valid JSON (no markdown):
+{ "es": "the Spanish sentence", "en": "the English translation" }
+
+Rules:
+- 5 to 10 words. Natural, everyday Spanish.
+- The sentence must clearly require understanding ${c.name}.`;
+
+  try {
+    const data = await ollamaJSON(prompt, 2, 0.7);
+    if (data && data.es && alreadyRecent(trackKey, data.es) && staticEx) { trackRecent(trackKey, staticEx.es); return staticEx; }
+    if (data && data.es) { trackRecent(trackKey, data.es); return data; }
+    if (staticEx) { trackRecent(trackKey, staticEx.es); return staticEx; }
+    throw new Error('No sentence generated');
+  } catch (err) {
+    if (staticEx) { trackRecent(trackKey, staticEx.es); return staticEx; }
+    throw err;
+  }
+}
+
+async function loadMissing() {
   if (!currentConcept) return;
-  const exercises = currentConcept.exercises || [];
-  if (!exercises.length) { showToast('No missing-word exercises yet', 2000); return; }
-  const ex = exercises[Math.floor(Math.random() * exercises.length)];
-  const es = ex.es || ex.cards?.[0]?.es || '';
-  const en = ex.en || ex.cards?.[0]?.en || '';
-  if (!es) { loadMissing(); return; }
+  let data;
+  if (nextExercise) { data = nextExercise; nextExercise = null; }
+  else {
+    showLoading(ollamaOnline ? 'Generating exercise...' : '📚 Loading exercise...',
+                ollamaOnline ? `Using ${aiModelLabel()}` : 'Using built-in exercise bank');
+    try { data = await generateMissingData(); }
+    catch { showToast('No missing-word exercises yet', 2000); return; }
+  }
+  renderMissing(data);
+  preGenerateMissing();
+}
+
+async function preGenerateMissing() {
+  if (isPreGenerating || !currentConcept || isGeminiRateLimited()) return;
+  isPreGenerating = true;
+  try { nextExercise = await generateMissingData(); } catch {}
+  finally { isPreGenerating = false; }
+}
+
+function renderMissing(data) {
+  const es = data.es || data.cards?.[0]?.es || '';
+  const en = data.en || data.cards?.[0]?.en || '';
+  if (!es) { showToast('No missing-word exercises yet', 2000); return; }
+  const staticBadge = data._static ? ' <span title="Built-in exercise" style="font-size:9px;opacity:.6;font-weight:500;background:rgba(91,141,238,.15);padding:1px 5px;border-radius:3px;">📚</span>' : '';
   // Pick a random non-trivial word to blank
   const words = es.split(' ');
   if (words.length < 3) { loadMissing(); return; }
@@ -7579,7 +7668,7 @@ function loadMissing() {
   const area = document.getElementById('exercise-area');
   area.innerHTML = `
     <div class="prompt-box" style="margin-bottom:14px">
-      <div class="prompt-lbl">What's missing? Type the missing word</div>
+      <div class="prompt-lbl">What's missing? Type the missing word${staticBadge}</div>
       <div class="prompt-en">${en}</div>
     </div>
     <div class="missing-sentence">${displayWords.join(' ')}</div>
@@ -7630,12 +7719,30 @@ function checkMissing(answer) {
 // ── #22 WORD DROP MODE (tap-to-place — see renderWordDrop for the 2026-07-01
 // conversion away from HTML5 drag-and-drop, which doesn't work via touch) ──
 let _dropAnswer = [];
-function loadWordDrop() {
+async function loadWordDrop() {
   if (!currentConcept) return;
-  // Re-use builder static bank for word-drop (same exercises, different UX)
-  const staticData = getStaticBuilderEntry();
-  if (staticData) { renderWordDrop(staticData); return; }
-  showToast('No word-drop exercises for this concept', 2000);
+  // 2026-07-03: was static-only (returned a getStaticBuilderEntry() and bailed
+  // with a toast otherwise), so Word Drop felt finite. Now AI-first via the
+  // shared generateBuilderData() — it produces the same {en, words, explanation}
+  // shape and already handles static fallback/mixing internally, so Word Drop
+  // gets Builder's near-infinite variety. It deliberately shares the _builder
+  // trackKey/bank, so the two modes also share anti-repeat history.
+  let data;
+  if (nextExercise) { data = nextExercise; nextExercise = null; }
+  else {
+    showLoading(ollamaOnline ? 'Generating exercise...' : '📚 Loading exercise...',
+                ollamaOnline ? `Using ${aiModelLabel()}` : 'Using built-in exercise bank');
+    try { data = await generateBuilderData(); }
+    catch (err) { showError(err.message, loadWordDrop); return; }
+  }
+  renderWordDrop(data);
+  preGenerateWordDrop();
+}
+async function preGenerateWordDrop() {
+  if (isPreGenerating || !currentConcept || isGeminiRateLimited()) return;
+  isPreGenerating = true;
+  try { nextExercise = await generateBuilderData(); } catch {}
+  finally { isPreGenerating = false; }
 }
 // 2026-07-01: converted from HTML5 drag-and-drop to tap-to-place (mirrors
 // Builder mode's placeTile/removePlaced pattern). Native drag events
@@ -8258,22 +8365,176 @@ const SPOT_ERROR_BANK = [
     error: 'viene', correct_word: 'venga', explanation: '"Esperar que" + different subject = subjunctive → "venga" not "viene".',
     options: ['viene → venga', 'Espero → Espera', 'pronto → tarde', 'ella → él']
   },
+  {
+    sentence: 'Nosotros <span class="ste-error-word">habla</span> español en casa.',
+    error: 'habla', correct_word: 'hablamos', explanation: '"Nosotros" needs the -amos ending → "hablamos", not the él/ella form "habla".',
+    options: ['habla → hablamos', 'en → a', 'casa → casas', 'español → española']
+  },
+  {
+    sentence: 'Señor López, ¿<span class="ste-error-word">puedes</span> ayudarme, por favor?',
+    error: 'puedes', correct_word: 'puede', explanation: 'Addressing "Señor López" is formal (usted) → "puede", not the tú form "puedes".',
+    options: ['puedes → puede', 'ayudarme → ayudarte', 'por → para', 'Señor → Señora']
+  },
+  {
+    sentence: 'Ellos tienen una <span class="ste-error-word">roja casa</span> muy grande.',
+    error: 'roja casa', correct_word: 'casa roja', explanation: 'Descriptive adjectives normally follow the noun in Spanish → "casa roja".',
+    options: ['roja casa → casa roja', 'tienen → tiene', 'muy → mucho', 'grande → gran']
+  },
+  {
+    sentence: 'Ella <span class="ste-error-word">lava</span> las manos antes de comer.',
+    error: 'lava', correct_word: 'se lava', explanation: 'Washing one\'s own body parts is reflexive → "se lava las manos".',
+    options: ['lava → se lava', 'las → los', 'antes → después', 'comer → come']
+  },
+  {
+    sentence: 'A mí me <span class="ste-error-word">gusta</span> los perros.',
+    error: 'gusta', correct_word: 'gustan', explanation: 'The subject "los perros" is plural, so gustar agrees with it → "gustan".',
+    options: ['gusta → gustan', 'A → De', 'me → mí', 'los → las']
+  },
+  {
+    sentence: 'La sopa <span class="ste-error-word">es</span> muy caliente ahora.',
+    error: 'es', correct_word: 'está', explanation: 'Temperature right now is a temporary state → "está", not "es".',
+    options: ['es → está', 'sopa → sopas', 'muy → mucho', 'caliente → calienta']
+  },
+  {
+    sentence: 'Cuando <span class="ste-error-word">fui</span> niño, jugaba en el parque.',
+    error: 'fui', correct_word: 'era', explanation: 'Describing what you used to be (background/age) is imperfect → "era", not preterite "fui".',
+    options: ['fui → era', 'jugaba → jugué', 'en → a', 'parque → parqueo']
+  },
+  {
+    sentence: 'Es importante que tú <span class="ste-error-word">estudias</span> más.',
+    error: 'estudias', correct_word: 'estudies', explanation: '"Es importante que" triggers the subjunctive → "estudies", not indicative "estudias".',
+    options: ['estudias → estudies', 'Es → Está', 'más → menos', 'tú → te']
+  },
+  {
+    sentence: 'Muchas gracias <span class="ste-error-word">para</span> tu ayuda.',
+    error: 'para', correct_word: 'por', explanation: '"Gracias por" — thanks for something received uses "por", not "para".',
+    options: ['para → por', 'tu → su', 'ayuda → ayudo', 'gracias → gracia']
+  },
+  {
+    sentence: '<span class="ste-error-word">La</span> mapa está sobre la mesa.',
+    error: 'La', correct_word: 'El', explanation: '"Mapa" is masculine despite the -a ending → "el mapa".',
+    options: ['La → El', 'está → es', 'sobre → bajo', 'mesa → mesas']
+  },
+  {
+    sentence: '¿Ves el libro? Sí, <span class="ste-error-word">le</span> veo.',
+    error: 'le', correct_word: 'lo', explanation: '"Ver" takes a direct object → "lo" (it/him), not the indirect-object "le".',
+    options: ['le → lo', 'Ves → Vez', 'libro → libra', 'Sí → Si']
+  },
+  {
+    sentence: 'Yo <span class="ste-error-word">sabo</span> la respuesta correcta.',
+    error: 'sabo', correct_word: 'sé', explanation: '"Saber" is irregular in the yo form → "sé", not the regular "sabo".',
+    options: ['sabo → sé', 'la → el', 'respuesta → respondo', 'correcta → correcto']
+  },
+  {
+    sentence: 'Los niños <span class="ste-error-word">son</span> en la escuela ahora.',
+    error: 'son', correct_word: 'están', explanation: 'Location always uses estar → "están en la escuela", not "son".',
+    options: ['son → están', 'niños → niño', 'la → el', 'escuela → escuelas']
+  },
+  {
+    sentence: 'Nosotros <span class="ste-error-word">despertamos</span> a las siete cada día.',
+    error: 'despertamos', correct_word: 'nos despertamos', explanation: '"Despertarse" (to wake oneself up) is reflexive → "nos despertamos".',
+    options: ['despertamos → nos despertamos', 'a → en', 'cada → toda', 'siete → siete y']
+  },
 ];
 
 let _steIdx = 0;
-function loadSpotError() {
+// 2026-07-03: rotates the (expanded) static bank as the offline/failure
+// fallback — the AI path below is the primary, near-infinite source.
+function getStaticSpotError() {
+  if (!SPOT_ERROR_BANK.length) return null;
   if (_steIdx >= SPOT_ERROR_BANK.length) _steIdx = 0;
-  const ex = SPOT_ERROR_BANK[_steIdx];
+  const ex = { ...SPOT_ERROR_BANK[_steIdx] };
   _steIdx++;
+  return ex;
+}
+function steText(ex) { return (ex && ex.sentence ? ex.sentence : '').replace(/<[^>]+>/g, '').trim(); }
+
+// 2026-07-03: Spot-the-Error was static-only (one fixed 10-item bank cycled by
+// _steIdx, not even concept-scoped) — so it always felt finite. Now AI-first,
+// same pattern as generatePairData: concept-aware generation leads, the static
+// bank is forced only offline / rate-limited, mixed in ~20% for variety, and
+// used as the fallback on any failure. Anti-repeat via the shared history.
+async function generateSpotErrorData() {
+  const c = currentConcept;
+  const trackKey = (c ? c.key : 'general') + '_spoterror';
+  const staticEx = getStaticSpotError();
+
+  if (!ollamaOnline || isGeminiRateLimited()) {
+    if (staticEx) { staticEx._static = true; trackRecent(trackKey, steText(staticEx)); return staticEx; }
+  } else if (staticEx && Math.random() < 0.2) {
+    staticEx._static = true; trackRecent(trackKey, steText(staticEx)); return staticEx;
+  }
+
+  const focus = c
+    ? `Concept to test: ${c.name}\nContext: ${c.context}`
+    : `Test a common Spanish grammar error (ser/estar, preterite vs imperfect, subjunctive, por/para, gender agreement, gustar, object or reflexive pronouns, tú/usted).`;
+  const theme = pickScenario();
+  const prompt = `You are a Spanish teacher creating a "spot the grammar error" exercise.
+${focus}
+Set it in the context of: ${theme}.
+
+Write ONE natural Spanish sentence containing EXACTLY ONE grammar error a learner would plausibly make. The student must find and fix it.${recentAvoidLine(trackKey)}
+
+Respond with ONLY valid JSON (no markdown):
+{
+  "sentence": "the full Spanish sentence with ONLY the single wrong word wrapped like <span class=\\"ste-error-word\\">wrongword</span>",
+  "error": "the wrong word, exactly as written",
+  "correct_word": "the correction",
+  "explanation": "one clear sentence explaining why the correction is right",
+  "options": ["wrongword → correction", "otherword → wrong-fix", "otherword → wrong-fix", "otherword → wrong-fix"]
+}
+
+Rules:
+- options[0] MUST be the real fix ("error → correct_word"); I shuffle the options in code.
+- The other 3 options must be plausible but WRONG fixes aimed at other words in the sentence.
+- Exactly one real error; the rest of the sentence must be grammatically correct.
+- 6 to 12 words. Everyday, natural Spanish.`;
+
+  try {
+    const data = await ollamaJSON(prompt, 2, 0.7);
+    if (alreadyRecent(trackKey, steText(data)) && staticEx) {
+      staticEx._static = true; trackRecent(trackKey, steText(staticEx)); return staticEx;
+    }
+    trackRecent(trackKey, steText(data));
+    return data;
+  } catch (err) {
+    if (staticEx) { staticEx._static = true; trackRecent(trackKey, steText(staticEx)); return staticEx; }
+    throw err;
+  }
+}
+
+async function loadSpotError() {
+  exerciseAnswered = false;
+  let ex;
+  if (nextExercise) { ex = nextExercise; nextExercise = null; }
+  else {
+    showLoading(ollamaOnline ? 'Generating exercise...' : '📚 Loading exercise...',
+                ollamaOnline ? `Using ${aiModelLabel()}` : 'Using built-in exercise bank');
+    try { ex = await generateSpotErrorData(); }
+    catch (err) { showError(err.message, loadSpotError); return; }
+  }
+  renderSpotError(ex);
+  preGenerateSpotError();
+}
+
+async function preGenerateSpotError() {
+  if (isPreGenerating || isGeminiRateLimited()) return;
+  isPreGenerating = true;
+  try { nextExercise = await generateSpotErrorData(); } catch {}
+  finally { isPreGenerating = false; }
+}
+
+function renderSpotError(ex) {
   const area = document.getElementById('exercise-area');
   exerciseAnswered = false;
+  const staticBadge = ex._static ? ' <span title="Built-in exercise" style="font-size:9px;opacity:.6;font-weight:500;background:rgba(91,141,238,.15);padding:1px 5px;border-radius:3px;vertical-align:middle;">📚</span>' : '';
   area.innerHTML = `
     <div class="prompt-box" style="margin-bottom:14px">
-      <div class="prompt-lbl">🐛 Find and fix the grammar error</div>
+      <div class="prompt-lbl">🐛 Find and fix the grammar error${staticBadge}</div>
     </div>
     <div class="ste-sentence">${ex.sentence}</div>
     <div class="ste-options" id="ste-options">
-      ${shuffle([...ex.options]).map(opt => 
+      ${shuffle([...ex.options]).map(opt =>
         `<button class="ste-opt" onclick="checkSpotError(this,'${escStr(ex.options[0])}','${escStr(ex.explanation)}')">${opt}</button>`
       ).join('')}
     </div>
