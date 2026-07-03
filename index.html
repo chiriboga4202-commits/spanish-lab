@@ -3854,23 +3854,47 @@ function cycleDifficulty() {
 
 // ─── Static exercise index tracker
 const _staticIdx = {};
+// 2026-07-03: canonical text used to identify a pair/fillblank exercise for
+// cross-source dedup (shared with AI-generated content via _recentGenerated —
+// see trackRecent/alreadyRecent below). Pairs are identified by the CORRECT
+// card's Spanish sentence since that's the sentence a student actually learns.
+function pairSentenceText(ex) {
+  if (!ex || !ex.cards) return '';
+  return ex.cards[ex.correct]?.es || ex.cards[0]?.es || '';
+}
+function fillBlankSentenceText(ex) {
+  if (!ex) return '';
+  return `${ex.before || ''} ___ ${ex.after || ''}`.trim();
+}
 function getStaticPair(key) {
   const difficulty = getCurrentDifficulty(key);
   const all = STATIC_EXERCISES[key]?.pairs || [];
   let pool = all.filter(e => e.difficulty === difficulty);
   if (!pool.length) pool = all;
   if (!pool.length) return null;
-  // SM-2: serve overdue cards first
+  // SM-2: serve overdue cards first — this takes priority over everything
+  // else below, including the recent-repeat check, because a due card MUST
+  // surface for spaced repetition to work.
   const dueEx = getDueExercise(pool);
-  if (dueEx) { lastCardId = dueEx._id; return dueEx; }
+  if (dueEx) { lastCardId = dueEx._id; dueEx._dueCard = true; return dueEx; }
   const idxKey = key + '_p_' + difficulty;
+  const trackKey = key + '_pairs';
   // 2026-07-01: seed a random starting point instead of always 0 — otherwise
   // every student, every session, saw the identical sequence of sentences
   // starting from the same item. Still rotates through the whole pool with
   // no repeats before wrapping, just from a different starting position.
   if (_staticIdx[idxKey] === undefined) _staticIdx[idxKey] = Math.floor(Math.random() * pool.length);
-  const ex = pool[_staticIdx[idxKey] % pool.length];
-  _staticIdx[idxKey]++;
+  // 2026-07-03: skip forward past any pool entries this student has seen very
+  // recently (shared history with AI-generated content) before settling on
+  // one — bounded to pool.length attempts so a fully-exhausted pool still
+  // returns something instead of stalling.
+  let ex, attempts = 0;
+  do {
+    ex = pool[_staticIdx[idxKey] % pool.length];
+    _staticIdx[idxKey]++;
+    attempts++;
+  } while (attempts < pool.length && alreadyRecent(trackKey, pairSentenceText(ex)));
+  ex._dueCard = false;
   lastCardId = ex._id || null;
   return ex;
 }
@@ -3880,17 +3904,23 @@ function getStaticFillBlank(key) {
   let pool = all.filter(e => e.difficulty === difficulty);
   if (!pool.length) pool = all;
   if (!pool.length) return null;
-  // SM-2: serve overdue cards first
+  // SM-2: serve overdue cards first (see getStaticPair for rationale)
   const dueEx = getDueExercise(pool);
-  if (dueEx) { lastCardId = dueEx._id; return dueEx; }
+  if (dueEx) { lastCardId = dueEx._id; dueEx._dueCard = true; return dueEx; }
   const idxKey = key + '_f_' + difficulty;
+  const trackKey = key + '_fillblank';
   // 2026-07-01: seed a random starting point instead of always 0 — otherwise
   // every student, every session, saw the identical sequence of sentences
   // starting from the same item. Still rotates through the whole pool with
   // no repeats before wrapping, just from a different starting position.
   if (_staticIdx[idxKey] === undefined) _staticIdx[idxKey] = Math.floor(Math.random() * pool.length);
-  const ex = pool[_staticIdx[idxKey] % pool.length];
-  _staticIdx[idxKey]++;
+  let ex, attempts = 0;
+  do {
+    ex = pool[_staticIdx[idxKey] % pool.length];
+    _staticIdx[idxKey]++;
+    attempts++;
+  } while (attempts < pool.length && alreadyRecent(trackKey, fillBlankSentenceText(ex)));
+  ex._dueCard = false;
   lastCardId = ex._id || null;
   return ex;
 }
@@ -4846,37 +4876,73 @@ function pickCharacter() {
 function pickScenario() {
   return `${pickTheme()}, seen from the perspective of ${pickCharacter()}`;
 }
-let _recentGenerated = {}; // { [conceptKey_mode]: ['sentence', ...] }, most recent first
-function trackRecent(trackKey, sentence, max = 8) {
+// 2026-07-03: persisted to localStorage — this used to be in-memory only,
+// which meant it reset to empty on every page reload/new tab. Since students
+// open the app fresh each session, the anti-repeat list the AI prompt relies
+// on effectively never had any history, so the model kept regressing to the
+// same "canonical" example every session (LLMs do this for any fixed prompt).
+// Persisting fixes the actual "same every session" complaint; raising the cap
+// from 8 to 40 also lets it double as the shared static+AI dedup history used
+// by getStaticPair/getStaticFillBlank via alreadyRecent() below.
+let _recentGenerated = JSON.parse(localStorage.getItem('sl_recent_gen') || '{}'); // { [conceptKey_mode]: ['sentence', ...] }, most recent first
+function trackRecent(trackKey, sentence, max = 40) {
   if (!sentence) return;
   if (!_recentGenerated[trackKey]) _recentGenerated[trackKey] = [];
   _recentGenerated[trackKey] = [sentence, ..._recentGenerated[trackKey]].slice(0, max);
+  try { localStorage.setItem('sl_recent_gen', JSON.stringify(_recentGenerated)); } catch {} // ignore quota errors
+}
+// Normalizes for comparison: case/accent/punctuation-insensitive so trivial
+// AI rewordings ("¿Estás casado?" vs "estas casado") still count as a repeat.
+function _normalizeForDedup(s) {
+  return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9\s]/g, '').trim();
+}
+function alreadyRecent(trackKey, sentence) {
+  const norm = _normalizeForDedup(sentence);
+  if (!norm) return false;
+  const list = _recentGenerated[trackKey];
+  if (!list || !list.length) return false;
+  return list.some(s => _normalizeForDedup(s) === norm);
 }
 function recentAvoidLine(trackKey) {
   const list = _recentGenerated[trackKey];
   if (!list || !list.length) return '';
-  return `\nAlready used recently (do NOT repeat these or anything very similar): ${list.join(' | ')}`;
+  // Only surface the most recent ~15 in-prompt (the full persisted list keeps
+  // growing well past that) — enough for the model to steer away from without
+  // bloating the prompt or drowning out the actual instructions.
+  return `\nAlready used recently (do NOT repeat these or anything very similar): ${list.slice(0, 15).join(' | ')}`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ── PAIRS MODE ────────────────────────────────────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════════
 
-let _useStaticNext = false; // alternates to mix static + AI
-
 async function generatePairData() {
   const c = currentConcept;
   const staticEx = getStaticPair(c.key);
+  const trackKey = c.key + '_pairs';
 
-  // Use static when offline, or every other exercise for speed
-  if (!ollamaOnline || (_useStaticNext && staticEx)) {
-    _useStaticNext = false;
-    if (staticEx) { staticEx._static = true; return staticEx; }
+  // 2026-07-03: previously this alternated static/AI on a strict 50/50 toggle
+  // regardless of AI health — meaning half of everything shown came from a
+  // finite hand-authored pool no matter what, which was a real contributor to
+  // the "same every session" complaint. Now static is only forced when (a)
+  // the AI backend is offline/unreachable, or (b) this is a genuinely-due
+  // SM-2 card (spaced repetition must win — see getStaticPair). Otherwise we
+  // mix in static content only occasionally (~20%) purely for variety/cost,
+  // and every static draw is still registered in the shared recent-history so
+  // the AI won't independently regenerate something a student just saw.
+  if (!ollamaOnline || (staticEx && staticEx._dueCard)) {
+    if (staticEx) {
+      staticEx._static = true;
+      trackRecent(trackKey, pairSentenceText(staticEx));
+      return staticEx;
+    }
+  } else if (staticEx && Math.random() < 0.2) {
+    staticEx._static = true;
+    trackRecent(trackKey, pairSentenceText(staticEx));
+    return staticEx;
   }
-  _useStaticNext = true;
 
   const theme = pickScenario();
-  const trackKey = c.key + '_pairs';
   const prompt = `You are a Spanish teacher creating a minimal pairs exercise.
 Concept: ${c.name}
 Context: ${c.context}
@@ -4904,11 +4970,23 @@ Rules:
 - DO NOT use "Es aburrido vs Está aburrido" or "Comí vs Comía pizza" — use fresh examples.`;
 
   try {
-    const data = await ollamaJSON(prompt);
-    trackRecent(trackKey, data?.cards?.[0]?.es);
+    // 2026-07-03: temp raised 0.3 → 0.7. Low temperature was fighting the
+    // variety mechanisms (scenario/character injection, anti-repeat list) by
+    // biasing every call toward the same highest-probability ("canonical")
+    // phrasing regardless of prompt content. Structure is still constrained
+    // tightly enough by the JSON schema + rules above that 0.7 stays coherent.
+    const data = await ollamaJSON(prompt, 2, 0.7);
+    if (alreadyRecent(trackKey, pairSentenceText(data)) && staticEx) {
+      // AI regenerated something we just saw despite instructions — fall
+      // back to a static pick rather than serve a known repeat.
+      staticEx._static = true;
+      trackRecent(trackKey, pairSentenceText(staticEx));
+      return staticEx;
+    }
+    trackRecent(trackKey, pairSentenceText(data));
     return data;
   } catch (err) {
-    if (staticEx) { staticEx._static = true; return staticEx; } // fallback to static on AI failure
+    if (staticEx) { staticEx._static = true; trackRecent(trackKey, pairSentenceText(staticEx)); return staticEx; } // fallback to static on AI failure
     throw err;
   }
 }
