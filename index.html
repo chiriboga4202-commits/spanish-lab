@@ -1260,14 +1260,31 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
     <div style="font-size:12.5px;opacity:.75;margin-bottom:10px;">A dense reference toolkit for your topic — mnemonics, vocab banks, tables, examples. Built fresh by AI, then save it or download it to keep.</div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
       <div style="font-size:13px;">Current concept: <strong id="res-concept-label">—</strong></div>
+      <div style="font-size:11px;opacity:.6;">Quick topics — tap to fill:</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;">
+        <button class="cfg-btn" style="font-size:11px;" onclick="pickResourceTopic('Ser vs Estar')">Ser vs Estar</button>
+        <button class="cfg-btn" style="font-size:11px;" onclick="pickResourceTopic('Por vs Para')">Por vs Para</button>
+        <button class="cfg-btn" style="font-size:11px;" onclick="pickResourceTopic('Preterite vs Imperfect')">Pret vs Imp</button>
+        <button class="cfg-btn" style="font-size:11px;" onclick="pickResourceTopic('The subjunctive')">Subjunctive</button>
+        <button class="cfg-btn" style="font-size:11px;" onclick="pickResourceTopic('50 food and kitchen nouns')">Food &amp; kitchen</button>
+        <button class="cfg-btn" style="font-size:11px;" onclick="pickResourceTopic('Travel and directions vocabulary')">Travel</button>
+        <button class="cfg-btn" style="font-size:11px;" onclick="pickResourceTopic('Numbers, dates and telling time')">Numbers &amp; time</button>
+        <button class="cfg-btn" style="font-size:11px;" onclick="pickResourceTopic('Family and people vocabulary')">Family</button>
+        <button class="cfg-btn" style="font-size:11px;" onclick="pickResourceTopic('50 common verbs')">Common verbs</button>
+      </div>
       <input id="res-topic" class="ollama-inp" placeholder="…or type any topic (e.g. 50 kitchen nouns, food vocabulary, the subjunctive)" style="width:100%;box-sizing:border-box;padding:8px 10px;" />
       <div style="display:flex;gap:6px;flex-wrap:wrap;">
         <button class="cfg-btn" style="background:rgba(91,141,238,.15);border-color:rgba(91,141,238,.4);color:var(--accent);font-weight:600;" onclick="generateResourceSheet(false)">⚡ Quick sheet</button>
         <button class="cfg-btn" style="background:rgba(91,141,238,.15);border-color:rgba(91,141,238,.4);color:var(--accent);font-weight:600;" onclick="generateResourceSheet(true)">📚 Full toolkit</button>
       </div>
+      <label style="font-size:12px;opacity:.85;display:flex;align-items:center;gap:6px;cursor:pointer;">
+        <input type="checkbox" id="res-personalize" checked /> Include my recent mistakes on this concept
+      </label>
+      <button class="cfg-btn" onclick="quizMyMistakes()" style="align-self:flex-start;background:rgba(62,207,142,.12);border-color:#3ecf8e;color:#3ecf8e;font-size:12px;">🎯 Quiz me on my recent mistakes</button>
     </div>
     <div id="res-output" style="border:1px solid var(--border,#333);border-radius:8px;padding:12px;min-height:60px;max-height:44vh;overflow-y:auto;font-size:13.5px;line-height:1.5;"></div>
     <div id="res-actions" style="display:none;gap:6px;margin-top:8px;flex-wrap:wrap;">
+      <button class="cfg-btn" style="background:rgba(62,207,142,.14);border-color:#3ecf8e;color:#3ecf8e;font-weight:600;" onclick="quizFromSheet()">🎯 Quiz me</button>
       <button class="cfg-btn" onclick="saveCurrentSheet()">📌 Save</button>
       <button class="cfg-btn" onclick="downloadResourcePDF()">🖨 PDF</button>
       <button class="cfg-btn" onclick="downloadResourceDoc()">📄 Word (.doc)</button>
@@ -4399,9 +4416,12 @@ function openResources() {
 }
 function closeResources() { document.getElementById('resources-overlay').classList.remove('open'); }
 
-function buildResourcePrompt(topicName, full) {
+function buildResourcePrompt(topicName, full, mistakes) {
+  const mistakeLine = (mistakes && mistakes.length)
+    ? `\n\nThe student recently got these specific items WRONG on this topic — add a short **"⚠️ Watch out (from your recent misses)"** subsection that directly addresses each: ${mistakes.join(' ; ')}.`
+    : '';
   const density = full
-    ? 'This is a FULL toolkit: every vocabulary bank must contain AT LEAST 50 items. Include 8-10 example sentences and 2-4 tables.'
+    ? 'This is a FULL toolkit. HARD REQUIREMENT: each vocabulary bank/column must contain AT LEAST 50 distinct items — count them and do not stop short. Include 8-10 example sentences and 2-4 tables.'
     : 'This is a COMPACT one-pager: about 20 vocabulary items total, one key table, 5 example sentences. Keep it to roughly one screen.';
   return `You are an expert Spanish teacher creating a dense, practical STUDENT REFERENCE SHEET (study guide + vocabulary toolkit) on: "${topicName}". An American beginner-intermediate learner keeps it open while practicing.
 
@@ -4413,12 +4433,12 @@ Structure, in this order:
 3. **The core idea** - the mental model in 2-3 sentences (contrast the confusable forms if any).
 4. **Shortcut / mnemonic** - a memorable acronym or a single decision-question.
 5. **A "confusable contrast" table** - same word/trigger shown two ways, or a trigger-vs-trigger table (like ser vs estar, por vs para). Required.
-6. **Vocabulary banks** - categorized lists relevant to THIS topic, each item with its English gloss and gender/usage note where relevant. ${density}
-7. **Example sentences** - natural everyday Spanish, each with a one-line "why".
+6. **Vocabulary banks** - the heart of the sheet. Where the concept has two contrasting uses (e.g. ser vs estar, por vs para, preterite vs imperfect), SPLIT the main bank into two labeled columns by which use each word takes, like a teacher's handout. Order each bank by frequency (most common first). Show every noun with its article (el/la); mark adjectives that change form as /a (alto/a). ${density}
+7. **Example sentences** - natural everyday Spanish that a real person would say. Each "why" must be a full teaching sentence explaining the choice (not a one-word tag), and where two forms contrast, show BOTH and why the meaning flips. Do NOT reuse the tired textbook examples (es doctora / está cansado, comí/comía pizza, es aburrido/está aburrido) — use fresh, varied situations.
 8. **The #1 mistake to avoid** + the one-question shortcut.
-9. End with: **▶ Now practice:** one line nudging a specific practice mode on this topic in the app.
+9. End with: **▶ Now practice:** one line nudging a specific practice mode on this topic in the app.${mistakeLine}
 
-Rules: natural, correct, everyday Spanish; dense and skimmable; no filler; gloss every Spanish word in English.`;
+Rules: natural, correct, everyday Spanish; dense and skimmable; no filler; gloss every Spanish word in English. Prefer high-frequency words a beginner will actually encounter — no obscure vocabulary as padding. For any word that is easy to mispronounce, add a tiny phonetic hint in brackets after the gloss, e.g. "listo/a (ready) [LEE-sto]".`;
 }
 
 async function callAIForResource(prompt) {
@@ -4443,13 +4463,18 @@ async function generateResourceSheet(full) {
   const out = document.getElementById('res-output');
   const actions = document.getElementById('res-actions');
   if (actions) actions.style.display = 'none';
-  out.innerHTML = '<div style="opacity:.7;padding:20px;text-align:center;">⚡ Building your study sheet…<br><span style="font-size:12px;opacity:.7;">Full sheets take ~15-20s</span></div>';
+  out.innerHTML = '<div style="opacity:.75;padding:20px;text-align:center;">⚡ Building your study sheet — mnemonic, contrast table, and the vocab banks…<br><span style="font-size:12px;opacity:.7;">A full toolkit (50-word banks) can take ~15-20s. Hang tight.</span></div>';
   if (!ollamaOnline || isGeminiRateLimited()) {
     out.innerHTML = '<div style="opacity:.8;padding:20px;text-align:center;">⚠️ Study sheets need the AI, which is busy right now. Try again in a moment.</div>';
     return;
   }
   try {
-    const md = await callAIForResource(buildResourcePrompt(custom || topicName, full));
+    const pz = document.getElementById('res-personalize');
+    const usePersonal = pz ? pz.checked : true;
+    const myMisses = (usePersonal && typeof wrongAnswers !== 'undefined' && currentConcept && !custom)
+      ? wrongAnswers.filter(w => w && w.conceptName === currentConcept.name).slice(-6).map(w => `"${w.wrong}" (should be "${w.correct}")`)
+      : [];
+    const md = await callAIForResource(buildResourcePrompt(custom || topicName, full, myMisses));
     if (!md) throw new Error('empty response');
     _resourceMD = md;
     _resourceTitle = custom || (currentConcept ? currentConcept.name : 'Study Sheet');
@@ -4521,7 +4546,8 @@ function copyResourceMD() {
   navigator.clipboard.writeText(_resourceMD).then(() => showToast('📋 Copied', 1500)).catch(() => showToast('Copy blocked', 1800));
 }
 function _resourceDocHTML() {
-  return "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset='utf-8'><title>" + escStr(_resourceTitle) + "</title></head><body style=\"font-family:Calibri,Arial,sans-serif;font-size:12pt;color:#111;\">" + renderMarkdownLite(_resourceMD) + "</body></html>";
+  const style = "<style>body{font-family:Calibri,Arial,sans-serif;font-size:12pt;color:#111;line-height:1.5;margin:0.8in;}h2{font-size:20pt;margin:16pt 0 6pt;}h3{font-size:14pt;margin:14pt 0 4pt;}h4{font-size:12pt;margin:10pt 0 3pt;}table{border-collapse:collapse;width:100%;margin:8pt 0;}th,td{border:1px solid #888;padding:6pt 8pt;text-align:left;vertical-align:top;}li{margin:2pt 0;}p{margin:4pt 0;}</style>";
+  return "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset='utf-8'><title>" + escStr(_resourceTitle) + "</title>" + style + "</head><body>" + renderMarkdownLite(_resourceMD) + "</body></html>";
 }
 function _resourceFileName() { return ((_resourceTitle || 'study-sheet').replace(/[^\w\- ]/g, '').trim().replace(/\s+/g, '-')) || 'study-sheet'; }
 function downloadResourceDoc() {
@@ -4540,6 +4566,90 @@ function downloadResourcePDF() {
     '</head><body>' + renderMarkdownLite(_resourceMD) +
     '<scr' + 'ipt>window.onload=function(){setTimeout(function(){window.print();},350);}</scr' + 'ipt></body></html>');
   w.document.close();
+}
+
+// ── In-sheet quiz engine (2026-07-03, loops 3+5): vocab (both directions) + mistakes review.
+let _quizItems = [], _quizIdx = 0, _quizDir = 'en2es', _quizKind = 'vocab', _quizPairsRaw = [];
+function _extractVocabPairs(md) {
+  const pairs = [], seen = new Set();
+  const re = /([A-Za-zÁÉÍÓÚÑáéíóúñ][A-Za-zÁÉÍÓÚÑáéíóúñ\/\-\. ]*?)\s*\(([^)]+)\)/g;
+  let m;
+  while ((m = re.exec(md)) !== null) {
+    const es = m[1].trim().replace(/\s*\/\s*$/, ''), en = m[2].trim();
+    if (!es || !en) continue;
+    if (es.split(/\s+/).length > 4 || en.split(/\s+/).length > 4) continue;
+    if (/[+]/.test(es) || /[0-9]/.test(es) || /[0-9]/.test(en) || en.length > 40) continue;
+    if (/\b(what|how|when|which|she's|he's|doing|gerund)\b/i.test(en)) continue;
+    const key = es.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key); pairs.push({ es, en });
+  }
+  return pairs;
+}
+function _buildVocabItems() {
+  return _quizPairsRaw.map(p => _quizDir === 'en2es'
+    ? { front: p.en, back: p.es, speak: p.es, prompt: "What's the Spanish for:" }
+    : { front: p.es, back: p.en, speak: p.es, prompt: "What does this mean:" });
+}
+function quizFromSheet() {
+  const pairs = shuffle(_extractVocabPairs(_resourceMD));
+  if (pairs.length < 4) { showToast('Not enough vocab on this sheet to quiz', 2500); return; }
+  _quizPairsRaw = pairs.slice(0, 12); _quizKind = 'vocab'; _quizItems = _buildVocabItems(); _quizIdx = 0;
+  renderSheetQuiz();
+}
+function quizMyMistakes() {
+  const src = (typeof wrongAnswers !== 'undefined' ? wrongAnswers : []).slice(-14).reverse();
+  if (!src.length) { showToast('No recent mistakes to review — go practice first!', 2600); return; }
+  _quizKind = 'mistakes';
+  _quizItems = src.map(w => ({
+    front: (w.conceptName ? '[' + w.conceptName + '] ' : '') + (w.question || 'Your answer') + (w.wrong ? '  — you put: “' + w.wrong + '”' : ''),
+    back: 'Correct: ' + (w.correct || '?'),
+    speak: w.correct || '', prompt: 'Recall the correct answer:'
+  }));
+  _quizIdx = 0; renderSheetQuiz();
+}
+function toggleQuizDir() {
+  if (_quizKind !== 'vocab') return;
+  _quizDir = _quizDir === 'en2es' ? 'es2en' : 'en2es';
+  _quizItems = _buildVocabItems();
+  renderSheetQuiz();
+}
+function renderSheetQuiz() {
+  const out = document.getElementById('res-output');
+  const actions = document.getElementById('res-actions');
+  if (actions) actions.style.display = 'none';
+  if (_quizIdx >= _quizItems.length) {
+    out.innerHTML = '<div style="text-align:center;padding:16px;"><div style="font-size:16px;margin-bottom:10px;">✅ Reviewed ' + _quizItems.length + ' ' + (_quizKind === 'mistakes' ? 'mistakes' : 'words') + '!</div>' +
+      '<button class="cfg-btn" onclick="' + (_quizKind === 'mistakes' ? 'quizMyMistakes()' : 'quizFromSheet()') + '">🔁 Again</button> ' +
+      '<button class="cfg-btn" onclick="backToSheet()">← Back to sheet</button></div>';
+    return;
+  }
+  const it = _quizItems[_quizIdx];
+  const dirBtn = _quizKind === 'vocab'
+    ? '<button class="cfg-btn" onclick="toggleQuizDir()" style="font-size:11px;">🔁 ' + (_quizDir === 'en2es' ? 'EN→ES' : 'ES→EN') + '</button>' : '';
+  out.innerHTML = '<div style="text-align:center;padding:14px;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;opacity:.6;"><span>' + (_quizIdx + 1) + ' / ' + _quizItems.length + '</span>' + dirBtn + '</div>' +
+    '<div style="font-size:13px;opacity:.7;margin:8px 0 6px;">' + it.prompt + '</div>' +
+    '<div style="font-size:19px;font-weight:700;margin-bottom:10px;">' + escStr(it.front) + '</div>' +
+    '<div id="quiz-answer" style="font-size:18px;color:var(--accent);min-height:24px;margin-bottom:10px;"></div>' +
+    '<button class="cfg-btn" id="quiz-reveal" onclick="revealQuiz()">Show answer</button> ' +
+    '<button class="cfg-btn" onclick="nextQuiz()">Next →</button>' +
+    '<div style="margin-top:8px;"><button class="cfg-btn" onclick="backToSheet()" style="font-size:11px;opacity:.7;">← Back to sheet</button></div>' +
+    '</div>';
+}
+function revealQuiz() {
+  const it = _quizItems[_quizIdx]; if (!it) return;
+  const el = document.getElementById('quiz-answer'); if (el) el.textContent = it.back;
+  if (it.speak && typeof speakSpanish === 'function') speakSpanish(it.speak);
+  const b = document.getElementById('quiz-reveal'); if (b) b.style.display = 'none';
+}
+function nextQuiz() { _quizIdx++; renderSheetQuiz(); }
+function backToSheet() {
+  document.getElementById('res-output').innerHTML = _resourceMD ? renderMarkdownLite(_resourceMD) : '<div style="opacity:.5;padding:16px;text-align:center;">Generate a sheet above, or quiz your mistakes.</div>';
+  const actions = document.getElementById('res-actions'); if (actions && _resourceMD) actions.style.display = 'flex';
+}
+function pickResourceTopic(t) {
+  const inp = document.getElementById('res-topic'); if (inp) { inp.value = t; inp.focus(); }
 }
 
 function renderCheatSheet() {
