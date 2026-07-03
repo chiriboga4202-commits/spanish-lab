@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "spanish-lab",
+  "compatibility_date": "2026-07-02",
+  "main": "./dist/worker/index.js",
+  "assets": {
+    "directory": "."
+  }
+}
