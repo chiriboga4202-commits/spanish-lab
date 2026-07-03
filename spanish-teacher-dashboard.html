@@ -2966,6 +2966,22 @@ const ALL_CONCEPTS = [
   {key:'obj-pronouns',name:'Obj Pronouns'},
 ];
 
+// 2026-07-03: this whole queue used to live ONLY in localStorage, meaning it
+// only ever reached a student if the teacher happened to run this dashboard on
+// the exact same browser/device as the student — no real cross-device sync at
+// all. syncQueueToServer() pushes every change to the Cloudflare KV-backed
+// /api/assignments endpoint (functions/api/assignments.js) so any student's
+// browser, anywhere, can pick it up (see index.html's applyTeacherQueue()).
+// Fire-and-forget — localStorage stays the instant local cache/fallback, so a
+// flaky connection here doesn't block the teacher from using the panel.
+function syncQueueToServer(q) {
+  fetch('/api/assignments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ queue: q })
+  }).catch(() => {});
+}
+
 function renderQueue() {
   const btns = document.getElementById('queue-concept-btns');
   const list = document.getElementById('queue-list');
@@ -2973,6 +2989,15 @@ function renderQueue() {
     `<button class="queue-concept-btn" onclick="queueConcept('${c.key}','${c.name}')">${c.name}</button>`
   ).join('');
   if (list) refreshQueueList();
+  // Pull the server's copy in case this dashboard was reopened on a different
+  // device/session than whichever one last edited the queue.
+  fetch('/api/assignments').then(r => r.json()).then(data => {
+    if (!Array.isArray(data?.queue)) return;
+    const local = JSON.parse(localStorage.getItem('sl_teacher_queue') || '[]');
+    if (JSON.stringify(data.queue) === JSON.stringify(local)) return;
+    localStorage.setItem('sl_teacher_queue', JSON.stringify(data.queue));
+    refreshQueueList();
+  }).catch(() => {});
 }
 
 function queueConcept(key, name) {
@@ -2980,6 +3005,7 @@ function queueConcept(key, name) {
   if (!q.find(c => c.key === key)) {
     q.push({ key, name, addedAt: new Date().toISOString() });
     localStorage.setItem('sl_teacher_queue', JSON.stringify(q));
+    syncQueueToServer(q);
   }
   refreshQueueList();
   showToast(`"${name}" added to queue`, 1500);
@@ -3003,11 +3029,13 @@ function dequeueConceptAt(i) {
   const q = JSON.parse(localStorage.getItem('sl_teacher_queue') || '[]');
   q.splice(i, 1);
   localStorage.setItem('sl_teacher_queue', JSON.stringify(q));
+  syncQueueToServer(q);
   refreshQueueList();
 }
 
 function clearQueue() {
   localStorage.removeItem('sl_teacher_queue');
+  syncQueueToServer([]);
   refreshQueueList();
   showToast('Queue cleared', 1500);
 }

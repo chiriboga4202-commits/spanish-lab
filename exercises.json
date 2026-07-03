@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generated": "2026-07-03",
-  "total": 352,
+  "total": 376,
   "concepts": {
     "ser-estar": {
       "pairs": [
@@ -1604,6 +1604,142 @@
           "en": "I'm going to bed early tonight.",
           "es": "Me voy a acostar temprano esta noche. / Voy a acostarme temprano esta noche.",
           "explanation": "Reflexive pronoun goes before the conjugated verb OR attaches to the infinitive."
+        }
+      ]
+    },
+    "tu-usted": {
+      "pairs": [
+        {
+          "es": "¿Cómo te llamas?",
+          "en": "What's your name? (informal)",
+          "explanation": "tú register — te llamas"
+        },
+        {
+          "es": "¿Cómo se llama usted?",
+          "en": "What's your name? (formal)",
+          "explanation": "usted register — conjugates like él/ella"
+        },
+        {
+          "es": "¿Es este tu libro?",
+          "en": "Is this your book? (informal)",
+          "explanation": "tú possessive: tu"
+        },
+        {
+          "es": "¿Es este su libro?",
+          "en": "Is this your book? (formal)",
+          "explanation": "usted possessive: su"
+        },
+        {
+          "es": "Habla más despacio, por favor.",
+          "en": "Speak more slowly, please. (to a friend)",
+          "explanation": "tú affirmative command: habla"
+        },
+        {
+          "es": "Hable más despacio, por favor.",
+          "en": "Speak more slowly, please. (to a stranger)",
+          "explanation": "usted command form: hable"
+        },
+        {
+          "es": "¿Puedes ayudarme con esto?",
+          "en": "Can you help me with this? (informal)",
+          "explanation": "tú present: puedes"
+        },
+        {
+          "es": "¿Puede ayudarme con esto?",
+          "en": "Can you help me with this? (formal)",
+          "explanation": "usted present: puede"
+        }
+      ],
+      "fillblank": [
+        {
+          "question": "Perdón, ¿___ (llamarse, usted) María?",
+          "answer": "se llama",
+          "hint": "is your name Maria? (formal)",
+          "explanation": "Usted conjugates like él/ella: se llama."
+        },
+        {
+          "question": "Oye, ¿___ (llamarse, tú) Ana?",
+          "answer": "te llamas",
+          "hint": "is your name Ana? (informal, to a friend)",
+          "explanation": "Tú → te llamas."
+        },
+        {
+          "question": "Señora, ¿es este ___ (posesivo) paraguas?",
+          "answer": "su",
+          "hint": "is this your umbrella? (formal, to a woman)",
+          "explanation": "Usted's possessive is su/sus, same as his/her/their."
+        },
+        {
+          "question": "Oye, ¿es este ___ (posesivo) paraguas?",
+          "answer": "tu",
+          "hint": "is this your umbrella? (informal)",
+          "explanation": "Tú's possessive is tu/tus."
+        },
+        {
+          "question": "Profesor, ¿___ (poder, usted) ayudarme?",
+          "answer": "puede",
+          "hint": "can you help me? (formal, to a professor)",
+          "explanation": "Usted, poder (o→ue) → puede."
+        },
+        {
+          "question": "Ey, ¿___ (poder, tú) ayudarme?",
+          "answer": "puedes",
+          "hint": "can you help me? (informal)",
+          "explanation": "Tú, poder (o→ue) → puedes."
+        },
+        {
+          "question": "Señor, ___ (sentarse, comando usted) aquí, por favor.",
+          "answer": "siéntese",
+          "hint": "have a seat here, please (formal command)",
+          "explanation": "Usted command of sentarse → siéntese."
+        },
+        {
+          "question": "Oye, ___ (sentarse, comando tú) aquí conmigo.",
+          "answer": "siéntate",
+          "hint": "sit here with me (informal command)",
+          "explanation": "Tú command of sentarse → siéntate."
+        }
+      ],
+      "translate": [
+        {
+          "en": "What's your name? (asking a classmate)",
+          "es": "¿Cómo te llamas?",
+          "explanation": "Tú register — peer/classmate context."
+        },
+        {
+          "en": "What's your name? (asking your doctor)",
+          "es": "¿Cómo se llama usted?",
+          "explanation": "Usted register — professional/formal context."
+        },
+        {
+          "en": "Is this your car? (asking your neighbor's elderly mother)",
+          "es": "¿Es este su carro?",
+          "explanation": "Usted possessive su — showing respect toward an elder."
+        },
+        {
+          "en": "Is this your car? (asking your little cousin)",
+          "es": "¿Es este tu carro?",
+          "explanation": "Tú possessive tu — informal family context."
+        },
+        {
+          "en": "Please come in, sir.",
+          "es": "Pase, por favor, señor.",
+          "explanation": "Usted command of pasar → pase — formal register matching 'señor'."
+        },
+        {
+          "en": "Come in, come in! (to your best friend)",
+          "es": "¡Pasa, pasa!",
+          "explanation": "Tú command of pasar → pasa — informal register."
+        },
+        {
+          "en": "Could you repeat that, please? (to a stranger on the phone)",
+          "es": "¿Podría repetir eso, por favor?",
+          "explanation": "Podría = formal/usted conditional — extra-polite request to a stranger."
+        },
+        {
+          "en": "Can you repeat that? (to your brother)",
+          "es": "¿Puedes repetir eso?",
+          "explanation": "Puedes = tú present — casual request among family."
         }
       ]
     },

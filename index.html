@@ -923,6 +923,12 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   .next-btn { width: 100%; margin-top: 4px; }
   /* Review modal */
   .review-overlay { padding: 12px; }
+  /* 2026-07-03: pronunciation buttons were 3px 7px padding / 13px font at every
+     breakpoint (~20x27px rendered) — well under the ~44px touch-target guideline,
+     and they're one of the most-tapped controls (Pairs, Fill Blank, Translate,
+     Conjugate all use them). Bump on touch-sized viewports only; desktop mouse
+     precision doesn't need it. */
+  .speak-btn { padding: 9px 12px; font-size: 16px; }
 }
 
 /* Phone — single column pairs, hide hd-stat icons, collapse logo sub */
@@ -1409,6 +1415,16 @@ Some verbs change meaning with reflexive: ir (to go) vs irse (to leave/go away),
 Reciprocal: "Nos queremos" = we love each other.`
   },
   {
+    key:'tu-usted', name:'Tú vs. Usted', emoji:'🤝', level:'beg', requires:['present'],
+    context:`Tú (informal) and usted (formal) both mean "you" (singular) but require different verb forms — usted actually conjugates like él/ella (third person), not like tú.
+"¿Cómo te llamas?" (tú) vs "¿Cómo se llama usted?" (usted) — same question, different register.
+Use tú with: friends, family, peers, children — anyone you're on casual terms with.
+Use usted with: strangers, elders, bosses/professionals, customer service — anyone you want to show respect or social distance to.
+Possessives shift too: tu/tus (tú) vs su/sus (usted — same as his/her/their).
+Commands diverge the most: "habla" (tú command) vs "hable" (usted command) — genuinely different forms.
+Once you choose a register with someone, stay consistent — don't mix tú and usted forms for the same person.`
+  },
+  {
     key:'present', name:'Present Tense', emoji:'⚡', level:'beg',
     context:`Spanish present tense covers: current ongoing actions, habitual actions, universal facts, near-future plans.
 Unlike English: no separate "I am eating" vs "I eat" — context determines which meaning.
@@ -1549,6 +1565,16 @@ const BUILDER_BANK = {
     { _static:true, en:"Sit down, please, the meeting is starting.", words:["Siéntense","por","favor","la","reunión","está","empezando"], explanation:"Siéntense (sentarse, imperative plural) = reflexive command" },
     { _static:true, en:"I don't remember his name.", words:["No","me","acuerdo","de","su","nombre"], explanation:"me acuerdo (acordarse) = reflexive verb for 'to remember'" }
   ],
+  'tu-usted': [
+    { _static:true, en:"Excuse me, could you tell me the time?", words:["Perdón","¿podría","decirme","la","hora?"], explanation:"Podría = formal/usted conditional of poder — a polite request to a stranger" },
+    { _static:true, en:"Hey, can you pass me the salt?", words:["Oye","¿me","pasas","la","sal?"], explanation:"Pasas = tú present tense — direct, casual request among friends" },
+    { _static:true, en:"Good afternoon, how can I help you, ma'am?", words:["Buenas","tardes","¿en","qué","puedo","ayudarle?"], explanation:"Ayudarle (usted indirect object le) — formal customer-service register" },
+    { _static:true, en:"Dude, what are you doing this weekend?", words:["Tío","¿qué","haces","este","fin","de","semana?"], explanation:"Haces = tú present tense — casual register signaled by 'tío' (dude)" },
+    { _static:true, en:"Sir, please have a seat.", words:["Señor","tome","asiento","por","favor"], explanation:"Tome = usted command of tomar — formal command matching 'señor'" },
+    { _static:true, en:"Come here and look at this!", words:["Ven","aquí","y","mira","esto!"], explanation:"Ven, mira = tú affirmative commands (irregular venir + regular mirar) — informal register" },
+    { _static:true, en:"Doctor, what do you recommend for this pain?", words:["Doctor","¿qué","me","recomienda","para","este","dolor?"], explanation:"Recomienda = usted present (e→ie stem change) — formal, professional context" },
+    { _static:true, en:"Mom, could you help me with this?", words:["Mamá","¿me","ayudas","con","esto?"], explanation:"Ayudas = tú present — family members typically use tú even when asking for help" }
+  ],
   'present': [
     { _static:true, en:"I have a lot of work and I cannot go out today.", words:["Tengo","mucho","trabajo","y","no","puedo","salir","hoy"], explanation:"tengo = irregular yo form of tener; puedo = o→ue stem change of poder" },
     { _static:true, en:"Do you want to come with me to the market?", words:["¿Quieres","venir","conmigo","al","mercado?"], explanation:"quieres = e→ie stem change; near-future use of present tense" },
@@ -1668,6 +1694,14 @@ const GATEWAYS = {
     anchorEn: 'My name is Carlos (I call myself Carlos). / I call Carlos.',
     anchorWhy: `<b>Me llamo</b> = the calling loops back to me (my name). <b>Llamo a Carlos</b> = the calling goes outward to someone else. The reflexive pronoun changes the direction of the action entirely.`,
     mistake: `❌ <b>Forgetting to change the pronoun</b> with the subject. "Ella <b>se</b> lava" (she washes herself), not "ella <b>me</b> lava." The reflexive pronoun must match the subject: me/te/se/nos/os/se.`
+  },
+  'tu-usted': {
+    subtitle: 'Choosing your social distance, not just "you"',
+    mental: `Spanish forces you to choose a <strong>social relationship</strong> every time you say "you" — <em>tú</em> signals closeness/informality, <em>usted</em> signals respect/distance. Usted is grammatically third person (it conjugates exactly like él/ella), even though it means "you" — that mismatch between meaning and grammar is what trips people up.<br><br>Get it wrong and it's not really a grammar mistake so much as a social one: too casual with your boss, or oddly stiff with a friend.`,
+    anchorEs: '¿Cómo te llamas? / ¿Cómo se llama usted?',
+    anchorEn: "What's your name? (asked to a friend) / What's your name? (asked formally)",
+    anchorWhy: `Same question, same meaning — but <b>te llamas</b> (tú) and <b>se llama</b> (usted) are grammatically unrelated verb forms. Usted borrows él/ella's conjugation entirely.`,
+    mistake: `❌ <b>Mixing tú and usted forms for the same person</b> — e.g. "¿Cómo se llama... tú?" Pick one register and stay consistent: every pronoun, possessive, and verb ending must match (tú/te/tu/tus OR usted/se/su/sus).`
   },
   'present': {
     subtitle: 'One tense doing the work of three English ones',
@@ -1922,6 +1956,42 @@ const STATIC_EXERCISES = {
       { difficulty:'int', before:"Ellos", after:"sin decir nada.", en:"They left without saying anything.", options:["se fueron","se van","se fue","nos fuimos"], correct:0, explanation:"Irse (to leave/go away), ellos, preterite → se fueron." },
       { difficulty:'int', before:"Antes de", after:", lávate los dientes.", en:"Before going to bed, brush your teeth.", options:["acostarte","acostarse","me acostar","te acuestes"], correct:0, explanation:"Antes de + infinitive; pronoun matches tú → acostarte." },
       { difficulty:'adv', before:"No", after:"bien con su jefe desde el primer día.", en:"He hasn't gotten along with his boss since day one.", options:["se lleva","se llevan","me llevo","te llevas"], correct:0, explanation:"Llevarse bien = to get along; él, present → se lleva." }
+    ]
+  },
+  'tu-usted': {
+    pairs: [
+      { difficulty:'beg', question:"Which correctly asks a close friend for their name?", correct:1,
+        cards:[
+          {es:"¿Cómo se llama?",en:"What's your name?",reason:"Wrong — this is the usted (formal) form, too distant for a close friend."},
+          {es:"¿Cómo te llamas?",en:"What's your name?",reason:"Correct — tú (informal) matches a close friend."}
+        ], explanation:"Tú is for friends/peers; te llamas matches tú, not usted's se llama." },
+      { difficulty:'beg', question:"Which correctly addresses a stranger you're meeting for the first time in a professional context?", correct:1,
+        cards:[
+          {es:"¿De dónde eres tú?",en:"Where are you from?",reason:"Wrong — tú is too informal for a first professional meeting with a stranger."},
+          {es:"¿De dónde es usted?",en:"Where are you from?",reason:"Correct — usted shows the respect/social distance appropriate for a stranger in a formal setting."}
+        ], explanation:"Usted signals respect and distance — appropriate for strangers and professional contexts." },
+      { difficulty:'int', question:"Which correctly says 'Is this your book?' to your boss?", correct:1,
+        cards:[
+          {es:"¿Es este tu libro?",en:"Is this your book?",reason:"Wrong — 'tu' is the informal possessive, mismatched with the formal register appropriate for a boss."},
+          {es:"¿Es este su libro?",en:"Is this your book?",reason:"Correct — 'su' is the formal possessive matching usted."}
+        ], explanation:"Usted's possessive is su/sus — identical to his/her/their, which is why it's often ambiguous without context." },
+      { difficulty:'int', question:"Which is the correct informal command telling a friend to 'speak louder'?", correct:1,
+        cards:[
+          {es:"Hable más alto.",en:"Speak louder.",reason:"Wrong — 'hable' is the usted command form, too formal for a friend."},
+          {es:"Habla más alto.",en:"Speak louder.",reason:"Correct — 'habla' is the tú affirmative command."}
+        ], explanation:"Tú affirmative commands use a distinct form from usted commands — habla (tú) vs hable (usted)." },
+      { difficulty:'adv', question:"Which keeps register consistent throughout, talking to the same friend?", correct:1,
+        cards:[
+          {es:"¿Tú vas al mercado? ¿Y usted qué compra?",en:"Are you going to the market? And what are you buying?",reason:"Wrong — mixing tú and usted for the same person mid-conversation is inconsistent register."},
+          {es:"¿Tú vas al mercado? ¿Y tú qué compras?",en:"Are you going to the market? And what are you buying?",reason:"Correct — once you choose a register with someone, stay consistent throughout."}
+        ], explanation:"Pick one register per relationship and keep every pronoun, possessive, and verb form consistent with it." }
+    ],
+    fillblank: [
+      { difficulty:'beg', before:"¿Cómo", after:"llamas? (asking a new friend your age)", en:"What's your name?", options:["te","se","le","nos"], correct:0, explanation:"Tú register with a peer → te llamas." },
+      { difficulty:'beg', before:"¿Cómo se", after:"usted? (asking your new boss)", en:"What's your name?", options:["llama","llamas","llamo","llaman"], correct:0, explanation:"Usted conjugates like él/ella → se llama." },
+      { difficulty:'int', before:"Perdón, ¿es esta", after:"mesa, señor?", en:"Excuse me, is this your table, sir?", options:["su","tu","sus","tus"], correct:0, explanation:"Formal address (señor) → su, the usted possessive." },
+      { difficulty:'int', before:"", after:"la puerta, por favor. (asking your grandmother, formally)", en:"Close the door, please.", options:["Cierre","Cierra","Cierras","Cierren"], correct:0, explanation:"Usted command form of cerrar (e→ie) → cierre." },
+      { difficulty:'adv', before:"", after:"la puerta, por favor. (asking your little brother)", en:"Close the door, please.", options:["Cierra","Cierre","Cierro","Cerrad"], correct:0, explanation:"Tú affirmative command of cerrar (e→ie) → cierra." }
     ]
   },
   'present': {
@@ -4500,8 +4570,12 @@ function checkConjugate() {
   }
 }
 
-function insertAccent(c) {
-  const inp = document.getElementById('conj-inp');
+function insertAccent(c, targetId = 'conj-inp') {
+  // 2026-07-03: generalized to accept a target input/textarea id (was hardcoded
+  // to #conj-inp) so the same accent-helper buttons/CSS could be reused in
+  // Translate and Missing mode's free-text inputs (backlog idea #33) instead of
+  // duplicating this logic three times.
+  const inp = document.getElementById(targetId);
   if (!inp || exerciseAnswered) return;
   const start = inp.selectionStart;
   const end = inp.selectionEnd;
@@ -5667,13 +5741,23 @@ function advanceMixedConcept() {
   let pool = CONCEPTS.filter(c => !recentConceptKeys.includes(c.key));
   if (pool.length === 0) pool = CONCEPTS.filter(c => c.key !== lastUsedConceptKey);
   if (pool.length === 0) pool = CONCEPTS;
+  // 2026-07-03: layer SM-2 due-status into the weighting, not just accuracy — a
+  // concept a student has already mastered can still have specific cards due
+  // for spaced review today, and those were previously only surfaced in the
+  // separate Review tab, never boosted here. Reuses the same getAllDueItems()
+  // Review mode already relies on, so due-counting logic isn't duplicated.
+  const dueByConcept = {};
+  getAllDueItems().forEach(item => {
+    dueByConcept[item._conceptKey] = (dueByConcept[item._conceptKey] || 0) + 1;
+  });
   const weighted = [];
   pool.forEach(c => {
     const m = conceptMastery[c.key];
     const acc = m && m.total > 0 ? m.correct / m.total : 0.5;
     // More weight for lower accuracy (0→3 slots, 100%→1 slot)
     const slots = Math.max(1, Math.round((1 - acc) * 3) + 1);
-    for (let i = 0; i < slots; i++) weighted.push(c);
+    const dueBonus = Math.min(3, dueByConcept[c.key] || 0);
+    for (let i = 0; i < slots + dueBonus; i++) weighted.push(c);
   });
   const next = weighted[Math.floor(Math.random() * weighted.length)];
   lastUsedConceptKey = next.key;
@@ -5803,6 +5887,11 @@ function renderTranslation(data) {
         ${data.hint ? `<div class="translate-hint">💡 ${data.hint}</div>` : ''}
       </div>
       <textarea class="translate-input" id="translate-input" placeholder="Write your Spanish translation here..." oninput="document.getElementById('translate-go').disabled=!this.value.trim()"></textarea>
+      <div class="conj-accents" style="margin-bottom:8px">
+        ${['á','é','í','ó','ú','ñ','¿','¡'].map(c =>
+          `<button type="button" class="accent-btn" onclick="insertAccent('${c}','translate-input');document.getElementById('translate-go').disabled=!document.getElementById('translate-input').value.trim()">${c}</button>`
+        ).join('')}
+      </div>
       <button class="translate-submit" id="translate-go" onclick="submitTranslation()" disabled>Check my answer →</button>
       <div class="translate-feedback" id="translate-feedback"></div>
       <div class="result-bar" id="result-bar" style="display:none" aria-live="polite">
@@ -5814,6 +5903,13 @@ function renderTranslation(data) {
       </div>
     </div>`;
   document.getElementById('translate-input').focus();
+  // 2026-07-03: this listener was only ever removed inside translateKeyHandler's own
+  // Ctrl+Enter branch — if a student answered by clicking the button instead (or any
+  // other path), the old listener never got cleaned up, and every subsequent Translate
+  // exercise stacked another one on `document`, so Ctrl+Enter would fire the handler
+  // multiple times at once. Remove any prior listener before adding a fresh one so
+  // there's ever at most one bound.
+  document.removeEventListener('keydown', translateKeyHandler);
   document.addEventListener('keydown', translateKeyHandler);
 }
 
@@ -7149,7 +7245,8 @@ const CONCEPT_MIN_ATTEMPTS = {
   'reflexive':   12,
   'gustar':      12,
   'word-order':   8,
-  'obj-pronouns':15
+  'obj-pronouns':15,
+  'tu-usted':     8
 };
 function getMinAttempts(conceptKey) {
   return CONCEPT_MIN_ATTEMPTS[conceptKey] || 10;
@@ -7231,6 +7328,12 @@ const CONCEPT_GLOSSARIES = {
     {es:'se llama',en:'he/she is called'},
     {es:'nos duchamos',en:'we shower'},
     {es:'-se (inf)',en:'reflexive infinitive'},
+  ],
+  'tu-usted': [
+    {es:'tú hablas / usted habla',en:'same meaning, different conjugation — usted = él/ella form'},
+    {es:'tu casa / su casa',en:'your house: tú → tu(s), usted → su(s) (same as his/her/their)'},
+    {es:'te veo / lo veo (a usted)',en:'I see you: tú → te, usted → lo/la'},
+    {es:'¡habla! / ¡hable!',en:'speak!: tú command vs usted command'},
   ],
   'present': [
     {es:'-ar: -o/-as/-a',en:'hablar → hablo'},
@@ -7338,9 +7441,12 @@ function gradeSpeaking(transcript, expected) {
   const matches = expWords.filter(w => gotWords.includes(w)).length;
   const score = matches / expWords.length;
   let cls, msg;
-  if (score >= 0.9) { cls = 'ok'; msg = '✅ Excellent! Almost word-perfect.'; addXP(12); updateStreak(true); }
-  else if (score >= 0.65) { cls = 'close'; msg = '🟡 Close! Expected: "' + expected + '"'; addXP(6); updateStreak(true); }
-  else { cls = 'try'; msg = '❌ Try again. Expected: "' + expected + '"'; updateStreak(false); }
+  // 2026-07-03: same concept-mastery gap as Missing/Word Drop — Speak mode is
+  // concept-scoped but never called recordMastery(), so it never counted toward
+  // concept accuracy/SM-2/teacher sync.
+  if (score >= 0.9) { cls = 'ok'; msg = '✅ Excellent! Almost word-perfect.'; addXP(12); updateStreak(true); recordMastery(true); }
+  else if (score >= 0.65) { cls = 'close'; msg = '🟡 Close! Expected: "' + expected + '"'; addXP(6); updateStreak(true); recordMastery(true); }
+  else { cls = 'try'; msg = '❌ Try again. Expected: "' + expected + '"'; updateStreak(false); recordMastery(false); }
   resultEl.className = 'speak-result ' + cls;
   resultEl.textContent = msg;
   resultBar.style.display = '';
@@ -7371,6 +7477,11 @@ function loadMissing() {
     </div>
     <div class="missing-sentence">${displayWords.join(' ')}</div>
     <input class="missing-input" id="missing-inp" placeholder="Type the missing word..." autocomplete="off">
+    <div class="conj-accents" style="justify-content:center;margin-top:8px">
+      ${['á','é','í','ó','ú','ñ'].map(c =>
+        `<button type="button" class="accent-btn" onclick="insertAccent('${c}','missing-inp')">${c}</button>`
+      ).join('')}
+    </div>
     <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
       <button class="check-btn" onclick="checkMissing('${escStr(answer)}')" id="missing-check-btn">Check</button>
     </div>
@@ -7400,6 +7511,11 @@ function checkMissing(answer) {
   if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(10); updateStreak(true); }
   else { updateStreak(false, { conceptName: currentConcept?.name, question: 'Missing word: ' + answer, wrong: input.value, correct: answer }); }
+  // 2026-07-03: Missing mode is concept-scoped (uses currentConcept) just like
+  // Pairs/FillBlank/Builder, but never called recordMastery() — so practicing it
+  // never moved the concept-bar accuracy%, never updated lastPracticed (throwing
+  // off the weekly-review nudge), and never fed SM-2/teacher sync. Bring it to parity.
+  recordMastery(correct);
   logAnswerHistory('Missing: ' + answer, correct);
   checkBadges();
 }
@@ -7503,6 +7619,9 @@ function checkWordDrop(explanation) {
   if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(12); updateStreak(true); }
   else { updateStreak(false, { conceptName: currentConcept?.name, question: 'Word drop', wrong: placed.join(' '), correct: _dropAnswer.join(' ') }); }
+  // 2026-07-03: same gap as Missing mode — Word Drop is concept-scoped but never
+  // called recordMastery(), so it never counted toward concept accuracy/mastery.
+  recordMastery(correct);
   logAnswerHistory('Word Drop: ' + _dropAnswer.join(' '), correct);
   checkBadges();
 }
@@ -7652,6 +7771,24 @@ function writeLiveFeed(correct, question, mode) {
       if (v.minEx) CONCEPT_MIN_ATTEMPTS[key] = v.minEx;
     });
   }
+  // 2026-07-03: sl_teacher_queue previously only ever got populated if a
+  // teacher happened to use THIS exact browser/device — the teacher dashboard
+  // wrote straight to localStorage with no cross-device sync, so a remote
+  // student could never actually see anything assigned from the teacher's own
+  // machine. Pull the real shared queue from the Cloudflare KV-backed
+  // /api/assignments endpoint and let it override the local copy if different;
+  // the localStorage read above stays as an instant/offline fallback so there's
+  // no regression if this fetch fails.
+  fetch('/api/assignments').then(r => r.json()).then(data => {
+    const remoteQ = Array.isArray(data?.queue) ? data.queue : null;
+    if (!remoteQ) return;
+    if (JSON.stringify(remoteQ) === JSON.stringify(q)) return; // already in sync
+    localStorage.setItem('sl_teacher_queue', JSON.stringify(remoteQ));
+    if (remoteQ.length && typeof showToast === 'function') {
+      showToast('📋 Teacher queued: ' + remoteQ.slice(0,3).map(c=>c.name).join(', '), 4000);
+    }
+    if (typeof renderAssignmentBanner === 'function') renderAssignmentBanner();
+  }).catch(() => {}); // offline/misconfigured KV — silently keep the local copy
 })();
 
 // Inject teacher custom exercises into student exercise bank (#34)
@@ -7769,6 +7906,7 @@ const ERROR_CATEGORIES = {
   'obj-pronouns': 'Object Pronouns',
   'word-order': 'Word Order',
   'present': 'Present Tense',
+  'tu-usted': 'Tú vs. Usted',
 };
 
 let _errorTaxonomy = JSON.parse(localStorage.getItem('sl_error_taxonomy') || '{}');
@@ -7892,10 +8030,21 @@ const VOCAB_LIST = [
 
 let _vocabIdx = 0;
 let _vocabSeen = JSON.parse(localStorage.getItem('sl_vocab_seen') || '[]');
+let _vocabXpAwarded = new Set(); // indices already credited this deck pass — see renderVocabCard
 
 function loadVocab() {
   const shuffled = shuffle([...VOCAB_LIST]);
+  // 2026-07-03: "✓ Know it" wrote a positional index into this array, but the
+  // array gets reshuffled from scratch every load — index 3 is a different word
+  // every time, and nothing ever read _vocabSeen back, so the button had zero
+  // effect beyond its color. markVocabKnown now persists by the word's stable
+  // `es` text (see below); use it here to push already-known words to the back
+  // of the deck so review time favors what's still new, without hiding them
+  // outright (so the deck never dead-ends if everything's marked known).
+  const known = new Set(_vocabSeen);
+  shuffled.sort((a, b) => (known.has(a.es) ? 1 : 0) - (known.has(b.es) ? 1 : 0));
   _vocabIdx = 0;
+  _vocabXpAwarded = new Set();
   renderVocabCard(shuffled);
 }
 
@@ -7917,10 +8066,17 @@ function renderVocabCard(list) {
     </div>
     <div class="vocab-nav">
       <button onclick="_vocabIdx--;if(_vocabIdx<0)_vocabIdx=total-1;renderVocabCard(list)">← Prev</button>
-      <button onclick="markVocabKnown('${idx}');_vocabIdx++;renderVocabCard(list)" style="background:rgba(62,207,142,.12);border-color:#3ecf8e;color:#3ecf8e">✓ Know it</button>
+      <button onclick="markVocabKnown('${escStr(word.es)}');_vocabIdx++;renderVocabCard(list)" style="background:rgba(62,207,142,.12);border-color:#3ecf8e;color:#3ecf8e">✓ Know it</button>
       <button onclick="_vocabIdx++;renderVocabCard(list)" style="background:rgba(244,91,105,.06);border-color:#f45b69;color:#f45b69">✗ Review</button>
     </div>`;
-  addXP(2);
+  // 2026-07-03: this used to fire unconditionally on every render, including
+  // "← Prev" navigating back over already-seen cards — since Prev/Next both just
+  // call renderVocabCard again, a student could click back and forth to farm
+  // unlimited XP. Only credit the first time a given card is shown per deck pass.
+  if (!_vocabXpAwarded.has(idx)) {
+    _vocabXpAwarded.add(idx);
+    addXP(2);
+  }
 }
 
 function revealVocab() {
@@ -7929,8 +8085,8 @@ function revealVocab() {
   document.getElementById('vocab-ex').style.display = 'block';
 }
 
-function markVocabKnown(idx) {
-  if (!_vocabSeen.includes(idx)) _vocabSeen.push(idx);
+function markVocabKnown(esText) {
+  if (!_vocabSeen.includes(esText)) _vocabSeen.push(esText);
   localStorage.setItem('sl_vocab_seen', JSON.stringify(_vocabSeen));
 }
 
