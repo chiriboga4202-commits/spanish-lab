@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "generated": "2026-07-01",
-  "total": 325,
+  "generated": "2026-07-03",
+  "total": 352,
   "concepts": {
     "ser-estar": {
       "pairs": [
@@ -1204,6 +1204,18 @@
           "answer": "falta",
           "hint": "we're missing information",
           "explanation": "Singular subject → falta"
+        },
+        {
+          "question": "A los estudiantes ___ los exámenes sorpresa.",
+          "answer": "no les gustan",
+          "hint": "students don't like pop quizzes (plural)",
+          "explanation": "Exámenes = plural → gustan; students = les (plural indirect object)."
+        },
+        {
+          "question": "¿A vosotros os ___ (parecer) buena idea?",
+          "answer": "parece",
+          "hint": "does it seem like a good idea to you all (singular idea)",
+          "explanation": "Parecer follows the gustar pattern; 'una buena idea' is singular → parece."
         }
       ],
       "translate": [
@@ -1246,6 +1258,16 @@
           "en": "I feel like a coffee.",
           "es": "Me apetece un café.",
           "explanation": "Apetecer same pattern"
+        },
+        {
+          "en": "My parents don't like loud music.",
+          "es": "A mis padres no les gusta la música alta.",
+          "explanation": "La música (singular) is the subject → gusta; parents = les."
+        },
+        {
+          "en": "It seems like a great plan to me.",
+          "es": "Me parece un plan estupendo.",
+          "explanation": "Parecer follows gustar's structure: singular subject (un plan) → parece, me = indirect object."
         }
       ]
     },
@@ -1350,6 +1372,18 @@
           "answer": "una / a",
           "hint": "female doctor",
           "explanation": "Female profession → la/una médica"
+        },
+        {
+          "question": "___ (el/la) clima de esta región es muy seco.",
+          "answer": "El",
+          "hint": "clima ends in -a but is masculine",
+          "explanation": "Clima is one of the Greek-origin -ma words that are masculine: el clima."
+        },
+        {
+          "question": "Sus manos estaban heladas y ___.",
+          "answer": "rojas",
+          "hint": "manos is feminine plural",
+          "explanation": "Manos is feminine plural → the adjective must be feminine plural: rojas."
         }
       ],
       "translate": [
@@ -1392,6 +1426,16 @@
           "en": "The interesting books.",
           "es": "Los libros interesantes.",
           "explanation": "Interesante = no gender change, only number"
+        },
+        {
+          "en": "The climate here is very dry.",
+          "es": "El clima aquí es muy seco.",
+          "explanation": "Clima = masculine despite -a ending → el clima."
+        },
+        {
+          "en": "She has cold, red hands.",
+          "es": "Tiene las manos frías y rojas.",
+          "explanation": "Manos = feminine → frías, rojas (feminine plural adjectives)."
         }
       ]
     },
@@ -1496,6 +1540,18 @@
           "answer": "Te sientes",
           "hint": "do you feel better",
           "explanation": "Sentirse e→ie: te sientes"
+        },
+        {
+          "question": "¿Cómo ___ (llevarse) tú con tus hermanos?",
+          "answer": "te llevas",
+          "hint": "how do you get along with your siblings",
+          "explanation": "Llevarse bien/mal = to get along; tú → te llevas."
+        },
+        {
+          "question": "Nosotros ___ (quejarse) del ruido todas las noches.",
+          "answer": "nos quejamos",
+          "hint": "we complain about the noise",
+          "explanation": "Quejarse: nosotros → nos quejamos."
         }
       ],
       "translate": [
@@ -1538,6 +1594,16 @@
           "en": "I feel much better today.",
           "es": "Me siento mucho mejor hoy.",
           "explanation": "Sentirse e→ie: me siento"
+        },
+        {
+          "en": "He and his brother don't get along.",
+          "es": "Él y su hermano no se llevan bien.",
+          "explanation": "Llevarse bien/mal (idiom) — se + llevan for 'ellos'."
+        },
+        {
+          "en": "I'm going to bed early tonight.",
+          "es": "Me voy a acostar temprano esta noche. / Voy a acostarme temprano esta noche.",
+          "explanation": "Reflexive pronoun goes before the conjugated verb OR attaches to the infinitive."
         }
       ]
     },
@@ -1624,6 +1690,36 @@
           "answer": "azules",
           "hint": "adjective usually after noun",
           "explanation": "Color adjectives follow noun"
+        },
+        {
+          "question": "— ¿Quién ganó el partido? — ___ nuestro equipo.",
+          "answer": "Ganó",
+          "hint": "new information (the subject) comes after the verb",
+          "explanation": "As an answer, the new information (the subject) is placed after the verb: ganó nuestro equipo."
+        },
+        {
+          "question": "Es un ___ amigo mío, nos conocemos desde niños. (old friend, not old in age)",
+          "answer": "viejo",
+          "hint": "pre-noun position changes the meaning",
+          "explanation": "Viejo amigo (before the noun) = longtime friend; amigo viejo (after) would mean an elderly friend."
+        },
+        {
+          "question": "A Pedro ___ vi en el supermercado ayer.",
+          "answer": "lo",
+          "hint": "fronted direct object (a Pedro) needs a pronoun placeholder",
+          "explanation": "When the direct object is fronted for emphasis, Spanish still requires the clitic pronoun (lo) before the verb."
+        },
+        {
+          "question": "Nunca ___ digo mentiras a mis amigos.",
+          "answer": "les",
+          "hint": "negative adverb + indirect object pronoun + verb",
+          "explanation": "Negative words like nunca come first, then the object pronoun, then the conjugated verb."
+        },
+        {
+          "question": "¿A qué hora ___ el vuelo?",
+          "answer": "sale",
+          "hint": "question phrase + verb before subject",
+          "explanation": "In questions, the verb typically comes right after the question phrase, with the subject (el vuelo) placed after or omitted."
         }
       ],
       "translate": [
@@ -1661,6 +1757,21 @@
           "en": "What time does the train leave?",
           "es": "¿A qué hora sale el tren?",
           "explanation": "Question structure with inverted order"
+        },
+        {
+          "en": "It was Ana who called, not Carlos.",
+          "es": "Fue Ana quien llamó, no Carlos.",
+          "explanation": "Cleft structure (fue...quien) fronts Ana for emphasis as the one who called."
+        },
+        {
+          "en": "I already gave it to them.",
+          "es": "Ya se lo di.",
+          "explanation": "Indirect (les→se) + direct (lo) object pronouns combine and precede the conjugated verb."
+        },
+        {
+          "en": "He's an old friend, we've known each other for years.",
+          "es": "Es un viejo amigo, nos conocemos desde hace años.",
+          "explanation": "Pre-noun adjective position (viejo amigo) signals longtime friend, not elderly."
         }
       ]
     },
@@ -1753,6 +1864,30 @@
           "answer": "nos",
           "hint": "she wrote to us",
           "explanation": "Indirect object: nos"
+        },
+        {
+          "question": "¿Tienes mi número? — Sí, ya ___ tengo guardado.",
+          "answer": "lo",
+          "hint": "número = masculine direct object",
+          "explanation": "Número is masculine singular → lo."
+        },
+        {
+          "question": "¿Vas a mandarles el paquete? — Sí, voy a mandár___.",
+          "answer": "selo",
+          "hint": "les + lo attached to infinitive → se + lo",
+          "explanation": "Le/les + lo becomes se + lo, attached to the end of the infinitive: mandárselo."
+        },
+        {
+          "question": "A nosotros no ___ avisaron del cambio.",
+          "answer": "nos",
+          "hint": "indirect object: to us",
+          "explanation": "Nos = indirect object pronoun, 'to us'."
+        },
+        {
+          "question": "¿Y las llaves? Creo que ___ perdí.",
+          "answer": "las",
+          "hint": "llaves = feminine plural direct object",
+          "explanation": "Llaves is feminine plural → las."
         }
       ],
       "translate": [
@@ -1790,6 +1925,21 @@
           "en": "Can you show me the way?",
           "es": "¿Puedes mostrarme el camino? / ¿Me puedes mostrar el camino?",
           "explanation": "Pronoun before aux or attached to inf"
+        },
+        {
+          "en": "I already told her everything.",
+          "es": "Ya se lo dije todo.",
+          "explanation": "Le (to her) + lo (it/everything) → se lo, before the conjugated verb."
+        },
+        {
+          "en": "We're bringing it to you tomorrow.",
+          "es": "Te lo traemos mañana.",
+          "explanation": "Te (to you) + lo (it) both precede the conjugated verb."
+        },
+        {
+          "en": "I haven't seen them since last year.",
+          "es": "No los he visto desde el año pasado.",
+          "explanation": "Los = masculine plural direct object, placed before the conjugated auxiliary he."
         }
       ]
     }

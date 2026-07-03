@@ -5221,15 +5221,25 @@ function formatExplanation(text) {
 async function generateFillBlankData() {
   const c = currentConcept;
   const staticEx = getStaticFillBlank(c.key);
+  const trackKey = c.key + '_fillblank';
 
-  if (!ollamaOnline || (_useStaticNext && staticEx)) {
-    _useStaticNext = false;
-    if (staticEx) { staticEx._static = true; return staticEx; }
+  // 2026-07-03: see generatePairData for the full rationale — static is now
+  // forced only when offline or serving a genuinely-due SM-2 card, otherwise
+  // mixed in ~20% of the time purely for variety, with every static draw
+  // logged into the same shared recent-history AI generation checks against.
+  if (!ollamaOnline || (staticEx && staticEx._dueCard)) {
+    if (staticEx) {
+      staticEx._static = true;
+      trackRecent(trackKey, fillBlankSentenceText(staticEx));
+      return staticEx;
+    }
+  } else if (staticEx && Math.random() < 0.2) {
+    staticEx._static = true;
+    trackRecent(trackKey, fillBlankSentenceText(staticEx));
+    return staticEx;
   }
-  _useStaticNext = true;
 
   const theme = pickScenario();
-  const trackKey = c.key + '_fillblank';
   const prompt = `You are a Spanish teacher creating a fill-in-the-blank exercise.
 Concept: ${c.name}
 Context: ${c.context}
@@ -5256,11 +5266,17 @@ Rules:
 - Keep "before" + blank + "after" to a natural, complete sentence (not too long).`;
 
   try {
-    const data = await ollamaJSON(prompt);
-    trackRecent(trackKey, data ? `${data.before || ''} ___ ${data.after || ''}`.trim() : null);
+    // temp raised 0.3 → 0.7 — same rationale as generatePairData.
+    const data = await ollamaJSON(prompt, 2, 0.7);
+    if (alreadyRecent(trackKey, fillBlankSentenceText(data)) && staticEx) {
+      staticEx._static = true;
+      trackRecent(trackKey, fillBlankSentenceText(staticEx));
+      return staticEx;
+    }
+    trackRecent(trackKey, fillBlankSentenceText(data));
     return data;
   } catch (err) {
-    if (staticEx) { staticEx._static = true; return staticEx; }
+    if (staticEx) { staticEx._static = true; trackRecent(trackKey, fillBlankSentenceText(staticEx)); return staticEx; }
     throw err;
   }
 }
