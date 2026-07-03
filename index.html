@@ -1481,7 +1481,13 @@ const BUILDER_BANK = {
     { _static:true, en:"The party is at my house this Saturday.", words:["La","fiesta","es","en","mi","casa","este","sábado"], explanation:"Events (parties, meetings) always use ser for location — a common trap since it looks like a place" },
     { _static:true, en:"He looks taller since the last time I saw him.", words:["Está","más","alto","desde","la","última","vez","que","lo","vi"], explanation:"estar for a perceived change in appearance, even for something as 'permanent' as height" },
     { _static:true, en:"My parents are from Peru but they live in Chile.", words:["Mis","padres","son","de","Perú","pero","viven","en","Chile"], explanation:"ser de = origin/nationality (permanent identity)" },
-    { _static:true, en:"The window is broken since the storm.", words:["La","ventana","está","rota","desde","la","tormenta"], explanation:"estar + past participle = resulting state after an event" }
+    { _static:true, en:"The window is broken since the storm.", words:["La","ventana","está","rota","desde","la","tormenta"], explanation:"estar + past participle = resulting state after an event" },
+    { _static:true, en:"My sister is a nurse and is very kind.", words:["Mi","hermana","es","enfermera","y","es","muy","amable"], explanation:"es enfermera = profession (ser), es amable = permanent character trait (ser)" },
+    { _static:true, en:"The children are tired after school.", words:["Los","niños","están","cansados","después","del","colegio"], explanation:"están cansados = temporary physical state (estar)" },
+    { _static:true, en:"The store is closed on Sundays.", words:["La","tienda","está","cerrada","los","domingos"], explanation:"estar + cerrada = resulting state/condition, not an inherent trait" },
+    { _static:true, en:"It's three o'clock and I'm hungry.", words:["Son","las","tres","y","tengo","hambre"], explanation:"son las tres = clock time always uses ser (tener for hunger)" },
+    { _static:true, en:"The movie is boring and I am bored.", words:["La","película","es","aburrida","y","estoy","aburrido"], explanation:"es aburrida = the film's nature (ser); estoy aburrido = my current feeling (estar)" },
+    { _static:true, en:"We are ready to leave.", words:["Estamos","listos","para","salir"], explanation:"estar listo = to be ready (state); ser listo would mean 'to be clever'" }
   ],
   'pret-imp': [
     { _static:true, en:"When I was a child I used to eat paella every Sunday.", words:["Cuando","era","niño","comía","paella","todos","los","domingos"], explanation:"era, comía = imperfect for habitual past actions and ongoing background states" },
@@ -1498,7 +1504,13 @@ const BUILDER_BANK = {
     { _static:true, en:"Every morning she drank coffee and read the newspaper.", words:["Cada","mañana","tomaba","café","y","leía","el","periódico"], explanation:"tomaba, leía = imperfect for repeated daily routine" },
     { _static:true, en:"He suddenly stood up and left the room.", words:["De","repente","se","levantó","y","salió","de","la","sala"], explanation:"se levantó, salió = preterite for sudden, sequential, completed actions" },
     { _static:true, en:"The streets were empty because it was very late.", words:["Las","calles","estaban","vacías","porque","era","muy","tarde"], explanation:"estaban, era = imperfect for background scene-setting" },
-    { _static:true, en:"I lived there for two years before moving back home.", words:["Viví","allí","durante","dos","años","antes","de","volver","a","casa"], explanation:"Viví = preterite — a bounded, completed period with a clear duration" }
+    { _static:true, en:"I lived there for two years before moving back home.", words:["Viví","allí","durante","dos","años","antes","de","volver","a","casa"], explanation:"Viví = preterite — a bounded, completed period with a clear duration" },
+    { _static:true, en:"Last night we watched a movie at home.", words:["Anoche","vimos","una","película","en","casa"], explanation:"vimos = preterite for a completed one-time event" },
+    { _static:true, en:"As a child, I was afraid of the dark.", words:["De","niño","tenía","miedo","a","la","oscuridad"], explanation:"tenía = imperfect for an ongoing past state/emotion" },
+    { _static:true, en:"She was cooking when I arrived.", words:["Ella","cocinaba","cuando","yo","llegué"], explanation:"cocinaba = imperfect background action, llegué = preterite interrupting event" },
+    { _static:true, en:"They visited us last summer.", words:["Nos","visitaron","el","verano","pasado"], explanation:"visitaron = preterite for a bounded completed event" },
+    { _static:true, en:"It was late and everyone was sleeping.", words:["Era","tarde","y","todos","dormían"], explanation:"era, dormían = imperfect for background scene-setting" },
+    { _static:true, en:"I read the whole book yesterday.", words:["Ayer","leí","todo","el","libro"], explanation:"leí = preterite for a completed action with a clear endpoint" }
   ],
   'subjunctive': [
     { _static:true, en:"I want you to come to the party.", words:["Quiero","que","tú","vengas","a","la","fiesta"], explanation:"Quiero que + different subject triggers subjunctive (vengas)" },
@@ -1515,7 +1527,13 @@ const BUILDER_BANK = {
     { _static:true, en:"I'm looking for a house that has a garden.", words:["Busco","una","casa","que","tenga","jardín"], explanation:"Searching for something that may not exist yet = subjunctive (tenga)" },
     { _static:true, en:"Although it is expensive, I want to buy it.", words:["Aunque","sea","caro","quiero","comprarlo"], explanation:"Aunque + subjunctive when the speaker isn't conceding it as fact yet" },
     { _static:true, en:"I recommend that you arrive early.", words:["Te","recomiendo","que","llegues","temprano"], explanation:"Recomendar que = a suggestion/influence verb, triggers subjunctive (llegues)" },
-    { _static:true, en:"There isn't anyone who can help me.", words:["No","hay","nadie","que","pueda","ayudarme"], explanation:"Negated existence = the antecedent doesn't exist, always triggers subjunctive (pueda)" }
+    { _static:true, en:"There isn't anyone who can help me.", words:["No","hay","nadie","que","pueda","ayudarme"], explanation:"Negated existence = the antecedent doesn't exist, always triggers subjunctive (pueda)" },
+    { _static:true, en:"I hope you feel better soon.", words:["Espero","que","te","sientas","mejor","pronto"], explanation:"Esperar que + different subject = subjunctive (sientas)" },
+    { _static:true, en:"It's necessary that we leave now.", words:["Es","necesario","que","salgamos","ahora"], explanation:"Es necesario que = impersonal expression triggering subjunctive (salgamos)" },
+    { _static:true, en:"She asks that you be on time.", words:["Pide","que","seas","puntual"], explanation:"Pedir que = a verb of influence, triggers subjunctive (seas)" },
+    { _static:true, en:"I don't believe he'll come.", words:["No","creo","que","venga"], explanation:"No creer que = negated belief triggers subjunctive (venga)" },
+    { _static:true, en:"We're looking for a teacher who speaks Chinese.", words:["Buscamos","un","profesor","que","hable","chino"], explanation:"Unknown/hypothetical antecedent triggers subjunctive (hable)" },
+    { _static:true, en:"Call me before you leave.", words:["Llámame","antes","de","que","te","vayas"], explanation:"Antes de que always triggers subjunctive (vayas)" }
   ],
   'por-para': [
     { _static:true, en:"I bought this gift for you.", words:["Compré","este","regalo","para","ti"], explanation:"para = intended recipient of the gift (forward-facing purpose)" },
@@ -1532,7 +1550,13 @@ const BUILDER_BANK = {
     { _static:true, en:"The flight leaves for Bogotá at six.", words:["El","vuelo","sale","para","Bogotá","a","las","seis"], explanation:"para = destination — salir para indicates where something is headed" },
     { _static:true, en:"I exchanged my old phone for a new one.", words:["Cambié","mi","teléfono","viejo","por","uno","nuevo"], explanation:"por = exchange, trading one thing for another" },
     { _static:true, en:"He was arrested for driving too fast.", words:["Lo","arrestaron","por","conducir","demasiado","rápido"], explanation:"por = the cause/reason behind the consequence" },
-    { _static:true, en:"For me, this is the best restaurant in the city.", words:["Para","mí","este","es","el","mejor","restaurante","de","la","ciudad"], explanation:"para mí = expressing a personal opinion/perspective" }
+    { _static:true, en:"For me, this is the best restaurant in the city.", words:["Para","mí","este","es","el","mejor","restaurante","de","la","ciudad"], explanation:"para mí = expressing a personal opinion/perspective" },
+    { _static:true, en:"This letter is for my mother.", words:["Esta","carta","es","para","mi","madre"], explanation:"para = intended recipient" },
+    { _static:true, en:"We paid a lot for the tickets.", words:["Pagamos","mucho","por","las","entradas"], explanation:"por = exchange (amount paid in return)" },
+    { _static:true, en:"He studies to become a doctor.", words:["Estudia","para","ser","médico"], explanation:"para + infinitive = goal/purpose" },
+    { _static:true, en:"Thanks for coming to my party.", words:["Gracias","por","venir","a","mi","fiesta"], explanation:"por = cause/reason for the gratitude" },
+    { _static:true, en:"The train leaves for Madrid at noon.", words:["El","tren","sale","para","Madrid","al","mediodía"], explanation:"salir para = destination" },
+    { _static:true, en:"I'll finish it by tomorrow.", words:["Lo","terminaré","para","mañana"], explanation:"para = deadline (point in time it's intended for)" }
   ],
   'gender': [
     { _static:true, en:"The red house is beautiful and big.", words:["La","casa","roja","es","hermosa","y","grande"], explanation:"casa is feminine → la; roja agrees in feminine singular; grande has no gender form" },
@@ -1549,7 +1573,13 @@ const BUILDER_BANK = {
     { _static:true, en:"My favorite color is dark blue.", words:["Mi","color","favorito","es","azul","oscuro"], explanation:"color = masculine → favorito agrees masculine; azul has one form regardless of gender" },
     { _static:true, en:"The young actresses are very talented.", words:["Las","actrices","jóvenes","son","muy","talentosas"], explanation:"actrices = feminine plural → las; jóvenes has one form for both genders" },
     { _static:true, en:"This is a big and difficult decision.", words:["Esta","es","una","decisión","grande","y","difícil"], explanation:"decisión = feminine → esta, una; grande and difícil have one form for both genders" },
-    { _static:true, en:"The water is very cold today.", words:["El","agua","está","muy","fría","hoy"], explanation:"agua is feminine but takes 'el' in the singular to avoid two a-sounds colliding" }
+    { _static:true, en:"The water is very cold today.", words:["El","agua","está","muy","fría","hoy"], explanation:"agua is feminine but takes 'el' in the singular to avoid two a-sounds colliding" },
+    { _static:true, en:"The white cars are new.", words:["Los","coches","blancos","son","nuevos"], explanation:"coches = masculine plural → los; blancos, nuevos agree masculine plural" },
+    { _static:true, en:"She has a beautiful red dress.", words:["Tiene","un","vestido","rojo","hermoso"], explanation:"vestido = masculine → un; rojo, hermoso agree masculine singular" },
+    { _static:true, en:"The tall women are athletes.", words:["Las","mujeres","altas","son","atletas"], explanation:"mujeres = feminine plural → las; altas agrees feminine plural" },
+    { _static:true, en:"This is an interesting map.", words:["Este","es","un","mapa","interesante"], explanation:"mapa = masculine despite -a ending → este, un" },
+    { _static:true, en:"The cold water is in the fridge.", words:["El","agua","fría","está","en","la","nevera"], explanation:"agua = feminine but takes 'el' in singular; adjective stays feminine (fría)" },
+    { _static:true, en:"My favorite photos are old.", words:["Mis","fotos","favoritas","son","viejas"], explanation:"foto = feminine (short for fotografía) → favoritas, viejas agree feminine plural" }
   ],
   'reflexive': [
     { _static:true, en:"She wakes up at seven and gets dressed quickly.", words:["Se","despierta","a","las","siete","y","se","viste","rápido"], explanation:"se despierta, se viste = reflexive — actions loop back to the subject herself" },
@@ -1566,7 +1596,13 @@ const BUILDER_BANK = {
     { _static:true, en:"I'm worried about the exam tomorrow.", words:["Me","preocupo","por","el","examen","de","mañana"], explanation:"me preocupo (preocuparse) = reflexive to express an emotional state affecting oneself" },
     { _static:true, en:"They realized their mistake too late.", words:["Se","dieron","cuenta","de","su","error","demasiado","tarde"], explanation:"se dieron cuenta (darse cuenta) = reflexive idiom meaning 'to realize'" },
     { _static:true, en:"Sit down, please, the meeting is starting.", words:["Siéntense","por","favor","la","reunión","está","empezando"], explanation:"Siéntense (sentarse, imperative plural) = reflexive command" },
-    { _static:true, en:"I don't remember his name.", words:["No","me","acuerdo","de","su","nombre"], explanation:"me acuerdo (acordarse) = reflexive verb for 'to remember'" }
+    { _static:true, en:"I don't remember his name.", words:["No","me","acuerdo","de","su","nombre"], explanation:"me acuerdo (acordarse) = reflexive verb for 'to remember'" },
+    { _static:true, en:"I wash my hands before eating.", words:["Me","lavo","las","manos","antes","de","comer"], explanation:"me lavo (lavarse) = reflexive; the action returns to the subject" },
+    { _static:true, en:"He shaves every morning.", words:["Se","afeita","todas","las","mañanas"], explanation:"se afeita (afeitarse) = reflexive daily-routine verb" },
+    { _static:true, en:"We sit down at the table.", words:["Nos","sentamos","a","la","mesa"], explanation:"nos sentamos (sentarse) = reflexive" },
+    { _static:true, en:"They get up early on weekdays.", words:["Se","levantan","temprano","entre","semana"], explanation:"se levantan (levantarse) = reflexive" },
+    { _static:true, en:"She combs her hair before leaving.", words:["Se","peina","antes","de","salir"], explanation:"se peina (peinarse) = reflexive; salir is non-reflexive" },
+    { _static:true, en:"I feel happy today.", words:["Me","siento","feliz","hoy"], explanation:"me siento (sentirse) = reflexive for an emotional state" }
   ],
   'tu-usted': [
     { _static:true, en:"Excuse me, could you tell me the time?", words:["Perdón","¿podría","decirme","la","hora?"], explanation:"Podría = formal/usted conditional of poder — a polite request to a stranger" },
@@ -1576,7 +1612,15 @@ const BUILDER_BANK = {
     { _static:true, en:"Sir, please have a seat.", words:["Señor","tome","asiento","por","favor"], explanation:"Tome = usted command of tomar — formal command matching 'señor'" },
     { _static:true, en:"Come here and look at this!", words:["Ven","aquí","y","mira","esto!"], explanation:"Ven, mira = tú affirmative commands (irregular venir + regular mirar) — informal register" },
     { _static:true, en:"Doctor, what do you recommend for this pain?", words:["Doctor","¿qué","me","recomienda","para","este","dolor?"], explanation:"Recomienda = usted present (e→ie stem change) — formal, professional context" },
-    { _static:true, en:"Mom, could you help me with this?", words:["Mamá","¿me","ayudas","con","esto?"], explanation:"Ayudas = tú present — family members typically use tú even when asking for help" }
+    { _static:true, en:"Mom, could you help me with this?", words:["Mamá","¿me","ayudas","con","esto?"], explanation:"Ayudas = tú present — family members typically use tú even when asking for help" },
+    { _static:true, en:"Please come in and take a seat, madam.", words:["Pase","y","tome","asiento","por","favor","señora"], explanation:"Pase, tome = usted commands — formal register matching 'señora'" },
+    { _static:true, en:"Hey, do you want to grab a coffee?", words:["Oye","¿quieres","tomar","un","café?"], explanation:"quieres = tú present — casual invitation among friends" },
+    { _static:true, en:"Officer, could you tell me where the station is?", words:["Oficial","¿podría","decirme","dónde","está","la","estación?"], explanation:"podría = usted conditional — polite, formal request" },
+    { _static:true, en:"Grandma, do you need help with the bags?", words:["Abuela","¿necesitas","ayuda","con","las","bolsas?"], explanation:"necesitas = tú present — family typically uses tú" },
+    { _static:true, en:"Professor, may I ask you a question?", words:["Profesor","¿le","puedo","hacer","una","pregunta?"], explanation:"le = usted indirect object — formal, professional register" },
+    { _static:true, en:"Come on, tell me what happened!", words:["Venga","¡dime","qué","pasó!"], explanation:"dime = tú command (di + me) — informal register" },
+    { _static:true, en:"Sir, please wait a moment.", words:["Señor","espere","un","momento","por","favor"], explanation:"espere = usted command of esperar — formal" },
+    { _static:true, en:"What's up, are you coming to the game?", words:["¿Qué","tal","vienes","al","partido?"], explanation:"vienes = tú present — casual register" }
   ],
   'present': [
     { _static:true, en:"I have a lot of work and I cannot go out today.", words:["Tengo","mucho","trabajo","y","no","puedo","salir","hoy"], explanation:"tengo = irregular yo form of tener; puedo = o→ue stem change of poder" },
@@ -1593,7 +1637,13 @@ const BUILDER_BANK = {
     { _static:true, en:"You always arrive late to class.", words:["Siempre","llegas","tarde","a","clase"], explanation:"llegas = regular -ar verb, tú form, present tense" },
     { _static:true, en:"I put the keys on the table every day.", words:["Pongo","las","llaves","en","la","mesa","todos","los","días"], explanation:"pongo = irregular yo form of poner" },
     { _static:true, en:"Do you know how to swim?", words:["¿Sabes","nadar?"], explanation:"sabes = present tense of saber, used for knowing how to do something + infinitive" },
-    { _static:true, en:"We prefer to eat at home on weekdays.", words:["Preferimos","comer","en","casa","entre","semana"], explanation:"preferimos = e→ie stem-changing verb (preferir), but regular in the nosotros form" }
+    { _static:true, en:"We prefer to eat at home on weekdays.", words:["Preferimos","comer","en","casa","entre","semana"], explanation:"preferimos = e→ie stem-changing verb (preferir), but regular in the nosotros form" },
+    { _static:true, en:"We eat dinner at eight every night.", words:["Cenamos","a","las","ocho","todas","las","noches"], explanation:"cenamos = regular -ar verb, nosotros form, present tense" },
+    { _static:true, en:"He closes the shop at nine.", words:["Cierra","la","tienda","a","las","nueve"], explanation:"cierra = e→ie stem change (cerrar)" },
+    { _static:true, en:"I count on your help.", words:["Cuento","con","tu","ayuda"], explanation:"cuento = o→ue stem change (contar)" },
+    { _static:true, en:"They repeat the exercise every day.", words:["Repiten","el","ejercicio","cada","día"], explanation:"repiten = e→i stem change (repetir)" },
+    { _static:true, en:"I bring my lunch to work.", words:["Traigo","mi","almuerzo","al","trabajo"], explanation:"traigo = irregular yo form of traer" },
+    { _static:true, en:"She begins classes in September.", words:["Empieza","las","clases","en","septiembre"], explanation:"empieza = e→ie stem change (empezar)" }
   ],
   'gustar': [
     { _static:true, en:"I love spicy food.", words:["Me","encanta","la","comida","picante"], explanation:"me encanta — la comida is the subject (singular), me = indirect object (me)" },
@@ -1610,7 +1660,13 @@ const BUILDER_BANK = {
     { _static:true, en:"It annoys us when he arrives late.", words:["Nos","molesta","cuando","llega","tarde"], explanation:"nos molesta (molestar-type) with a clause as the singular subject" },
     { _static:true, en:"I'm fascinated by old movies.", words:["Me","fascinan","las","películas","antiguas"], explanation:"fascinan = plural because las películas antiguas is a plural subject" },
     { _static:true, en:"Does it bother you if I open the window?", words:["¿Te","molesta","si","abro","la","ventana?"], explanation:"te molesta = singular, the 'if' clause acts as the subject" },
-    { _static:true, en:"We need more time to finish this.", words:["Nos","falta","más","tiempo","para","terminar","esto"], explanation:"falta = singular because más tiempo is a singular subject" }
+    { _static:true, en:"We need more time to finish this.", words:["Nos","falta","más","tiempo","para","terminar","esto"], explanation:"falta = singular because más tiempo is a singular subject" },
+    { _static:true, en:"I like Spanish music.", words:["Me","gusta","la","música","española"], explanation:"gusta = singular because la música is a singular subject" },
+    { _static:true, en:"We don't like waiting.", words:["No","nos","gusta","esperar"], explanation:"gusta = singular; esperar (infinitive) is the subject" },
+    { _static:true, en:"Do you like these paintings?", words:["¿Te","gustan","estos","cuadros?"], explanation:"gustan = plural because estos cuadros is a plural subject" },
+    { _static:true, en:"My back hurts today.", words:["Me","duele","la","espalda","hoy"], explanation:"me duele (doler-type) — la espalda is the singular subject" },
+    { _static:true, en:"They love the beach.", words:["Les","encanta","la","playa"], explanation:"encanta = singular; la playa is the subject, les = indirect object" },
+    { _static:true, en:"It interests us to learn more.", words:["Nos","interesa","aprender","más"], explanation:"interesa = singular; aprender (infinitive) is the subject" }
   ],
   'word-order': [
     { _static:true, en:"Juan arrived yesterday from Paris.", words:["Llegó","Juan","ayer","de","París"], explanation:"Verb before subject (llegó Juan) — Juan is new information placed at end for emphasis" },
@@ -1627,7 +1683,13 @@ const BUILDER_BANK = {
     { _static:true, en:"What happened here?", words:["¿Qué","pasó","aquí?"], explanation:"Question word first, verb-subject inversion is implicit" },
     { _static:true, en:"That, I don't believe.", words:["Eso","no","lo","creo"], explanation:"Eso fronted as topic, doubled with lo before the verb" },
     { _static:true, en:"Here comes the bus.", words:["Aquí","viene","el","autobús"], explanation:"Locative adverb aquí fronted, verb-subject order (viene el autobús) follows" },
-    { _static:true, en:"It was Marta who called you.", words:["Fue","Marta","quien","te","llamó"], explanation:"Cleft-like structure fronting fue to emphasize Marta as the singled-out subject" }
+    { _static:true, en:"It was Marta who called you.", words:["Fue","Marta","quien","te","llamó"], explanation:"Cleft-like structure fronting fue to emphasize Marta as the singled-out subject" },
+    { _static:true, en:"Here comes the teacher.", words:["Aquí","viene","el","profesor"], explanation:"Locative aquí fronted; verb-subject order (viene el profesor)" },
+    { _static:true, en:"That book, I already read it.", words:["Ese","libro","ya","lo","leí"], explanation:"Ese libro fronted as topic, doubled by clitic lo before the verb" },
+    { _static:true, en:"There are three apples in the bowl.", words:["Hay","tres","manzanas","en","el","cuenco"], explanation:"hay (existential) always comes first — no subject before it" },
+    { _static:true, en:"What are you looking for?", words:["¿Qué","buscas?"], explanation:"Question word first, verb next; subject tú dropped" },
+    { _static:true, en:"It's very cold today.", words:["Hace","mucho","frío","hoy"], explanation:"Subjectless weather verb (hacer) — no explicit subject possible" },
+    { _static:true, en:"I have never seen anything like that.", words:["Nunca","he","visto","algo","así"], explanation:"Nunca fronted for emphasis; subject yo dropped" }
   ],
   'obj-pronouns': [
     { _static:true, en:"I give it to her every day.", words:["Se","lo","doy","todos","los","días"], explanation:"le → se when followed by lo; both pronouns placed before conjugated verb" },
@@ -1644,7 +1706,13 @@ const BUILDER_BANK = {
     { _static:true, en:"They already showed it to us.", words:["Ya","nos","lo","mostraron"], explanation:"nos (indirect) + lo (direct) both before the conjugated verb mostraron" },
     { _static:true, en:"I want to tell you something important.", words:["Quiero","decirte","algo","importante"], explanation:"te attaches to the infinitive: decir + te = decirte" },
     { _static:true, en:"She gave it to them at the party.", words:["Se","lo","dio","en","la","fiesta"], explanation:"les → se before lo; se lo dio = she gave it to them" },
-    { _static:true, en:"Don't tell him anything.", words:["No","le","digas","nada"], explanation:"Negative command: pronoun le goes BEFORE the verb (unlike affirmative commands)" }
+    { _static:true, en:"Don't tell him anything.", words:["No","le","digas","nada"], explanation:"Negative command: pronoun le goes BEFORE the verb (unlike affirmative commands)" },
+    { _static:true, en:"I bought it for you.", words:["Te","lo","compré"], explanation:"te (indirect) + lo (direct) both before the conjugated verb compré" },
+    { _static:true, en:"Give me the book.", words:["Dame","el","libro"], explanation:"Affirmative command: da + me = dame (pronoun attaches to the verb)" },
+    { _static:true, en:"She's telling us a story.", words:["Nos","está","contando","un","cuento"], explanation:"nos placed before the conjugated verb está" },
+    { _static:true, en:"I want to give it to you.", words:["Quiero","dártelo"], explanation:"te + lo attach to the infinitive: dar + te + lo = dártelo" },
+    { _static:true, en:"They sent it to me yesterday.", words:["Me","lo","enviaron","ayer"], explanation:"me (indirect) + lo (direct) before the conjugated verb enviaron" },
+    { _static:true, en:"Don't give it to him.", words:["No","se","lo","des"], explanation:"Negative command: se lo go BEFORE the verb (le→se before lo)" }
   ]
 };
 
@@ -5416,43 +5484,16 @@ Rules:
 }
 
 let fbData = null;
-// 2026-07-01: Fill Blank has two genuinely different exercise formats, from
-// two separate content sources — free-text recall (exercises.json's
-// fillblankBank: type the missing word) and multiple-choice (the 25/concept
-// STATIC_EXERCISES pool + AI fallback, via generateFillBlankData/renderFillBlank
-// below: pick from 4 options). The free-text bank used to always win, which
-// meant the multiple-choice pool never ran at all — worse, it's the smaller
-// pool (5-10/concept vs 25/concept) that was actually active. Now they
-// alternate, so students get both retrieval formats and both content pools.
-let _fbUseTextBank = true;
+// 2026-07-03: Fill Blank used to ALTERNATE between two visuals — the nice
+// multiple-choice card (renderFillBlank) and a free-text "type the word" card
+// from fillblankBank. Because exercises.json loads asynchronously, the first
+// click landed on the multiple-choice card (bank not ready yet) and then every
+// other click flipped to the type-in card, which read as "the visual breaks
+// after one exercise." Fill Blank now ALWAYS uses the multiple-choice visual —
+// infinite via AI-first generateFillBlankData() with the static MC pool as
+// fallback. The fillblankBank type-in content still feeds Missing mode, so it
+// isn't wasted. (Re-enable a dedicated type-in mode later if desired.)
 async function loadFillBlank() {
-  const hasTextBank = currentConcept && currentConcept.fillblankBank && currentConcept.fillblankBank.length;
-  if (hasTextBank && _fbUseTextBank) {
-    _fbUseTextBank = false;
-    const bank = currentConcept.fillblankBank;
-    const idxKey = currentConcept.key + '_fbtext';
-    if (_staticIdx[idxKey] === undefined) _staticIdx[idxKey] = Math.floor(Math.random() * bank.length);
-    const ex = bank[_staticIdx[idxKey] % bank.length];
-    _staticIdx[idxKey]++;
-    if (ex && ex.question && ex.answer) {
-      const area = document.getElementById('exercise-area');
-      area.innerHTML = '<div class="prompt-box"><div class="prompt-lbl">Fill in the blank</div>' +
-        (ex.hint ? '<div class="prompt-en">' + ex.hint + '</div>' : '') +
-        '</div>' +
-        '<div class="fb-sentence" style="font-size:17px;text-align:center;padding:16px;background:var(--surface2);border-radius:10px;margin-bottom:12px">' + ex.question + '</div>' +
-        '<input class="fill-input" id="fill-input" placeholder="Type the missing word..." autocomplete="off">' +
-        '<div style="display:flex;gap:8px;margin-top:10px;justify-content:center">' +
-        '<button class="check-btn" onclick="checkFillBlankBankAnswer(' + JSON.stringify(ex.answer) + ',' + JSON.stringify(ex.explanation||'') + ')">Check</button>' +
-        '</div>' +
-        '<div class="result-bar" id="result-bar" aria-live="polite"><div class="result-icon" id="result-icon"></div><div class="result-body"><div class="result-main" id="result-main"></div><div class="result-sub" id="result-sub"></div></div>' +
-        '<button class="next-btn" onclick="loadFillBlank()">Next →</button></div>';
-      exerciseAnswered = false;
-      const inp = document.getElementById('fill-input');
-      if (inp) { inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkFillBlankBankAnswer(ex.answer, ex.explanation||''); }); inp.focus(); }
-      return;
-    }
-  }
-  _fbUseTextBank = true; // next call goes back to the free-text bank
   exerciseAnswered = false;
   clearErrorBox();
   let data;
@@ -8240,6 +8281,82 @@ const VOCAB_LIST = [
   {es:'hasta',en:'until / up to / even',pos:'prep',ex:'Trabajo hasta las seis.'},
   {es:'desde',en:'from / since',pos:'prep',ex:'Vivo aquí desde hace dos años.'},
   {es:'para',en:'for / in order to / by',pos:'prep',ex:'Este café es para ti.'},
+  // 2026-07-03: bulk expansion — more verbs, nouns, adjectives, adverbs, phrases.
+  {es:'pensar',en:'to think',pos:'verb',ex:'¿Qué piensas de esta idea?'},
+  {es:'empezar',en:'to start / to begin',pos:'verb',ex:'La clase empieza a las nueve.'},
+  {es:'terminar',en:'to finish',pos:'verb',ex:'Termino el trabajo a las cinco.'},
+  {es:'dormir',en:'to sleep',pos:'verb',ex:'Los niños duermen ocho horas.'},
+  {es:'sentir',en:'to feel',pos:'verb',ex:'Siento mucho frío hoy.'},
+  {es:'pedir',en:'to ask for / to order',pos:'verb',ex:'Voy a pedir un café.'},
+  {es:'poner',en:'to put / to place',pos:'verb',ex:'Pon el libro en la mesa.'},
+  {es:'salir',en:'to leave / to go out',pos:'verb',ex:'Salgo de casa a las ocho.'},
+  {es:'seguir',en:'to follow / to continue',pos:'verb',ex:'Sigue todo recto hasta la plaza.'},
+  {es:'escribir',en:'to write',pos:'verb',ex:'Le escribo una carta a mi abuela.'},
+  {es:'leer',en:'to read',pos:'verb',ex:'Me gusta leer antes de dormir.'},
+  {es:'aprender',en:'to learn',pos:'verb',ex:'Aprendo español todos los días.'},
+  {es:'enseñar',en:'to teach / to show',pos:'verb',ex:'Ella enseña matemáticas.'},
+  {es:'comprar',en:'to buy',pos:'verb',ex:'Compro pan en la panadería.'},
+  {es:'pagar',en:'to pay',pos:'verb',ex:'Pago con tarjeta, por favor.'},
+  {es:'ayudar',en:'to help',pos:'verb',ex:'¿Me puedes ayudar con esto?'},
+  {es:'buscar',en:'to look for',pos:'verb',ex:'Busco mis llaves por todas partes.'},
+  {es:'esperar',en:'to wait / to hope',pos:'verb',ex:'Te espero en la entrada.'},
+  {es:'recordar',en:'to remember',pos:'verb',ex:'No recuerdo su nombre.'},
+  {es:'olvidar',en:'to forget',pos:'verb',ex:'Siempre olvido el paraguas.'},
+  {es:'viajar',en:'to travel',pos:'verb',ex:'Viajamos a México en verano.'},
+  {es:'caminar',en:'to walk',pos:'verb',ex:'Camino al trabajo cada mañana.'},
+  {es:'jugar',en:'to play',pos:'verb',ex:'Los niños juegan en el parque.'},
+  {es:'la casa',en:'the house / home',pos:'noun',ex:'Mi casa está cerca del centro.'},
+  {es:'el trabajo',en:'work / job',pos:'noun',ex:'Tengo mucho trabajo esta semana.'},
+  {es:'la comida',en:'food / meal',pos:'noun',ex:'La comida está muy rica.'},
+  {es:'el agua',en:'water',pos:'noun',ex:'¿Me das un vaso de agua?'},
+  {es:'el tiempo',en:'time / weather',pos:'noun',ex:'No tengo tiempo hoy.'},
+  {es:'el día',en:'day',pos:'noun',ex:'Que tengas un buen día.'},
+  {es:'la noche',en:'night',pos:'noun',ex:'Trabajo por la noche.'},
+  {es:'la semana',en:'week',pos:'noun',ex:'Nos vemos la próxima semana.'},
+  {es:'la familia',en:'family',pos:'noun',ex:'Mi familia es muy grande.'},
+  {es:'el amigo',en:'friend',pos:'noun',ex:'Voy al cine con un amigo.'},
+  {es:'la ciudad',en:'city',pos:'noun',ex:'Vivo en una ciudad tranquila.'},
+  {es:'el país',en:'country',pos:'noun',ex:'España es un país bonito.'},
+  {es:'la calle',en:'street',pos:'noun',ex:'La tienda está en esta calle.'},
+  {es:'la escuela',en:'school',pos:'noun',ex:'Mis hijos van a la escuela.'},
+  {es:'el dinero',en:'money',pos:'noun',ex:'No llevo dinero en efectivo.'},
+  {es:'el coche',en:'car',pos:'noun',ex:'Mi coche es viejo pero funciona.'},
+  {es:'la puerta',en:'door',pos:'noun',ex:'Cierra la puerta, por favor.'},
+  {es:'la mesa',en:'table',pos:'noun',ex:'La cena está en la mesa.'},
+  {es:'la vida',en:'life',pos:'noun',ex:'La vida en el campo es tranquila.'},
+  {es:'la gente',en:'people',pos:'noun',ex:'Hay mucha gente en la plaza.'},
+  {es:'la mano',en:'hand',pos:'noun',ex:'Levanta la mano si tienes una duda.'},
+  {es:'bueno',en:'good',pos:'adj',ex:'Es un buen restaurante.'},
+  {es:'malo',en:'bad',pos:'adj',ex:'Hace mal tiempo hoy.'},
+  {es:'grande',en:'big / large',pos:'adj',ex:'Viven en una casa grande.'},
+  {es:'pequeño',en:'small',pos:'adj',ex:'Tengo un perro pequeño.'},
+  {es:'nuevo',en:'new',pos:'adj',ex:'Compré un teléfono nuevo.'},
+  {es:'viejo',en:'old',pos:'adj',ex:'Es un edificio muy viejo.'},
+  {es:'feliz',en:'happy',pos:'adj',ex:'Estoy feliz de verte.'},
+  {es:'triste',en:'sad',pos:'adj',ex:'Se puso triste con la noticia.'},
+  {es:'fácil',en:'easy',pos:'adj',ex:'El examen fue muy fácil.'},
+  {es:'difícil',en:'difficult / hard',pos:'adj',ex:'Es una decisión difícil.'},
+  {es:'importante',en:'important',pos:'adj',ex:'Es importante llegar a tiempo.'},
+  {es:'bonito',en:'pretty / nice',pos:'adj',ex:'Qué vestido tan bonito.'},
+  {es:'caro',en:'expensive',pos:'adj',ex:'Este hotel es muy caro.'},
+  {es:'barato',en:'cheap',pos:'adj',ex:'Encontré un vuelo barato.'},
+  {es:'rápido',en:'fast / quick',pos:'adj',ex:'El tren es muy rápido.'},
+  {es:'lento',en:'slow',pos:'adj',ex:'El internet está muy lento hoy.'},
+  {es:'siempre',en:'always',pos:'adv',ex:'Siempre desayuno café.'},
+  {es:'nunca',en:'never',pos:'adv',ex:'Nunca llego tarde.'},
+  {es:'a veces',en:'sometimes',pos:'adv',ex:'A veces salgo a correr.'},
+  {es:'muy',en:'very',pos:'adv',ex:'Estoy muy cansado hoy.'},
+  {es:'bien',en:'well',pos:'adv',ex:'Ella habla inglés muy bien.'},
+  {es:'aquí',en:'here',pos:'adv',ex:'Ven aquí un momento.'},
+  {es:'ahora',en:'now',pos:'adv',ex:'No puedo hablar ahora.'},
+  {es:'temprano',en:'early',pos:'adv',ex:'Me levanto muy temprano.'},
+  {es:'tarde',en:'late',pos:'adv',ex:'Llegamos un poco tarde.'},
+  {es:'por favor',en:'please',pos:'phrase',ex:'Un café, por favor.'},
+  {es:'gracias',en:'thank you',pos:'phrase',ex:'Muchas gracias por tu ayuda.'},
+  {es:'lo siento',en:"I'm sorry",pos:'phrase',ex:'Lo siento, fue mi culpa.'},
+  {es:'tener que',en:'to have to',pos:'phrase',ex:'Tengo que estudiar esta noche.'},
+  {es:'hay que',en:'one must / it is necessary',pos:'phrase',ex:'Hay que reservar con antelación.'},
+  {es:'de repente',en:'suddenly',pos:'phrase',ex:'De repente empezó a llover.'},
 ];
 
 let _vocabIdx = 0;
