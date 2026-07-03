@@ -41,13 +41,18 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: CORS_HEADERS });
   }
 
-  const { system, prompt, temperature = 0.7, json_mode = false } = body;
+  const { system, prompt, temperature = 0.7, json_mode = false, max_tokens } = body;
+
+  // 2026-07-03: optional max_tokens so long outputs (resource/study sheets) don't
+  // truncate at the old hardcoded 2048. Clamped 256..8192; defaults to 2048 so
+  // every existing exercise-generation call is unchanged.
+  const outTokens = Math.min(Math.max(parseInt(max_tokens, 10) || 2048, 256), 8192);
 
   const requestBody = {
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
     generationConfig: {
       temperature,
-      maxOutputTokens: 2048,
+      maxOutputTokens: outTokens,
       ...(json_mode ? { responseMimeType: 'application/json' } : {}),
     },
   };

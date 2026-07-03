@@ -1028,6 +1028,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
     <button class="review-btn" id="review-btn" onclick="openReviewModal()">📊 Review <span id="review-count">0</span></button>
     <button class="cfg-btn" onclick="reopenGateway()" title="Re-read the mental model for your current concept">🧠 Brief</button>
     <button class="cfg-btn" onclick="openCheatSheet()" title="Grammar reference — always available">📖 Cheat Sheet</button>
+    <button class="cfg-btn" onclick="openResources()" title="Generate a study sheet / vocab toolkit for your topic — save or download it">📄 Study Sheets</button>
     <button class="cfg-btn" onclick="openHelp()" title="How to use this dashboard">❓ Help</button>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
     <button class="cfg-btn" onclick="openSettings()">⚙ Settings</button>
@@ -1248,6 +1249,36 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
     <div id="cheatsheet-body" style="display:flex;flex-direction:column;gap:14px;"></div>
     <div class="modal-actions">
       <button class="modal-close" onclick="closeCheatSheet()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESOURCE / STUDY SHEETS -->
+<div class="modal-overlay" id="resources-overlay" onclick="if(event.target===this)closeResources()">
+  <div class="modal" style="width:700px;max-width:94vw;max-height:90vh;overflow-y:auto;">
+    <div class="modal-title">📄 Study Sheets</div>
+    <div style="font-size:12.5px;opacity:.75;margin-bottom:10px;">A dense reference toolkit for your topic — mnemonics, vocab banks, tables, examples. Built fresh by AI, then save it or download it to keep.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+      <div style="font-size:13px;">Current concept: <strong id="res-concept-label">—</strong></div>
+      <input id="res-topic" class="ollama-inp" placeholder="…or type any topic (e.g. 50 kitchen nouns, food vocabulary, the subjunctive)" style="width:100%;box-sizing:border-box;padding:8px 10px;" />
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <button class="cfg-btn" style="background:rgba(91,141,238,.15);border-color:rgba(91,141,238,.4);color:var(--accent);font-weight:600;" onclick="generateResourceSheet(false)">⚡ Quick sheet</button>
+        <button class="cfg-btn" style="background:rgba(91,141,238,.15);border-color:rgba(91,141,238,.4);color:var(--accent);font-weight:600;" onclick="generateResourceSheet(true)">📚 Full toolkit</button>
+      </div>
+    </div>
+    <div id="res-output" style="border:1px solid var(--border,#333);border-radius:8px;padding:12px;min-height:60px;max-height:44vh;overflow-y:auto;font-size:13.5px;line-height:1.5;"></div>
+    <div id="res-actions" style="display:none;gap:6px;margin-top:8px;flex-wrap:wrap;">
+      <button class="cfg-btn" onclick="saveCurrentSheet()">📌 Save</button>
+      <button class="cfg-btn" onclick="downloadResourcePDF()">🖨 PDF</button>
+      <button class="cfg-btn" onclick="downloadResourceDoc()">📄 Word (.doc)</button>
+      <button class="cfg-btn" onclick="copyResourceMD()">📋 Copy</button>
+    </div>
+    <div style="margin-top:12px;">
+      <div style="font-size:12px;font-weight:600;opacity:.7;margin-bottom:4px;">💾 Saved sheets</div>
+      <div id="res-saved"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-close" onclick="closeResources()">Close</button>
     </div>
   </div>
 </div>
@@ -4346,6 +4377,169 @@ function openCheatSheet() {
 }
 function closeCheatSheet() {
   document.getElementById('cheatsheet-overlay').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── RESOURCE / STUDY SHEETS (2026-07-03) ──────────────────────────────────────
+// Student-side port of the teacher dashboard's resource generator. Builds a
+// dense study/reference sheet for a concept or custom topic via Gemini, with
+// Quick/Full density, save-to-revisit (localStorage), and .doc / PDF export.
+// ═══════════════════════════════════════════════════════════════════════════════
+let _resourceMD = '';
+let _resourceTitle = '';
+let savedSheets = JSON.parse(localStorage.getItem('sl_resources') || '[]');
+
+function openResources() {
+  const label = document.getElementById('res-concept-label');
+  if (label) label.textContent = currentConcept ? currentConcept.name : '(pick a concept, or type a topic)';
+  const topicInp = document.getElementById('res-topic');
+  if (topicInp) topicInp.value = '';
+  renderSavedSheets();
+  document.getElementById('resources-overlay').classList.add('open');
+}
+function closeResources() { document.getElementById('resources-overlay').classList.remove('open'); }
+
+function buildResourcePrompt(topicName, full) {
+  const density = full
+    ? 'This is a FULL toolkit: every vocabulary bank must contain AT LEAST 50 items. Include 8-10 example sentences and 2-4 tables.'
+    : 'This is a COMPACT one-pager: about 20 vocabulary items total, one key table, 5 example sentences. Keep it to roughly one screen.';
+  return `You are an expert Spanish teacher creating a dense, practical STUDENT REFERENCE SHEET (study guide + vocabulary toolkit) on: "${topicName}". An American beginner-intermediate learner keeps it open while practicing.
+
+Output CLEAN MARKDOWN only (# and ## for headers, standard Markdown tables with | pipes, ** for bold). No preamble and no closing remarks — just the sheet.
+
+Structure, in this order:
+1. A single H1 title (# ...).
+2. **What this is for** - one line.
+3. **The core idea** - the mental model in 2-3 sentences (contrast the confusable forms if any).
+4. **Shortcut / mnemonic** - a memorable acronym or a single decision-question.
+5. **A "confusable contrast" table** - same word/trigger shown two ways, or a trigger-vs-trigger table (like ser vs estar, por vs para). Required.
+6. **Vocabulary banks** - categorized lists relevant to THIS topic, each item with its English gloss and gender/usage note where relevant. ${density}
+7. **Example sentences** - natural everyday Spanish, each with a one-line "why".
+8. **The #1 mistake to avoid** + the one-question shortcut.
+9. End with: **▶ Now practice:** one line nudging a specific practice mode on this topic in the app.
+
+Rules: natural, correct, everyday Spanish; dense and skimmable; no filler; gloss every Spanish word in English.`;
+}
+
+async function callAIForResource(prompt) {
+  let res;
+  try {
+    res = await fetch('/api/ai', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, temperature: 0.6, max_tokens: 8192 }),
+      signal: AbortSignal.timeout(30000)
+    });
+  } catch (e) { throw new Error('timed out — try again'); }
+  if (!res.ok) { if (res.status === 429) _geminiRateLimitedUntil = Date.now() + 15000; throw new Error('AI busy (HTTP ' + res.status + ')'); }
+  const data = await res.json();
+  return (data.content || '').trim();
+}
+
+async function generateResourceSheet(full) {
+  const topicInp = document.getElementById('res-topic');
+  const custom = topicInp ? topicInp.value.trim() : '';
+  const topicName = custom || (currentConcept ? currentConcept.name + (currentConcept.context ? ' — ' + currentConcept.context : '') : '');
+  if (!topicName) { showToast('Pick a concept above or type a topic first', 2500); return; }
+  const out = document.getElementById('res-output');
+  const actions = document.getElementById('res-actions');
+  if (actions) actions.style.display = 'none';
+  out.innerHTML = '<div style="opacity:.7;padding:20px;text-align:center;">⚡ Building your study sheet…<br><span style="font-size:12px;opacity:.7;">Full sheets take ~15-20s</span></div>';
+  if (!ollamaOnline || isGeminiRateLimited()) {
+    out.innerHTML = '<div style="opacity:.8;padding:20px;text-align:center;">⚠️ Study sheets need the AI, which is busy right now. Try again in a moment.</div>';
+    return;
+  }
+  try {
+    const md = await callAIForResource(buildResourcePrompt(custom || topicName, full));
+    if (!md) throw new Error('empty response');
+    _resourceMD = md;
+    _resourceTitle = custom || (currentConcept ? currentConcept.name : 'Study Sheet');
+    out.innerHTML = renderMarkdownLite(md);
+    if (actions) actions.style.display = 'flex';
+  } catch (err) {
+    out.innerHTML = '<div style="opacity:.8;padding:20px;text-align:center;">Could not build the sheet (' + ((err && err.message) || 'error') + '). Try again.</div>';
+  }
+}
+
+function renderMarkdownLite(md) {
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/`(.+?)`/g, '<code>$1</code>');
+  const lines = md.replace(/\r/g, '').split('\n');
+  let html = '', i = 0, inList = false;
+  const closeList = () => { if (inList) { html += '</ul>'; inList = false; } };
+  while (i < lines.length) {
+    const ln = lines[i];
+    if (/^\s*\|.*\|/.test(ln) && i + 1 < lines.length && /^\s*\|[\s:|-]+\|\s*$/.test(lines[i + 1])) {
+      closeList();
+      const header = ln.trim().replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+      i += 2;
+      const rows = [];
+      while (i < lines.length && /^\s*\|.*\|/.test(lines[i])) { rows.push(lines[i].trim().replace(/^\||\|$/g, '').split('|').map(c => c.trim())); i++; }
+      html += '<table style="width:100%;border-collapse:collapse;margin:8px 0;font-size:13px;">';
+      html += '<tr>' + header.map(h => '<th style="border:1px solid var(--border,#444);padding:5px 7px;text-align:left;background:rgba(127,127,127,.12);">' + inline(h) + '</th>').join('') + '</tr>';
+      rows.forEach(r => { html += '<tr>' + r.map(c => '<td style="border:1px solid var(--border,#444);padding:5px 7px;vertical-align:top;">' + inline(c) + '</td>').join('') + '</tr>'; });
+      html += '</table>';
+      continue;
+    }
+    if (/^###\s/.test(ln)) { closeList(); html += '<h4 style="font-size:14px;margin:8px 0 3px;">' + inline(ln.replace(/^###\s/, '')) + '</h4>'; i++; continue; }
+    if (/^##\s/.test(ln)) { closeList(); html += '<h3 style="font-size:15px;margin:12px 0 4px;">' + inline(ln.replace(/^##\s/, '')) + '</h3>'; i++; continue; }
+    if (/^#\s/.test(ln)) { closeList(); html += '<h2 style="font-size:18px;margin:10px 0 4px;">' + inline(ln.replace(/^#\s/, '')) + '</h2>'; i++; continue; }
+    if (/^\s*[-*+]\s+/.test(ln)) { if (!inList) { html += '<ul style="margin:4px 0 4px 18px;">'; inList = true; } html += '<li>' + inline(ln.replace(/^\s*[-*+]\s+/, '')) + '</li>'; i++; continue; }
+    if (/^\s*$/.test(ln)) { closeList(); i++; continue; }
+    closeList(); html += '<p style="margin:4px 0;">' + inline(ln) + '</p>'; i++;
+  }
+  closeList();
+  return html;
+}
+
+function saveCurrentSheet() {
+  if (!_resourceMD) { showToast('Generate a sheet first', 2000); return; }
+  savedSheets.unshift({ title: _resourceTitle, md: _resourceMD, ts: Date.now() });
+  savedSheets = savedSheets.slice(0, 20);
+  localStorage.setItem('sl_resources', JSON.stringify(savedSheets));
+  renderSavedSheets();
+  showToast('📌 Saved — see "Saved sheets" below', 2500);
+}
+function renderSavedSheets() {
+  const el = document.getElementById('res-saved');
+  if (!el) return;
+  if (!savedSheets.length) { el.innerHTML = '<div style="opacity:.5;font-size:12px;">No saved sheets yet.</div>'; return; }
+  el.innerHTML = savedSheets.map((s, i) =>
+    '<div style="display:flex;align-items:center;gap:6px;padding:3px 0;">' +
+      '<button class="cfg-btn" style="flex:1;text-align:left;" onclick="openSavedSheet(' + i + ')">📄 ' + escStr(s.title) + ' <span style="opacity:.5;font-size:11px;">' + new Date(s.ts).toLocaleDateString() + '</span></button>' +
+      '<button class="cfg-btn" onclick="deleteSavedSheet(' + i + ')" title="Delete">🗑</button>' +
+    '</div>').join('');
+}
+function openSavedSheet(i) {
+  const s = savedSheets[i]; if (!s) return;
+  _resourceMD = s.md; _resourceTitle = s.title;
+  document.getElementById('res-output').innerHTML = renderMarkdownLite(s.md);
+  document.getElementById('res-actions').style.display = 'flex';
+}
+function deleteSavedSheet(i) { savedSheets.splice(i, 1); localStorage.setItem('sl_resources', JSON.stringify(savedSheets)); renderSavedSheets(); }
+function copyResourceMD() {
+  if (!_resourceMD) return;
+  navigator.clipboard.writeText(_resourceMD).then(() => showToast('📋 Copied', 1500)).catch(() => showToast('Copy blocked', 1800));
+}
+function _resourceDocHTML() {
+  return "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset='utf-8'><title>" + escStr(_resourceTitle) + "</title></head><body style=\"font-family:Calibri,Arial,sans-serif;font-size:12pt;color:#111;\">" + renderMarkdownLite(_resourceMD) + "</body></html>";
+}
+function _resourceFileName() { return ((_resourceTitle || 'study-sheet').replace(/[^\w\- ]/g, '').trim().replace(/\s+/g, '-')) || 'study-sheet'; }
+function downloadResourceDoc() {
+  if (!_resourceMD) return;
+  const blob = new Blob(['﻿', _resourceDocHTML()], { type: 'application/msword' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = _resourceFileName() + '.doc';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+function downloadResourcePDF() {
+  if (!_resourceMD) return;
+  const w = window.open('', '_blank');
+  if (!w) { showToast('Allow pop-ups to save as PDF', 3000); return; }
+  w.document.write('<html><head><meta charset="utf-8"><title>' + escStr(_resourceTitle) + '</title>' +
+    '<style>body{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#111;max-width:760px;margin:24px auto;padding:0 16px;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #999;padding:5px 7px;text-align:left;vertical-align:top;}h2{font-size:20px;}h3{font-size:16px;}</style>' +
+    '</head><body>' + renderMarkdownLite(_resourceMD) +
+    '<scr' + 'ipt>window.onload=function(){setTimeout(function(){window.print();},350);}</scr' + 'ipt></body></html>');
+  w.document.close();
 }
 
 function renderCheatSheet() {
