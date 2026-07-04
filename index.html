@@ -5155,23 +5155,51 @@ function accentTipHTML(correctText) {
 }
 
 // ─── PRONUNCIATION ────────────────────────────────────────────────────────────
+// 2026-07-03: hardened for Android Chrome / mobile. Failure modes handled:
+// (1) voices load async and getVoices() is empty on the first tap → cache them
+// and refresh on 'voiceschanged'; (2) Chrome can start an utterance PAUSED →
+// resume() nudges after speak; (3) the engine needs an "unlock" speak inside the
+// first user gesture; (4) the device may have NO Spanish voice installed, which
+// is silent with no error → detect and tell the user how to add one.
+let _ttsVoices = [];
+let _ttsUnlocked = false;
+let _noEsWarned = false;
+function _loadTTSVoices() {
+  try { _ttsVoices = window.speechSynthesis.getVoices() || []; } catch { _ttsVoices = []; }
+}
+if (window.speechSynthesis) {
+  _loadTTSVoices();
+  try { window.speechSynthesis.addEventListener('voiceschanged', _loadTTSVoices); } catch { window.speechSynthesis.onvoiceschanged = _loadTTSVoices; }
+  const _unlockTTS = () => {
+    if (_ttsUnlocked) return;
+    _ttsUnlocked = true;
+    try { window.speechSynthesis.resume(); const u = new SpeechSynthesisUtterance(' '); u.volume = 0; window.speechSynthesis.speak(u); } catch {}
+    _loadTTSVoices();
+  };
+  document.addEventListener('pointerdown', _unlockTTS, { once: true });
+  document.addEventListener('touchend', _unlockTTS, { once: true });
+}
 function speakSpanish(text) {
   if (!window.speechSynthesis || !text) return;
+  const synth = window.speechSynthesis;
   try {
-    window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text.trim());
+    synth.cancel();
+    if (!_ttsVoices.length) _loadTTSVoices();
+    const utter = new SpeechSynthesisUtterance(String(text).trim());
     utter.lang = 'es-ES';
     utter.rate = 0.9;
     utter.pitch = 1.0;
-    // 2026-07-03: speak SYNCHRONOUSLY inside the tap. The old code deferred the
-    // speak via onvoiceschanged when voices weren't loaded yet — but on iOS/Safari
-    // that breaks the user-gesture requirement and produces silence, the #1 reason
-    // pronunciation "doesn't work on phone." Use whatever Spanish voice exists now;
-    // if none, the es-ES lang hint still triggers Spanish TTS on most devices.
-    const voices = window.speechSynthesis.getVoices() || [];
-    const esVoice = voices.find(v => (v.lang || '').toLowerCase().startsWith('es'));
-    if (esVoice) utter.voice = esVoice;
-    window.speechSynthesis.speak(utter);
+    const esVoice = _ttsVoices.find(v => (v.lang || '').toLowerCase().startsWith('es'));
+    if (esVoice) {
+      utter.voice = esVoice;
+    } else if (_ttsVoices.length && !_noEsWarned) {
+      _noEsWarned = true;
+      showToast('🔈 No Spanish voice installed on this device. On Android: Settings → System → Languages → Text-to-speech → add Spanish, then reload.', 6500);
+    }
+    synth.speak(utter);
+    // Chrome (desktop + Android) can start paused — nudge it, twice for safety.
+    setTimeout(() => { try { synth.resume(); } catch {} }, 50);
+    setTimeout(() => { try { synth.resume(); } catch {} }, 250);
   } catch {}
 }
 
