@@ -1020,15 +1020,27 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
         <div class="hd-stat-lbl">Today</div>
       </div>
     </div>
+    <div class="hd-stat" title="Days in a row you've practiced (freezes protect missed days)">
+      <span class="hd-stat-icon">🔥</span>
+      <div>
+        <div class="hd-stat-val" id="day-streak-val">0</div>
+        <div class="hd-stat-lbl">Day streak</div>
+      </div>
+    </div>
   </div>
 
   <div class="hd-right">
     <div class="pomo-bar" id="pomo-bar"><span>🍅</span><span class="pomo-time" id="pomo-time">25:00</span><button class="pomo-stop" onclick="stopPomodoro()" title="Stop">✕</button></div>
     <div class="lvl-badge" id="lvl-badge">Level 1</div>
     <button class="review-btn" id="review-btn" onclick="openReviewModal()">📊 Review <span id="review-count">0</span></button>
-    <button class="cfg-btn" onclick="reopenGateway()" title="Re-read the mental model for your current concept">🧠 Brief</button>
-    <button class="cfg-btn" onclick="openCheatSheet()" title="Grammar reference — always available">📖 Cheat Sheet</button>
-    <button class="cfg-btn" onclick="openResources()" title="Generate a study sheet / vocab toolkit for your topic — save or download it">📄 Study Sheets</button>
+    <div class="study-menu-wrap" style="position:relative;display:inline-block;">
+      <button class="cfg-btn" onclick="toggleStudyMenu(event)" title="Briefs, cheat sheet, and AI study sheets">📚 Study ▾</button>
+      <div id="study-menu" style="display:none;position:absolute;right:0;top:112%;background:var(--surface,#1c1c22);border:1px solid var(--border,#333);border-radius:8px;padding:5px;z-index:300;min-width:190px;box-shadow:0 8px 24px rgba(0,0,0,.4);">
+        <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();reopenGateway()">🧠 Concept brief</button>
+        <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();openCheatSheet()">📖 Grammar cheat sheet</button>
+        <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();openResources()">📄 Study sheets + quiz</button>
+      </div>
+    </div>
     <button class="cfg-btn" onclick="openHelp()" title="How to use this dashboard">❓ Help</button>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
     <button class="cfg-btn" onclick="openSettings()">⚙ Settings</button>
@@ -4330,6 +4342,7 @@ function selectConcept(key, el) {
   nextExercise = null;
   localStorage.setItem('sl_last_concept', key); // restored on next visit, see init()
   setTimeout(updateDifficultyBadge, 50);
+  try { highlightRecommendedMode(); } catch {}
 
   // Show concept gateway if first time this session
   if (!sessionSeenGateways.has(key) && GATEWAYS[key]) {
@@ -4415,6 +4428,68 @@ function openResources() {
   document.getElementById('resources-overlay').classList.add('open');
 }
 function closeResources() { document.getElementById('resources-overlay').classList.remove('open'); }
+
+// 2026-07-03 (whole-app loop): the header had 3 separate "reference" buttons
+// (Brief / Cheat Sheet / Study Sheets) crowding it and confusing students about
+// which is which. Consolidated into one 📚 Study menu.
+function toggleStudyMenu(e) {
+  if (e) e.stopPropagation();
+  const m = document.getElementById('study-menu');
+  if (!m) return;
+  const show = (m.style.display === 'none' || !m.style.display);
+  m.style.display = show ? 'block' : 'none';
+  if (show) setTimeout(() => document.addEventListener('click', closeStudyMenu, { once: true }), 0);
+}
+function closeStudyMenu() { const m = document.getElementById('study-menu'); if (m) m.style.display = 'none'; }
+
+// 2026-07-03 (whole-app loop): the app had streak-FREEZE infra but never showed
+// a day-streak, so nothing signalled "come back tomorrow" (student feedback #38).
+// Compute consecutive practiced-or-frozen days ending today (today counts once
+// practiced; an un-practiced today doesn't break yesterday's streak yet).
+function computeDayStreak() {
+  try {
+    let n = 0;
+    for (let i = 0; i > -400; i--) {
+      const d = dateStrOffset(i);
+      const active = (dailyLog[d] || 0) > 0 || (typeof frozenDays !== 'undefined' && frozenDays.includes(d));
+      if (active) n++;
+      else if (i === 0) continue; // today not practiced yet — don't break yesterday's streak
+      else break;
+    }
+    return n;
+  } catch { return 0; }
+}
+function renderDayStreak() {
+  const el = document.getElementById('day-streak-val');
+  if (el) el.textContent = computeDayStreak();
+}
+
+// 2026-07-03 (whole-app loop, cycle 2): "16 modes, where do I start?" — badge a
+// recommended first mode for the current concept. New concept → Pairs (recognition
+// first); solid recognition → Builder (production); shaky → Fill Blank. Never hides
+// any mode — just points.
+function recommendedModeFor(key) {
+  const m = conceptMastery[key];
+  if (!m || m.total < 6) return 'pairs';
+  const acc = m.total ? m.correct / m.total : 0;
+  if (acc >= 0.7) return 'builder';
+  return 'fillblank';
+}
+function highlightRecommendedMode() {
+  document.querySelectorAll('.mode-tab .rec-badge').forEach(b => b.remove());
+  if (!currentConcept || mixedMode) return;
+  const rec = recommendedModeFor(currentConcept.key);
+  if (currentMode === rec) return; // already there — no need to point
+  const tab = document.querySelector('.mode-tab[data-mode="' + rec + '"]');
+  if (tab) {
+    const b = document.createElement('span');
+    b.className = 'rec-badge';
+    b.textContent = ' ⭐';
+    b.style.cssText = 'font-size:10px;';
+    b.title = 'Suggested starting point for this concept';
+    tab.appendChild(b);
+  }
+}
 
 function buildResourcePrompt(topicName, full, mistakes) {
   const mistakeLine = (mistakes && mistakes.length)
@@ -4812,6 +4887,7 @@ function switchMode(mode, el) {
   document.getElementById('mixed-chip')?.classList.remove('active');
   nextExercise = null;
   localStorage.setItem('sl_last_mode', mode); // restored on next visit, see init()
+  try { highlightRecommendedMode(); } catch {}
   // 2026-07-01: this used to only exempt 'conjugate' from needing a concept,
   // so vocab/spottherror/readcomp (also concept-free per startExercise()'s own
   // noConceptModes list) silently did nothing when no concept was selected.
@@ -7193,6 +7269,7 @@ function updateStats() {
   const bestEl = document.getElementById('best-streak-val');
   if (bestEl) bestEl.textContent = `(best ${bestStreak})`;
   document.getElementById('xp-val').textContent = xp;
+  try { renderDayStreak(); } catch {}
   document.getElementById('s-correct').textContent = sessionCorrect;
   document.getElementById('s-wrong').textContent = sessionWrong;
 
