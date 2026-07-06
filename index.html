@@ -685,7 +685,13 @@ body.focus-mode header { min-height:auto; }
   border-radius: 16px;
   width: 100%;
   max-width: 560px;
-  overflow: hidden;
+  /* 2026-07-05 Gary QA BLOCKER fix: card was overflow:hidden with no max-height,
+     so on short viewports (phones, small laptop windows) the "Got it — start
+     practicing" button was clipped off-screen and the gateway couldn't be
+     dismissed — the whole app looked broken. Card now scrolls internally. */
+  max-height: calc(100dvh - 40px);
+  overflow-x: hidden;
+  overflow-y: auto;
   transform: translateY(20px) scale(.97);
   transition: transform .3s cubic-bezier(.34,1.3,.64,1);
   box-shadow: 0 24px 60px rgba(0,0,0,.6);
@@ -924,10 +930,18 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
     white-space: nowrap; cursor: pointer; flex-shrink: 0;
   }
   .mode-group-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .mode-tabs[data-filter="practice"] .mode-tab:not([data-group="practice"]),
-  .mode-tabs[data-filter="produce"] .mode-tab:not([data-group="produce"]),
-  .mode-tabs[data-filter="readlisten"] .mode-tab:not([data-group="readlisten"]),
-  .mode-tabs[data-filter="review"] .mode-tab:not([data-group="review"]) { display: none; }
+  .mode-tabs[data-filter="practice"] .mode-tab:not([data-group="practice"]):not(.active),
+  .mode-tabs[data-filter="produce"] .mode-tab:not([data-group="produce"]):not(.active),
+  .mode-tabs[data-filter="readlisten"] .mode-tab:not([data-group="readlisten"]):not(.active),
+  .mode-tabs[data-filter="review"] .mode-tab:not([data-group="review"]):not(.active) { display: none; }
+  /* Gary QA 2026-07-05: keep the ACTIVE mode's tab visible even when browsing
+     another group (:not(.active) above) — otherwise no tab looks selected.
+     Study dropdown: anchored right:0 to a button near the LEFT edge on phones,
+     which pushed the menu off-screen ("…cept brief"). Anchor left instead. */
+  #study-menu { left: 0 !important; right: auto !important; }
+  /* Study-sheet / in-sheet quiz viewport was a ~44vh keyhole inside the modal;
+     give the sheet most of the screen on phones. */
+  #res-output { max-height: 62dvh !important; }
   /* Exercise area — tighter padding */
   .exercise-area { padding: 14px 12px; gap: 12px; }
   /* Pairs — single column on narrow phones */
