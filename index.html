@@ -252,6 +252,9 @@ body.focus-mode header { min-height:auto; }
 }
 .mode-tab:hover { color: var(--text2); }
 .mode-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+/* Mode group chips — hidden on desktop (all 16 tabs fit fine there).
+   Shown ≤640px, where they filter .mode-tabs via its data-filter attribute. */
+.mode-groups { display: none; }
 
 /* ── EXERCISE AREA ── */
 .exercise-area {
@@ -908,6 +911,23 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
   }
   .mode-tabs::-webkit-scrollbar { display: none; }
   .mode-tab { padding: 8px 11px; font-size: 11.5px; }
+  /* Mode group chips (phones): show the 4-category row and filter the tab strip.
+     No data-filter attr = all tabs visible (safe default if JS hasn't run). */
+  .mode-groups {
+    display: flex; gap: 6px; padding: 7px 10px 0;
+    background: var(--surface2); overflow-x: auto; scrollbar-width: none;
+  }
+  .mode-groups::-webkit-scrollbar { display: none; }
+  .mode-group-chip {
+    font-size: 11px; font-weight: 700; padding: 5px 11px; border-radius: 14px;
+    border: 1px solid var(--border); color: var(--text3);
+    white-space: nowrap; cursor: pointer; flex-shrink: 0;
+  }
+  .mode-group-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .mode-tabs[data-filter="practice"] .mode-tab:not([data-group="practice"]),
+  .mode-tabs[data-filter="produce"] .mode-tab:not([data-group="produce"]),
+  .mode-tabs[data-filter="readlisten"] .mode-tab:not([data-group="readlisten"]),
+  .mode-tabs[data-filter="review"] .mode-tab:not([data-group="review"]) { display: none; }
   /* Exercise area — tighter padding */
   .exercise-area { padding: 14px 12px; gap: 12px; }
   /* Pairs — single column on narrow phones */
@@ -940,8 +960,13 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
 
 /* Phone — single column pairs, hide hd-stat icons, collapse logo sub */
 @media (max-width: 480px) {
-  /* Header: hide Accuracy stat on phones (keep Streak + XP + Due) */
+  /* Header slimming (Gary mobile loop 2026-07-05): target one row, two max.
+     Hide Accuracy (3) and XP (2) — level badge + XP bar already show progression.
+     Keep 🔥 Streak, 📚 Due, 📅 Today, 📆 Day streak. */
   .hd-stats .hd-stat:nth-child(3) { display: none; }
+  .hd-stats .hd-stat:nth-child(2) { display: none; }
+  #best-streak-val { display: none; } /* "(best N)" label noise on phones */
+  .hd-right .cfg-btn[onclick="openHelp()"] { display: none; } /* Help lives in Settings on phones */
   .hd-stat-icon { font-size: 14px; }
   /* Pairs grid → 1 column */
   .pair-grid { grid-template-columns: 1fr; }
@@ -1106,23 +1131,31 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
 <div class="concept-bar" id="concept-bar"></div>
 
 <!-- MODE TABS -->
+<!-- Mode group chips — phones only (CSS hides on desktop). Filters the 16 tabs
+     into 4 scannable categories; Gary flagged the flat 16-tab strip as overwhelming. -->
+<div class="mode-groups" id="mode-groups">
+  <div class="mode-group-chip" data-group="practice" onclick="setModeGroup('practice')">🎯 Quick practice</div>
+  <div class="mode-group-chip" data-group="produce" onclick="setModeGroup('produce')">✍️ Write &amp; speak</div>
+  <div class="mode-group-chip" data-group="readlisten" onclick="setModeGroup('readlisten')">📖 Read &amp; listen</div>
+  <div class="mode-group-chip" data-group="review" onclick="setModeGroup('review')">📅 Review</div>
+</div>
 <div class="mode-tabs" id="mode-tabs">
-  <div class="mode-tab active" data-mode="pairs" onclick="switchMode('pairs', this)">⚡ Pairs</div>
-  <div class="mode-tab" data-mode="examples" onclick="switchMode('examples', this)">📚 Examples</div>
-  <div class="mode-tab" data-mode="fillblank" onclick="switchMode('fillblank', this)">✏️ Fill Blank</div>
-  <div class="mode-tab" data-mode="builder" onclick="switchMode('builder', this)">🔨 Builder</div>
-  <div class="mode-tab" data-mode="translate" onclick="switchMode('translate', this)">✍️ Translate</div>
-  <div class="mode-tab" data-mode="story" onclick="switchMode('story', this)">📖 Story</div>
-  <div class="mode-tab" data-mode="conjugate" onclick="switchMode('conjugate', this)">🔤 Conjugate</div>
-  <div class="mode-tab" data-mode="speak" onclick="switchMode('speak', this)">🎙️ Speak</div>
-  <div class="mode-tab" data-mode="missing" onclick="switchMode('missing', this)">🔍 Missing</div>
-  <div class="mode-tab" data-mode="worddrop" onclick="switchMode('worddrop', this)">🃏 Word Drop</div>
-  <div class="mode-tab" data-mode="dialogue" onclick="switchMode('dialogue', this)">💬 Dialogue</div>
-  <div class="mode-tab" data-mode="vocab" onclick="switchMode('vocab', this)">📖 Vocab</div>
-  <div class="mode-tab" data-mode="spottherror" onclick="switchMode('spottherror', this)">🐛 Errors</div>
-  <div class="mode-tab" data-mode="readcomp" onclick="switchMode('readcomp', this)">📚 Read</div>
-  <div class="mode-tab" data-mode="review" onclick="switchMode('review', this)">📅 Review<span id="review-mode-due" style="opacity:.7"></span></div>
-  <div class="mode-tab" data-mode="sprint" onclick="switchMode('sprint', this)">⏱️ Sprint</div>
+  <div class="mode-tab active" data-mode="pairs" data-group="practice" onclick="switchMode('pairs', this)">⚡ Pairs</div>
+  <div class="mode-tab" data-mode="examples" data-group="readlisten" onclick="switchMode('examples', this)">📚 Examples</div>
+  <div class="mode-tab" data-mode="fillblank" data-group="practice" onclick="switchMode('fillblank', this)">✏️ Fill Blank</div>
+  <div class="mode-tab" data-mode="builder" data-group="produce" onclick="switchMode('builder', this)">🔨 Builder</div>
+  <div class="mode-tab" data-mode="translate" data-group="produce" onclick="switchMode('translate', this)">✍️ Translate</div>
+  <div class="mode-tab" data-mode="story" data-group="readlisten" onclick="switchMode('story', this)">📖 Story</div>
+  <div class="mode-tab" data-mode="conjugate" data-group="produce" onclick="switchMode('conjugate', this)">🔤 Conjugate</div>
+  <div class="mode-tab" data-mode="speak" data-group="produce" onclick="switchMode('speak', this)">🎙️ Speak</div>
+  <div class="mode-tab" data-mode="missing" data-group="practice" onclick="switchMode('missing', this)">🔍 Missing</div>
+  <div class="mode-tab" data-mode="worddrop" data-group="practice" onclick="switchMode('worddrop', this)">🃏 Word Drop</div>
+  <div class="mode-tab" data-mode="dialogue" data-group="readlisten" onclick="switchMode('dialogue', this)">💬 Dialogue</div>
+  <div class="mode-tab" data-mode="vocab" data-group="practice" onclick="switchMode('vocab', this)">📖 Vocab</div>
+  <div class="mode-tab" data-mode="spottherror" data-group="practice" onclick="switchMode('spottherror', this)">🐛 Errors</div>
+  <div class="mode-tab" data-mode="readcomp" data-group="readlisten" onclick="switchMode('readcomp', this)">📚 Read</div>
+  <div class="mode-tab" data-mode="review" data-group="review" onclick="switchMode('review', this)">📅 Review<span id="review-mode-due" style="opacity:.7"></span></div>
+  <div class="mode-tab" data-mode="sprint" data-group="review" onclick="switchMode('sprint', this)">⏱️ Sprint</div>
 </div>
 
 <!-- EXERCISE AREA -->
@@ -1170,6 +1203,11 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
 <div class="modal-overlay" id="settings-modal" onclick="if(event.target===this)closeSettings()">
   <div class="modal" style="width:380px;max-width:92vw;max-height:90vh;overflow-y:auto;">
     <div class="modal-title">⚙ Settings</div>
+
+    <!-- Phones hide the header ❓ Help button (Gary mobile loop) — this is its home there -->
+    <div class="modal-row">
+      <button class="cfg-btn" style="width:100%;" onclick="closeSettings();openHelp()">❓ How to use this app</button>
+    </div>
 
     <div id="ollama-dev-settings" style="display:none">
     <div class="modal-row">
@@ -3769,6 +3807,148 @@ const STATIC_EXERCISES = {
   });
 })();
 
+// ─── BATCH 6 — TÚ/USTED PARITY (2026-07-05) ────────────────────────────────────
+// tu-usted was the only concept never extended past the base 5/5 (B2–B5 skipped
+// it) while every other concept sits at 25/25. This brings it to parity: +20
+// pairs, +20 fillblank. Same shapes as the base bank; merge mirrors B2–B5.
+// NOTE: must stay ABOVE assignCardIds() so the new items get stable SM-2 ids.
+(function extendTuUstedBank() {
+  const B6 = {
+  'tu-usted': {
+    pairs: [
+      { difficulty:'beg', question:"Which correctly asks your best friend how they are?", correct:0,
+        cards:[
+          {es:"¿Cómo estás?",en:"How are you?",reason:"Correct — tú form for a close friend."},
+          {es:"¿Cómo está usted?",en:"How are you?",reason:"Wrong — usted is oddly distant with your best friend."}
+        ], explanation:"Close friends take tú: estás, not está." },
+      { difficulty:'beg', question:"Which correctly asks your new teacher how she is?", correct:1,
+        cards:[
+          {es:"¿Cómo estás?",en:"How are you?",reason:"Wrong — tú is too casual for a teacher you just met."},
+          {es:"¿Cómo está usted?",en:"How are you?",reason:"Correct — usted shows respect to a teacher."}
+        ], explanation:"Teachers, bosses, and elders you just met → usted." },
+      { difficulty:'beg', question:"Which would a waiter correctly say to a customer?", correct:0,
+        cards:[
+          {es:"¿Qué desea usted?",en:"What would you like?",reason:"Correct — service staff address customers with usted."},
+          {es:"¿Qué deseas?",en:"What would you like?",reason:"Wrong — tú with a customer sounds unprofessional in most places."}
+        ], explanation:"Service interactions default to usted: desea, not deseas." },
+      { difficulty:'beg', question:"Which correctly offers coffee to a friend?", correct:0,
+        cards:[
+          {es:"¿Quieres un café?",en:"Do you want a coffee?",reason:"Correct — quieres is the tú form, right for a friend."},
+          {es:"¿Quiere un café?",en:"Do you want a coffee?",reason:"Wrong — quiere is the usted form, too formal here."}
+        ], explanation:"Friends → tú: quieres. Usted → quiere." },
+      { difficulty:'beg', question:"Which correctly offers help to an elderly neighbor you address formally?", correct:1,
+        cards:[
+          {es:"¿Necesitas ayuda?",en:"Do you need help?",reason:"Wrong — necesitas is tú, but you address her with usted."},
+          {es:"¿Necesita ayuda, señora?",en:"Do you need help, ma'am?",reason:"Correct — necesita matches the usted register."}
+        ], explanation:"Usted conjugates like él/ella: necesita." },
+      { difficulty:'int', question:"Which would a doctor correctly ask a patient?", correct:0,
+        cards:[
+          {es:"¿Tiene usted alergias?",en:"Do you have allergies?",reason:"Correct — professional settings use usted: tiene."},
+          {es:"¿Tienes alergias?",en:"Do you have allergies?",reason:"Wrong — tú with a patient breaks the professional register."}
+        ], explanation:"Professional contexts (doctor–patient) → usted: tiene, not tienes." },
+      { difficulty:'int', question:"Which correctly asks a police officer for help?", correct:1,
+        cards:[
+          {es:"¿Puedes ayudarme?",en:"Can you help me?",reason:"Wrong — puedes is tú; authority figures take usted."},
+          {es:"¿Puede ayudarme?",en:"Can you help me?",reason:"Correct — puede matches usted, the register for an officer."}
+        ], explanation:"Authority figures → usted: puede." },
+      { difficulty:'int', question:"Which correctly asks a friend 'Is this your phone?'", correct:0,
+        cards:[
+          {es:"¿Es este tu teléfono?",en:"Is this your phone?",reason:"Correct — tu (no accent) is the informal possessive."},
+          {es:"¿Es este su teléfono?",en:"Is this your phone?",reason:"Wrong — su is the usted possessive, mismatched with a friend."}
+        ], explanation:"Possessives follow register: tú → tu, usted → su." },
+      { difficulty:'int', question:"Which correctly tells a friend 'Don't arrive late'?", correct:0,
+        cards:[
+          {es:"No llegues tarde.",en:"Don't arrive late.",reason:"Correct — negative tú commands use the subjunctive: no llegues."},
+          {es:"No llegue tarde.",en:"Don't arrive late.",reason:"Wrong — no llegue is the usted command, too formal for a friend."}
+        ], explanation:"Negative tú command = tú subjunctive form: no llegues. Usted: no llegue." },
+      { difficulty:'int', question:"Which correctly tells a client to sign here?", correct:1,
+        cards:[
+          {es:"Firma aquí, por favor.",en:"Sign here, please.",reason:"Wrong — firma is the tú command; clients get usted."},
+          {es:"Firme aquí, por favor.",en:"Sign here, please.",reason:"Correct — firme is the usted command form."}
+        ], explanation:"Usted commands flip the vowel: firmar → firme (tú: firma)." },
+      { difficulty:'int', question:"Which correctly asks a child where he lives?", correct:0,
+        cards:[
+          {es:"¿Dónde vives?",en:"Where do you live?",reason:"Correct — children are always addressed with tú."},
+          {es:"¿Dónde vive usted?",en:"Where do you live?",reason:"Wrong — usted with a small child sounds comically formal."}
+        ], explanation:"Adults address children with tú, regardless of setting." },
+      { difficulty:'int', question:"Which correctly tells señora García to sit down?", correct:1,
+        cards:[
+          {es:"Siéntate, por favor.",en:"Sit down, please.",reason:"Wrong — siéntate is the tú command."},
+          {es:"Siéntese, por favor.",en:"Sit down, please.",reason:"Correct — siéntese is the usted command of the reflexive sentarse."}
+        ], explanation:"Reflexive commands keep the register: siéntate (tú) vs siéntese (usted)." },
+      { difficulty:'int', question:"Which correctly asks your professor a question in class?", correct:0,
+        cards:[
+          {es:"Profesor, ¿usted sabe si hay examen?",en:"Professor, do you know if there's an exam?",reason:"Correct — usted (sabe) is the right register for a professor."},
+          {es:"Profesor, ¿tú sabes si hay examen?",en:"Professor, do you know if there's an exam?",reason:"Wrong — tú with a professor clashes with the respectful title 'profesor'."}
+        ], explanation:"If you use a title (profesor, doctor, señora), match it with usted." },
+      { difficulty:'adv', question:"Which correctly tells señora Ruiz, a client, that you'll call her tomorrow?", correct:1,
+        cards:[
+          {es:"Te llamo mañana, señora Ruiz.",en:"I'll call you tomorrow, Mrs. Ruiz.",reason:"Wrong — te is the tú object pronoun; it clashes with 'señora'."},
+          {es:"La llamo mañana, señora Ruiz.",en:"I'll call you tomorrow, Mrs. Ruiz.",reason:"Correct — la is the formal object pronoun for usted (feminine)."}
+        ], explanation:"Object pronouns carry register too: te (tú) vs lo/la (usted)." },
+      { difficulty:'adv', question:"Which correctly compliments your friend's grandmother, whom you just met?", correct:0,
+        cards:[
+          {es:"Usted es muy amable.",en:"You are very kind.",reason:"Correct — a friend's elderly grandmother gets usted at first meeting."},
+          {es:"Tú eres muy amable.",en:"You are very kind.",reason:"Wrong — tú with an elder you just met can come across as disrespectful."}
+        ], explanation:"Age + first meeting → usted, even inside a friend's family." },
+      { difficulty:'beg', question:"Which correctly asks two customers what they'd like (Latin America)?", correct:0,
+        cards:[
+          {es:"¿Qué desean ustedes?",en:"What would you (all) like?",reason:"Correct — ustedes is THE plural 'you' in Latin America, formal or not."},
+          {es:"¿Qué deseáis?",en:"What would you (all) like?",reason:"Wrong in Latin America — vosotros is only used in Spain, and it's informal."}
+        ], explanation:"Latin America: ustedes for every group. Spain adds informal vosotros." },
+      { difficulty:'int', question:"Which correctly tells a customer her table is ready?", correct:1,
+        cards:[
+          {es:"Tu mesa está lista.",en:"Your table is ready.",reason:"Wrong — tu is informal; customers get the usted possessive."},
+          {es:"Su mesa está lista, señora.",en:"Your table is ready, ma'am.",reason:"Correct — su matches the usted register of a restaurant."}
+        ], explanation:"Customer service: su/sus, not tu/tus." },
+      { difficulty:'adv', question:"An elderly man says 'Puedes tutearme' (you can call me tú). Which reply respects his request?", correct:0,
+        cards:[
+          {es:"Gracias — ¿y cómo estás hoy?",en:"Thanks — and how are you today?",reason:"Correct — he invited you to switch, so tú (estás) honors that."},
+          {es:"Gracias — ¿y cómo está usted hoy?",en:"Thanks — and how are you today?",reason:"Wrong — staying in usted after 'puedes tutearme' politely rejects his invitation."}
+        ], explanation:"'Tutear' = to use tú. Once invited, switching is the polite move." },
+      { difficulty:'adv', question:"Which keeps the formal register consistent?", correct:0,
+        cards:[
+          {es:"¿Tiene usted su identificación?",en:"Do you have your ID?",reason:"Correct — tiene and su both match usted."},
+          {es:"¿Tiene usted tu identificación?",en:"Do you have your ID?",reason:"Wrong — tiene is usted but tu is the tú possessive: mixed register."}
+        ], explanation:"Every word must agree with the chosen register: usted → tiene + su." },
+      { difficulty:'adv', question:"Which correctly asks a group of children if they're ready (Latin America)?", correct:1,
+        cards:[
+          {es:"¿Estáis listos, niños?",en:"Are you ready, kids?",reason:"Wrong in Latin America — estáis is vosotros, which isn't used there."},
+          {es:"¿Están listos, niños?",en:"Are you ready, kids?",reason:"Correct — ustedes (están) covers ALL groups in Latin America, even kids."}
+        ], explanation:"In Latin America even informal groups take ustedes: están, not estáis." }
+    ],
+    fillblank: [
+      { difficulty:'beg', before:"¿De dónde", after:"usted?", en:"Where are you from? (formal)", options:["es","eres","soy","son"], correct:0, explanation:"Usted conjugates like él/ella → es." },
+      { difficulty:'beg', before:"¿Cuántos años", after:"? (asking a classmate)", en:"How old are you?", options:["tienes","tiene","tengo","tienen"], correct:0, explanation:"A classmate is a peer → tú: tienes." },
+      { difficulty:'beg', before:"", after:"muy simpático. (telling your friend he's nice)", en:"You're very nice.", options:["Eres","Es","Soy","Son"], correct:0, explanation:"Friend → tú: eres." },
+      { difficulty:'beg', before:"¿", after:"usted inglés?", en:"Do you speak English? (formal)", options:["Habla","Hablas","Hablo","Hablan"], correct:0, explanation:"Usted → habla (like él/ella)." },
+      { difficulty:'beg', before:"¿Cómo", after:", señora?", en:"How are you, ma'am?", options:["está","estás","estoy","están"], correct:0, explanation:"'Señora' signals usted → está." },
+      { difficulty:'int', before:"Señor,", after:"pasaporte, por favor.", en:"Sir, your passport, please.", options:["su","tu","sus","tus"], correct:0, explanation:"Formal address (señor) → su, the usted possessive." },
+      { difficulty:'int', before:"Oye, ¿me prestas", after:"boli?", en:"Hey, can you lend me your pen?", options:["tu","su","tus","sus"], correct:0, explanation:"'Oye' + prestas = tú register → tu boli." },
+      { difficulty:'int', before:"", after:"aquí, por favor, señora.", en:"Sign here, please, ma'am.", options:["Firme","Firma","Firmo","Firman"], correct:0, explanation:"Usted command → firme (tú would be firma)." },
+      { difficulty:'int', before:"", after:"la sal, porfa. (to your sister)", en:"Pass me the salt, please.", options:["Pásame","Páseme","Me pasa","Me pases"], correct:0, explanation:"Family → tú command: pásame. Usted would be páseme." },
+      { difficulty:'int', before:"No", after:"tarde, hijo.", en:"Don't be late, son.", options:["llegues","llegue","llegas","llega"], correct:0, explanation:"Negative tú command uses the subjunctive → no llegues." },
+      { difficulty:'int', before:"Doctora, ¿", after:"ayudarme con esto?", en:"Doctor, can you help me with this?", options:["puede","puedes","puedo","pueden"], correct:0, explanation:"Title (doctora) → usted: puede." },
+      { difficulty:'int', before:"¿", after:"llamo un taxi, señor?", en:"Shall I call you a taxi, sir?", options:["Le","Te","Lo","Me"], correct:0, explanation:"Usted indirect object pronoun → le. Te would be tú register." },
+      { difficulty:'int', before:"", after:", por favor, señora García.", en:"Sit down, please, Mrs. García.", options:["Siéntese","Siéntate","Me siento","Te sientas"], correct:0, explanation:"Usted reflexive command → siéntese." },
+      { difficulty:'adv', before:"Profesor, ¿me", after:"explicar esto otra vez?", en:"Professor, can you explain this to me again?", options:["puede","puedes","podemos","pueden"], correct:0, explanation:"Professor → usted: puede." },
+      { difficulty:'adv', before:"¿", after:"ustedes listos?", en:"Are you (all) ready?", options:["Están","Estáis","Estás","Está"], correct:0, explanation:"Ustedes conjugates like ellos → están." },
+      { difficulty:'beg', before:"¿", after:"tú al partido el sábado?", en:"Are you going to the game on Saturday?", options:["Vas","Va","Voy","Van"], correct:0, explanation:"Tú → vas." },
+      { difficulty:'adv', before:"Niños, ¿ya", after:"la tarea? (Latin America)", en:"Kids, did you already do the homework?", options:["hicieron","hicisteis","hizo","hiciste"], correct:0, explanation:"Latin America uses ustedes for any group → hicieron. Hicisteis is Spain's vosotros." },
+      { difficulty:'adv', before:"Perdone, ¿", after:"decirme la hora?", en:"Excuse me, could you tell me the time?", options:["podría","podrías","puedo","podrán"], correct:0, explanation:"'Perdone' opens in usted → podría keeps it consistent (and extra-polite)." },
+      { difficulty:'beg', before:"Tía Rosa,", after:"eres mi tía favorita.", en:"Aunt Rosa, you're my favorite aunt.", options:["tú","usted","te","ti"], correct:0, explanation:"Family (in most regions) → tú, and 'eres' confirms it." },
+      { difficulty:'adv', before:"El médico me dijo: «", after:"dos pastillas al día».", en:"The doctor told me: 'Take two pills a day.'", options:["Tome","Toma","Tomas","Tomo"], correct:0, explanation:"Doctors address patients with usted → tome (tú would be toma)." }
+    ]
+  }
+  };
+  Object.keys(B6).forEach(function(k) {
+    if (STATIC_EXERCISES[k]) {
+      STATIC_EXERCISES[k].pairs.push.apply(STATIC_EXERCISES[k].pairs, B6[k].pairs);
+      STATIC_EXERCISES[k].fillblank.push.apply(STATIC_EXERCISES[k].fillblank, B6[k].fillblank);
+    }
+  });
+})();
+
 // ─── ASSIGN STABLE CARD IDs (for SM-2 scheduling) ─────────────────────────────
 (function assignCardIds() {
   Object.entries(STATIC_EXERCISES).forEach(function([concept, data]) {
@@ -4246,6 +4426,8 @@ function init() {
       currentMode = lastMode;
     }
   }
+  // Phones: highlight the active mode's group chip and filter the tab strip
+  try { syncModeGroup(currentMode || 'pairs'); } catch {}
 
   // Auto-select a starting concept so the app is never blank on first load.
   // Root cause fixed 2026-07-01: nothing was selected until a student clicked a
@@ -4486,7 +4668,7 @@ function recommendedModeFor(key) {
   return 'fillblank';
 }
 function highlightRecommendedMode() {
-  document.querySelectorAll('.mode-tab .rec-badge').forEach(b => b.remove());
+  document.querySelectorAll('.mode-tab .rec-badge, .mode-group-chip .rec-badge').forEach(b => b.remove());
   if (!currentConcept || mixedMode) return;
   const rec = recommendedModeFor(currentConcept.key);
   if (currentMode === rec) return; // already there — no need to point
@@ -4498,6 +4680,19 @@ function highlightRecommendedMode() {
     b.style.cssText = 'font-size:10px;';
     b.title = 'Suggested starting point for this concept';
     tab.appendChild(b);
+  }
+  // Phones: if the recommended tab sits in a different (filtered-out) group,
+  // star that group's chip too so the nudge stays visible.
+  const recGroup = (typeof MODE_GROUPS !== 'undefined') ? MODE_GROUPS[rec] : null;
+  if (recGroup && tab) {
+    const chip = document.querySelector('.mode-group-chip[data-group="' + recGroup + '"]');
+    if (chip && !chip.classList.contains('active')) {
+      const cb = document.createElement('span');
+      cb.className = 'rec-badge';
+      cb.textContent = ' ⭐';
+      cb.style.cssText = 'font-size:10px;';
+      chip.appendChild(cb);
+    }
   }
 }
 
@@ -4523,7 +4718,7 @@ Structure, in this order:
 8. **The #1 mistake to avoid** + the one-question shortcut.
 9. End with: **▶ Now practice:** one line nudging a specific practice mode on this topic in the app.${mistakeLine}
 
-Rules: natural, correct, everyday Spanish; dense and skimmable; no filler; gloss every Spanish word in English. Prefer high-frequency words a beginner will actually encounter — no obscure vocabulary as padding. For any word that is easy to mispronounce, add a tiny phonetic hint in brackets after the gloss, e.g. "listo/a (ready) [LEE-sto]".`;
+Rules: natural, correct, everyday Spanish; dense and skimmable; no filler; gloss every Spanish word in English. In the vocabulary banks, EVERY item must be a real SPANISH word or phrase first, with its English gloss in parentheses — e.g. "por la mañana (in the morning)" — never an English label or category name. Prefer high-frequency words a beginner will actually encounter — no obscure vocabulary as padding. For any word that is easy to mispronounce, add a tiny phonetic hint in brackets after the gloss, e.g. "listo/a (ready) [LEE-sto]".`;
 }
 
 async function callAIForResource(prompt) {
@@ -4658,6 +4853,10 @@ function downloadResourcePDF() {
 // ── In-sheet quiz engine (2026-07-03, loops 3+5): vocab (both directions) + mistakes review.
 let _quizItems = [], _quizIdx = 0, _quizDir = 'en2es', _quizKind = 'vocab', _quizPairsRaw = [];
 function _extractVocabPairs(md) {
+  // Scan only from the vocabulary section onward when present — avoids junk
+  // pairs from mnemonics/headers like "POR (The Path/Cause)".
+  const vs = md.search(/^#{1,4}[^\n]*vocabular/im);
+  if (vs > 0) md = md.slice(vs);
   const pairs = [], seen = new Set();
   const re = /([A-Za-zÁÉÍÓÚÑáéíóúñ][A-Za-zÁÉÍÓÚÑáéíóúñ\/\-\. ]*?)\s*\(([^)]+)\)/g;
   let m;
@@ -4891,6 +5090,31 @@ function renderHelp() {
 }
 
 // ─── MODE SWITCHING ────────────────────────────────────────────────────────────
+// ── MODE GROUPS (phones) — Gary mobile loop 2026-07-05 ──────────────────────
+// The 4 chips above the tab strip filter the 16 mode tabs on small screens.
+// Desktop ignores all of this (chips are display:none; no data-filter is set
+// until a chip is tapped or syncModeGroup runs, and the filter CSS lives
+// inside the mobile media query anyway).
+const MODE_GROUPS = {
+  pairs: 'practice', fillblank: 'practice', missing: 'practice',
+  worddrop: 'practice', spottherror: 'practice', vocab: 'practice',
+  builder: 'produce', translate: 'produce', conjugate: 'produce', speak: 'produce',
+  examples: 'readlisten', story: 'readlisten', dialogue: 'readlisten', readcomp: 'readlisten',
+  review: 'review', sprint: 'review'
+};
+function setModeGroup(g) {
+  const bar = document.getElementById('mode-tabs');
+  if (bar) bar.setAttribute('data-filter', g);
+  document.querySelectorAll('.mode-group-chip').forEach(c =>
+    c.classList.toggle('active', c.getAttribute('data-group') === g));
+}
+// Keep the chip row in sync when a mode is activated by any path
+// (tab tap, init restore, recommended-mode nudge).
+function syncModeGroup(mode) {
+  const g = MODE_GROUPS[mode];
+  if (g) setModeGroup(g);
+}
+
 function switchMode(mode, el) {
   document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
@@ -4899,6 +5123,7 @@ function switchMode(mode, el) {
   document.getElementById('mixed-chip')?.classList.remove('active');
   nextExercise = null;
   localStorage.setItem('sl_last_mode', mode); // restored on next visit, see init()
+  try { syncModeGroup(mode); } catch {}
   try { highlightRecommendedMode(); } catch {}
   // 2026-07-01: this used to only exempt 'conjugate' from needing a concept,
   // so vocab/spottherror/readcomp (also concept-free per startExercise()'s own
