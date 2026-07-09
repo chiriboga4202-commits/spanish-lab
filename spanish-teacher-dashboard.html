@@ -1902,37 +1902,15 @@ Then on a new line write:
 DISCUSSION QUESTIONS:
 Write 4 short discussion questions a teacher can ask students about the story.`;
 
-  const model = document.getElementById('model-select').value;
   try {
-    const response = await fetch(`${ollamaUrl}/api/chat`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({model, messages:[{role:'user',content:prompt}], stream:true})
-    });
-    if (!response.ok) throw new Error(`Ollama error ${response.status}`);
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
-    let full = '';
-    out.innerHTML = '';
-    while (true) {
-      const {done, value} = await reader.read();
-      if (done) break;
-      const lines = decoder.decode(value).split('\n').filter(l=>l.trim());
-      for (const line of lines) {
-        try {
-          const j = JSON.parse(line);
-          if (j.message?.content) {
-            full += j.message.content;
-            const split = full.split('DISCUSSION QUESTIONS:');
-            out.textContent = split[0].trim();
-            if (split[1]) { qOut.textContent = split[1].trim(); }
-          }
-        } catch {}
-      }
-    }
+    out.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Writing the story…</div>';
+    const full = await aiGenerate(prompt, { max_tokens: 2048, temperature: 0.7 });
+    const split = full.split('DISCUSSION QUESTIONS:');
+    out.textContent = split[0].trim();
+    qOut.textContent = split[1] ? split[1].trim() : '';
     document.getElementById('story-actions').style.display = 'flex';
   } catch(err) {
-    out.textContent = `⚠️ ${err.message}\n\nMake sure Ollama is running.`;
+    out.textContent = `⚠️ ${err.message} — try again in a moment.`;
     qOut.textContent = 'Could not generate questions.';
   }
 }
@@ -2163,36 +2141,15 @@ async function generateContent() {
   document.getElementById('out-actions').style.display = 'flex';
 }
 
+// Kept the name from the Ollama streaming era — callers don't care that the
+// Gemini proxy returns in one shot instead of streaming.
 async function streamToElement(prompt, el) {
-  const model = document.getElementById('model-select').value;
   try {
-    const res = await fetch(`${ollamaUrl}/api/chat`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({model, messages:[{role:'user',content:prompt}], stream:true})
-    });
-    if (!res.ok) throw new Error(`Ollama error ${res.status}`);
-    el.innerHTML = '';
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let full = '';
-    while (true) {
-      const {done, value} = await reader.read();
-      if (done) break;
-      const lines = decoder.decode(value).split('\n').filter(l=>l.trim());
-      for (const line of lines) {
-        try {
-          const j = JSON.parse(line);
-          if (j.message?.content) {
-            full += j.message.content;
-            el.textContent = full;
-            el.scrollTop = el.scrollHeight;
-          }
-        } catch {}
-      }
-    }
+    el.innerHTML = '<div class="ai-thinking"><div class="spinner"></div> Thinking…</div>';
+    el.textContent = await aiGenerate(prompt);
+    el.scrollTop = 0;
   } catch(err) {
-    el.innerHTML = `<span style="color:var(--red)">⚠️ ${err.message}\n\nCheck Ollama is running:\n  ollama serve\n\nCheck model is available:\n  ollama list</span>`;
+    el.innerHTML = `<span style="color:var(--red)">⚠️ ${err.message} — the AI may be busy; try again in a moment.</span>`;
   }
 }
 
@@ -2302,6 +2259,22 @@ async function fetchRoster(force = false) {
   _rosterAt = Date.now();
   return _rosterCache;
 }
+// 2026-07-05: all dashboard AI now goes through the same Cloudflare /api/ai
+// Gemini proxy the student app uses — no local Ollama, no local hardware,
+// works from a phone. Non-streaming by design (the proxy returns {content}).
+async function aiGenerate(prompt, opts = {}) {
+  const res = await fetch(API_BASE + '/api/ai', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt, temperature: opts.temperature ?? 0.6, max_tokens: opts.max_tokens ?? 4096 }),
+    signal: AbortSignal.timeout(opts.timeout ?? 45000)
+  });
+  if (!res.ok) throw new Error('AI error HTTP ' + res.status);
+  const data = await res.json();
+  const text = (data.content || '').trim();
+  if (!text) throw new Error('empty AI response');
+  return text;
+}
+
 function _fmtAge(iso) {
   const ms = Date.now() - new Date(iso).getTime();
   if (isNaN(ms)) return '?';
@@ -2355,6 +2328,17 @@ async function refreshStudentProgress() {
           ' <span style="font-weight:400;color:var(--text3);font-size:11px">· Lv ' + (s.level || 1) + ' · ' + (s.xp || 0) + ' XP · ' + (s.dueCount || 0) + ' due · ' + _fmtAge(s.lastActive) + '</span>' +
         '</summary>' +
         '<div style="margin-top:8px">' + bars + '</div>' +
+        // Teacher mirror (2026-07-05): the student's own AI session recap and
+        // mistake clusters, exactly as the student saw them.
+        (s.constellation && s.constellation.clusters && s.constellation.clusters.length
+          ? '<div style="margin-top:6px;font-size:11px;color:var(--text3)">🌌 Mistake patterns: ' +
+            s.constellation.clusters.map(c => c.name + ' (' + c.n + ')').join(' · ') + '</div>'
+          : '') +
+        (s.lastRecap && s.lastRecap.md
+          ? '<details style="margin-top:6px"><summary style="cursor:pointer;font-size:11.5px;color:var(--accent)">📝 Their last session recap (' + _fmtAge(new Date(s.lastRecap.ts).toISOString()) + ')</summary>' +
+            '<div style="white-space:pre-wrap;font-size:11.5px;color:var(--text2);margin-top:6px;max-height:220px;overflow-y:auto;border-left:2px solid var(--border2);padding-left:8px">' +
+            String(s.lastRecap.md).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div></details>'
+          : '') +
       '</details>';
     }).join('');
   } catch (e) {
@@ -2399,26 +2383,26 @@ function setLevel(level, btn) {
 
 // ─── OLLAMA STATUS ────────────────────────────────────────────────────────────
 
+// 2026-07-05: was an Ollama /api/tags poll. Now pings the Gemini proxy the
+// dashboard actually uses. Model select becomes a fixed "Gemini (cloud)" —
+// the proxy owns model choice server-side (functions/api/ai.js).
 async function checkOllama() {
   const dot = document.getElementById('ollama-dot');
   const txt = document.getElementById('ollama-txt');
+  const sel = document.getElementById('model-select');
+  if (sel) sel.innerHTML = '<option value="gemini">Gemini (cloud)</option>';
   try {
-    const res = await fetch(`${ollamaUrl}/api/tags`, {signal: AbortSignal.timeout(3000)});
-    if (res.ok) {
-      const data = await res.json();
-      const models = data.models || [];
-      dot.className = 'status-dot on';
-      txt.textContent = `${t('ollamaOnline')} · ${models.length} model${models.length!==1?'s':''}`;
-      if (models.length > 0) {
-        const sel = document.getElementById('model-select');
-        const cur = sel.value;
-        sel.innerHTML = models.map(m=>`<option value="${m.name}">${m.name}</option>`).join('');
-        if ([...sel.options].some(o=>o.value===cur)) sel.value = cur;
-      }
-    } else throw new Error('not ok');
+    const res = await fetch(API_BASE + '/api/ai', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: 'ping — reply with the single word: pong', max_tokens: 256 }),
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!res.ok) throw new Error('not ok');
+    dot.className = 'status-dot on';
+    txt.textContent = 'AI online (Gemini)';
   } catch {
     dot.className = 'status-dot off';
-    txt.textContent = t('ollamaOffline');
+    txt.textContent = 'AI unreachable';
   }
 }
 
@@ -3207,19 +3191,13 @@ Provide:
 
 Keep it practical and actionable for the teacher.`;
   try {
-    const url = document.getElementById('ollama-url-input')?.value || 'http://localhost:11434';
-    const model = document.getElementById('model-select')?.value || 'llama3.1:8b';
-    const resp = await fetch(url + '/api/generate', { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ model, prompt, stream: false }) });
-    if (resp.ok) {
-      const data = await resp.json();
-      // Show debrief in the student recap tab
-      const outEl = document.getElementById('out-student');
-      if (outEl) { outEl.textContent = data.response?.trim() || 'No response'; outEl.classList.remove('empty'); }
-      switchOutTab('student', document.querySelector('[data-tab="student"]'));
-      showToast('Debrief generated!', 2000);
-    } else { showToast('Ollama error: ' + resp.status, 3000); }
-  } catch(e) { showToast('Ollama offline', 2000); }
+    const text = await aiGenerate(prompt, { max_tokens: 2048 });
+    // Show debrief in the student recap tab
+    const outEl = document.getElementById('out-student');
+    if (outEl) { outEl.textContent = text; outEl.classList.remove('empty'); }
+    switchOutTab('student', document.querySelector('[data-tab="student"]'));
+    showToast('Debrief generated!', 2000);
+  } catch(e) { showToast('AI busy — try again: ' + e.message, 3000); }
 }
 
 // ── #36 ERROR PATTERN DETECTION ──────────────────────────────────────────────
@@ -3246,17 +3224,11 @@ Categorize errors into these types and give counts + examples:
 Format as a concise table: Error Type | Count | Example Error | Correct Form
 Then add a 2-sentence summary of the biggest pattern to address.`;
   try {
-    const url = document.getElementById('ollama-url-input')?.value || 'http://localhost:11434';
-    const model = document.getElementById('model-select')?.value || 'llama3.1:8b';
-    const resp = await fetch(url + '/api/generate', { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ model, prompt, stream: false }) });
-    if (resp.ok) {
-      const data = await resp.json();
-      const outEl = document.getElementById('autopsy-output');
-      if (outEl) { outEl.textContent = data.response?.trim() || 'No response'; outEl.classList.remove('empty'); }
-      showToast('Error patterns ready in Error Autopsy tab!', 2000);
-    }
-  } catch(e) { showToast('Ollama offline', 2000); }
+    const text = await aiGenerate(prompt, { max_tokens: 2048 });
+    const outEl = document.getElementById('autopsy-output');
+    if (outEl) { outEl.textContent = text; outEl.classList.remove('empty'); }
+    showToast('Error patterns ready in Error Autopsy tab!', 2000);
+  } catch(e) { showToast('AI busy — try again: ' + e.message, 3000); }
 }
 
 // ── INIT NEW FEATURES ────────────────────────────────────────────────────────

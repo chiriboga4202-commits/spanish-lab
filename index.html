@@ -1088,6 +1088,9 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
         <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();reopenGateway()">🧠 Concept brief</button>
         <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();openCheatSheet()">📖 Grammar cheat sheet</button>
         <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();openResources()">📄 Study sheets + quiz</button>
+        <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();openMindMap()">🧠 Concept mind map</button>
+        <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();generateSessionRecap()">📝 Session recap</button>
+        <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();openMistakeConstellation()">🌌 My mistake patterns</button>
       </div>
     </div>
     <button class="cfg-btn" onclick="openHelp()" title="How to use this dashboard">❓ Help</button>
@@ -4717,7 +4720,9 @@ function buildResourcePrompt(topicName, full, mistakes) {
   const density = full
     ? 'This is a FULL toolkit. HARD REQUIREMENT: each vocabulary bank/column must contain AT LEAST 50 distinct items — count them and do not stop short. Include 8-10 example sentences and 2-4 tables.'
     : 'This is a COMPACT one-pager: about 20 vocabulary items total, one key table, 5 example sentences. Keep it to roughly one screen.';
-  return `You are an expert Spanish teacher creating a dense, practical STUDENT REFERENCE SHEET (study guide + vocabulary toolkit) on: "${topicName}". An American beginner-intermediate learner keeps it open while practicing.
+  return `${EXPLAIN_STYLE}
+
+You are an expert Spanish teacher creating a dense, practical STUDENT REFERENCE SHEET (study guide + vocabulary toolkit) on: "${topicName}". An American beginner-intermediate learner keeps it open while practicing.
 
 Output CLEAN MARKDOWN only (# and ## for headers, standard Markdown tables with | pipes, ** for bold). No preamble and no closing remarks — just the sheet.
 
@@ -7469,6 +7474,7 @@ function updateStreak(correct, wrongData) {
     streak = 0;
     sessionWrong++;
     if (wrongData) {
+      if (wrongData && !wrongData.ts) wrongData.ts = Date.now(); // for weekly windows (2026-07-05)
       wrongAnswers.push(wrongData);
       if (wrongAnswers.length > 60) wrongAnswers.shift();
       saveMistakes();
@@ -7956,14 +7962,29 @@ function showSessionGrade() {
   if (el('gs-wrong')) el('gs-wrong').textContent = sessionWrong;
   if (el('gs-acc')) el('gs-acc').textContent = Math.round(acc * 100) + '%';
   if (el('gs-xp')) el('gs-xp').textContent = '+' + xpEarned;
+  // 2026-07-05: session recap entry point — the natural moment to reflect.
+  const gbox = overlayRecapAnchor();
   const overlay = el('grade-overlay');
   if (overlay) overlay.classList.add('open');
+}
+function overlayRecapAnchor() {
+  if (document.getElementById('grade-recap-btn')) return;
+  const stats = document.querySelector('#grade-overlay .grade-stats');
+  if (!stats) return;
+  const b = document.createElement('button');
+  b.id = 'grade-recap-btn';
+  b.className = 'cfg-btn';
+  b.style.cssText = 'display:block;margin:12px auto 0;';
+  b.textContent = '📝 My session recap';
+  b.onclick = () => generateSessionRecap();
+  stats.insertAdjacentElement('afterend', b);
 }
 function closeGrade() {
   const overlay = document.getElementById('grade-overlay');
   if (overlay) overlay.classList.remove('open');
   // Reset for next session
   _sessionXPStart = xp;
+  _sessionStartTs = Date.now();
 }
 
 // ── #49 DIFFICULTY HINTS ──────────────────────────────────────────────────────
@@ -8062,6 +8083,10 @@ function syncProgressToTeacher(force = false) {
     // the existing 60s sync, so the teacher dashboard's 📡 Live tab can show
     // remote activity (~1 min latency) without a new endpoint or extra writes.
     recent: (() => { try { return JSON.parse(localStorage.getItem('sl_live_history') || '[]').slice(-15); } catch { return []; } })(),
+    // Teacher mirror (2026-07-05): the student's latest AI recap + mistake
+    // clusters ride along so Felipe sees exactly what the student saw.
+    lastRecap: (() => { try { const r = JSON.parse(localStorage.getItem('sl_last_recap') || 'null'); return r ? { ts: r.ts, md: String(r.md || '').slice(0, 2500) } : null; } catch { return null; } })(),
+    constellation: (() => { try { return JSON.parse(localStorage.getItem('sl_last_constellation') || 'null'); } catch { return null; } })(),
     lastActive: new Date().toISOString()
   };
   try {
@@ -8801,6 +8826,221 @@ function skipNamePrompt() {
   if (ov) ov.remove();
 }
 setTimeout(() => maybePromptName(), 3000);
+
+// ── EXPLANATION STYLE CONTRACT (2026-07-05) ──────────────────────────────────
+// Shared prompt prefix for EVERY explanatory AI feature (study sheets, session
+// recap, mind maps, mistake constellation). Encodes Felipe's teaching
+// philosophy: teach how the language WORKS before drilling grammar forms.
+// One place to tune the voice.
+const EXPLAIN_STYLE = `HOW TO EXPLAIN (follow all 9 rules strictly):
+1. FUNCTION FIRST: open with the JOB this piece of grammar does — what problem it solves in the language — before naming any form or rule.
+2. ENGLISH ANCHOR: explain through what English does instead (or fails to distinguish). The learner is an American English speaker.
+3. MNEMONIC RULES: give BOTH a pronounceable acronym AND a single decision-question of 7 words or fewer. The mnemonic must encode the DECISION, not terminology (good: "Can it change by tomorrow? → estar").
+4. CONCRETE BEFORE ABSTRACT: show two everyday example sentences BEFORE naming the pattern. Never open with a definition.
+5. THE 80/20 GATE: state the ONE rule that covers ~80% of real usage, marked "▶ Start here". Exceptions go under "Later, when you're ready" — never mixed in.
+6. FLIP-PAIRS: include at least one minimal pair — same sentence, one word changed, meaning flips — with a one-line WHY for each side.
+7. READING LEVEL: explain like to a smart 12-year-old. Sentences of 15 words or fewer. No linguistic jargon unless defined in 5 words or fewer right there.
+8. PHYSICAL ANALOGY: include exactly one physical/spatial analogy (like "ser is your ID card, estar is your GPS pin").
+9. EXIT QUESTION: end with one self-check question whose answer is the decision rule itself.`;
+
+// ── SESSION SLICE ────────────────────────────────────────────────────────────
+let _sessionStartTs = Date.now();
+function _getSessionSlice() {
+  let events = [];
+  try { events = JSON.parse(localStorage.getItem('sl_live_history') || '[]').filter(e => e.ts >= _sessionStartTs); } catch {}
+  const byConcept = {};
+  events.forEach(e => {
+    const c = e.concept || 'General';
+    byConcept[c] = byConcept[c] || { right: 0, wrong: 0 };
+    e.correct ? byConcept[c].right++ : byConcept[c].wrong++;
+  });
+  // wrongAnswers has answer detail; keep the tail as "this session's" misses
+  const missCount = events.filter(e => !e.correct).length;
+  const misses = (wrongAnswers || []).slice(-Math.max(missCount, 0)).map(w =>
+    `Q: ${w.question || '?'} | they answered: "${w.wrong || '?'}" | correct: "${w.correct || '?'}" | concept: ${w.conceptName || '?'}`);
+  return { events, byConcept, misses };
+}
+
+// ── A: SESSION RECAP ─────────────────────────────────────────────────────────
+async function generateSessionRecap() {
+  const s = _getSessionSlice();
+  if (s.events.length < 3) { showToast('Practice a few exercises first — then I can recap your session', 3000); return; }
+  try { closeGrade(); } catch {}
+  openResources();
+  const out = document.getElementById('res-output');
+  const actions = document.getElementById('res-actions');
+  if (actions) actions.style.display = 'none';
+  out.innerHTML = '<div style="opacity:.75;padding:20px;text-align:center;">📝 Reading your session and writing the recap…</div>';
+  const conceptLines = Object.entries(s.byConcept).map(([c, v]) => `${c}: ${v.right} right, ${v.wrong} wrong`).join('; ');
+  const prompt = `${EXPLAIN_STYLE}
+
+You are recapping a Spanish practice session for the student who just finished it. Speak directly to them ("you"). Output CLEAN MARKDOWN only.
+
+SESSION DATA
+Totals by concept: ${conceptLines || 'n/a'}
+Their misses this session:
+${s.misses.length ? s.misses.join('\n') : '(no misses — clean session)'}
+
+Write, in this order, max 260 words total:
+## Your session in one line
+## What clicked (2-3 things they clearly got right)
+## What to fix (up to 3 misses — for each: the miss, then WHY the language works the way it does (rule 1!), then the decision-question)
+## Tomorrow (ONE specific thing to practice, name the mode and concept)`;
+  try {
+    const md = await callAIForResource(prompt);
+    if (!md) throw new Error('empty response');
+    _resourceMD = md;
+    _resourceTitle = 'Session Recap ' + new Date().toLocaleDateString();
+    out.innerHTML = renderMarkdownLite(md);
+    if (actions) actions.style.display = 'flex';
+    try { localStorage.setItem('sl_last_recap', JSON.stringify({ ts: Date.now(), md: md.slice(0, 4000) })); } catch {}
+    try { syncProgressToTeacher(true); } catch {}
+  } catch (err) {
+    out.innerHTML = '<div style="opacity:.8;padding:20px;text-align:center;">Could not build the recap (' + ((err && err.message) || 'error') + '). Try again.</div>';
+  }
+}
+
+// ── SHARED: strict-JSON extraction from AI text ──────────────────────────────
+function _parseAIJson(raw) {
+  let t = String(raw).replace(/```json|```/g, '').trim();
+  const a = t.indexOf('{'), b = t.lastIndexOf('}');
+  if (a < 0 || b <= a) throw new Error('no JSON in response');
+  return JSON.parse(t.slice(a, b + 1));
+}
+
+// ── B: CONCEPT MIND MAP ──────────────────────────────────────────────────────
+async function openMindMap() {
+  if (!currentConcept) { showToast('👆 Pick a concept first', 2500); return; }
+  openResources();
+  const out = document.getElementById('res-output');
+  const actions = document.getElementById('res-actions');
+  if (actions) actions.style.display = 'none';
+  out.innerHTML = '<div style="opacity:.75;padding:20px;text-align:center;">🧠 Mapping how ' + currentConcept.name + ' actually works…</div>';
+  const misses = (wrongAnswers || []).filter(w => w.conceptName === currentConcept.name).slice(-8)
+    .map(w => `"${w.wrong}" (should be "${w.correct}")`).join('; ') || 'none recorded';
+  const prompt = `${EXPLAIN_STYLE}
+
+Build a MIND MAP of the Spanish concept "${currentConcept.name}" that teaches how it WORKS, not just its forms.
+The student's recent misses on this concept: ${misses}
+
+Return STRICT JSON ONLY (no markdown, no commentary):
+{"center":"${currentConcept.name}","idea":"the one-line big idea (the JOB this concept does)","decision":"the decision-question, 7 words max","branches":[{"label":"short branch name","rule":"when to use this side, one line","example":"natural Spanish sentence","en":"English gloss","why":"one line on why the meaning works this way","risk":"high or low — high if their misses suggest weakness here"}]}
+4 to 6 branches. Mark risk honestly from their misses.
+IMPORTANT: every branch must be a real USE of the concept (a situation where the student picks one form over another). Do NOT create branches named after explanation techniques (no "Mnemonic", "Analogy", "Flip-Pairs" branches) — weave those into the idea/why fields instead.`;
+  try {
+    const raw = await callAIForResource(prompt);
+    const tree = _parseAIJson(raw);
+    if (!tree.branches || !tree.branches.length) throw new Error('no branches');
+    renderMindMapTree(tree);
+    _resourceTitle = currentConcept.name + ' Mind Map';
+    _resourceMD = '# ' + tree.center + '\n\n' + (tree.idea || '') + '\n\nDecision: ' + (tree.decision || '') + '\n\n' +
+      tree.branches.map(b => '## ' + b.label + '\n- Rule: ' + b.rule + '\n- ' + b.example + ' (' + b.en + ')\n- Why: ' + b.why).join('\n\n');
+    if (actions) actions.style.display = 'flex';
+  } catch (err) {
+    out.innerHTML = '<div style="opacity:.8;padding:20px;text-align:center;">Could not build the map (' + ((err && err.message) || 'error') + '). Try again.</div>';
+  }
+}
+
+function renderMindMapTree(tree) {
+  const out = document.getElementById('res-output');
+  const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  out.innerHTML =
+    '<div style="text-align:center;margin-bottom:10px;">' +
+      '<div style="display:inline-block;background:var(--accent);color:#fff;font-weight:800;border-radius:12px;padding:10px 18px;font-size:15px;">' + esc(tree.center) + '</div>' +
+      '<div style="font-size:12.5px;opacity:.85;margin-top:8px;">' + esc(tree.idea) + '</div>' +
+      '<div style="font-size:12px;margin-top:6px;"><strong>🧭 ' + esc(tree.decision) + '</strong></div>' +
+    '</div>' +
+    '<div style="display:flex;flex-direction:column;gap:8px;">' +
+    tree.branches.map((b, i) => {
+      const hot = String(b.risk).toLowerCase() === 'high';
+      return '<details style="border:1px solid ' + (hot ? 'var(--red,#f45b69)' : 'var(--border,#333)') + ';border-radius:10px;padding:8px 12px;"' + (hot ? ' open' : '') + '>' +
+        '<summary style="cursor:pointer;font-weight:700;font-size:13px;">' + (hot ? '🔴 ' : '🟢 ') + esc(b.label) +
+          '<span style="font-weight:400;opacity:.7;font-size:11.5px;"> — ' + esc(b.rule) + '</span></summary>' +
+        '<div style="margin-top:8px;font-size:13px;">' +
+          '<div style="font-weight:600;">' + esc(b.example) + ' <button class="cfg-btn" style="font-size:11px;padding:2px 7px;" onclick="speakSpanish(' + JSON.stringify(String(b.example || '')).replace(/"/g, '&quot;') + ')">🔊</button></div>' +
+          '<div style="opacity:.75;font-size:12px;">' + esc(b.en) + '</div>' +
+          '<div style="margin-top:6px;font-size:12px;opacity:.9;">💡 ' + esc(b.why) + '</div>' +
+        '</div>' +
+      '</details>';
+    }).join('') +
+    '</div>' +
+    '<div style="text-align:center;margin-top:10px;"><button class="cfg-btn" onclick="closeResources();startExercise()">▶ Practice ' + esc(tree.center) + ' now</button></div>';
+}
+
+// ── C: MISTAKE CONSTELLATION ─────────────────────────────────────────────────
+async function openMistakeConstellation() {
+  const misses = (wrongAnswers || []).slice(-40);
+  if (misses.length < 4) { showToast('Not enough mistakes yet — go practice, then check your patterns!', 3200); return; }
+  openResources();
+  const out = document.getElementById('res-output');
+  const actions = document.getElementById('res-actions');
+  if (actions) actions.style.display = 'none';
+  out.innerHTML = '<div style="opacity:.75;padding:20px;text-align:center;">🌌 Looking for patterns in your ' + misses.length + ' recent misses…</div>';
+  const list = misses.map((w, i) => `${i}: [${w.conceptName || '?'}] Q: ${w.question || '?'} | answered "${w.wrong || '?'}" | correct "${w.correct || '?'}"`).join('\n');
+  const prompt = `${EXPLAIN_STYLE}
+
+Cluster this Spanish student's mistakes into recurring PATTERNS. Name each pattern by what the student misunderstands about how the language works — not by textbook chapter.
+
+MISTAKES (index: detail)
+${list}
+
+Return STRICT JSON ONLY:
+{"clusters":[{"name":"short human-readable pattern name","why":"1-2 sentences on how the language actually works here (rule 1: function first)","rule":"decision-question, 7 words max","items":[mistake indices belonging to this cluster]}]}
+3 to 6 clusters. Every mistake index appears in exactly one cluster. Order clusters by size, biggest first.`;
+  try {
+    const raw = await callAIForResource(prompt);
+    const data = _parseAIJson(raw);
+    if (!data.clusters || !data.clusters.length) throw new Error('no clusters');
+    _constellationData = { clusters: data.clusters, misses };
+    renderConstellation();
+    _resourceTitle = 'My Mistake Patterns';
+    _resourceMD = '# My Mistake Patterns\n\n' + data.clusters.map(c =>
+      '## ' + c.name + ' (' + (c.items || []).length + ')\n' + c.why + '\n\nAsk yourself: ' + c.rule).join('\n\n');
+    if (actions) actions.style.display = 'flex';
+    try { localStorage.setItem('sl_last_constellation', JSON.stringify({ ts: Date.now(), clusters: data.clusters.map(c => ({ name: c.name, n: (c.items || []).length })) })); } catch {}
+    try { syncProgressToTeacher(true); } catch {}
+  } catch (err) {
+    out.innerHTML = '<div style="opacity:.8;padding:20px;text-align:center;">Could not find patterns (' + ((err && err.message) || 'error') + '). Try again.</div>';
+  }
+}
+
+let _constellationData = null;
+function renderConstellation() {
+  const out = document.getElementById('res-output');
+  const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const max = Math.max(...(_constellationData.clusters.map(c => (c.items || []).length)), 1);
+  out.innerHTML =
+    '<div style="font-size:12.5px;opacity:.8;margin-bottom:10px;">Your misses aren’t random — they cluster. Biggest cluster first; drill it away.</div>' +
+    '<div style="display:flex;flex-direction:column;gap:8px;">' +
+    _constellationData.clusters.map((c, i) => {
+      const n = (c.items || []).length;
+      const size = 13 + Math.round(4 * n / max);
+      return '<div style="border:1px solid var(--border,#333);border-radius:10px;padding:10px 12px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;">' +
+          '<span style="font-weight:800;font-size:' + size + 'px;">' + esc(c.name) + '</span>' +
+          '<span style="font-size:11px;opacity:.7;white-space:nowrap;">' + n + ' miss' + (n !== 1 ? 'es' : '') + '</span>' +
+        '</div>' +
+        '<div style="font-size:12.5px;margin-top:5px;">' + esc(c.why) + '</div>' +
+        '<div style="font-size:12px;margin-top:5px;"><strong>🧭 ' + esc(c.rule) + '</strong></div>' +
+        '<button class="cfg-btn" style="margin-top:7px;font-size:12px;" onclick="drillCluster(' + i + ')">🎯 Drill these ' + n + '</button>' +
+      '</div>';
+    }).join('') + '</div>';
+}
+
+function drillCluster(i) {
+  const c = _constellationData && _constellationData.clusters[i];
+  if (!c) return;
+  const items = (c.items || []).map(ix => _constellationData.misses[ix]).filter(Boolean);
+  if (!items.length) { showToast('Nothing to drill in this cluster', 2000); return; }
+  _quizKind = 'mistakes';
+  _quizItems = items.map(w => ({
+    front: (w.conceptName ? '[' + w.conceptName + '] ' : '') + (w.question || 'Recall it') + (w.wrong ? '  — you put: “' + w.wrong + '”' : ''),
+    back: 'Correct: ' + (w.correct || '?'),
+    speak: w.correct || '', prompt: c.rule || 'Recall the correct answer:'
+  }));
+  _quizIdx = 0;
+  renderSheetQuiz();
+}
 
 // Read teacher queue on load and show banner (#33)
 (function applyTeacherQueue() {
