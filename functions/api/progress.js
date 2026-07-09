@@ -14,8 +14,8 @@
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, x-teacher-pin',
+  'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
   'Content-Type': 'application/json',
 };
 
@@ -45,8 +45,40 @@ export async function onRequestPost(context) {
   }
 }
 
+// 2026-07-05: reading the roster now requires the teacher PIN. Set TEACHER_PIN
+// in the Cloudflare dashboard (Workers & Pages -> spanish-lab -> Settings ->
+// Variables and Secrets). While TEACHER_PIN is unset, reads stay open so
+// nothing breaks before the variable exists. Student POSTs are never gated.
+// PIN-gated cleanup: DELETE /api/progress?studentId=stu_xxx removes one
+// student record (test devices, students who left). Same PIN as GET.
+export async function onRequestDelete(context) {
+  const { request, env } = context;
+  if (env.TEACHER_PIN) {
+    const pin = request.headers.get('x-teacher-pin') || new URL(request.url).searchParams.get('pin');
+    if (pin !== env.TEACHER_PIN) {
+      return new Response(JSON.stringify({ error: 'PIN required' }), { status: 401, headers: CORS_HEADERS });
+    }
+  }
+  const studentId = new URL(request.url).searchParams.get('studentId');
+  if (!studentId) {
+    return new Response(JSON.stringify({ error: 'studentId query param required' }), { status: 400, headers: CORS_HEADERS });
+  }
+  try {
+    await env.PROGRESS_KV.delete(studentId);
+    return new Response(JSON.stringify({ ok: true, deleted: studentId }), { status: 200, headers: CORS_HEADERS });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
+  }
+}
+
 export async function onRequestGet(context) {
-  const { env } = context;
+  const { request, env } = context;
+  if (env.TEACHER_PIN) {
+    const pin = request.headers.get('x-teacher-pin') || new URL(request.url).searchParams.get('pin');
+    if (pin !== env.TEACHER_PIN) {
+      return new Response(JSON.stringify({ error: 'PIN required' }), { status: 401, headers: CORS_HEADERS });
+    }
+  }
   try {
     const { keys } = await env.PROGRESS_KV.list();
     const students = await Promise.all(

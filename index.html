@@ -8058,6 +8058,10 @@ function syncProgressToTeacher(force = false) {
     bestStreak,
     mastery: conceptMastery,
     dueCount: getTotalDueCount(),
+    // 2026-07-05 teacher connection: tail of the answer history rides along on
+    // the existing 60s sync, so the teacher dashboard's 📡 Live tab can show
+    // remote activity (~1 min latency) without a new endpoint or extra writes.
+    recent: (() => { try { return JSON.parse(localStorage.getItem('sl_live_history') || '[]').slice(-15); } catch { return []; } })(),
     lastActive: new Date().toISOString()
   };
   try {
@@ -8738,13 +8742,65 @@ function writeLiveFeed(correct, question, mode) {
       streak: (typeof streak !== 'undefined') ? streak : 0
     }));
     const hist = JSON.parse(localStorage.getItem('sl_live_history') || '[]');
-    hist.push({ ts: Date.now(), correct, question: question || '?', mode: mode || currentMode });
+    hist.push({ ts: Date.now(), correct, question: question || '?', mode: mode || currentMode,
+      concept: currentConcept ? (currentConcept.name || currentConcept.key) : null });
     if (hist.length > 50) hist.splice(0, hist.length - 50);
     localStorage.setItem('sl_live_history', JSON.stringify(hist));
   } catch(e) {}
 }
 
 // writeLiveFeed on every answer: folded into updateStreak() directly (see 2026-07-01 note)
+
+// ── FIRST-VISIT NAME PROMPT (2026-07-05 teacher connection) ──────────────────
+// Progress syncs as "Unnamed student" unless the student sets a name in
+// Settings — which nobody finds. Ask once, gently, after the gateway closes.
+// Skippable; never asks again either way (sl_name_prompted).
+function maybePromptName(attempt = 0) {
+  try {
+    if (localStorage.getItem('sl_name') || localStorage.getItem('sl_name_prompted')) return;
+    const gw = document.getElementById('gateway-overlay');
+    if (gw && gw.classList.contains('open')) {
+      if (attempt < 30) setTimeout(() => maybePromptName(attempt + 1), 2000);
+      return; // don't stack a prompt on top of the concept brief
+    }
+    if (document.getElementById('name-prompt-overlay')) return;
+    const ov = document.createElement('div');
+    ov.id = 'name-prompt-overlay';
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;';
+    ov.innerHTML =
+      '<div style="background:var(--surface,#1c1c22);border:1px solid var(--border,#333);border-radius:14px;padding:22px;max-width:340px;width:100%;">' +
+        '<div style="font-size:16px;font-weight:700;margin-bottom:6px;">👋 ¿Cómo te llamas?</div>' +
+        '<div style="font-size:12.5px;opacity:.75;margin-bottom:12px;">Your name shows up on your teacher’s dashboard so they can follow your progress.</div>' +
+        '<input id="name-prompt-inp" class="modal-inp" style="width:100%;box-sizing:border-box;margin-bottom:12px;" placeholder="e.g. Maria" maxlength="40">' +
+        '<div style="display:flex;gap:8px;align-items:center;">' +
+          '<button class="cfg-btn" style="flex:1;" onclick="saveNamePrompt()">Save</button>' +
+          '<button class="cfg-btn" style="opacity:.6;" onclick="skipNamePrompt()">Skip</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(ov);
+    const inp = document.getElementById('name-prompt-inp');
+    if (inp) {
+      inp.focus();
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') saveNamePrompt(); });
+    }
+  } catch (e) {}
+}
+function saveNamePrompt() {
+  const inp = document.getElementById('name-prompt-inp');
+  const name = inp ? inp.value.trim() : '';
+  if (name) localStorage.setItem('sl_name', name);
+  localStorage.setItem('sl_name_prompted', '1');
+  const ov = document.getElementById('name-prompt-overlay');
+  if (ov) ov.remove();
+  try { if (typeof saveAndRefreshName === 'function') saveAndRefreshName(); } catch (e) {}
+  try { syncProgressToTeacher(true); } catch (e) {}
+}
+function skipNamePrompt() {
+  localStorage.setItem('sl_name_prompted', '1');
+  const ov = document.getElementById('name-prompt-overlay');
+  if (ov) ov.remove();
+}
+setTimeout(() => maybePromptName(), 3000);
 
 // Read teacher queue on load and show banner (#33)
 (function applyTeacherQueue() {

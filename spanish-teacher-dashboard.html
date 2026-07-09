@@ -2228,10 +2228,13 @@ const STUDENT_CONCEPTS = [
   { key:'present',      name:'Present Tense' },
   { key:'gustar',       name:'Gustar-type Verbs' },
   { key:'word-order',   name:'Word Order' },
-  { key:'obj-pronouns', name:'Object Pronouns' }
+  { key:'obj-pronouns', name:'Object Pronouns' },
+  { key:'tu-usted',     name:'Tú vs. Usted' }
 ];
 
-function refreshStudentProgress() {
+// Pre-2026-07-05 same-device view — kept as the offline fallback for the new
+// remote refreshStudentProgress() below.
+function renderLocalStudentProgress() {
   const mastery = JSON.parse(localStorage.getItem('sl_mastery') || '{}');
   const xp      = parseInt(localStorage.getItem('sl_xp')          || '0');
   const name    = localStorage.getItem('sl_name') || '';
@@ -2272,6 +2275,92 @@ function refreshStudentProgress() {
         <div style="font-size:10.5px;color:var(--text3);margin-top:2px">${m.correct}/${m.total} correct</div>
       </div>`;
   }).join('');
+}
+
+// ── REMOTE CONNECTION (2026-07-05) ───────────────────────────────────────────
+// The Student Progress pane and 📡 Live tab used to read localStorage — they
+// could only ever see a student on THIS browser. They now pull every student's
+// synced record from the KV-backed /api/progress endpoint. Works whether this
+// dashboard is opened from the live site or as a local file (API_BASE).
+const API_BASE = location.protocol.startsWith('http') ? '' : 'https://spanish-lab.chiriboga-labs.workers.dev';
+function teacherPinHeaders() {
+  const p = localStorage.getItem('td_pin') || '';
+  return p ? { 'x-teacher-pin': p } : {};
+}
+let _rosterCache = null, _rosterAt = 0;
+async function fetchRoster(force = false) {
+  if (!force && _rosterCache && Date.now() - _rosterAt < 45000) return _rosterCache;
+  const doFetch = () => fetch(API_BASE + '/api/progress', { headers: teacherPinHeaders(), signal: AbortSignal.timeout(10000) });
+  let res = await doFetch();
+  if (res.status === 401) {
+    const pin = (prompt('Teacher PIN required (the TEACHER_PIN variable in Cloudflare):') || '').trim();
+    if (pin) { localStorage.setItem('td_pin', pin); res = await doFetch(); }
+  }
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const data = await res.json();
+  _rosterCache = data.students || [];
+  _rosterAt = Date.now();
+  return _rosterCache;
+}
+function _fmtAge(iso) {
+  const ms = Date.now() - new Date(iso).getTime();
+  if (isNaN(ms)) return '?';
+  const m = Math.round(ms / 60000);
+  if (m < 1) return 'just now';
+  if (m < 60) return m + 'm ago';
+  const h = Math.round(m / 60);
+  if (h < 24) return h + 'h ago';
+  return Math.round(h / 24) + 'd ago';
+}
+
+async function refreshStudentProgress() {
+  const nameEl = document.getElementById('sp-name');
+  const metaEl = document.getElementById('sp-meta');
+  const container = document.getElementById('sp-concepts');
+  const empty = document.getElementById('sp-empty');
+  try {
+    const students = await fetchRoster(true);
+    if (!students.length) {
+      nameEl.textContent = 'No students yet';
+      metaEl.textContent = 'Nobody has synced — progress appears ~1 min after a student answers.';
+      container.innerHTML = ''; empty.style.display = 'none';
+      return;
+    }
+    students.sort((a, b) => new Date(b.lastActive || 0) - new Date(a.lastActive || 0));
+    nameEl.textContent = students.length + ' student' + (students.length > 1 ? 's' : '') + ' · remote sync';
+    metaEl.textContent = 'Most recent activity: ' + _fmtAge(students[0].lastActive);
+    empty.style.display = 'none';
+    container.innerHTML = students.map((s, i) => {
+      const m = s.mastery || {};
+      const bars = STUDENT_CONCEPTS.map(c => {
+        const cm = m[c.key];
+        if (!cm || !cm.total) return '';
+        const acc = Math.round(cm.correct / cm.total * 100);
+        const color = acc >= 80 ? '#4ade80' : acc >= 60 ? '#f6a623' : '#ff6b6b';
+        const star = acc >= 80 ? ' ⭐' : acc >= 60 ? ' 📈' : ' 🔴';
+        return '<div style="margin-bottom:8px">' +
+          '<div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;margin-bottom:3px">' +
+            '<span style="color:var(--text1);font-weight:500">' + c.name + star + '</span>' +
+            '<span style="color:' + color + ';font-weight:700;font-size:13px">' + acc + '%</span>' +
+          '</div>' +
+          '<div style="height:5px;background:var(--border2);border-radius:3px;overflow:hidden">' +
+            '<div style="height:100%;width:' + acc + '%;background:' + color + ';border-radius:3px"></div>' +
+          '</div>' +
+          '<div style="font-size:10.5px;color:var(--text3);margin-top:2px">' + cm.correct + '/' + cm.total + ' correct</div>' +
+        '</div>';
+      }).join('') || '<div style="font-size:11.5px;color:var(--text3);padding:6px 0">No concept practice yet.</div>';
+      return '<details ' + (i === 0 ? 'open' : '') + ' style="margin-bottom:10px;border:1px solid var(--border);border-radius:8px;padding:8px 10px">' +
+        '<summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--text1)">' +
+          (s.name || s.studentId) +
+          ' <span style="font-weight:400;color:var(--text3);font-size:11px">· Lv ' + (s.level || 1) + ' · ' + (s.xp || 0) + ' XP · ' + (s.dueCount || 0) + ' due · ' + _fmtAge(s.lastActive) + '</span>' +
+        '</summary>' +
+        '<div style="margin-top:8px">' + bars + '</div>' +
+      '</details>';
+    }).join('');
+  } catch (e) {
+    renderLocalStudentProgress();
+    metaEl.textContent += ' · ⚠ offline — showing this device only';
+  }
 }
 
 // ─── TIMER ───────────────────────────────────────────────────────────────────
@@ -2796,40 +2885,51 @@ function toggleLiveFeed() {
   }
 }
 
-function renderLiveFeed() {
+// 2026-07-05: was localStorage-only (same-browser students only). Now merges
+// every synced student's `recent` events from /api/progress (~1 min latency —
+// events ride the student app's 60s progress sync) with this device's own
+// localStorage history, deduped, newest first. fetchRoster caches 45s, so the
+// 2s watch interval stays cheap.
+async function renderLiveFeed() {
   const current = document.getElementById('live-current');
   const list = document.getElementById('live-feed-list');
   if (!current || !list) return;
-  // Read from shared localStorage
-  const feedRaw = localStorage.getItem('sl_live_feed');
-  const histRaw = localStorage.getItem('sl_live_history');
-  if (feedRaw) {
-    try {
-      const f = JSON.parse(feedRaw);
-      const age = Math.round((Date.now() - f.ts) / 1000);
-      const ageStr = age < 60 ? age + 's ago' : Math.round(age/60) + 'm ago';
-      current.innerHTML = `
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-          <strong style="font-size:13px">${f.concept || '—'}</strong>
-          <span style="font-size:10px;color:var(--text3)">${ageStr}</span>
-        </div>
-        <div style="font-size:12px;color:var(--text2)">Mode: <strong>${f.mode || '?'}</strong> · XP: <strong>${f.xp || 0}</strong> · Streak: <strong>${f.streak || 0}</strong></div>
-        <div style="font-size:11px;color:var(--text3);margin-top:4px">Level ${f.level || 1}</div>`;
-    } catch(e) { current.innerHTML = '<div style="color:var(--text3);font-size:12px">No active student data found.</div>'; }
-  } else {
-    current.innerHTML = '<div style="color:var(--text3);font-size:12px">No live data — student dashboard not open.</div>';
+  let events = [];
+  try {
+    const students = await fetchRoster();
+    students.forEach(s => (s.recent || []).forEach(ev =>
+      events.push({ ...ev, student: s.name || s.studentId })));
+  } catch (e) {}
+  try {
+    JSON.parse(localStorage.getItem('sl_live_history') || '[]').slice(-20).forEach(ev =>
+      events.push({ ...ev, student: '(this device)' }));
+  } catch (e) {}
+  const seen = new Set();
+  events = events.filter(ev => {
+    const k = ev.ts + '|' + (ev.question || '');
+    if (seen.has(k)) return false;
+    seen.add(k); return true;
+  }).sort((a, b) => (b.ts || 0) - (a.ts || 0)).slice(0, 25);
+  if (!events.length) {
+    current.innerHTML = '<div style="color:var(--text3);font-size:12px">No activity yet — events appear about a minute after students answer.</div>';
+    list.innerHTML = '';
+    return;
   }
-  if (histRaw) {
-    try {
-      const hist = JSON.parse(histRaw).slice(-20).reverse();
-      list.innerHTML = hist.map(h => `
-        <div class="live-feed-item">
-          <div class="lfi-icon">${h.correct ? '✅' : '❌'}</div>
-          <div class="lfi-text">${h.question || '?'}</div>
-          <div class="lfi-mode">${h.mode || ''}</div>
-        </div>`).join('');
-    } catch(e) { list.innerHTML = ''; }
-  }
+  const f = events[0];
+  const age = Math.round((Date.now() - (f.ts || 0)) / 1000);
+  const ageStr = age < 60 ? age + 's ago' : Math.round(age / 60) + 'm ago';
+  current.innerHTML =
+    '<div style="display:flex;justify-content:space-between;margin-bottom:6px">' +
+      '<strong style="font-size:13px">' + (f.student || '?') + (f.concept ? ' · ' + f.concept : '') + '</strong>' +
+      '<span style="font-size:10px;color:var(--text3)">' + ageStr + '</span>' +
+    '</div>' +
+    '<div style="font-size:12px;color:var(--text2)">' + (f.correct ? '✅' : '❌') + ' ' + (f.question || '?') + ' <span style="color:var(--text3)">(' + (f.mode || '?') + ')</span></div>';
+  list.innerHTML = events.map(h =>
+    '<div class="live-feed-item">' +
+      '<div class="lfi-icon">' + (h.correct ? '✅' : '❌') + '</div>' +
+      '<div class="lfi-text">' + (h.question || '?') + ' <span style="color:var(--text3);font-size:10px">— ' + (h.student || '?') + '</span></div>' +
+      '<div class="lfi-mode">' + (h.mode || '') + '</div>' +
+    '</div>').join('');
 }
 
 // ── #32 EXERCISE LIBRARY ──────────────────────────────────────────────────────
@@ -2963,7 +3063,7 @@ const ALL_CONCEPTS = [
   {key:'present',name:'Present'},{key:'ser-estar',name:'Ser/Estar'},{key:'pret-imp',name:'Pret/Imp'},
   {key:'subjunctive',name:'Subjunctive'},{key:'por-para',name:'Por/Para'},{key:'gender',name:'Gender'},
   {key:'reflexive',name:'Reflexive'},{key:'gustar',name:'Gustar'},{key:'word-order',name:'Word Order'},
-  {key:'obj-pronouns',name:'Obj Pronouns'},
+  {key:'obj-pronouns',name:'Obj Pronouns'},{key:'tu-usted',name:'Tú vs. Usted'},
 ];
 
 // 2026-07-03: this whole queue used to live ONLY in localStorage, meaning it
@@ -2975,10 +3075,15 @@ const ALL_CONCEPTS = [
 // Fire-and-forget — localStorage stays the instant local cache/fallback, so a
 // flaky connection here doesn't block the teacher from using the panel.
 function syncQueueToServer(q) {
-  fetch('/api/assignments', {
+  fetch(API_BASE + '/api/assignments', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
     body: JSON.stringify({ queue: q })
+  }).then(r => {
+    if (r.status === 401) {
+      const pin = (prompt('Teacher PIN required to update the class queue:') || '').trim();
+      if (pin) { localStorage.setItem('td_pin', pin); syncQueueToServer(q); }
+    }
   }).catch(() => {});
 }
 
@@ -2991,7 +3096,7 @@ function renderQueue() {
   if (list) refreshQueueList();
   // Pull the server's copy in case this dashboard was reopened on a different
   // device/session than whichever one last edited the queue.
-  fetch('/api/assignments').then(r => r.json()).then(data => {
+  fetch(API_BASE + '/api/assignments').then(r => r.json()).then(data => {
     if (!Array.isArray(data?.queue)) return;
     const local = JSON.parse(localStorage.getItem('sl_teacher_queue') || '[]');
     if (JSON.stringify(data.queue) === JSON.stringify(local)) return;

@@ -17,7 +17,7 @@
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Headers': 'Content-Type, x-teacher-pin',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Content-Type': 'application/json',
 };
@@ -40,6 +40,15 @@ export async function onRequestGet(context) {
 
 export async function onRequestPost(context) {
   const { request, env } = context;
+  // 2026-07-05: writing the class queue requires the teacher PIN (same
+  // TEACHER_PIN env var as progress.js reads). GET stays open — students
+  // must be able to read their assignments. Open while TEACHER_PIN unset.
+  if (env.TEACHER_PIN) {
+    const pin = request.headers.get('x-teacher-pin') || new URL(request.url).searchParams.get('pin');
+    if (pin !== env.TEACHER_PIN) {
+      return new Response(JSON.stringify({ error: 'PIN required' }), { status: 401, headers: CORS_HEADERS });
+    }
+  }
   let body;
   try {
     body = await request.json();
