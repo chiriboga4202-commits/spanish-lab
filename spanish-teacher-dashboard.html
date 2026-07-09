@@ -2275,6 +2275,40 @@ async function aiGenerate(prompt, opts = {}) {
   return text;
 }
 
+// Linear path order — must match index.html's LEARNING_PATH exactly.
+const TD_PATH = ['ser-estar','gender','present','tu-usted','gustar','word-order','reflexive','obj-pronouns','por-para','pret-imp','subjunctive'];
+async function _postPathUnlock(studentId, unlocked) {
+  const res = await fetch(API_BASE + '/api/path', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+    body: JSON.stringify({ studentId, unlocked })
+  });
+  if (res.status === 401) {
+    const pin = (prompt('Teacher PIN required:') || '').trim();
+    if (pin) { localStorage.setItem('td_pin', pin); return _postPathUnlock(studentId, unlocked); }
+    throw new Error('PIN required');
+  }
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return res.json();
+}
+async function approvePathAdvance(studentId, nextIdx) {
+  try {
+    await _postPathUnlock(studentId, nextIdx);
+    showToast('🔓 Unlocked topic ' + (nextIdx + 1) + ' — the student sees it within ~2 min', 3000);
+    refreshStudentProgress();
+  } catch (e) { showToast('Unlock failed: ' + e.message, 3000); }
+}
+async function setStudentTopic(studentId, current) {
+  const n = parseInt(prompt('Set unlocked topic for this student (1-' + TD_PATH.length + '):\n' +
+    TD_PATH.map((k, i) => (i + 1) + '. ' + k).join('\n'), String((current || 0) + 1)));
+  if (!n || n < 1 || n > TD_PATH.length) return;
+  try {
+    await _postPathUnlock(studentId, n - 1);
+    showToast('📍 Set to topic ' + n, 2500);
+    refreshStudentProgress();
+  } catch (e) { showToast('Failed: ' + e.message, 3000); }
+}
+
 function _fmtAge(iso) {
   const ms = Date.now() - new Date(iso).getTime();
   if (isNaN(ms)) return '?';
@@ -2322,11 +2356,27 @@ async function refreshStudentProgress() {
           '<div style="font-size:10.5px;color:var(--text3);margin-top:2px">' + cm.correct + '/' + cm.total + ' correct</div>' +
         '</div>';
       }).join('') || '<div style="font-size:11.5px;color:var(--text3);padding:6px 0">No concept practice yet.</div>';
+      // Linear path (2026-07-05): topic position, ready-to-advance approval,
+      // and manual topic override (backlog ideas #5 + #14).
+      const ps = s.pathState || null;
+      const readyBadge = (ps && ps.ready)
+        ? ' <span style="background:#4ade80;color:#0a0a0a;font-size:10px;font-weight:800;border-radius:8px;padding:2px 7px;">READY ' + (ps.ready.score || '') + '</span>'
+        : '';
+      const pathLine = ps
+        ? '<div style="font-size:11.5px;color:var(--text2);margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">' +
+            '<span>📍 Topic ' + ((ps.unlocked || 0) + 1) + '/' + TD_PATH.length + ': <strong>' + (ps.topic || '?') + '</strong></span>' +
+            (ps.ready
+              ? '<button class="queue-concept-btn" style="border-color:#4ade80;color:#4ade80" onclick="approvePathAdvance(\'' + s.studentId + '\',' + ((ps.unlocked || 0) + 1) + ')">✓ Unlock next topic</button>'
+              : '') +
+            '<button class="queue-concept-btn" style="opacity:.7" onclick="setStudentTopic(\'' + s.studentId + '\',' + (ps.unlocked || 0) + ')">set topic…</button>' +
+          '</div>'
+        : '';
       return '<details ' + (i === 0 ? 'open' : '') + ' style="margin-bottom:10px;border:1px solid var(--border);border-radius:8px;padding:8px 10px">' +
         '<summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--text1)">' +
-          (s.name || s.studentId) +
+          (s.name || s.studentId) + readyBadge +
           ' <span style="font-weight:400;color:var(--text3);font-size:11px">· Lv ' + (s.level || 1) + ' · ' + (s.xp || 0) + ' XP · ' + (s.dueCount || 0) + ' due · ' + _fmtAge(s.lastActive) + '</span>' +
         '</summary>' +
+        pathLine +
         '<div style="margin-top:8px">' + bars + '</div>' +
         // Teacher mirror (2026-07-05): the student's own AI session recap and
         // mistake clusters, exactly as the student saw them.
