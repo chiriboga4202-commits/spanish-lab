@@ -9120,28 +9120,54 @@ function refreshPathUnlock() {
 setTimeout(refreshPathUnlock, 2500);
 setInterval(refreshPathUnlock, 120000);
 
-// ── CHECKPOINT QUIZ ──────────────────────────────────────────────────────────
+// ── CHECKPOINT QUIZ (sectioned, 2026-07-05) ──────────────────────────────────
+// 36 questions across 3 sections; EACH section has its own pass mark and a
+// failed section is the only thing retaken (passed sections stay banked in
+// _pathState.sections[topic]). Topic passes when all 3 sections are passed.
+// Tune difficulty here — four constants, nothing else to touch:
+const PATH_SECTIONS = [
+  { id: 'A', name: 'Recognition',  src: 'pairs',     n: 16, pass: 13, hint: 'Pick the correct sentence' },
+  { id: 'B', name: 'Application',  src: 'fillblank', n: 16, pass: 13, hint: 'Fill the blank' },
+  { id: 'C', name: 'Production',   src: 'builder',   n: 4,  pass: 4,  hint: 'Build the sentence — tap the words in order' }
+];
 let _cp = null;
+function _cpSectionsState(key) {
+  _pathState.sections = _pathState.sections || {};
+  _pathState.sections[key] = _pathState.sections[key] || {};
+  return _pathState.sections[key];
+}
+function _cpBuildSectionQs(key, sec) {
+  if (sec.src === 'builder') {
+    const bank = (typeof BUILDER_BANK !== 'undefined' && BUILDER_BANK[key]) || [];
+    return shuffle([...bank]).slice(0, sec.n).map(b => ({
+      kind: 'builder', en: b.en, words: b.words, shuffled: shuffle([...b.words]), built: [], explanation: b.explanation
+    }));
+  }
+  const bank = (typeof STATIC_EXERCISES !== 'undefined' && STATIC_EXERCISES[key]) ? (STATIC_EXERCISES[key][sec.src] || []) : [];
+  if (sec.src === 'pairs') {
+    return shuffle([...bank]).slice(0, sec.n).map(p => {
+      const order = shuffle([...p.cards.keys()]);
+      return { kind: 'choice', q: p.question, options: order.map(i => p.cards[i].es), correct: order.indexOf(p.correct), explanation: p.explanation };
+    });
+  }
+  return shuffle([...bank]).slice(0, sec.n).map(f => {
+    const order = shuffle([...f.options.keys()]);
+    return { kind: 'choice', q: (f.before || '') + ' ____ ' + (f.after || ''), en: f.en, options: order.map(i => f.options[i]), correct: order.indexOf(f.correct), explanation: f.explanation };
+  });
+}
 function startCheckpoint() {
   const fIdx = effectiveUnlocked();
   const key = LEARNING_PATH[fIdx];
   const c = CONCEPTS.find(x => x.key === key);
   if (_pathState.passed[key]) { showToast('✅ Already passed — waiting on your teacher to unlock the next topic', 3500); return; }
-  const bank = (typeof STATIC_EXERCISES !== 'undefined') ? STATIC_EXERCISES[key] : null;
-  if (!bank || ((bank.pairs || []).length + (bank.fillblank || []).length) < PATH_QUIZ_LEN) {
-    showToast('No checkpoint bank for this topic yet', 2500); return;
+  const done = _cpSectionsState(key);
+  const remaining = PATH_SECTIONS.filter(s => !done[s.id]);
+  if (!remaining.length) { _cpTopicPassed(key); return; }
+  for (const s of remaining) {
+    if (_cpBuildSectionQs(key, s).length < s.n) { showToast('Not enough material for the ' + s.name + ' section yet', 3000); return; }
   }
-  const qs = [];
-  shuffle([...(bank.pairs || [])]).slice(0, 6).forEach(p => {
-    const order = shuffle([...p.cards.keys()]);
-    qs.push({ q: p.question, options: order.map(i => p.cards[i].es), correct: order.indexOf(p.correct), explanation: p.explanation });
-  });
-  shuffle([...(bank.fillblank || [])]).slice(0, 6).forEach(f => {
-    const order = shuffle([...f.options.keys()]);
-    qs.push({ q: (f.before || '') + ' ____ ' + (f.after || ''), en: f.en, options: order.map(i => f.options[i]), correct: order.indexOf(f.correct), explanation: f.explanation });
-  });
-  _cp = { key, name: c ? c.name : key, idx: 0, score: 0, qs: shuffle(qs).slice(0, PATH_QUIZ_LEN), answered: false };
-  _renderCheckpoint();
+  _cp = { key, name: c ? c.name : key, sections: remaining, si: 0, qi: -1, score: 0, results: {}, answered: false };
+  _renderCheckpointIntro();
 }
 function _cpOverlay() {
   let ov = document.getElementById('checkpoint-overlay');
@@ -9153,69 +9179,172 @@ function _cpOverlay() {
   }
   return ov;
 }
-function _renderCheckpoint() {
-  const ov = _cpOverlay();
-  const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  if (_cp.idx >= _cp.qs.length) { _finishCheckpoint(); return; }
-  const q = _cp.qs[_cp.idx];
-  ov.innerHTML =
-    '<div style="background:var(--surface,#1c1c22);border:1px solid var(--border,#333);border-radius:14px;padding:20px;max-width:480px;width:100%;max-height:92dvh;overflow-y:auto;">' +
-      '<div style="display:flex;justify-content:space-between;font-size:11.5px;opacity:.75;margin-bottom:10px;">' +
-        '<span>🏁 ' + esc(_cp.name) + ' checkpoint</span><span>' + (_cp.idx + 1) + ' / ' + _cp.qs.length + ' · need ' + PATH_PASS + ' right</span>' +
-      '</div>' +
-      '<div style="font-size:15px;font-weight:700;margin-bottom:4px;">' + esc(q.q) + '</div>' +
-      (q.en ? '<div style="font-size:12px;opacity:.7;margin-bottom:8px;">' + esc(q.en) + '</div>' : '') +
-      '<div id="cp-opts" style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">' +
-        q.options.map((o, i) =>
-          '<button class="cfg-btn" style="text-align:left;font-size:14px;padding:10px 12px;" onclick="answerCheckpoint(' + i + ', this)">' + esc(o) + '</button>').join('') +
-      '</div>' +
-      '<div id="cp-feedback" style="min-height:20px;font-size:12px;margin-top:10px;"></div>' +
-      '<div style="text-align:right;margin-top:4px;"><button class="cfg-btn" style="opacity:.55;font-size:11px;" onclick="quitCheckpoint()">Quit</button></div>' +
-    '</div>';
+function _cpEsc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function _cpBox(inner) {
+  _cpOverlay().innerHTML =
+    '<div style="background:var(--surface,#1c1c22);border:1px solid var(--border,#333);border-radius:14px;padding:20px;max-width:500px;width:100%;max-height:92dvh;overflow-y:auto;">' + inner + '</div>';
 }
-function answerCheckpoint(i, btn) {
+function _renderCheckpointIntro() {
+  const sec = _cp.sections[_cp.si];
+  const banked = PATH_SECTIONS.length - _cp.sections.length;
+  sec.qs = _cpBuildSectionQs(_cp.key, sec);
+  _cp.qi = -1; _cp.score = 0;
+  _cpBox(
+    '<div style="text-align:center;">' +
+      '<div style="font-size:12px;opacity:.7;margin-bottom:6px;">🏁 ' + _cpEsc(_cp.name) + ' checkpoint' + (banked ? ' · ' + banked + ' section' + (banked > 1 ? 's' : '') + ' already passed ✅' : '') + '</div>' +
+      '<div style="font-size:18px;font-weight:800;margin-bottom:4px;">Section ' + sec.id + ' — ' + sec.name + '</div>' +
+      '<div style="font-size:13px;opacity:.85;margin-bottom:4px;">' + _cpEsc(sec.hint) + '</div>' +
+      '<div style="font-size:12.5px;opacity:.75;margin-bottom:16px;">' + sec.n + ' questions · need ' + sec.pass + ' correct to pass this section</div>' +
+      '<button class="cfg-btn" onclick="_cpNextQ()">Start section ' + sec.id + ' →</button> ' +
+      '<button class="cfg-btn" style="opacity:.55;font-size:11px;" onclick="quitCheckpoint()">Quit</button>' +
+    '</div>');
+}
+function _cpNextQ() {
+  const sec = _cp.sections[_cp.si];
+  _cp.qi++;
+  _cp.answered = false;
+  if (_cp.qi >= sec.qs.length) { _cpFinishSection(); return; }
+  const q = sec.qs[_cp.qi];
+  const head =
+    '<div style="display:flex;justify-content:space-between;font-size:11.5px;opacity:.75;margin-bottom:10px;">' +
+      '<span>Section ' + sec.id + ' · ' + _cpEsc(sec.name) + '</span>' +
+      '<span>' + (_cp.qi + 1) + '/' + sec.n + ' · ' + _cp.score + ' right · need ' + sec.pass + '</span>' +
+    '</div>';
+  if (q.kind === 'builder') { _cpBox(head + _cpBuilderHTML(q)); return; }
+  _cpBox(head +
+    '<div style="font-size:15px;font-weight:700;margin-bottom:4px;">' + _cpEsc(q.q) + '</div>' +
+    (q.en ? '<div style="font-size:12px;opacity:.7;margin-bottom:8px;">' + _cpEsc(q.en) + '</div>' : '') +
+    '<div id="cp-opts" style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">' +
+      q.options.map((o, i) => '<button class="cfg-btn" style="text-align:left;font-size:14px;padding:10px 12px;" onclick="answerCheckpoint(' + i + ')">' + _cpEsc(o) + '</button>').join('') +
+    '</div>' +
+    '<div id="cp-feedback" style="min-height:20px;font-size:12px;margin-top:10px;"></div>' +
+    '<div style="text-align:right;margin-top:4px;"><button class="cfg-btn" style="opacity:.55;font-size:11px;" onclick="quitCheckpoint()">Quit</button></div>');
+}
+function answerCheckpoint(i) {
   if (!_cp || _cp.answered) return;
+  const sec = _cp.sections[_cp.si];
+  const q = sec.qs[_cp.qi];
   _cp.answered = true;
-  const q = _cp.qs[_cp.idx];
   const right = i === q.correct;
   if (right) _cp.score++;
-  const opts = document.querySelectorAll('#cp-opts button');
-  opts.forEach((b, bi) => {
+  document.querySelectorAll('#cp-opts button').forEach((b, bi) => {
     b.disabled = true;
     if (bi === q.correct) b.style.borderColor = '#4ade80';
     if (bi === i && !right) b.style.borderColor = '#f45b69';
   });
   const fb = document.getElementById('cp-feedback');
   if (fb) fb.textContent = right ? '✓' : '✗ ' + (q.explanation || '');
-  setTimeout(() => { _cp.idx++; _cp.answered = false; _renderCheckpoint(); }, right ? 550 : 2400);
+  setTimeout(_cpNextQ, right ? 550 : 2400);
+}
+function _cpBuilderHTML(q) {
+  return '<div style="font-size:14px;font-weight:700;margin-bottom:8px;">' + _cpEsc(q.en) + '</div>' +
+    '<div id="cp-built" style="min-height:40px;border:1px dashed var(--border,#444);border-radius:8px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">' +
+      (q.built.length
+        ? q.built.map((ix, pos) => '<button class="cfg-btn" style="font-size:13px;" onclick="cpBuilderRemove(' + pos + ')">' + _cpEsc(q.shuffled[ix]) + '</button>').join('')
+        : '<span style="font-size:11.5px;opacity:.5;align-self:center;">Tap the words below in order…</span>') +
+    '</div>' +
+    '<div id="cp-words" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">' +
+      q.shuffled.map((w, i) =>
+        '<button class="cfg-btn" style="font-size:13px;' + (q.built.includes(i) ? 'opacity:.3;pointer-events:none;' : '') + '" onclick="cpBuilderAdd(' + i + ')">' + _cpEsc(w) + '</button>').join('') +
+    '</div>' +
+    '<button class="cfg-btn" onclick="cpBuilderCheck()"' + (q.built.length === q.words.length ? '' : ' disabled') + '>Check</button> ' +
+    '<button class="cfg-btn" style="opacity:.7;" onclick="cpBuilderClear()">↺ Clear</button>' +
+    '<div id="cp-feedback" style="min-height:20px;font-size:12px;margin-top:10px;"></div>' +
+    '<div style="text-align:right;margin-top:4px;"><button class="cfg-btn" style="opacity:.55;font-size:11px;" onclick="quitCheckpoint()">Quit</button></div>';
+}
+function cpBuilderAdd(i) {
+  if (!_cp || _cp.answered) return;
+  const q = _cp.sections[_cp.si].qs[_cp.qi];
+  if (q.built.includes(i)) return;
+  q.built.push(i);
+  _cpRepaintBuilder(q);
+}
+function cpBuilderRemove(pos) {
+  if (!_cp || _cp.answered) return;
+  const q = _cp.sections[_cp.si].qs[_cp.qi];
+  q.built.splice(pos, 1);
+  _cpRepaintBuilder(q);
+}
+function cpBuilderClear() {
+  if (!_cp || _cp.answered) return;
+  const q = _cp.sections[_cp.si].qs[_cp.qi];
+  q.built = [];
+  _cpRepaintBuilder(q);
+}
+function _cpRepaintBuilder(q) {
+  const sec = _cp.sections[_cp.si];
+  const head =
+    '<div style="display:flex;justify-content:space-between;font-size:11.5px;opacity:.75;margin-bottom:10px;">' +
+      '<span>Section ' + sec.id + ' · ' + _cpEsc(sec.name) + '</span>' +
+      '<span>' + (_cp.qi + 1) + '/' + sec.n + ' · ' + _cp.score + ' right · need ' + sec.pass + '</span>' +
+    '</div>';
+  _cpBox(head + _cpBuilderHTML(q));
+}
+function cpBuilderCheck() {
+  if (!_cp || _cp.answered) return;
+  const q = _cp.sections[_cp.si].qs[_cp.qi];
+  if (q.built.length !== q.words.length) return;
+  _cp.answered = true;
+  const right = q.built.map(ix => q.shuffled[ix]).join(' ') === q.words.join(' ');
+  if (right) _cp.score++;
+  const fb = document.getElementById('cp-feedback');
+  if (fb) fb.innerHTML = right
+    ? '<span style="color:#4ade80">✓ ' + _cpEsc(q.words.join(' ')) + '</span>'
+    : '<span style="color:#f45b69">✗ Correct: ' + _cpEsc(q.words.join(' ')) + '</span>' + (q.explanation ? '<br>' + _cpEsc(q.explanation) : '');
+  setTimeout(_cpNextQ, right ? 900 : 3000);
+}
+function _cpFinishSection() {
+  const sec = _cp.sections[_cp.si];
+  const passed = _cp.score >= sec.pass;
+  _cp.results[sec.id] = { score: _cp.score, n: sec.n, passed };
+  if (passed) {
+    const done = _cpSectionsState(_cp.key);
+    done[sec.id] = { score: _cp.score + '/' + sec.n, ts: Date.now() };
+    _savePath();
+  }
+  const more = _cp.si < _cp.sections.length - 1;
+  if (passed && more) {
+    _cpBox('<div style="text-align:center;">' +
+      '<div style="font-size:30px;margin-bottom:6px;">✅</div>' +
+      '<div style="font-size:15px;font-weight:800;margin-bottom:6px;">Section ' + sec.id + ' passed — ' + _cp.score + '/' + sec.n + '</div>' +
+      '<button class="cfg-btn" onclick="_cp.si++;_renderCheckpointIntro()">Next section →</button> ' +
+      '<button class="cfg-btn" style="opacity:.6;font-size:11px;" onclick="quitCheckpoint()">Pause here</button>' +
+    '</div>');
+    return;
+  }
+  if (!passed) {
+    _cpBox('<div style="text-align:center;">' +
+      '<div style="font-size:30px;margin-bottom:6px;">🧗</div>' +
+      '<div style="font-size:15px;font-weight:800;margin-bottom:6px;">Section ' + sec.id + ': ' + _cp.score + '/' + sec.n + ' — needed ' + sec.pass + '</div>' +
+      '<div style="font-size:12.5px;opacity:.85;margin-bottom:12px;">Any section you already passed stays passed. Review, then retake just this part — questions reshuffle.</div>' +
+      '<button class="cfg-btn" onclick="quitCheckpoint();startCheckpoint()">🔁 Retake section</button> ' +
+      '<button class="cfg-btn" style="opacity:.7;" onclick="quitCheckpoint()">Review first</button>' +
+    '</div>');
+    return;
+  }
+  const done = _cpSectionsState(_cp.key);
+  if (PATH_SECTIONS.every(s => done[s.id])) { _cpTopicPassed(_cp.key); }
+  else { quitCheckpoint(); startCheckpoint(); }
+}
+function _cpTopicPassed(key) {
+  const done = _cpSectionsState(key);
+  const summary = PATH_SECTIONS.map(s => s.id + ':' + (done[s.id] ? done[s.id].score : '?')).join(' ');
+  _pathState.passed[key] = { score: summary, ts: Date.now() };
+  _savePath();
+  try { syncProgressToTeacher(true); } catch {}
+  _cpBox('<div style="text-align:center;">' +
+    '<div style="font-size:36px;margin-bottom:8px;">🏆</div>' +
+    '<div style="font-size:17px;font-weight:800;margin-bottom:6px;">Checkpoint passed!</div>' +
+    '<div style="font-size:12.5px;opacity:.8;margin-bottom:6px;">' + _cpEsc(summary) + '</div>' +
+    '<div style="font-size:13px;opacity:.85;margin-bottom:14px;">Your teacher has been notified and will unlock the next topic.</div>' +
+    '<button class="cfg-btn" onclick="quitCheckpoint()">Keep practicing</button>' +
+  '</div>');
+  _cp = null;
+  try { renderConceptBar(); } catch {}
 }
 function quitCheckpoint() {
   const ov = document.getElementById('checkpoint-overlay');
   if (ov) ov.remove();
-  _cp = null;
-}
-function _finishCheckpoint() {
-  const ov = _cpOverlay();
-  const passed = _cp.score >= PATH_PASS;
-  const pct = Math.round(_cp.score / _cp.qs.length * 100);
-  if (passed) {
-    _pathState.passed[_cp.key] = { score: _cp.score + '/' + _cp.qs.length, ts: Date.now() };
-    _savePath();
-    try { syncProgressToTeacher(true); } catch {}
-  }
-  ov.innerHTML =
-    '<div style="background:var(--surface,#1c1c22);border:1px solid var(--border,#333);border-radius:14px;padding:26px;max-width:440px;width:100%;text-align:center;">' +
-      '<div style="font-size:34px;margin-bottom:8px;">' + (passed ? '🏆' : '🧗') + '</div>' +
-      '<div style="font-size:17px;font-weight:800;margin-bottom:6px;">' + _cp.score + ' / ' + _cp.qs.length + ' (' + pct + '%)</div>' +
-      '<div style="font-size:13px;opacity:.85;margin-bottom:14px;">' +
-        (passed
-          ? 'Checkpoint passed! Your teacher has been notified and will unlock the next topic.'
-          : 'You need ' + PATH_PASS + '/' + _cp.qs.length + ' (75%). Review the misses in your mistake patterns, then retake — the questions reshuffle every time.') +
-      '</div>' +
-      (passed
-        ? '<button class="cfg-btn" onclick="quitCheckpoint()">Keep practicing</button>'
-        : '<button class="cfg-btn" onclick="quitCheckpoint();startCheckpoint()">🔁 Retake</button> <button class="cfg-btn" style="opacity:.7;" onclick="quitCheckpoint()">Review first</button>') +
-    '</div>';
   _cp = null;
 }
 
