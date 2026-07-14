@@ -27,6 +27,12 @@ export async function onRequestGet(context) {
     return new Response(JSON.stringify({ error: 'PIN required' }), { status: 401, headers: CORS_HEADERS });
   }
   try {
+    // ?date=YYYY-MM-DD fetches a stored snapshot (feeds the trend arrows)
+    const want = new URL(request.url).searchParams.get('date');
+    if (want) {
+      const snap = await env.PROGRESS_KV.get('snap_' + want, { type: 'json' });
+      return new Response(JSON.stringify({ snapshot: snap || null }), { status: 200, headers: CORS_HEADERS });
+    }
     const today = new Date().toISOString().slice(0, 10);
     const key = 'snap_' + today;
     const existing = await env.PROGRESS_KV.get(key);

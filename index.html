@@ -1323,6 +1323,15 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
     </div>
 
     <div class="modal-row">
+      <div class="modal-lbl">Accent Color</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <input type="color" id="m-accent" value="#5b8dee" style="width:44px;height:30px;border:none;background:none;cursor:pointer" onchange="applyAccentColor(this.value)">
+        <button class="cfg-btn" style="font-size:11px" onclick="applyAccentColor('#5b8dee');document.getElementById('m-accent').value='#5b8dee'">Reset</button>
+        <span id="m-hours" style="font-size:11.5px;color:var(--text3);margin-left:auto"></span>
+      </div>
+    </div>
+
+    <div class="modal-row">
       <div class="modal-lbl">Font Size</div>
       <div style="display:flex;align-items:center;gap:10px">
         <button onclick="adjustFont(-1)" style="padding:4px 10px;border-radius:5px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);cursor:pointer;font-size:14px">A−</button>
@@ -5217,6 +5226,7 @@ function switchMode(mode, el) {
 
 function startExercise() {
   try { ensureSkipBtn(); } catch (e) {} // #31 universal skip
+  try { ensureFlagBtn(); } catch (e) {} // #100 report bad exercise
   const noConceptModes = ['conjugate','vocab','spottherror','readcomp','review','sprint'];
   if (!currentConcept && !noConceptModes.includes(currentMode)) {
     // Defensive fallback: if this state is ever reached (should no longer happen
@@ -5755,8 +5765,28 @@ function showLoading(msg = 'Generating exercise...', sub = `Using ${aiModelLabel
       <div class="loading-ring"></div>
       <div class="loading-text">${msg}</div>
       <div class="loading-sub">${sub}</div>
+      <div class="loading-sub" style="margin-top:8px;opacity:.65;font-style:italic;">${randomSpanishFact()}</div>
     </div>`;
 }
+// #94: loading time becomes teaching time.
+const SPANISH_FACTS = [
+  "💡 'Esperar' means both to wait AND to hope — Spanish optimism built in.",
+  "💡 Spanish has two 'to be's because WHO you are and HOW you are are different questions.",
+  "💡 '¿Por qué?' asks why; 'porque' answers it. Same sounds, opposite jobs.",
+  "💡 Every Spanish noun has a gender — even 'el problema' (masculine, surprisingly).",
+  "💡 Upside-down ¿ and ¡ warn you a question or shout is coming. English just surprises you.",
+  "💡 'Embarazada' means pregnant, not embarrassed. A famous trap.",
+  "💡 Spanish drops 'yo' constantly — the verb ending already tells you who.",
+  "💡 There are ~500 million native Spanish speakers. You're joining a big club.",
+  "💡 'Sobremesa' — the time spent chatting at the table after eating. No English word for it.",
+  "💡 The ñ was born as a tiny n written above another n by medieval scribes saving parchment.",
+  "💡 'Madrugar' is a single verb meaning 'to wake up very early'. Efficient suffering.",
+  "💡 Rolling your R is a muscle skill, not talent — 2 minutes a day for 2 weeks usually cracks it.",
+  "💡 'Te quiero' and 'te amo' both mean I love you — the second is a bigger deal.",
+  "💡 Spanish spelling is nearly 100% phonetic. If you can say it, you can spell it.",
+  "💡 'Estar' comes from Latin 'stare' (to stand) — states you stand in, temporarily."
+];
+function randomSpanishFact() { return SPANISH_FACTS[Math.floor(Math.random() * SPANISH_FACTS.length)]; }
 
 function showError(msg, retryFn) {
   // 2026-07-03: distinguish "Gemini is rate-limited" from a generic failure —
@@ -7376,6 +7406,17 @@ function addXP(amount) {
   logDailyXP(amount);
   checkLevelUp(xp);
   updateStats();
+  // #24 floating +XP at the action, not just the header counter
+  try {
+    if (amount > 0) {
+      const f = document.createElement('div');
+      f.textContent = '+' + amount + ' XP';
+      f.style.cssText = 'position:fixed;left:50%;bottom:30%;transform:translateX(-50%);z-index:900;color:var(--green,#3ecf8e);font-weight:800;font-size:17px;pointer-events:none;transition:all 1.1s ease-out;opacity:1;text-shadow:0 1px 6px rgba(0,0,0,.5);';
+      document.body.appendChild(f);
+      requestAnimationFrame(() => { f.style.bottom = '42%'; f.style.opacity = '0'; });
+      setTimeout(() => f.remove(), 1200);
+    }
+  } catch (e) {}
 }
 
 // ── DAILY GOAL ────────────────────────────────────────────────────────────────
@@ -7661,7 +7702,13 @@ function updateStats() {
   const pct = (xpInLevel / xpForThisLevel) * 100;
   document.getElementById('xp-bar').style.width = pct + '%';
   document.getElementById('xp-label').textContent = `${xpInLevel} / ${xpForThisLevel} XP to Level ${level + 1}`;
-  document.getElementById('lvl-badge').textContent = `Level ${level}`;
+  // #23: levels with personality — a title beats a bare number.
+  const LEVEL_TITLES = ['', 'Recién Llegado', 'Turista Valiente', 'Amigo del Barrio', 'Charlatán Jr.', 'Casi Fluido', 'Vecino Honorario', 'Cuentacuentos', 'Maestro del Café', 'Casi Nativo', 'Leyenda Local'];
+  const lt = LEVEL_TITLES[Math.min(level, LEVEL_TITLES.length - 1)];
+  const lvlEl = document.getElementById('lvl-badge');
+  lvlEl.textContent = `Level ${level}`;
+  lvlEl.title = lt ? `Nivel ${level}: ${lt}` : `Level ${level}`;
+  if (lt && window.innerWidth > 640) lvlEl.textContent = `Lv ${level} · ${lt}`;
   // SM-2 due count
   const dueCount = getTotalDueCount();
   const dueStat = document.getElementById('due-stat');
@@ -7716,6 +7763,14 @@ function showToast(msg, duration = 2400) {
 function openSettings() {
   document.getElementById('m-ollama').value = ollamaUrl;
   document.getElementById('m-name').value = localStorage.getItem('sl_name') || '';
+  // mega-tranche: accent picker state + practice-hours odometer (#98, #30)
+  try {
+    const acc = localStorage.getItem('sl_accent');
+    if (acc && document.getElementById('m-accent')) document.getElementById('m-accent').value = acc;
+    const mins = parseInt(localStorage.getItem('sl_time_min') || '0');
+    const h = document.getElementById('m-hours');
+    if (h) h.textContent = '⏱ ' + Math.floor(mins / 60) + 'h ' + (mins % 60) + 'm practiced total';
+  } catch (e) {}
   if (document.getElementById('m-theme')) document.getElementById('m-theme').value = currentTheme;
   document.getElementById('settings-modal').classList.add('open');
   // Populate model list from live Ollama (dev-only backend)
@@ -7773,6 +7828,15 @@ function setSoundEnabled(on) {
   localStorage.setItem('sl_sound', on ? 'on' : 'off');
 }
 function playSound(type) {
+  // #36 haptics (2026-07-05): phones get a tap you can feel — short for
+  // right, double-buzz for wrong. Independent of the sound toggle.
+  try {
+    if (navigator.vibrate) {
+      if (type === 'correct') navigator.vibrate(15);
+      else if (type === 'wrong') navigator.vibrate([35, 45, 35]);
+      else if (type === 'streak') navigator.vibrate([15, 30, 15, 30, 40]);
+    }
+  } catch (e) {}
   if (!_soundEnabled) return;
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -8175,6 +8239,9 @@ function syncProgressToTeacher(force = false) {
     // Linear path (2026-07-05): where they are, what they've passed, and
     // whether they're waiting on the teacher to approve an advancement.
     pathState: (() => { try { return { unlocked: effectiveUnlocked(), topic: (CONCEPTS.find(c => c.key === pathFrontierKey()) || {}).name || pathFrontierKey(), passed: _pathState.passed, ready: pathReadyInfo() }; } catch { return null; } })(),
+    // mega-tranche (2026-07-05): flagged exercises + announcement receipt
+    flags: (() => { try { return JSON.parse(localStorage.getItem('sl_flags') || '[]').slice(-10); } catch { return []; } })(),
+    announceSeen: parseInt(localStorage.getItem('sl_announce_seen') || '0'),
     lastActive: new Date().toISOString()
   };
   try {
@@ -9396,16 +9463,17 @@ function _cpFinishSection() {
   const sec = _cp.sections[_cp.si];
   const passed = _cp.score >= sec.pass;
   _cp.results[sec.id] = { score: _cp.score, n: sec.n, passed };
+  const perfect = _cp.score === sec.n;
   if (passed) {
     const done = _cpSectionsState(_cp.key);
-    done[sec.id] = { score: _cp.score + '/' + sec.n, ts: Date.now() };
+    done[sec.id] = { score: _cp.score + '/' + sec.n + (perfect ? '⭐' : ''), ts: Date.now() };
     _savePath();
   }
   const more = _cp.si < _cp.sections.length - 1;
   if (passed && more) {
     _cpBox('<div style="text-align:center;">' +
-      '<div style="font-size:30px;margin-bottom:6px;">✅</div>' +
-      '<div style="font-size:15px;font-weight:800;margin-bottom:6px;">Section ' + sec.id + ' passed — ' + _cp.score + '/' + sec.n + '</div>' +
+      '<div style="font-size:30px;margin-bottom:6px;">' + (perfect ? '⭐' : '✅') + '</div>' +
+      '<div style="font-size:15px;font-weight:800;margin-bottom:6px;">' + (perfect ? 'PERFECT section — ' : 'Section ' + sec.id + ' passed — ') + _cp.score + '/' + sec.n + '</div>' +
       '<button class="cfg-btn" onclick="_cp.si++;_renderCheckpointIntro()">Next section →</button> ' +
       '<button class="cfg-btn" style="opacity:.6;font-size:11px;" onclick="quitCheckpoint()">Pause here</button>' +
     '</div>');
@@ -9623,6 +9691,109 @@ function appendStaticExamples() {
   showToast('⚡ AI is busy — showing examples from the classic bank', 2600);
   return true;
 }
+// ── MEGA-TRANCHE (student, 2026-07-05): #19 #22 #30 #35 #63 #64 #98 #100 ─────
+
+// #19 comeback bonus — returning after 2+ days away earns XP, not guilt.
+(function comebackBonus() {
+  try {
+    const last = parseInt(localStorage.getItem('sl_prev_visit') || '0');
+    localStorage.setItem('sl_prev_visit', String(Date.now()));
+    const today = new Date().toISOString().slice(0, 10);
+    if (last && Date.now() - last >= 2 * 86400000 && localStorage.getItem('sl_comeback_day') !== today) {
+      localStorage.setItem('sl_comeback_day', today);
+      setTimeout(() => { try { addXP(10); showToast('💪 Comeback bonus: +10 XP just for showing up again', 3500); } catch (e) {} }, 4000);
+    }
+  } catch (e) {}
+})();
+
+// #22 weekly recap — every 7 days, one line of earned perspective.
+(function weeklyRecap() {
+  try {
+    const lastRecap = parseInt(localStorage.getItem('sl_week_recap') || '0');
+    if (Date.now() - lastRecap < 7 * 86400000) return;
+    const hist = JSON.parse(localStorage.getItem('sl_live_history') || '[]').filter(e => Date.now() - e.ts < 7 * 86400000);
+    if (hist.length < 10) return;
+    localStorage.setItem('sl_week_recap', String(Date.now()));
+    const right = hist.filter(e => e.correct).length;
+    const concepts = new Set(hist.map(e => e.concept).filter(Boolean)).size;
+    setTimeout(() => showToast('📈 Your week: ' + hist.length + ' answers, ' + Math.round(right / hist.length * 100) + '% right, across ' + concepts + ' topic' + (concepts !== 1 ? 's' : '') + '. Keep stacking.', 5500), 9000);
+  } catch (e) {}
+})();
+
+// #63 respect prefers-reduced-motion (accessibility)
+(function reducedMotion() {
+  const st = document.createElement('style');
+  st.textContent = '@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }';
+  document.head.appendChild(st);
+})();
+
+// #64 aria labels for icon-only buttons (accessibility) — runs after load.
+setTimeout(function ariaPass() {
+  try {
+    document.querySelectorAll('button:not([aria-label])').forEach(b => {
+      const t = (b.title || '').trim() || (b.textContent || '').trim();
+      if (t) b.setAttribute('aria-label', t.slice(0, 60));
+    });
+  } catch (e) {}
+}, 2000);
+
+// #98 accent color picker — personalization for free.
+function applyAccentColor(c) {
+  try {
+    if (!c) return;
+    document.documentElement.style.setProperty('--accent', c);
+    localStorage.setItem('sl_accent', c);
+  } catch (e) {}
+}
+(function initAccent() { const c = localStorage.getItem('sl_accent'); if (c) applyAccentColor(c); })();
+
+// #100 report-a-bad-exercise — flags ride the progress sync to the teacher.
+function ensureFlagBtn() {
+  let b = document.getElementById('flag-btn');
+  if (!b) {
+    b = document.createElement('button');
+    b.id = 'flag-btn';
+    b.className = 'cfg-btn';
+    b.style.cssText = 'position:fixed;bottom:70px;right:82px;z-index:200;opacity:.6;font-size:12px;';
+    b.textContent = '👎';
+    b.title = 'Report this exercise (confusing, wrong, or broken) — your teacher sees it';
+    b.onclick = flagCurrentExercise;
+    document.body.appendChild(b);
+  }
+  b.style.display = ['review', 'sprint'].includes(currentMode) ? 'none' : 'block';
+}
+function flagCurrentExercise() {
+  try {
+    const q = (document.querySelector('.q-text, .story-q-text, .ex-sentence') || document.getElementById('exercise-area') || {}).textContent || '';
+    const flags = JSON.parse(localStorage.getItem('sl_flags') || '[]');
+    flags.push({ ts: Date.now(), mode: currentMode, concept: currentConcept ? currentConcept.name : null, q: q.trim().slice(0, 90) });
+    if (flags.length > 20) flags.splice(0, flags.length - 20);
+    localStorage.setItem('sl_flags', JSON.stringify(flags));
+    showToast('👎 Reported — thanks, your teacher will see it. Skipping…', 2200);
+    try { nextExercise = null; startExercise(); } catch (e) {}
+    try { syncProgressToTeacher(true); } catch (e) {}
+  } catch (e) {}
+}
+
+// #35 checkpoint hotkeys — desktop students answer with 1-9.
+document.addEventListener('keydown', (e) => {
+  try {
+    if (!_cp || e.metaKey || e.ctrlKey || e.altKey) return;
+    const n = parseInt(e.key);
+    if (!n) return;
+    const opts = document.querySelectorAll('#cp-opts button');
+    if (opts[n - 1] && !opts[n - 1].disabled) opts[n - 1].click();
+  } catch (err) {}
+});
+
+// #30 practice-hours odometer — one minute at a time, only while visible.
+setInterval(() => {
+  try {
+    if (document.hidden) return;
+    localStorage.setItem('sl_time_min', String(parseInt(localStorage.getItem('sl_time_min') || '0') + 1));
+  } catch (e) {}
+}, 60000);
+
 // Story: one hand-written fallback per topic. Same shape renderStory expects.
 const STORY_FALLBACK = {
   'ser-estar': { title: 'La doctora cansada', sentences: [
