@@ -250,7 +250,13 @@ body.focus-mode header { min-height:auto; }
   padding: 0 20px;
   flex-shrink: 0;
   gap: 2px;
+  /* 2026-07-05 audit: scrollable at EVERY width — between 641px and desktop
+     the 16 tabs used to overflow the body sideways (landscape phones hit
+     1519px page width) because containment only existed ≤640px. */
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.mode-tabs::-webkit-scrollbar { display: none; }
 .mode-tab {
   padding: 9px 15px;
   font-size: 12px;
@@ -981,6 +987,31 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
      Conjugate all use them). Bump on touch-sized viewports only; desktop mouse
      precision doesn't need it. */
   .speak-btn { padding: 9px 12px; font-size: 16px; }
+  /* 2026-07-05 audit: 36-40 interactive elements measured under 32px tall on
+     phones. Bump the primary navigation/action targets. */
+  .mode-tab, .mode-group-chip, .concept-chip { min-height: 36px; display: inline-flex; align-items: center; }
+  .cfg-btn { min-height: 34px; }
+  .accent-btn, .review-btn { min-height: 34px; }
+}
+
+/* Very small phones (≤360px, e.g. older SE / compact Androids) — 2026-07-05
+   audit: the header wrapped to 3 rows and chrome ate ~50% of the screen.
+   Trim the least-essential header pieces further. */
+@media (max-width: 360px) {
+  .hd-stats { gap: 8px; }
+  .hd-stats .hd-stat:nth-child(6) { display: none; } /* day streak — lives in the calendar */
+  .lvl-badge { display: none; } /* level is visible on the XP bar */
+  header { padding: 6px 8px; gap: 6px; }
+  .concept-bar { padding: 4px 8px; }
+  .hd-stat-val { font-size: 12px; }
+}
+
+/* Tablet / landscape-phone gap (641-1023px) — 2026-07-05 audit: these widths
+   got pure desktop CSS and overflowed horizontally. Contain, wrap, done. */
+@media (max-width: 1023px) {
+  body { overflow-x: hidden; max-width: 100vw; }
+  header { flex-wrap: wrap; }
+  .concept-bar { overflow-x: auto; scrollbar-width: none; }
 }
 
 /* Phone — single column pairs, hide hd-stat icons, collapse logo sub */

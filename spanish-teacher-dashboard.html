@@ -49,25 +49,67 @@ body {
   grid-template-columns: 248px 1fr 310px;
   grid-template-areas: "hd hd hd" "sb mn pn";
 }
-/* ── PHONE LAYOUT (2026-07-05, backlog #24): single column, everything
-   stacks — header, then sidebar (collapses to a strip), main, right panel.
-   Height goes auto so the page scrolls naturally like an app feed. ── */
-@media (max-width: 700px) {
+/* ── PHONE/TABLET LAYOUT (2026-07-05, rebuilt after the resolution audit):
+   breakpoint raised 700→1023 (the 3-col grid needs ~1100px; at 740 the main
+   column collapsed to 179px). Flex column instead of grid so sections can be
+   REORDERED via the order property (movable sections). Width containment:
+   min-width:0 everywhere — grid/flex 1fr tracks refuse to shrink below
+   content width without it, which is exactly how the page hit 1087px wide
+   on a 320px phone. ── */
+@media (max-width: 1023px) {
   body {
-    grid-template-columns: 1fr;
-    grid-template-rows: 52px auto auto auto;
-    grid-template-areas: "hd" "sb" "mn" "pn";
+    display: flex;
+    flex-direction: column;
     height: auto;
     min-height: 100dvh;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 64px; /* room for the sticky bottom nav */
   }
+  header { order: -2; flex-wrap: wrap; height: auto; min-height: 52px; padding: 6px 10px; }
+  .hd-center { overflow-x: auto; max-width: 100%; }
+  header, aside, main, .panel { min-width: 0; max-width: 100vw; }
+  main *, aside *, .panel *, header * { min-width: 0; }
+  main img, .panel img, main table { max-width: 100%; }
+  /* two-column content grids collapse to one column */
+  .contrast-grid, .type-grid, .ref-grid, .pair-arena, .session-grid, #ex-grid { grid-template-columns: 1fr !important; }
+  .builder-controls { grid-template-columns: 1fr 1fr !important; }
   .pane { max-width: 100vw; overflow-x: hidden; }
   table { font-size: 9px !important; }
-  input, select, button { font-size: 13px; }
+  input, select { font-size: 13px; }
   /* stacked: sidebar becomes a capped scrollable strip; panel grows naturally */
   aside { max-height: 38dvh; overflow-y: auto; border-right: none; border-bottom: 1px solid var(--border); }
   .panel { border-left: none; border-top: 1px solid var(--border); overflow: visible; }
-  header { padding: 0 10px; }
+  /* panel tabs: horizontally scrollable instead of a 1086px-wide row */
+  .panel-tabs { overflow-x: auto; scrollbar-width: none; }
+  .panel-tabs::-webkit-scrollbar { display: none; }
+  .ptab { flex: 0 0 auto; padding: 12px 12px; min-height: 40px; }
+  /* tap targets */
+  button, .queue-concept-btn { min-height: 36px; }
+  /* movable-section chrome (built by initMobileSections) */
+  .m-sec-hd {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface2); border-top: 1px solid var(--border);
+    padding: 8px 12px; font-size: 12.5px; font-weight: 700; color: var(--text2);
+    position: sticky; top: 0; z-index: 40;
+  }
+  .m-sec-hd button { background: none; border: 1px solid var(--border2); color: var(--text3); border-radius: 6px; padding: 3px 9px; margin-left: 5px; cursor: pointer; font-size: 12px; min-height: 30px; }
+  .m-collapsed { display: none !important; }
+  #mobile-nav {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+    background: var(--surface); border-top: 1px solid var(--border2);
+    padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
+  }
+  #mobile-nav button {
+    flex: 1; background: none; border: none; color: var(--text3);
+    font-size: 10px; padding: 5px 2px; cursor: pointer; min-height: 46px;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  #mobile-nav button span:first-child { font-size: 17px; }
+  #mobile-nav button.active { color: var(--accent); }
+}
+@media (min-width: 1024px) {
+  .m-sec-hd, #mobile-nav { display: none !important; }
 }
 
 /* ── HEADER ── */
@@ -3472,6 +3514,97 @@ Then add a 2-sentence summary of the biggest pattern to address.`;
   renderLibrary();
   renderGatewayConfig();
 })();
+// ── MOVABLE SECTIONS + BOTTOM NAV (phone, 2026-07-05 audit fixes) ────────────
+// On ≤1023px the three big sections (Curriculum / Lesson / Tools & Students)
+// become reorderable (↑↓, saved to this device) and collapsible, with a
+// sticky bottom nav that jumps to any tool — no more sections you can't find.
+const M_SECTIONS = [
+  { sel: 'aside',  name: '📑 Curriculum' },
+  { sel: 'main',   name: '📖 Lesson' },
+  { sel: '.panel', name: '🛠 Tools & Students' }
+];
+function _mOrder() { try { return JSON.parse(localStorage.getItem('td_sec_order') || '[0,1,2]'); } catch { return [0, 1, 2]; } }
+function _mCollapsed() { try { return JSON.parse(localStorage.getItem('td_sec_collapsed') || '{}'); } catch { return {}; } }
+function _mApplyOrder() {
+  const order = _mOrder();
+  M_SECTIONS.forEach((s, i) => {
+    const el = document.querySelector(s.sel);
+    const hd = document.querySelector('.m-sec-hd[data-sec="' + i + '"]');
+    const pos = order.indexOf(i);
+    if (el) el.style.order = pos * 2 + 1;
+    if (hd) hd.style.order = pos * 2; // header always directly above its section
+  });
+}
+function mSecMove(i, dir) {
+  const order = _mOrder();
+  const pos = order.indexOf(i);
+  const np = pos + dir;
+  if (np < 0 || np >= order.length) return;
+  [order[pos], order[np]] = [order[np], order[pos]];
+  localStorage.setItem('td_sec_order', JSON.stringify(order));
+  _mApplyOrder();
+}
+function mSecToggle(i) {
+  const el = document.querySelector(M_SECTIONS[i].sel);
+  const hd = document.querySelector('.m-sec-hd[data-sec="' + i + '"]');
+  if (!el) return;
+  const c = _mCollapsed();
+  c[i] = !c[i];
+  localStorage.setItem('td_sec_collapsed', JSON.stringify(c));
+  el.classList.toggle('m-collapsed', !!c[i]);
+  if (hd) hd.querySelector('.m-tgl').textContent = c[i] ? '▸' : '▾';
+}
+// Scroll now AND re-assert after content settles — tab clicks trigger async
+// re-renders (roster fetch etc.) that change heights mid-scroll and leave a
+// smooth scroll stranded halfway.
+function _mScrollTo(el) {
+  if (!el) return;
+  el.scrollIntoView();
+  setTimeout(() => el.scrollIntoView(), 450);
+  setTimeout(() => el.scrollIntoView(), 1200);
+}
+function mNav(target) {
+  // panel tools: expand the panel section, click the real tab (runs its own
+  // refresh logic), scroll to it. 'lesson'/'curriculum' just scroll.
+  const panel = document.querySelector('.panel');
+  if (target === 'lesson') { const m = document.querySelector('main'); if (m) { m.classList.remove('m-collapsed'); _mScrollTo(m); } return; }
+  if (target === 'curriculum') { const a = document.querySelector('aside'); if (a) { a.classList.remove('m-collapsed'); _mScrollTo(a); } return; }
+  const ptabs = [...document.querySelectorAll('.ptab')];
+  const idx = { gen: 0, autopsy: 1, student: 2, live: 3, library: 4, create: 5, queue: 6 }[target];
+  if (idx === undefined || !ptabs[idx]) return;
+  if (panel) panel.classList.remove('m-collapsed');
+  ptabs[idx].click();
+  _mScrollTo(panel);
+  document.querySelectorAll('#mobile-nav button').forEach(b => b.classList.toggle('active', b.dataset.t === target));
+}
+function initMobileSections() {
+  if (window.innerWidth > 1023 || document.getElementById('mobile-nav')) return;
+  const collapsed = _mCollapsed();
+  M_SECTIONS.forEach((s, i) => {
+    const el = document.querySelector(s.sel);
+    if (!el || document.querySelector('.m-sec-hd[data-sec="' + i + '"]')) return;
+    if (collapsed[i]) el.classList.add('m-collapsed');
+    const hd = document.createElement('div');
+    hd.className = 'm-sec-hd';
+    hd.dataset.sec = i;
+    hd.innerHTML = '<span>' + s.name + '</span><span>' +
+      '<button onclick="mSecMove(' + i + ',-1)" title="Move up">↑</button>' +
+      '<button onclick="mSecMove(' + i + ',1)" title="Move down">↓</button>' +
+      '<button class="m-tgl" onclick="mSecToggle(' + i + ')">' + (collapsed[i] ? '▸' : '▾') + '</button></span>';
+    el.parentElement.insertBefore(hd, el);
+  });
+  _mApplyOrder();
+  const nav = document.createElement('div');
+  nav.id = 'mobile-nav';
+  nav.innerHTML = [
+    ['lesson', '📖', 'Lesson'], ['student', '👤', 'Students'], ['live', '📡', 'Live'],
+    ['queue', '📋', 'Queue'], ['gen', '⚡', 'AI'], ['library', '📚', 'Library']
+  ].map(([t, ico, lbl]) => '<button data-t="' + t + '" onclick="mNav(\'' + t + '\')"><span>' + ico + '</span><span>' + lbl + '</span></button>').join('');
+  document.body.appendChild(nav);
+}
+window.addEventListener('DOMContentLoaded', initMobileSections);
+window.addEventListener('resize', () => { if (window.innerWidth <= 1023) initMobileSections(); });
+
 // ─── TOAST ─────────────────────────────────────────────────────────────────────────────
 
 function showToast(msg, duration) {
