@@ -29,9 +29,16 @@ export async function onRequestOptions() {
 }
 
 export async function onRequestGet(context) {
-  const { env } = context;
+  const { request, env } = context;
   try {
     const queue = (await env.PROGRESS_KV.get(KV_KEY, { type: 'json' })) || [];
+    // Per-student assignments (backlog #32, 2026-07-05): ?studentId=X also
+    // returns that student's personal queue alongside the class-wide one.
+    const studentId = new URL(request.url).searchParams.get('studentId');
+    if (studentId) {
+      const per = (await env.PROGRESS_KV.get('teacher_queue_per', { type: 'json' })) || {};
+      return new Response(JSON.stringify({ queue, personal: per[studentId] || [] }), { status: 200, headers: CORS_HEADERS });
+    }
     return new Response(JSON.stringify({ queue }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
@@ -60,6 +67,14 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ error: 'queue (array) is required' }), { status: 400, headers: CORS_HEADERS });
   }
   try {
+    // Per-student assignment (backlog #32): {studentId, queue} targets one
+    // student; plain {queue} stays the class-wide list as before.
+    if (body.studentId) {
+      const per = (await env.PROGRESS_KV.get('teacher_queue_per', { type: 'json' })) || {};
+      per[body.studentId] = body.queue;
+      await env.PROGRESS_KV.put('teacher_queue_per', JSON.stringify(per));
+      return new Response(JSON.stringify({ ok: true, studentId: body.studentId }), { status: 200, headers: CORS_HEADERS });
+    }
     await env.PROGRESS_KV.put(KV_KEY, JSON.stringify(body.queue));
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {

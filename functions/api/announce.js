@@ -26,7 +26,10 @@ export async function onRequestOptions() {
 export async function onRequestGet(context) {
   try {
     const a = (await context.env.PROGRESS_KV.get(KV_KEY, { type: 'json' })) || null;
-    return new Response(JSON.stringify({ announcement: a }), { status: 200, headers: CORS_HEADERS });
+    // classAuto (backlog #100-lite): students read this flag on load — when
+    // on, the app runs its own comeback nudges without teacher involvement.
+    const classAuto = (await context.env.PROGRESS_KV.get('class_auto', { type: 'json' })) === true;
+    return new Response(JSON.stringify({ announcement: a, classAuto }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
   }
@@ -40,6 +43,15 @@ export async function onRequestPost(context) {
   let body;
   try { body = await request.json(); }
   catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: CORS_HEADERS }); }
+  // class-in-a-box master flag (backlog #100-lite)
+  if (typeof body.classAuto === 'boolean') {
+    try {
+      await env.PROGRESS_KV.put('class_auto', JSON.stringify(body.classAuto));
+      return new Response(JSON.stringify({ ok: true, classAuto: body.classAuto }), { status: 200, headers: CORS_HEADERS });
+    } catch (err) {
+      return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
+    }
+  }
   const text = String(body.text || '').slice(0, 300);
   try {
     if (!text.trim()) {

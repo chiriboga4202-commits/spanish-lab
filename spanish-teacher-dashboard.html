@@ -2431,8 +2431,17 @@ function renderClassIntel(students) {
           '<button class="queue-concept-btn" onclick="composeAnnouncement()">📣 Announce</button>' +
           '<button class="queue-concept-btn" onclick="downloadBackup()">⬇ Backup</button>' +
           '<label style="font-size:10.5px;color:var(--text3);display:flex;align-items:center;gap:3px" title="When on, checkpoint passes unlock the next topic instantly — no approval tap needed. For classes you don\'t actively supervise."><input type="checkbox" id="auto-approve-cb" onchange="setAutoApprove(this.checked)"> 🤖 auto-approve</label>' +
+          '<label style="font-size:10.5px;color:var(--text3);display:flex;align-items:center;gap:3px" title="Master switch: auto-approve + comeback nudges for absent students + daily snapshots. Share the app and let it run."><input type="checkbox" id="class-box-cb" onchange="setClassBox(this.checked)"> 📦 class-in-a-box</label>' +
           '<label style="font-size:10.5px;color:var(--text3);display:flex;align-items:center;gap:3px"><input type="checkbox" id="auto-refresh-cb" checked> auto</label>' +
         '</span>' +
+      '</div>' +
+      // #56 triage briefing — auto-fills once/day, ↻ regenerates
+      '<div style="margin-bottom:8px;padding:8px 10px;background:var(--surface2);border-radius:8px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">' +
+          '<span style="font-size:11px;font-weight:700;color:var(--text2)">🤖 Today\'s triage</span>' +
+          '<button class="queue-concept-btn" style="font-size:10px;padding:2px 7px" onclick="aiTriage(true)">↻</button>' +
+        '</div>' +
+        '<div id="triage-out" style="font-size:11.5px;color:var(--text2);white-space:pre-wrap"></div>' +
       '</div>' +
       (flags.length
         ? '<div style="margin-bottom:8px">' + flags.map(f => '<div style="font-size:11.5px;color:var(--text2);margin-bottom:2px">' + f + '</div>').join('') + '</div>'
@@ -2514,6 +2523,121 @@ async function downloadBackup() {
     showToast('⬇ Backup downloaded', 2000);
   } catch (e) { showToast('Backup failed: ' + e.message, 2500); }
 }
+// ── TEACHER FIVE-PACK (2026-07-05: #56 triage, #32 assign, #16 search,
+//    #81-lite snapshot, #100-lite class-in-a-box) ─────────────────────────────
+
+// #56 AI TRIAGE — "what needs me today", auto-generated once per day.
+async function aiTriage(force = false) {
+  const out = document.getElementById('triage-out');
+  if (!out) return;
+  const today = new Date().toISOString().slice(0, 10);
+  if (!force && localStorage.getItem('td_triage_date') === today && localStorage.getItem('td_triage_text')) {
+    out.textContent = localStorage.getItem('td_triage_text');
+    return;
+  }
+  if (!_lastRoster.length) { out.textContent = 'No students yet.'; return; }
+  out.textContent = '🤖 Reading the class…';
+  const lines = _lastRoster.map(s => {
+    const days = Math.floor((Date.now() - new Date(s.lastActive || 0).getTime()) / 86400000);
+    const mast = Object.entries(s.mastery || {}).map(([k, m]) => k + ':' + Math.round(m.correct / m.total * 100) + '%(' + m.total + ')').join(' ');
+    return (s.name || s.studentId) + ' | topic:' + ((s.pathState || {}).topic || '?') + (s.pathState && s.pathState.ready ? ' READY-TO-ADVANCE' : '') + ' | inactive:' + days + 'd | ' + mast;
+  }).join('\n');
+  try {
+    const text = await aiGenerate(
+      'You are triaging a Spanish class for a busy teacher. From the data, give the 3 MOST important things needing attention today, one line each, most urgent first, each with a concrete action. If nothing is urgent, say so in one line. Max 70 words total, no preamble.\n\nCLASS DATA:\n' + lines, { max_tokens: 512 });
+    out.textContent = text;
+    localStorage.setItem('td_triage_date', today);
+    localStorage.setItem('td_triage_text', text);
+  } catch (e) { out.textContent = '⚠ ' + e.message; }
+}
+
+// #32 PER-STUDENT ASSIGNMENTS
+async function assignToStudent(sid) {
+  const s = _lastRoster.find(x => x.studentId === sid);
+  const pick = prompt('Assign topics to ' + ((s && s.name) || sid) + ' — enter numbers separated by commas (empty clears):\n' +
+    TD_PATH.map((k, i) => (i + 1) + '. ' + k).join('\n'), '');
+  if (pick === null) return;
+  const queue = pick.split(',').map(x => parseInt(x.trim())).filter(n => n >= 1 && n <= TD_PATH.length)
+    .map(n => ({ key: TD_PATH[n - 1], name: TD_PATH[n - 1], addedAt: new Date().toISOString() }));
+  try {
+    const res = await fetch(API_BASE + '/api/assignments', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ studentId: sid, queue })
+    });
+    if (res.status === 401) {
+      const pin = (prompt('Teacher PIN:') || '').trim();
+      if (pin) { localStorage.setItem('td_pin', pin); return assignToStudent(sid); }
+      return;
+    }
+    showToast(queue.length ? '📋 Assigned ' + queue.length + ' topic(s) — lands on their next app load' : 'Personal assignments cleared', 3000);
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
+
+// #16 ROSTER SEARCH / SORT
+let _rosterFilter = '', _rosterSort = 'recent';
+function ensureRosterControls() {
+  if (document.getElementById('roster-controls')) return;
+  const anchor = document.getElementById('class-intel') || document.getElementById('sp-concepts');
+  if (!anchor || !anchor.parentElement) return;
+  const c = document.createElement('div');
+  c.id = 'roster-controls';
+  c.style.cssText = 'display:flex;gap:6px;margin-bottom:8px;align-items:center;';
+  c.innerHTML =
+    '<input class="inp" placeholder="🔎 Find student…" style="flex:1;font-size:12px;padding:6px 9px;" oninput="_rosterFilter=this.value.toLowerCase();refreshStudentProgress()">' +
+    '<select class="inp" style="font-size:12px;padding:6px;" onchange="_rosterSort=this.value;refreshStudentProgress()">' +
+      '<option value="recent">Last active</option><option value="name">Name</option>' +
+      '<option value="accuracy">Accuracy ↑</option><option value="topic">Topic</option></select>';
+  anchor.parentElement.insertBefore(c, anchor.nextSibling);
+}
+function applyRosterView(students) {
+  let list = students;
+  if (_rosterFilter) list = list.filter(s => ((s.name || '') + s.studentId).toLowerCase().includes(_rosterFilter));
+  const acc = s => { let c = 0, t = 0; Object.values(s.mastery || {}).forEach(m => { c += m.correct; t += m.total; }); return t ? c / t : 1; };
+  if (_rosterSort === 'name') list = [...list].sort((a, b) => (a.name || a.studentId).localeCompare(b.name || b.studentId));
+  else if (_rosterSort === 'accuracy') list = [...list].sort((a, b) => acc(a) - acc(b));
+  else if (_rosterSort === 'topic') list = [...list].sort((a, b) => ((a.pathState || {}).unlocked || 0) - ((b.pathState || {}).unlocked || 0));
+  return list;
+}
+
+// #81-lite DAILY SNAPSHOT — opening the dashboard backs up the class.
+function dailySnapshot() {
+  const today = new Date().toISOString().slice(0, 10);
+  if (localStorage.getItem('td_snap_date') === today) return;
+  fetch(API_BASE + '/api/snapshot', { headers: teacherPinHeaders() })
+    .then(r => r.json()).then(d => {
+      if (d.ok) { localStorage.setItem('td_snap_date', today); if (!d.already) showToast('🗄 Daily class snapshot saved', 2000); }
+    }).catch(() => {});
+}
+
+// #100-lite CLASS-IN-A-BOX — one switch: auto-approve + comeback nudges + snapshots.
+async function setClassBox(on) {
+  try {
+    await setAutoApprove(on);
+    const res = await fetch(API_BASE + '/api/announce', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ classAuto: !!on })
+    });
+    if (res.status === 401) {
+      const pin = (prompt('Teacher PIN:') || '').trim();
+      if (pin) { localStorage.setItem('td_pin', pin); return setClassBox(on); }
+      const cb = document.getElementById('class-box-cb');
+      if (cb) cb.checked = !on;
+      return;
+    }
+    const ac = document.getElementById('auto-approve-cb');
+    if (ac) ac.checked = !!on;
+    showToast(on ? '📦 Class-in-a-box ON: auto-approve + comeback nudges + daily snapshots. The class runs itself.' : '📦 Class-in-a-box off — manual control restored', 3500);
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
+async function _loadClassBox() {
+  try {
+    const res = await fetch(API_BASE + '/api/announce');
+    const d = await res.json();
+    const cb = document.getElementById('class-box-cb');
+    if (cb) cb.checked = d.classAuto === true;
+  } catch (e) {}
+}
+
 // Auto-approve checkpoints (2026-07-05): class-wide flag in KV. When on,
 // progress.js unlocks the next topic the moment a student's sync reports a
 // passed checkpoint — built for sharing the app without active supervision.
@@ -2577,6 +2701,8 @@ async function refreshStudentProgress() {
     nameEl.textContent = students.length + ' student' + (students.length > 1 ? 's' : '') + ' · remote sync';
     metaEl.textContent = 'Most recent activity: ' + _fmtAge(students[0].lastActive);
     empty.style.display = 'none';
+    const _fullRoster = students;         // intel/triage always see everyone
+    students = applyRosterView(students); // #16 search + sort for the cards
     // #26: remember which student cards were open so auto-refresh doesn't collapse them
     const openSids = new Set([...container.querySelectorAll('details[data-sid][open]')].map(d => d.dataset.sid));
     container.innerHTML = students.map((s, i) => {
@@ -2611,6 +2737,7 @@ async function refreshStudentProgress() {
               ? '<button class="queue-concept-btn" style="border-color:#4ade80;color:#4ade80" onclick="approvePathAdvance(\'' + s.studentId + '\',' + ((ps.unlocked || 0) + 1) + ')">✓ Unlock next topic</button>'
               : '') +
             '<button class="queue-concept-btn" style="opacity:.7" onclick="setStudentTopic(\'' + s.studentId + '\',' + (ps.unlocked || 0) + ')">set topic…</button>' +
+            '<button class="queue-concept-btn" style="opacity:.7" onclick="assignToStudent(\'' + s.studentId + '\')">📋 assign…</button>' +
           '</div>'
         : '';
       const isOpen = openSids.size ? openSids.has(s.studentId) : (i === 0);
@@ -2646,8 +2773,12 @@ async function refreshStudentProgress() {
         '<div id="ai-sum-' + s.studentId + '" style="font-size:11.5px;color:var(--text2);margin-top:5px;white-space:pre-wrap"></div>' +
       '</details>';
     }).join('');
-    try { renderClassIntel(students); } catch (e) {}
+    try { renderClassIntel(_fullRoster); } catch (e) {}
+    try { ensureRosterControls(); } catch (e) {}
+    try { aiTriage(); } catch (e) {}
     try { _loadAutoApprove(); } catch (e) {}
+    try { _loadClassBox(); } catch (e) {}
+    try { dailySnapshot(); } catch (e) {}
   } catch (e) {
     renderLocalStudentProgress();
     metaEl.textContent += ' · ⚠ offline — showing this device only';

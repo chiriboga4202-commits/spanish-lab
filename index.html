@@ -5216,6 +5216,7 @@ function switchMode(mode, el) {
 }
 
 function startExercise() {
+  try { ensureSkipBtn(); } catch (e) {} // #31 universal skip
   const noConceptModes = ['conjugate','vocab','spottherror','readcomp','review','sprint'];
   if (!currentConcept && !noConceptModes.includes(currentMode)) {
     // Defensive fallback: if this state is ever reached (should no longer happen
@@ -6168,6 +6169,9 @@ Mix "beg" and "int" levels. Make explanations insightful, not just "this uses se
     });
     list.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   } catch (err) {
+    // #32 (2026-07-05): Examples now has a real fallback derived from the
+    // static pairs bank — students never hit a dead end here again.
+    if (appendStaticExamples()) return;
     if (aiBackend === 'ollama') showToast('⚠️ Generation failed — check Ollama');
     else if (err.status === 429) showToast('⚠️ High demand right now — wait a few seconds and try again');
     else showToast('⚠️ Generation failed — try again in a moment');
@@ -6976,6 +6980,14 @@ Concept hint: use ${c.name} naturally in at least 3 of the 4 sentences.`;
     trackRecent(trackKey, data?.title);
     renderStory(data);
   } catch (err) {
+    // #32 (2026-07-05): hand-written fallback story per topic — Story no
+    // longer dead-ends when the AI is down or rate-limited.
+    const fb = STORY_FALLBACK[currentConcept && currentConcept.key];
+    if (fb) {
+      showToast('⚡ AI is busy — here is a classic story instead', 2600);
+      renderStory(fb);
+      return;
+    }
     showError(err.message, loadStory);
   }
 }
@@ -7548,6 +7560,7 @@ function updateStreak(correct, wrongData) {
     if (wrongData) {
       if (wrongData && !wrongData.ts) wrongData.ts = Date.now(); // for weekly windows (2026-07-05)
       wrongAnswers.push(wrongData);
+      try { offerExplainMore(wrongData); } catch (e) {} // #33 explain-more on any miss
       if (wrongAnswers.length > 60) wrongAnswers.shift();
       saveMistakes();
       updateReviewBtn();
@@ -8792,7 +8805,7 @@ Respond only with the Spanish dialogue — no labels, no English, no extra comme
       appendDialogueMsg(text.trim() || '...', 'ai');
     }
   } catch(e) {
-    appendDialogueMsg('[Offline — keep writing! Practice is still valuable.]', 'ai');
+    appendDialogueMsg('[Mi conexión falló 😅 — the conversation partner needs internet. Try 📖 Story or ⚡ Pairs, they work offline!]', 'ai');
   }
 }
 
@@ -9180,6 +9193,16 @@ setInterval(refreshPathUnlock, 120000);
 function checkAnnouncement() {
   fetch('/api/announce', { signal: AbortSignal.timeout(8000) })
     .then(r => r.json()).then(d => {
+      // #100-lite comeback nudge: when class-in-a-box is on and the student
+      // was away 3+ days, the app itself welcomes them back — no teacher tap.
+      try {
+        const lastVisit = parseInt(localStorage.getItem('sl_last_visit') || '0');
+        localStorage.setItem('sl_last_visit', String(Date.now()));
+        if (d.classAuto && lastVisit && Date.now() - lastVisit >= 3 * 86400000) {
+          const days = Math.floor((Date.now() - lastVisit) / 86400000);
+          setTimeout(() => showToast('👋 ¡Bienvenido de vuelta! ' + days + ' days away — a 5-minute session today restarts your momentum. Try 🎯 What now?', 6000), 2500);
+        }
+      } catch (e) {}
       const a = d.announcement;
       if (!a || !a.text) return;
       const seen = parseInt(localStorage.getItem('sl_announce_seen') || '0');
@@ -9459,7 +9482,9 @@ function renderPathBar() {
   bar.innerHTML =
     '<span style="font-weight:700;color:var(--text2);white-space:nowrap;">📍 Topic ' + (eff + 1) + '/' + LEARNING_PATH.length + ': ' + (fc ? fc.name : fk) + '</span>' +
     '<span style="display:inline-flex;align-items:center;gap:0;flex-shrink:0;">' + dots + '</span>' +
-    '<span style="margin-left:auto;">' + cta + '</span>';
+    '<span style="margin-left:auto;display:inline-flex;gap:6px;align-items:center;">' +
+      '<button class="cfg-btn" style="font-size:11.5px;" onclick="whatNow()" title="Let the app pick your weakest topic and best mode">🎯 What now?</button>' +
+      cta + '</span>';
 }
 // pulse keyframes injected once
 (function () {
@@ -9468,6 +9493,227 @@ function renderPathBar() {
   document.head.appendChild(st);
 })();
 setTimeout(() => { try { renderPathBar(); } catch (e) {} }, 800);
+
+// ── STUDENT FIVE-PACK (2026-07-05: ideas #31 #33 #54 #67 + #32 helpers) ──────
+
+// #31 UNIVERSAL SKIP — every generative mode gets an escape hatch.
+function ensureSkipBtn() {
+  let b = document.getElementById('skip-btn');
+  if (!b) {
+    b = document.createElement('button');
+    b.id = 'skip-btn';
+    b.className = 'cfg-btn';
+    b.style.cssText = 'position:fixed;bottom:70px;right:14px;z-index:200;opacity:.85;font-size:12px;box-shadow:0 2px 10px rgba(0,0,0,.4);';
+    b.textContent = '⏭ Skip';
+    b.title = 'Not feeling this one? Get a different exercise';
+    b.onclick = () => { showToast('Skipped — new exercise coming up', 1400); try { nextExercise = null; startExercise(); } catch (e) {} };
+    document.body.appendChild(b);
+  }
+  b.style.display = ['review', 'sprint'].includes(currentMode) ? 'none' : 'block';
+}
+
+// #33 EXPLAIN MORE — any miss can expand into a mini EXPLAIN_STYLE lesson.
+function offerExplainMore(w) {
+  try {
+    if (!w) return;
+    const bar = document.getElementById('result-bar') || document.getElementById('conj-result-bar');
+    if (!bar || bar.querySelector('.explain-more-btn')) return;
+    const b = document.createElement('button');
+    b.className = 'cfg-btn explain-more-btn';
+    b.style.cssText = 'margin-left:8px;font-size:12px;';
+    b.textContent = '🎓 Explain more';
+    b.onclick = () => showExplainMore(w);
+    bar.appendChild(b);
+  } catch (e) {}
+}
+async function showExplainMore(w) {
+  let ov = document.getElementById('explain-more-overlay');
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.id = 'explain-more-overlay';
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:550;display:flex;align-items:center;justify-content:center;padding:16px;';
+    ov.onclick = (e) => { if (e.target === ov) ov.remove(); };
+    document.body.appendChild(ov);
+  }
+  ov.innerHTML = '<div style="background:var(--surface,#1c1c22);border:1px solid var(--border,#333);border-radius:14px;padding:18px;max-width:460px;width:100%;max-height:85dvh;overflow-y:auto;">' +
+    '<div id="em-body" style="font-size:13.5px;line-height:1.55;">🎓 Building your mini-lesson…</div>' +
+    '<div style="text-align:right;margin-top:10px;"><button class="cfg-btn" onclick="document.getElementById(\'explain-more-overlay\').remove()">Close</button></div></div>';
+  try {
+    const md = await callAIForResource(`${EXPLAIN_STYLE}
+
+A Spanish student just got this wrong and tapped "Explain more" — they want to actually UNDERSTAND, not just see the correction.
+Question: ${w.question || '?'}
+Their answer: "${w.wrong || '?'}"  Correct answer: "${w.correct || '?'}"  Concept: ${w.conceptName || '?'}
+
+Write a mini-lesson in CLEAN MARKDOWN, max 150 words: why the language works this way (the JOB of this grammar), the decision-question, one flip-pair, and one similar sentence for them to try mentally.`);
+    const body = document.getElementById('em-body');
+    if (body) body.innerHTML = renderMarkdownLite(md);
+  } catch (e) {
+    const body = document.getElementById('em-body');
+    if (body) body.textContent = '⚠ Could not build the lesson (' + e.message + ') — try again in a moment.';
+  }
+}
+
+// #54 WHAT NOW — one tap, the app decides: weakest unlocked concept, best mode.
+function whatNow() {
+  let target = null, worst = 101;
+  CONCEPTS.forEach(c => {
+    if (!isConceptUnlocked(c.key)) return;
+    const m = conceptMastery[c.key];
+    const acc = m && m.total >= 3 ? m.correct / m.total * 100 : null;
+    if (acc !== null && acc < worst) { worst = acc; target = c.key; }
+  });
+  if (!target) target = pathFrontierKey();
+  const chip = document.querySelector('.concept-chip[data-key="' + target + '"]');
+  if (chip) selectConcept(target, chip);
+  try {
+    const rec = recommendedModeFor(target);
+    const tab = document.querySelector('.mode-tab[data-mode="' + rec + '"]');
+    if (tab && currentMode !== rec) switchMode(rec, tab);
+  } catch (e) {}
+  const c = CONCEPTS.find(x => x.key === target);
+  showToast('🎯 ' + (c ? c.name : target) + (worst < 101 ? ' — your weakest right now (' + Math.round(worst) + '%)' : ' — your current topic'), 3000);
+}
+
+// #67 DAILY MICRO-LESSON — one AI call per day, built from your recent misses.
+function checkMicroLesson() {
+  try {
+    const today = new Date().toISOString().slice(0, 10);
+    if (localStorage.getItem('sl_micro_last') === today) return;
+    const misses = (wrongAnswers || []).slice(-8);
+    if (misses.length < 3) return;
+    localStorage.setItem('sl_micro_last', today);
+    const list = misses.map(w => `"${w.wrong}" should be "${w.correct}" (${w.conceptName})`).join('; ');
+    callAIForResource(`${EXPLAIN_STYLE}
+
+Write a tiny daily warm-up note (max 70 words, CLEAN MARKDOWN, friendly) for a Spanish student, based on their recent misses: ${list}
+Structure: one-line pattern observation, the decision-question that fixes it, one example sentence. End with an encouraging half-line.`).then(md => {
+      if (!md) return;
+      const card = document.createElement('div');
+      card.id = 'micro-lesson-card';
+      card.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;max-width:440px;margin:0 auto;z-index:460;background:var(--surface,#1c1c22);border:1px solid var(--accent,#5b8dee);border-radius:12px;padding:14px;box-shadow:0 6px 24px rgba(0,0,0,.5);font-size:13px;line-height:1.5;';
+      card.innerHTML = '<div style="font-size:11px;font-weight:700;opacity:.7;margin-bottom:6px;">☀️ TODAY\'S 30-SECOND WARM-UP</div>' +
+        renderMarkdownLite(md) +
+        '<div style="text-align:right;margin-top:8px;"><button class="cfg-btn" style="font-size:12px;" onclick="document.getElementById(\'micro-lesson-card\').remove()">Got it</button></div>';
+      document.body.appendChild(card);
+    }).catch(() => {});
+  } catch (e) {}
+}
+setTimeout(checkMicroLesson, 6000);
+
+// #32 STATIC FALLBACKS ────────────────────────────────────────────────────────
+// Examples: derived free from the static pairs bank — zero authoring, always available.
+function appendStaticExamples() {
+  const list = document.getElementById('examples-list');
+  const bank = STATIC_EXERCISES[currentConcept && currentConcept.key];
+  if (!list || !bank) return false;
+  const pool = shuffle([...(bank.pairs || [])]).slice(0, 5);
+  if (!pool.length) return false;
+  pool.forEach((p, i) => {
+    const card = p.cards[p.correct];
+    if (!card || !card.es) return;
+    examplesSeen.push(card.es);
+    const el = document.createElement('div');
+    el.className = 'example-card';
+    el.style.animationDelay = (i * 0.06) + 's';
+    el.innerHTML = '<div class="ex-hd"><div class="ex-num">Example #' + examplesSeen.length + '</div><div class="ex-lvl ' + (p.difficulty || 'beg') + '">' + (p.difficulty === 'int' ? 'Intermediate' : p.difficulty === 'adv' ? 'Advanced' : 'Beginner') + '</div></div>' +
+      '<div class="ex-body"><div class="ex-sentence">' + card.es + '</div><div class="ex-translation">' + (card.en || '') + '</div><div class="ex-hr"></div><div class="ex-explain">' + formatExplanation(p.explanation || card.reason || '') + '</div></div>';
+    list.appendChild(el);
+  });
+  showToast('⚡ AI is busy — showing examples from the classic bank', 2600);
+  return true;
+}
+// Story: one hand-written fallback per topic. Same shape renderStory expects.
+const STORY_FALLBACK = {
+  'ser-estar': { title: 'La doctora cansada', sentences: [
+    { es: 'Marta es doctora en un hospital pequeño.', en: 'Marta is a doctor in a small hospital.' },
+    { es: 'Hoy está muy cansada porque trabajó toda la noche.', en: 'Today she is very tired because she worked all night.' },
+    { es: 'Su café está frío, pero ella es demasiado amable para quejarse.', en: 'Her coffee is cold, but she is too kind to complain.' },
+    { es: 'El hospital es viejo, y hoy está lleno de pacientes.', en: 'The hospital is old, and today it is full of patients.' }],
+    questions: [
+      { q: 'Why does the story use "es doctora" but "está cansada"?', opts: ['Both are permanent', 'Profession is identity (ser); tiredness is a state (estar)', 'Random choice', 'Because doctora is feminine'], correct: 1, why: 'Ser marks what she IS; estar marks how she is RIGHT NOW.' },
+      { q: '"El café está frío" uses estar because…', opts: ['Coffee is always cold', 'It is a temporary condition', 'Frío is an adjective', 'Café is masculine'], correct: 1, why: 'The coffee could be reheated — a changeable state takes estar.' }] },
+  'gender': { title: 'El problema del mapa', sentences: [
+    { es: 'El turista perdió el mapa de la ciudad.', en: 'The tourist lost the map of the city.' },
+    { es: 'Pidió ayuda con la mano levantada.', en: 'He asked for help with his hand raised.' },
+    { es: 'Una señora amable le dio un mapa nuevo.', en: 'A kind lady gave him a new map.' },
+    { es: 'El día terminó bien gracias a la gente buena.', en: 'The day ended well thanks to good people.' }],
+    questions: [
+      { q: 'Why is it "el mapa" even though it ends in -a?', opts: ['It is a mistake', 'Mapa is a Greek-origin exception — masculine', 'Maps are big', 'El sounds better'], correct: 1, why: 'A small family of -ma/-pa words (mapa, problema, día) are masculine exceptions.' },
+      { q: '"La mano levantada" shows that…', opts: ['Mano is feminine despite ending in -o', 'Levantada is wrong', 'Mano is masculine', 'Adjectives never agree'], correct: 0, why: 'Mano is a classic feminine exception, and levantada agrees with it.' }] },
+  'present': { title: 'El dragón madrugador', sentences: [
+    { es: 'Un dragón vive en la montaña y trabaja en una oficina.', en: 'A dragon lives in the mountain and works in an office.' },
+    { es: 'Cada mañana desayuna café con fuego.', en: 'Every morning he has coffee with fire for breakfast.' },
+    { es: 'Sus compañeros piensan que es un poco raro.', en: 'His coworkers think he is a bit strange.' },
+    { es: 'Pero él siempre llega a tiempo y nunca pierde un correo.', en: 'But he always arrives on time and never loses an email.' }],
+    questions: [
+      { q: 'Why is "piensan" spelled with -ie-?', opts: ['Typo', 'Pensar is an e→ie stem-changing verb', 'Plural verbs add i', 'It is subjunctive'], correct: 1, why: 'Pensar stem-changes: pienso, piensas, piensa… except nosotros/vosotros.' },
+      { q: 'The present tense here describes…', opts: ['Right now only', 'Habits and routines', 'The past', 'Wishes'], correct: 1, why: 'Simple present covers habits — what the dragon does every day.' }] },
+  'tu-usted': { title: 'Dos saludos', sentences: [
+    { es: 'Ana ve a su mejor amiga y grita: «¿Cómo estás?»', en: 'Ana sees her best friend and shouts: "How are you?"' },
+    { es: 'Después entra la directora de la escuela.', en: 'Then the school principal walks in.' },
+    { es: 'Ana cambia el tono: «Buenos días, ¿cómo está usted?»', en: 'Ana changes her tone: "Good morning, how are you?"' },
+    { es: 'La misma pregunta, dos mundos diferentes.', en: 'The same question, two different worlds.' }],
+    questions: [
+      { q: 'Why does Ana switch from "estás" to "está usted"?', opts: ['She forgot', 'Register: friend = tú, authority = usted', 'Está is plural', 'Both are wrong'], correct: 1, why: 'Tú signals closeness; usted signals respect and distance.' },
+      { q: 'Usted conjugates like…', opts: ['Yo', 'Tú', 'Él/ella', 'Nosotros'], correct: 2, why: 'Usted borrows third-person forms even though it means "you".' }] },
+  'gustar': { title: 'Al robot le gustan los tacos', sentences: [
+    { es: 'A mi robot le gustan los tacos con aceite.', en: 'My robot likes tacos with oil.' },
+    { es: 'No le gusta la lluvia porque se oxida.', en: 'It does not like rain because it rusts.' },
+    { es: 'A nosotros nos encanta verlo bailar.', en: 'We love watching it dance.' },
+    { es: 'A los vecinos les molesta el ruido de sus motores.', en: 'The noise of its motors bothers the neighbors.' }],
+    questions: [
+      { q: 'Why "le gustAN los tacos" but "le gustA la lluvia"?', opts: ['Random', 'The verb agrees with the thing liked, not the liker', 'Gustan is formal', 'Tacos is masculine'], correct: 1, why: 'In gustar sentences the SUBJECT is the thing liked — plural tacos → gustan.' },
+      { q: '"A los vecinos les molesta" follows the same pattern as…', opts: ['Comer', 'Gustar', 'Ser', 'Ir'], correct: 1, why: 'Molestar, encantar, importar all work like gustar: thing + indirect object.' }] },
+  'word-order': { title: 'La pregunta al revés', sentences: [
+    { es: '¿Viene mañana el profesor nuevo?', en: 'Is the new teacher coming tomorrow?' },
+    { es: 'Nadie lo sabe todavía.', en: 'Nobody knows yet.' },
+    { es: 'En español, el verbo puede saludar primero.', en: 'In Spanish, the verb can greet you first.' },
+    { es: 'Y el adjetivo casi siempre camina detrás del nombre.', en: 'And the adjective almost always walks behind the noun.' }],
+    questions: [
+      { q: '"El profesor nuevo" — why does nuevo come after?', opts: ['Mistake', 'Descriptive adjectives usually follow the noun', 'Nuevo is a verb', 'Only in questions'], correct: 1, why: 'Spanish default: noun first, describing adjective after.' },
+      { q: 'Starting a question with the verb ("¿Viene…?") is…', opts: ['Wrong', 'Normal Spanish question order', 'Only for tú', 'English word order'], correct: 1, why: 'Verb-first questions are standard — no helper word like "does" needed.' }] },
+  'reflexive': { title: 'La astronauta se prepara', sentences: [
+    { es: 'La astronauta se despierta a las cinco.', en: 'The astronaut wakes up at five.' },
+    { es: 'Se ducha flotando, lo cual es complicado.', en: 'She showers floating, which is complicated.' },
+    { es: 'Luego ducha a su planta favorita con una jeringa.', en: 'Then she showers her favorite plant with a syringe.' },
+    { es: 'Se pone el casco y empieza el día.', en: 'She puts on her helmet and starts the day.' }],
+    questions: [
+      { q: '"Se ducha" vs "ducha a su planta" — the difference is…', opts: ['No difference', 'Se = action on herself; without se = action on something else', 'Plants need se', 'Ducha is a noun'], correct: 1, why: 'The reflexive pronoun bounces the action back onto the doer.' },
+      { q: '"Se pone el casco" literally means…', opts: ['She puts the helmet on herself', 'The helmet wears her', 'She becomes a helmet', 'Someone gives her a helmet'], correct: 0, why: 'Ponerse = to put on (yourself) — clothing verbs are commonly reflexive.' }] },
+  'obj-pronouns': { title: 'El regalo misterioso', sentences: [
+    { es: 'Compré un regalo para mi hermana.', en: 'I bought a gift for my sister.' },
+    { es: 'Se lo di anoche en la cena.', en: 'I gave it to her last night at dinner.' },
+    { es: 'Ella lo abrió despacio y sonrió.', en: 'She opened it slowly and smiled.' },
+    { es: 'Ahora me lo agradece cada día.', en: 'Now she thanks me for it every day.' }],
+    questions: [
+      { q: 'In "se lo di", what does "se" replace?', opts: ['El regalo', 'Le (to her) — le+lo becomes se lo', 'Nothing', 'Mi hermana as subject'], correct: 1, why: 'Spanish refuses le lo — the indirect le turns into se before lo/la.' },
+      { q: '"Ella LO abrió" — lo refers to…', opts: ['The sister', 'The gift', 'The dinner', 'The night'], correct: 1, why: 'Lo is the direct-object pronoun standing in for el regalo.' }] },
+  'por-para': { title: 'El mensajero del parque', sentences: [
+    { es: 'Corrí por el parque para llegar a tiempo.', en: 'I ran through the park in order to arrive on time.' },
+    { es: 'El paquete era para la señora del tercer piso.', en: 'The package was for the lady on the third floor.' },
+    { es: 'Me dio las gracias por el esfuerzo.', en: 'She thanked me for the effort.' },
+    { es: 'Y me pagó veinte euros por la entrega.', en: 'And she paid me twenty euros for the delivery.' }],
+    questions: [
+      { q: '"Corrí POR el parque PARA llegar" — the pattern is…', opts: ['Both mean for', 'Por = path/through; para = goal/purpose', 'Para = through', 'Interchangeable'], correct: 1, why: 'Por traces the route; para points at the destination or purpose.' },
+      { q: '"Veinte euros POR la entrega" uses por because…', opts: ['It is an exchange', 'Entrega is feminine', 'Money is involved', 'Deadline'], correct: 0, why: 'Exchanges and trades take por — money FOR service.' }] },
+  'pret-imp': { title: 'La tormenta y el gato', sentences: [
+    { es: 'Llovía muchísimo y yo leía en el sofá.', en: 'It was raining hard and I was reading on the sofa.' },
+    { es: 'De repente, un gato entró por la ventana.', en: 'Suddenly, a cat came in through the window.' },
+    { es: 'Estaba empapado y temblaba de frío.', en: 'It was soaked and was shivering with cold.' },
+    { es: 'Le di una toalla y se quedó a vivir conmigo.', en: 'I gave it a towel and it stayed to live with me.' }],
+    questions: [
+      { q: '"Llovía… y leía" vs "entró" — why the switch?', opts: ['No reason', 'Background scene = imperfect; sudden event = preterite', 'Rain is always imperfect', 'Entró is reflexive'], correct: 1, why: 'Imperfect films the ongoing scene; preterite snaps the photo of the event.' },
+      { q: '"Le di una toalla" is preterite because…', opts: ['It happened repeatedly', 'It is one completed action', 'Toalla is feminine', 'Dar is irregular'], correct: 1, why: 'A single, finished action in the story line takes the preterite.' }] },
+  'subjunctive': { title: 'El deseo del chef', sentences: [
+    { es: 'El chef quiere que su sopa sea perfecta.', en: 'The chef wants his soup to be perfect.' },
+    { es: 'Duda que los críticos vengan hoy.', en: 'He doubts the critics will come today.' },
+    { es: 'Pero es posible que aparezcan sin avisar.', en: 'But it is possible they show up unannounced.' },
+    { es: 'Cuando lleguen, la sopa estará lista.', en: 'When they arrive, the soup will be ready.' }],
+    questions: [
+      { q: '"Quiere que su sopa SEA perfecta" — why sea, not es?', opts: ['Typo', 'Wanting something from someone/something else triggers subjunctive', 'Sea is future', 'Sopa is feminine'], correct: 1, why: 'Desire about another subject → que + subjunctive.' },
+      { q: '"Cuando LLEGUEN" is subjunctive because…', opts: ['Cuando always takes it', 'The arrival is a future, not-yet-real event', 'Llegar is irregular', 'It is a question'], correct: 1, why: 'Cuando + future event (hasn\'t happened) → subjunctive; habitual past/present would take indicative.' }] }
+};
 
 // Read teacher queue on load and show banner (#33)
 (function applyTeacherQueue() {
@@ -9490,13 +9736,21 @@ setTimeout(() => { try { renderPathBar(); } catch (e) {} }, 800);
   // /api/assignments endpoint and let it override the local copy if different;
   // the localStorage read above stays as an instant/offline fallback so there's
   // no regression if this fetch fails.
-  fetch('/api/assignments').then(r => r.json()).then(data => {
+  // 2026-07-05 (#32): ?studentId also brings this student's PERSONAL queue —
+  // class-wide and personal assignments merge (personal first, deduped).
+  fetch('/api/assignments?studentId=' + encodeURIComponent(getStudentId())).then(r => r.json()).then(data => {
     const remoteQ = Array.isArray(data?.queue) ? data.queue : null;
     if (!remoteQ) return;
-    if (JSON.stringify(remoteQ) === JSON.stringify(q)) return; // already in sync
-    localStorage.setItem('sl_teacher_queue', JSON.stringify(remoteQ));
-    if (remoteQ.length && typeof showToast === 'function') {
-      showToast('📋 Teacher queued: ' + remoteQ.slice(0,3).map(c=>c.name).join(', '), 4000);
+    const personal = Array.isArray(data?.personal) ? data.personal : [];
+    const seen = new Set();
+    const merged = [...personal, ...remoteQ].filter(c => {
+      if (!c || !c.key || seen.has(c.key)) return false;
+      seen.add(c.key); return true;
+    });
+    if (JSON.stringify(merged) === JSON.stringify(q)) return; // already in sync
+    localStorage.setItem('sl_teacher_queue', JSON.stringify(merged));
+    if (merged.length && typeof showToast === 'function') {
+      showToast((personal.length ? '📋 Assigned to YOU: ' : '📋 Teacher queued: ') + merged.slice(0,3).map(c=>c.name).join(', '), 4000);
     }
     if (typeof renderAssignmentBanner === 'function') renderAssignmentBanner();
   }).catch(() => {}); // offline/misconfigured KV — silently keep the local copy
