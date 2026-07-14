@@ -1190,6 +1190,12 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
 <!-- CONCEPT BAR -->
 <div class="concept-bar" id="concept-bar"></div>
 
+<!-- LEARNING PATH BAR (2026-07-05 UX fix): the checkpoint used to hide inside
+     the 📚 Study menu — students didn't know advancing was possible. This
+     strip is always visible: where you are, dots for the whole path, and a
+     loud CTA when the checkpoint is worth taking. -->
+<div id="path-bar" style="display:flex;align-items:center;gap:10px;padding:6px 20px;background:var(--surface2);border-bottom:1px solid var(--border);font-size:12px;flex-wrap:wrap;"></div>
+
 <!-- MODE TABS -->
 <!-- Mode group chips — phones only (CSS hides on desktop). Filters the 16 tabs
      into 4 scannable categories; Gary flagged the flat 16-tab strip as overwhelming. -->
@@ -4590,6 +4596,7 @@ function renderConceptBar() {
   const masteredCount = CONCEPTS.filter(c => { try { return isMasteryThresholdMet(c.key); } catch { return false; } }).length;
   const masteryHeadline = `<div class="mastery-headline" title="Concepts where you've hit the mastery bar (80%+ with enough practice)" style="flex-basis:100%;font-size:11px;font-weight:600;opacity:.75;padding:0 2px 6px;">⭐ ${masteredCount} / ${CONCEPTS.length} concepts mastered</div>`;
   bar.innerHTML = masteryHeadline + mixedChip + conceptChips;
+  try { renderPathBar(); } catch (e) {} // path strip stays in sync with the chips
 }
 
 function selectConcept(key, el) {
@@ -5623,7 +5630,13 @@ const SYSTEM_EXERCISE = `You are a precise Spanish language teacher generating e
 1. Return ONLY valid JSON — no extra text, no markdown, no explanation outside the JSON.
 2. Every field in the schema is required. Never omit a field.
 3. Sentences must be natural everyday Spanish a real native speaker would say.
-4. Wrong answer options must be plausible mistakes, not obviously absurd.`;
+4. Wrong answer options must be plausible mistakes, not obviously absurd.
+5. LANGUAGE OF FEEDBACK (2026-07-05 UX fix): every explanation, reason, hint,
+   or feedback field in the JSON MUST be written in ENGLISH. The exercise
+   sentences and answer options stay in Spanish, but the student is an
+   American English learner — an explanation they can't read teaches nothing.
+   Spanish words INSIDE an English explanation are fine (e.g. "use cierre
+   because usted commands flip the vowel").`;
 
 const SYSTEM_CREATIVE = `You are a warm, creative Spanish teacher. Write naturally and engagingly.
 When returning JSON, return ONLY valid JSON — no markdown fences, no extra text.`;
@@ -9409,7 +9422,52 @@ function quitCheckpoint() {
   const ov = document.getElementById('checkpoint-overlay');
   if (ov) ov.remove();
   _cp = null;
+  try { renderPathBar(); } catch (e) {}
 }
+
+// ── PATH BAR (2026-07-05 UX fix) ─────────────────────────────────────────────
+// Always-visible strip: current topic, progress dots, and the checkpoint CTA.
+// The CTA pulses green once the student's mastery suggests they'd pass.
+// The checkpoint used to hide inside the 📚 Study menu — invisible.
+function renderPathBar() {
+  const bar = document.getElementById('path-bar');
+  if (!bar || typeof LEARNING_PATH === 'undefined') return;
+  const eff = effectiveUnlocked();
+  const fk = pathFrontierKey();
+  const fc = CONCEPTS.find(c => c.key === fk);
+  const dots = LEARNING_PATH.map((k, i) => {
+    const passed = _pathState.passed[k];
+    const cur = i === eff;
+    const color = passed ? 'var(--green,#3ecf8e)' : cur ? 'var(--accent,#5b8dee)' : 'var(--border2,#444)';
+    const size = cur ? 10 : 7;
+    const name = (CONCEPTS.find(c => c.key === k) || {}).name || k;
+    return '<span title="' + (i + 1) + '. ' + name + (passed ? ' ✓' : cur ? ' (you are here)' : ' 🔒') + '" style="display:inline-block;width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:' + color + ';"></span>';
+  }).join('<span style="width:6px;height:1px;background:var(--border2);display:inline-block;"></span>');
+  const ready = pathReadyInfo();
+  const m = conceptMastery[fk];
+  const likelyReady = m && m.total >= 8 && m.correct / m.total >= 0.75;
+  let cta;
+  if (ready) {
+    cta = '<span style="color:var(--green,#3ecf8e);font-weight:700;">✅ Passed — waiting for your teacher to unlock the next topic</span>';
+  } else if (eff >= LEARNING_PATH.length - 1 && _pathState.passed[fk]) {
+    cta = '<span style="color:var(--green,#3ecf8e);font-weight:700;">🏆 Path complete!</span>';
+  } else {
+    cta = '<button class="cfg-btn" onclick="startCheckpoint()" style="font-weight:700;' +
+      (likelyReady ? 'border-color:var(--green,#3ecf8e);color:var(--green,#3ecf8e);animation:pathPulse 1.6s infinite;' : '') + '">' +
+      '🏁 ' + (likelyReady ? 'You look ready — take the checkpoint!' : 'Take the ' + (fc ? fc.name : fk) + ' checkpoint') + '</button>';
+  }
+  bar.innerHTML =
+    '<span style="font-weight:700;color:var(--text2);white-space:nowrap;">📍 Topic ' + (eff + 1) + '/' + LEARNING_PATH.length + ': ' + (fc ? fc.name : fk) + '</span>' +
+    '<span style="display:inline-flex;align-items:center;gap:0;flex-shrink:0;">' + dots + '</span>' +
+    '<span style="margin-left:auto;">' + cta + '</span>';
+}
+// pulse keyframes injected once
+(function () {
+  const st = document.createElement('style');
+  st.textContent = '@keyframes pathPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(62,207,142,.5); } 50% { box-shadow: 0 0 0 6px rgba(62,207,142,0); } }';
+  document.head.appendChild(st);
+})();
+setTimeout(() => { try { renderPathBar(); } catch (e) {} }, 800);
 
 // Read teacher queue on load and show banner (#33)
 (function applyTeacherQueue() {

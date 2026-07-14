@@ -2430,6 +2430,7 @@ function renderClassIntel(students) {
           '<button class="queue-concept-btn" onclick="aiLessonPlan()">🤖 Lesson plan</button>' +
           '<button class="queue-concept-btn" onclick="composeAnnouncement()">📣 Announce</button>' +
           '<button class="queue-concept-btn" onclick="downloadBackup()">⬇ Backup</button>' +
+          '<label style="font-size:10.5px;color:var(--text3);display:flex;align-items:center;gap:3px" title="When on, checkpoint passes unlock the next topic instantly — no approval tap needed. For classes you don\'t actively supervise."><input type="checkbox" id="auto-approve-cb" onchange="setAutoApprove(this.checked)"> 🤖 auto-approve</label>' +
           '<label style="font-size:10.5px;color:var(--text3);display:flex;align-items:center;gap:3px"><input type="checkbox" id="auto-refresh-cb" checked> auto</label>' +
         '</span>' +
       '</div>' +
@@ -2513,6 +2514,35 @@ async function downloadBackup() {
     showToast('⬇ Backup downloaded', 2000);
   } catch (e) { showToast('Backup failed: ' + e.message, 2500); }
 }
+// Auto-approve checkpoints (2026-07-05): class-wide flag in KV. When on,
+// progress.js unlocks the next topic the moment a student's sync reports a
+// passed checkpoint — built for sharing the app without active supervision.
+async function setAutoApprove(on) {
+  try {
+    const res = await fetch(API_BASE + '/api/path', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ auto: !!on })
+    });
+    if (res.status === 401) {
+      const pin = (prompt('Teacher PIN:') || '').trim();
+      if (pin) { localStorage.setItem('td_pin', pin); return setAutoApprove(on); }
+      const cb = document.getElementById('auto-approve-cb');
+      if (cb) cb.checked = !on;
+      return;
+    }
+    showToast(on ? '🤖 Auto-approve ON — passed checkpoints unlock instantly' : 'Auto-approve off — you approve each advance', 3000);
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
+async function _loadAutoApprove() {
+  try {
+    const res = await fetch(API_BASE + '/api/path', { headers: teacherPinHeaders() });
+    if (!res.ok) return;
+    const d = await res.json();
+    const cb = document.getElementById('auto-approve-cb');
+    if (cb) cb.checked = d.auto === true;
+  } catch (e) {}
+}
+
 // #26 auto-refresh (90s, only when the checkbox is on and the tab is visible)
 setInterval(() => {
   const cb = document.getElementById('auto-refresh-cb');
@@ -2617,6 +2647,7 @@ async function refreshStudentProgress() {
       '</details>';
     }).join('');
     try { renderClassIntel(students); } catch (e) {}
+    try { _loadAutoApprove(); } catch (e) {}
   } catch (e) {
     renderLocalStudentProgress();
     metaEl.textContent += ' · ⚠ offline — showing this device only';
@@ -3523,7 +3554,9 @@ const M_SECTIONS = [
   { sel: 'main',   name: '📖 Lesson' },
   { sel: '.panel', name: '🛠 Tools & Students' }
 ];
-function _mOrder() { try { return JSON.parse(localStorage.getItem('td_sec_order') || '[0,1,2]'); } catch { return [0, 1, 2]; } }
+// Default order puts 🛠 Tools & Students FIRST on phones (2026-07-05: Felipe
+// runs the class from the roster, not the lesson content).
+function _mOrder() { try { return JSON.parse(localStorage.getItem('td_sec_order') || '[2,1,0]'); } catch { return [2, 1, 0]; } }
 function _mCollapsed() { try { return JSON.parse(localStorage.getItem('td_sec_collapsed') || '{}'); } catch { return {}; } }
 function _mApplyOrder() {
   const order = _mOrder();
@@ -3604,6 +3637,12 @@ function initMobileSections() {
 }
 window.addEventListener('DOMContentLoaded', initMobileSections);
 window.addEventListener('resize', () => { if (window.innerWidth <= 1023) initMobileSections(); });
+// 2026-07-05 UX: the dashboard now OPENS on 👤 Student (the roster + class
+// intelligence) instead of the AI generator — teaching control first,
+// content tools second.
+window.addEventListener('DOMContentLoaded', () => {
+  try { const t = document.querySelectorAll('.ptab')[2]; if (t) t.click(); } catch (e) {}
+});
 
 // ─── TOAST ─────────────────────────────────────────────────────────────────────────────
 

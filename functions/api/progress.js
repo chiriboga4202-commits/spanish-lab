@@ -39,6 +39,23 @@ export async function onRequestPost(context) {
   const record = { ...body, syncedAt: new Date().toISOString() };
   try {
     await env.PROGRESS_KV.put(body.studentId, JSON.stringify(record));
+    // Auto-approve (2026-07-05): if the class-wide flag is on and this sync
+    // reports a passed-but-not-unlocked checkpoint, unlock the next topic
+    // immediately instead of waiting for a manual teacher tap.
+    try {
+      const ps = body.pathState;
+      if (ps && ps.ready && typeof ps.unlocked === 'number') {
+        const auto = (await env.PROGRESS_KV.get('path_auto', { type: 'json' })) === true;
+        if (auto) {
+          const map = (await env.PROGRESS_KV.get('path_unlocks', { type: 'json' })) || {};
+          const next = Math.min(ps.unlocked + 1, 20);
+          if ((map[body.studentId] ?? 0) < next) {
+            map[body.studentId] = next;
+            await env.PROGRESS_KV.put('path_unlocks', JSON.stringify(map));
+          }
+        }
+      }
+    } catch (e) { /* auto-approve must never break a progress write */ }
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
