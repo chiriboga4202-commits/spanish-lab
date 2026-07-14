@@ -43,9 +43,10 @@ export async function onRequestPost(context) {
   // 2026-07-05: writing the class queue requires the teacher PIN (same
   // TEACHER_PIN env var as progress.js reads). GET stays open — students
   // must be able to read their assignments. Open while TEACHER_PIN unset.
-  if (env.TEACHER_PIN) {
+  if (env.TEACHER_PIN || env.TEACHER_PIN2) {
     const pin = request.headers.get('x-teacher-pin') || new URL(request.url).searchParams.get('pin');
-    if (pin !== env.TEACHER_PIN) {
+    const ok = (env.TEACHER_PIN && pin === env.TEACHER_PIN) || (env.TEACHER_PIN2 && pin === env.TEACHER_PIN2);
+    if (!ok) {
       return new Response(JSON.stringify({ error: 'PIN required' }), { status: 401, headers: CORS_HEADERS });
     }
   }

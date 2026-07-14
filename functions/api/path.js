@@ -20,10 +20,11 @@ const CORS_HEADERS = {
 
 const KV_KEY = 'path_unlocks';
 
+// TEACHER_PIN2 = optional co-teacher PIN (backlog #30) — either works.
 function pinOk(request, env) {
-  if (!env.TEACHER_PIN) return true;
+  if (!env.TEACHER_PIN && !env.TEACHER_PIN2) return true;
   const pin = request.headers.get('x-teacher-pin') || new URL(request.url).searchParams.get('pin');
-  return pin === env.TEACHER_PIN;
+  return (env.TEACHER_PIN && pin === env.TEACHER_PIN) || (env.TEACHER_PIN2 && pin === env.TEACHER_PIN2);
 }
 
 export async function onRequestOptions() {

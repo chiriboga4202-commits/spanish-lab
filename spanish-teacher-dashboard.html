@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Spanish Concept Lab — Teacher Dashboard</title>
+<!-- PWA (2026-07-05, backlog #24): installable from the phone browser -->
+<link rel="manifest" href="/teacher-manifest.json">
+<meta name="theme-color" content="#0d0f14">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<script>
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15.4/dist/browser/index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.15.4/dist/browser/index.js"></script>
 <style>
@@ -39,6 +48,26 @@ body {
   grid-template-rows: 52px 1fr;
   grid-template-columns: 248px 1fr 310px;
   grid-template-areas: "hd hd hd" "sb mn pn";
+}
+/* ── PHONE LAYOUT (2026-07-05, backlog #24): single column, everything
+   stacks — header, then sidebar (collapses to a strip), main, right panel.
+   Height goes auto so the page scrolls naturally like an app feed. ── */
+@media (max-width: 700px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 52px auto auto auto;
+    grid-template-areas: "hd" "sb" "mn" "pn";
+    height: auto;
+    min-height: 100dvh;
+    overflow: auto;
+  }
+  .pane { max-width: 100vw; overflow-x: hidden; }
+  table { font-size: 9px !important; }
+  input, select, button { font-size: 13px; }
+  /* stacked: sidebar becomes a capped scrollable strip; panel grows naturally */
+  aside { max-height: 38dvh; overflow-y: auto; border-right: none; border-bottom: 1px solid var(--border); }
+  .panel { border-left: none; border-top: 1px solid var(--border); overflow: visible; }
+  header { padding: 0 10px; }
 }
 
 /* ── HEADER ── */
@@ -2309,6 +2338,145 @@ async function setStudentTopic(studentId, current) {
   } catch (e) { showToast('Failed: ' + e.message, 3000); }
 }
 
+// ── CLASS INTELLIGENCE (2026-07-05 — backlog #2 #3 #8 #13 #20 #21 #26 #29) ───
+let _lastRoster = [];
+function renderClassIntel(students) {
+  _lastRoster = students;
+  let el = document.getElementById('class-intel');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'class-intel';
+    const anchor = document.getElementById('sp-concepts');
+    if (anchor && anchor.parentElement) anchor.parentElement.insertBefore(el, anchor);
+    else return;
+  }
+  const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // #3 needs attention
+  const flags = [];
+  students.forEach(s => {
+    const days = (Date.now() - new Date(s.lastActive || 0).getTime()) / 86400000;
+    if (days > 3) flags.push('😴 ' + esc(s.name || s.studentId) + ' — inactive ' + Math.floor(days) + 'd');
+    if (s.pathState && s.pathState.ready) flags.push('🏁 ' + esc(s.name || s.studentId) + ' — waiting on your unlock approval');
+    const weak = Object.entries(s.mastery || {}).filter(([k, m]) => m.total >= 5 && m.correct / m.total < 0.6);
+    if (weak.length) flags.push('🔴 ' + esc(s.name || s.studentId) + ' — struggling: ' + weak.map(([k]) => k).join(', '));
+  });
+  // #2 heatmap
+  const cell = (m) => {
+    if (!m || !m.total) return '<td style="background:var(--surface2);opacity:.4">·</td>';
+    const acc = Math.round(m.correct / m.total * 100);
+    const bg = acc >= 80 ? 'rgba(62,207,142,.35)' : acc >= 60 ? 'rgba(246,166,35,.35)' : 'rgba(244,91,105,.4)';
+    return '<td style="background:' + bg + '" title="' + acc + '% (' + m.correct + '/' + m.total + ')">' + acc + '</td>';
+  };
+  const heat = students.length
+    ? '<div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:10px;width:100%">' +
+      '<tr><th style="text-align:left;padding:2px 4px"></th>' + TD_PATH.map(k => '<th style="padding:2px 3px;writing-mode:vertical-rl;transform:rotate(180deg);font-weight:500;color:var(--text3)">' + k + '</th>').join('') + '</tr>' +
+      students.map(s => '<tr><td style="padding:2px 4px;white-space:nowrap;color:var(--text2)">' + esc((s.name || s.studentId).slice(0, 14)) + '</td>' +
+        TD_PATH.map(k => cell((s.mastery || {})[k])).join('') + '</tr>').join('') +
+      '</table></div>'
+    : '';
+  // #8 most-missed questions across the class
+  const missCounts = {};
+  students.forEach(s => (s.recent || []).forEach(ev => {
+    if (ev.correct === false) { const q = String(ev.question || '').slice(0, 80); if (q) missCounts[q] = (missCounts[q] || 0) + 1; }
+  }));
+  const topMissed = Object.entries(missCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  el.innerHTML =
+    '<div style="border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:12px">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px">' +
+        '<span style="font-size:12px;font-weight:700">📊 Class intelligence</span>' +
+        '<span style="display:flex;gap:6px;flex-wrap:wrap">' +
+          '<button class="queue-concept-btn" onclick="aiLessonPlan()">🤖 Lesson plan</button>' +
+          '<button class="queue-concept-btn" onclick="composeAnnouncement()">📣 Announce</button>' +
+          '<button class="queue-concept-btn" onclick="downloadBackup()">⬇ Backup</button>' +
+          '<label style="font-size:10.5px;color:var(--text3);display:flex;align-items:center;gap:3px"><input type="checkbox" id="auto-refresh-cb" checked> auto</label>' +
+        '</span>' +
+      '</div>' +
+      (flags.length
+        ? '<div style="margin-bottom:8px">' + flags.map(f => '<div style="font-size:11.5px;color:var(--text2);margin-bottom:2px">' + f + '</div>').join('') + '</div>'
+        : '<div style="font-size:11px;color:var(--text3);margin-bottom:8px">✅ Nobody needs attention right now</div>') +
+      heat +
+      (topMissed.length
+        ? '<div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:3px">🎯 Most-missed lately</div>' +
+          topMissed.map(([q, n]) => '<div style="font-size:11px;color:var(--text3)">' + n + '× ' + esc(q) + '</div>').join('') + '</div>'
+        : '') +
+      '<div id="intel-ai-out" style="font-size:11.5px;color:var(--text2);margin-top:8px;white-space:pre-wrap"></div>' +
+    '</div>';
+}
+// #20 per-student AI summary
+async function aiStudentSummary(sid) {
+  const s = _lastRoster.find(x => x.studentId === sid);
+  const out = document.getElementById('ai-sum-' + sid);
+  if (!s || !out) return;
+  out.textContent = '🤖 Reading their data…';
+  const mast = Object.entries(s.mastery || {}).map(([k, m]) => k + ': ' + m.correct + '/' + m.total).join('; ');
+  const misses = (s.recent || []).filter(e => e.correct === false).map(e => e.question).slice(0, 10).join(' | ');
+  try {
+    out.textContent = await aiGenerate(
+      'You are briefing a Spanish teacher on one student, in ONE tight paragraph (max 90 words). Practical, no fluff: overall trajectory, strongest area, the one thing to work on next, and a suggested action.\n\n' +
+      'Student: ' + (s.name || 'unnamed') + ' | Level ' + (s.level || 1) + ', ' + (s.xp || 0) + ' XP | Topic: ' + ((s.pathState || {}).topic || '?') + '\n' +
+      'Mastery: ' + (mast || 'none') + '\nRecent misses: ' + (misses || 'none'), { max_tokens: 512 });
+  } catch (e) { out.textContent = '⚠ ' + e.message; }
+}
+// #21 lesson plan from class weak spots
+async function aiLessonPlan() {
+  const out = document.getElementById('intel-ai-out');
+  if (!out) return;
+  out.textContent = '🤖 Building a plan from the class heatmap…';
+  const agg = {};
+  _lastRoster.forEach(s => Object.entries(s.mastery || {}).forEach(([k, m]) => {
+    agg[k] = agg[k] || { c: 0, t: 0 };
+    agg[k].c += m.correct; agg[k].t += m.total;
+  }));
+  const weakest = Object.entries(agg).filter(([k, v]) => v.t >= 5)
+    .map(([k, v]) => ({ k, acc: Math.round(v.c / v.t * 100), t: v.t }))
+    .sort((a, b) => a.acc - b.acc).slice(0, 3);
+  try {
+    out.textContent = await aiGenerate(
+      'Write a compact 20-minute Spanish lesson plan for a small class. Their weakest areas (accuracy): ' +
+      (weakest.map(w => w.k + ' ' + w.acc + '%').join(', ') || 'no data — pick ser vs estar') +
+      '. Structure: 3-min warm-up, 10-min guided practice targeting the weakest concept (concrete activity, example sentences), 5-min pair activity, 2-min exit ticket (one question). Keep it directly usable, max 220 words.', { max_tokens: 1024 });
+  } catch (e) { out.textContent = '⚠ ' + e.message; }
+}
+// #13 announcement composer
+async function composeAnnouncement() {
+  const text = prompt('Announcement to every student (empty clears the banner):', '');
+  if (text === null) return;
+  try {
+    const res = await fetch(API_BASE + '/api/announce', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ text })
+    });
+    if (res.status === 401) {
+      const pin = (prompt('Teacher PIN:') || '').trim();
+      if (pin) { localStorage.setItem('td_pin', pin); return composeAnnouncement(); }
+      return;
+    }
+    showToast(text.trim() ? '📣 Announced — students see it on next load' : 'Banner cleared', 2500);
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
+// #29-lite one-tap JSON backup of everything in KV
+async function downloadBackup() {
+  try {
+    const h = { headers: teacherPinHeaders() };
+    const [prog, asg, path] = await Promise.all([
+      fetch(API_BASE + '/api/progress', h).then(r => r.json()),
+      fetch(API_BASE + '/api/assignments').then(r => r.json()),
+      fetch(API_BASE + '/api/path', h).then(r => r.json())
+    ]);
+    const blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), progress: prog, assignments: asg, path }, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'spanish-lab-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+    showToast('⬇ Backup downloaded', 2000);
+  } catch (e) { showToast('Backup failed: ' + e.message, 2500); }
+}
+// #26 auto-refresh (90s, only when the checkbox is on and the tab is visible)
+setInterval(() => {
+  const cb = document.getElementById('auto-refresh-cb');
+  if (cb && cb.checked && !document.hidden) refreshStudentProgress();
+}, 90000);
+
 function _fmtAge(iso) {
   const ms = Date.now() - new Date(iso).getTime();
   if (isNaN(ms)) return '?';
@@ -2337,6 +2505,8 @@ async function refreshStudentProgress() {
     nameEl.textContent = students.length + ' student' + (students.length > 1 ? 's' : '') + ' · remote sync';
     metaEl.textContent = 'Most recent activity: ' + _fmtAge(students[0].lastActive);
     empty.style.display = 'none';
+    // #26: remember which student cards were open so auto-refresh doesn't collapse them
+    const openSids = new Set([...container.querySelectorAll('details[data-sid][open]')].map(d => d.dataset.sid));
     container.innerHTML = students.map((s, i) => {
       const m = s.mastery || {};
       const bars = STUDENT_CONCEPTS.map(c => {
@@ -2371,7 +2541,8 @@ async function refreshStudentProgress() {
             '<button class="queue-concept-btn" style="opacity:.7" onclick="setStudentTopic(\'' + s.studentId + '\',' + (ps.unlocked || 0) + ')">set topic…</button>' +
           '</div>'
         : '';
-      return '<details ' + (i === 0 ? 'open' : '') + ' style="margin-bottom:10px;border:1px solid var(--border);border-radius:8px;padding:8px 10px">' +
+      const isOpen = openSids.size ? openSids.has(s.studentId) : (i === 0);
+      return '<details data-sid="' + s.studentId + '" ' + (isOpen ? 'open' : '') + ' style="margin-bottom:10px;border:1px solid var(--border);border-radius:8px;padding:8px 10px">' +
         '<summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--text1)">' +
           (s.name || s.studentId) + readyBadge +
           ' <span style="font-weight:400;color:var(--text3);font-size:11px">· Lv ' + (s.level || 1) + ' · ' + (s.xp || 0) + ' XP · ' + (s.dueCount || 0) + ' due · ' + _fmtAge(s.lastActive) + '</span>' +
@@ -2389,8 +2560,21 @@ async function refreshStudentProgress() {
             '<div style="white-space:pre-wrap;font-size:11.5px;color:var(--text2);margin-top:6px;max-height:220px;overflow-y:auto;border-left:2px solid var(--border2);padding-left:8px">' +
             String(s.lastRecap.md).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div></details>'
           : '') +
+        // #6 answer replay — their synced recent events, oldest→newest
+        (s.recent && s.recent.length
+          ? '<details style="margin-top:6px"><summary style="cursor:pointer;font-size:11.5px;color:var(--accent)">🎬 Recent answers (' + s.recent.length + ')</summary>' +
+            '<div style="margin-top:6px;display:flex;flex-direction:column;gap:3px;max-height:200px;overflow-y:auto">' +
+            s.recent.map(ev => '<div style="font-size:11px;color:var(--text2)">' + (ev.correct ? '✅' : '❌') + ' ' +
+              String(ev.question || '?').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+              ' <span style="color:var(--text3)">· ' + (ev.concept || '') + ' · ' + (ev.mode || '') + '</span></div>').join('') +
+            '</div></details>'
+          : '') +
+        // #20 AI weekly summary — one paragraph, on demand
+        '<div style="margin-top:7px"><button class="queue-concept-btn" onclick="aiStudentSummary(\'' + s.studentId + '\')">🤖 AI summary</button></div>' +
+        '<div id="ai-sum-' + s.studentId + '" style="font-size:11.5px;color:var(--text2);margin-top:5px;white-space:pre-wrap"></div>' +
       '</details>';
     }).join('');
+    try { renderClassIntel(students); } catch (e) {}
   } catch (e) {
     renderLocalStudentProgress();
     metaEl.textContent += ' · ⚠ offline — showing this device only';

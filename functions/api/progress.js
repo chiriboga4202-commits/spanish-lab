@@ -53,9 +53,10 @@ export async function onRequestPost(context) {
 // student record (test devices, students who left). Same PIN as GET.
 export async function onRequestDelete(context) {
   const { request, env } = context;
-  if (env.TEACHER_PIN) {
+  if (env.TEACHER_PIN || env.TEACHER_PIN2) {
     const pin = request.headers.get('x-teacher-pin') || new URL(request.url).searchParams.get('pin');
-    if (pin !== env.TEACHER_PIN) {
+    const ok = (env.TEACHER_PIN && pin === env.TEACHER_PIN) || (env.TEACHER_PIN2 && pin === env.TEACHER_PIN2);
+    if (!ok) {
       return new Response(JSON.stringify({ error: 'PIN required' }), { status: 401, headers: CORS_HEADERS });
     }
   }
@@ -73,9 +74,10 @@ export async function onRequestDelete(context) {
 
 export async function onRequestGet(context) {
   const { request, env } = context;
-  if (env.TEACHER_PIN) {
+  if (env.TEACHER_PIN || env.TEACHER_PIN2) {
     const pin = request.headers.get('x-teacher-pin') || new URL(request.url).searchParams.get('pin');
-    if (pin !== env.TEACHER_PIN) {
+    const ok = (env.TEACHER_PIN && pin === env.TEACHER_PIN) || (env.TEACHER_PIN2 && pin === env.TEACHER_PIN2);
+    if (!ok) {
       return new Response(JSON.stringify({ error: 'PIN required' }), { status: 401, headers: CORS_HEADERS });
     }
   }

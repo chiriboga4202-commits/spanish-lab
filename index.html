@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Spanish Lab — Student Practice</title>
+<!-- PWA (2026-07-05): manifest.json existed but was never linked — the app
+     was never actually installable. Now it is, sharing sw.js with the
+     teacher dashboard. -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1a1a2e">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<script>
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+}
+</script>
 <style>
 :root {
   --bg: #0d0f14;
@@ -9119,6 +9130,27 @@ function refreshPathUnlock() {
 }
 setTimeout(refreshPathUnlock, 2500);
 setInterval(refreshPathUnlock, 120000);
+
+// ── CLASS ANNOUNCEMENT BANNER (backlog #13, 2026-07-05) ──────────────────────
+// Teacher posts via the dashboard; students see it once per announcement.
+function checkAnnouncement() {
+  fetch('/api/announce', { signal: AbortSignal.timeout(8000) })
+    .then(r => r.json()).then(d => {
+      const a = d.announcement;
+      if (!a || !a.text) return;
+      const seen = parseInt(localStorage.getItem('sl_announce_seen') || '0');
+      if (a.ts <= seen) return;
+      if (document.getElementById('announce-banner')) return;
+      const b = document.createElement('div');
+      b.id = 'announce-banner';
+      b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:450;background:var(--accent,#5b8dee);color:#fff;padding:10px 14px;font-size:13.5px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 12px rgba(0,0,0,.35);';
+      const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      b.innerHTML = '<span style="flex:1;">📣 <strong>From your teacher:</strong> ' + esc(a.text) + '</span>' +
+        '<button class="cfg-btn" style="flex-shrink:0;background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.4);color:#fff;" onclick="localStorage.setItem(\'sl_announce_seen\',\'' + a.ts + '\');this.parentElement.remove()">Got it</button>';
+      document.body.appendChild(b);
+    }).catch(() => {});
+}
+setTimeout(checkAnnouncement, 4000);
 
 // ── CHECKPOINT QUIZ (sectioned, 2026-07-05) ──────────────────────────────────
 // 36 questions across 3 sections; EACH section has its own pass mark and a
