@@ -27,6 +27,11 @@ export async function onRequestGet(context) {
     return new Response(JSON.stringify({ error: 'PIN required' }), { status: 401, headers: CORS_HEADERS });
   }
   try {
+    // ?audit=1 returns the audit log (last 50 teacher-side actions)
+    if (new URL(request.url).searchParams.get('audit')) {
+      const log = (await env.PROGRESS_KV.get('audit', { type: 'json' })) || [];
+      return new Response(JSON.stringify({ audit: log }), { status: 200, headers: CORS_HEADERS });
+    }
     // ?date=YYYY-MM-DD fetches a stored snapshot (feeds the trend arrows)
     const want = new URL(request.url).searchParams.get('date');
     if (want) {

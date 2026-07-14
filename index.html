@@ -1134,6 +1134,7 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
         <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();generateSessionRecap()">📝 Session recap</button>
         <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();openMistakeConstellation()">🌌 My mistake patterns</button>
         <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();startCheckpoint()">🏁 Topic checkpoint</button>
+        <button class="cfg-btn" style="width:100%;text-align:left;margin:2px 0;" onclick="closeStudyMenu();openClassSheet()">📩 From your teacher</button>
       </div>
     </div>
     <button class="cfg-btn" onclick="openHelp()" title="How to use this dashboard">❓ Help</button>
@@ -5227,6 +5228,7 @@ function switchMode(mode, el) {
 function startExercise() {
   try { ensureSkipBtn(); } catch (e) {} // #31 universal skip
   try { ensureFlagBtn(); } catch (e) {} // #100 report bad exercise
+  try { ensureAskBtn(); } catch (e) {}  // #66 ask the tutor
   const noConceptModes = ['conjugate','vocab','spottherror','readcomp','review','sprint'];
   if (!currentConcept && !noConceptModes.includes(currentMode)) {
     // Defensive fallback: if this state is ever reached (should no longer happen
@@ -5498,6 +5500,7 @@ if (window.speechSynthesis) {
   document.addEventListener('pointerdown', _unlockTTS, { once: true });
   document.addEventListener('touchend', _unlockTTS, { once: true });
 }
+let _lastSpeak = { text: '', ts: 0 };
 function speakSpanish(text) {
   if (!window.speechSynthesis || !text) return;
   const synth = window.speechSynthesis;
@@ -5506,7 +5509,11 @@ function speakSpanish(text) {
     if (!_ttsVoices.length) _loadTTSVoices();
     const utter = new SpeechSynthesisUtterance(String(text).trim());
     utter.lang = 'es-ES';
-    utter.rate = 0.9;
+    // #34 slow replay (2026-07-05): tap 🔊 again within 4s → 🐢 slow motion.
+    const again = _lastSpeak.text === String(text).trim() && Date.now() - _lastSpeak.ts < 4000;
+    _lastSpeak = { text: String(text).trim(), ts: Date.now() };
+    utter.rate = again ? 0.55 : 0.9;
+    if (again) showToast('🐢 Slow replay', 900);
     utter.pitch = 1.0;
     const esVoice = _ttsVoices.find(v => (v.lang || '').toLowerCase().startsWith('es'));
     if (esVoice) {
@@ -8242,6 +8249,7 @@ function syncProgressToTeacher(force = false) {
     // mega-tranche (2026-07-05): flagged exercises + announcement receipt
     flags: (() => { try { return JSON.parse(localStorage.getItem('sl_flags') || '[]').slice(-10); } catch { return []; } })(),
     announceSeen: parseInt(localStorage.getItem('sl_announce_seen') || '0'),
+    lastError: (() => { try { const e = JSON.parse(localStorage.getItem('sl_last_error') || 'null'); return e && Date.now() - e.ts < 86400000 ? e : null; } catch { return null; } })(),
     lastActive: new Date().toISOString()
   };
   try {
@@ -8253,7 +8261,7 @@ function syncProgressToTeacher(force = false) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(() => {});
+      }).then(r => { try { markSynced(r.ok); } catch (e) {} }).catch(() => { try { markSynced(false); } catch (e) {} });
     }
   } catch (e) {}
 }
@@ -8640,14 +8648,18 @@ function checkMissing(answer) {
   const got = stripAccents(input.value.trim().toLowerCase());
   const exp = stripAccents(answer.toLowerCase());
   const correct = got === exp;
+  // #38 typo tolerance (2026-07-05): one letter off = "almost" — half XP and
+  // the correction, not a cold ❌. Typos aren't grammar failures.
+  const almost = !correct && _editDistance(got, exp) === 1 && exp.length > 2;
   const bar = document.getElementById('result-bar');
   const icon = document.getElementById('result-icon');
   const main = document.getElementById('result-main');
   if (bar) bar.style.display = '';
-  if (icon) icon.textContent = correct ? '✅' : '❌';
-  if (main) main.innerHTML = (correct ? 'Correct!' : 'Answer: "' + answer + '"') + accentTipHTML(answer) + (correct ? '' : conceptMistakeTipHTML());
-  if (bar) bar.classList.add('show', correct ? 'correct-bar' : 'wrong-bar');
+  if (icon) icon.textContent = correct ? '✅' : almost ? '🤏' : '❌';
+  if (main) main.innerHTML = (correct ? 'Correct!' : almost ? 'SO close — one letter off. It\'s "' + answer + '"' : 'Answer: "' + answer + '"') + accentTipHTML(answer) + (correct || almost ? '' : conceptMistakeTipHTML());
+  if (bar) bar.classList.add('show', (correct || almost) ? 'correct-bar' : 'wrong-bar');
   if (correct) { addXP(10); updateStreak(true); }
+  else if (almost) { addXP(5); updateStreak(true); }
   else { updateStreak(false, { conceptName: currentConcept?.name, question: 'Missing word: ' + answer, wrong: input.value, correct: answer }); }
   // 2026-07-03: Missing mode is concept-scoped (uses currentConcept) just like
   // Pairs/FillBlank/Builder, but never called recordMastery() — so practicing it
@@ -9773,6 +9785,99 @@ function flagCurrentExercise() {
     try { nextExercise = null; startExercise(); } catch (e) {}
     try { syncProgressToTeacher(true); } catch (e) {}
   } catch (e) {}
+}
+
+// #38 helper — Levenshtein distance, small-string optimized.
+function _editDistance(a, b) {
+  if (a === b) return 0;
+  if (Math.abs(a.length - b.length) > 1) return 2;
+  const m = a.length, n = b.length;
+  const dp = Array.from({ length: m + 1 }, (_, i) => [i, ...Array(n).fill(0)]);
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return dp[m][n];
+}
+
+// #59 continue-where-you-left-off awareness — a quiet one-time orientation.
+setTimeout(() => {
+  try {
+    const lc = localStorage.getItem('sl_last_concept');
+    const c = lc && CONCEPTS.find(x => x.key === lc);
+    if (c && currentConcept && currentConcept.key === lc) {
+      showToast('▶ Continuing ' + c.name + ' · ' + (currentMode || 'pairs') + ' — 🎯 What now? picks something fresh', 3500);
+    }
+  } catch (e) {}
+}, 3500);
+
+// #60 sync indicator — students (and you) can SEE that the teacher connection works.
+function markSynced(ok) {
+  try {
+    let d = document.getElementById('sync-dot');
+    if (!d) {
+      d = document.createElement('div');
+      d.id = 'sync-dot';
+      d.style.cssText = 'position:fixed;bottom:4px;left:8px;z-index:150;font-size:10px;opacity:.6;pointer-events:none;';
+      document.body.appendChild(d);
+    }
+    d.textContent = ok ? '☁️✓ synced' : '☁️… offline';
+    d.style.color = ok ? 'var(--green,#3ecf8e)' : 'var(--text3,#888)';
+  } catch (e) {}
+}
+
+// #95 PWA app-icon badge with due-review count.
+function updateAppBadge() {
+  try {
+    if (!('setAppBadge' in navigator)) return;
+    const due = (typeof getTotalDueCount === 'function') ? getTotalDueCount() : 0;
+    if (due > 0) navigator.setAppBadge(due); else navigator.clearAppBadge();
+  } catch (e) {}
+}
+setInterval(updateAppBadge, 120000);
+setTimeout(updateAppBadge, 5000);
+
+// #66 ask-about-this-exercise — the cheapest version of a tutor on demand.
+function askAboutExercise() {
+  const q = prompt('What do you want to ask about this exercise?');
+  if (!q || !q.trim()) return;
+  const ctx = (document.querySelector('.q-text, .story-q-text, .ex-sentence') || document.getElementById('exercise-area') || {}).textContent || '';
+  showExplainMore({ question: 'Student question about: ' + ctx.trim().slice(0, 120), wrong: '(no answer — they asked: "' + q.trim().slice(0, 160) + '")', correct: '(answer their question directly)', conceptName: currentConcept ? currentConcept.name : 'general Spanish' });
+}
+function ensureAskBtn() {
+  let b = document.getElementById('ask-btn');
+  if (!b) {
+    b = document.createElement('button');
+    b.id = 'ask-btn';
+    b.className = 'cfg-btn';
+    b.style.cssText = 'position:fixed;bottom:108px;right:14px;z-index:200;opacity:.7;font-size:12px;';
+    b.textContent = '❓';
+    b.title = 'Ask the AI tutor anything about this exercise';
+    b.onclick = askAboutExercise;
+    document.body.appendChild(b);
+  }
+  b.style.display = ['review', 'sprint'].includes(currentMode) ? 'none' : 'block';
+}
+
+// #98(teacher-list) error telemetry — last JS error rides the sync.
+window.addEventListener('error', (e) => {
+  try { localStorage.setItem('sl_last_error', JSON.stringify({ ts: Date.now(), msg: String(e.message || '').slice(0, 120) })); } catch (err) {}
+});
+
+// #12(teacher-list) class sheet — a study sheet your teacher pushed to everyone.
+async function openClassSheet() {
+  try {
+    const r = await fetch('/api/announce', { signal: AbortSignal.timeout(8000) });
+    const d = await r.json();
+    if (!d.sheet || !d.sheet.md) { showToast('📭 No sheet from your teacher yet', 2500); return; }
+    openResources();
+    const out = document.getElementById('res-output');
+    const actions = document.getElementById('res-actions');
+    _resourceMD = d.sheet.md;
+    _resourceTitle = d.sheet.title || 'From your teacher';
+    out.innerHTML = '<div style="font-size:11px;opacity:.7;margin-bottom:8px;">📩 ' + (d.sheet.title || 'From your teacher') + '</div>' + renderMarkdownLite(d.sheet.md);
+    if (actions) actions.style.display = 'flex';
+  } catch (e) { showToast('Could not load the sheet — try again', 2500); }
 }
 
 // #35 checkpoint hotkeys — desktop students answer with 1-9.

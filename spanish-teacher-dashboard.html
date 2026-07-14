@@ -2431,6 +2431,8 @@ function renderClassIntel(students) {
           '<button class="queue-concept-btn" onclick="composeAnnouncement()">📣 Announce</button>' +
           '<button class="queue-concept-btn" onclick="downloadBackup()">⬇ Backup</button>' +
           '<button class="queue-concept-btn" onclick="exportRosterCSV()">📊 CSV</button>' +
+          '<button class="queue-concept-btn" onclick="pushClassSheet()">📩 Push sheet</button>' +
+          '<button class="queue-concept-btn" onclick="viewAuditLog()">🧾 Log</button>' +
           '<label style="font-size:10.5px;color:var(--text3);display:flex;align-items:center;gap:3px" title="When on, checkpoint passes unlock the next topic instantly — no approval tap needed. For classes you don\'t actively supervise."><input type="checkbox" id="auto-approve-cb" onchange="setAutoApprove(this.checked)"> 🤖 auto-approve</label>' +
           '<label style="font-size:10.5px;color:var(--text3);display:flex;align-items:center;gap:3px" title="Master switch: auto-approve + comeback nudges for absent students + daily snapshots. Share the app and let it run."><input type="checkbox" id="class-box-cb" onchange="setClassBox(this.checked)"> 📦 class-in-a-box</label>' +
           '<label style="font-size:10.5px;color:var(--text3);display:flex;align-items:center;gap:3px"><input type="checkbox" id="auto-refresh-cb" checked> auto</label>' +
@@ -2700,6 +2702,35 @@ function exportRosterCSV() {
   showToast('⬇ CSV exported', 1800);
 }
 
+// #12 push the AI Generator's current output to every student's Study menu.
+async function pushClassSheet() {
+  const out = document.getElementById('ai-output');
+  const md = out ? out.textContent.trim() : '';
+  if (!md || md.length < 40) { showToast('Generate something in ⚡ AI Generator first, then push it', 3000); return; }
+  const title = prompt('Title students will see:', 'From your teacher') || 'From your teacher';
+  try {
+    const res = await fetch(API_BASE + '/api/announce', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ sheet: { title, md } })
+    });
+    if (res.status === 401) { const p = (prompt('Teacher PIN:') || '').trim(); if (p) { localStorage.setItem('td_pin', p); return pushClassSheet(); } return; }
+    showToast('📩 Pushed — students find it under 📚 Study → From your teacher', 3500);
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
+
+// #82-lite audit log viewer — every teacher-side action, newest first.
+async function viewAuditLog() {
+  try {
+    const res = await fetch(API_BASE + '/api/snapshot?audit=1', { headers: teacherPinHeaders() });
+    if (res.status === 401) { const p = (prompt('Teacher PIN:') || '').trim(); if (p) { localStorage.setItem('td_pin', p); return viewAuditLog(); } return; }
+    const d = await res.json();
+    const out = document.getElementById('intel-ai-out');
+    if (!out) return;
+    out.textContent = (d.audit || []).slice().reverse().map(a =>
+      new Date(a.ts).toLocaleString() + ' · ' + a.action + (a.detail ? ' — ' + a.detail : '')).join('\n') || 'No logged actions yet.';
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
+
 // #81-lite DAILY SNAPSHOT — opening the dashboard backs up the class.
 function dailySnapshot() {
   const today = new Date().toISOString().slice(0, 10);
@@ -2850,6 +2881,10 @@ async function refreshStudentProgress() {
         '<summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--text1)">' +
           ((Date.now() - new Date(s.lastActive || 0).getTime() < 180000) ? '🟢 ' : '') + // #28 live now
           displayName(s) + trendArrow(s) + readyBadge +
+          // #27 NEW since your last dashboard visit
+          ((window._tdPrevOpen && new Date(s.lastActive || 0).getTime() > window._tdPrevOpen) ? ' <span style="background:var(--accent);color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:1px 5px;">NEW</span>' : '') +
+          // error telemetry: this student's app threw a JS error in the last 24h
+          (s.lastError ? ' <span title="' + String(s.lastError.msg || '').replace(/"/g, '&quot;') + '" style="font-size:10px;">⚠️</span>' : '') +
           ' <span style="font-weight:400;color:var(--text3);font-size:11px">· Lv ' + (s.level || 1) + ' · ' + (s.xp || 0) + ' XP · ' + (s.dueCount || 0) + ' due · ' + _fmtAge(s.lastActive) + '</span>' +
         '</summary>' +
         pathLine +
@@ -3893,6 +3928,11 @@ window.addEventListener('resize', () => { if (window.innerWidth <= 1023) initMob
 // content tools second.
 window.addEventListener('DOMContentLoaded', () => {
   try { const t = document.querySelectorAll('.ptab')[2]; if (t) t.click(); } catch (e) {}
+  // #27: remember when you last looked, so fresh activity gets a NEW chip
+  try {
+    window._tdPrevOpen = parseInt(localStorage.getItem('td_last_open') || '0');
+    localStorage.setItem('td_last_open', String(Date.now()));
+  } catch (e) {}
 });
 
 // ─── TOAST ─────────────────────────────────────────────────────────────────────────────
