@@ -94,7 +94,9 @@ async function evaluateRules(env) {
   // series (per-student trend) from the snapshot backbone
   let series = {};
   try {
-    const snapKeys = keys.map(k => k.name).filter(n => n.startsWith('snap_')).sort();
+    // Only real snapshot keys (snap_YYYY-MM-DD) — never the leftover snap_last
+    // marker, whose value ("2026-07-15") is not JSON and would throw on parse.
+    const snapKeys = keys.map(k => k.name).filter(n => /^snap_\d{4}-\d{2}-\d{2}$/.test(n)).sort();
     for (const sk of snapKeys) {
       const snap = await env.PROGRESS_KV.get(sk, { type: 'json' });
       if (!snap || !Array.isArray(snap.students)) continue;

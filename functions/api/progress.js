@@ -33,8 +33,10 @@ export async function onRequestOptions() {
 async function maybeDailySnapshot(env) {
   try {
     const today = new Date().toISOString().slice(0, 10);
-    if ((await env.PROGRESS_KV.get('snap_last')) === today) return;
-    await env.PROGRESS_KV.put('snap_last', today); // optimistic once/day lock
+    // Marker key is 'last_snapshot' (NOT snap_-prefixed) so it never pollutes
+    // a list({prefix:'snap_'}) that JSON-parses snapshot values.
+    if ((await env.PROGRESS_KV.get('last_snapshot')) === today) return;
+    await env.PROGRESS_KV.put('last_snapshot', today); // optimistic once/day lock
     const key = 'snap_' + today;
     if (await env.PROGRESS_KV.get(key)) return;
     const { keys } = await env.PROGRESS_KV.list();
@@ -42,7 +44,7 @@ async function maybeDailySnapshot(env) {
     const students = await Promise.all(studentKeys.map(n => env.PROGRESS_KV.get(n, { type: 'json' }).catch(() => null)));
     await env.PROGRESS_KV.put(key, JSON.stringify({ date: today, students: students.filter(Boolean) }));
     const cutoff = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
-    const stale = keys.map(k => k.name).filter(n => n.startsWith('snap_') && n.slice(5) < cutoff);
+    const stale = keys.map(k => k.name).filter(n => /^snap_\d{4}-\d{2}-\d{2}$/.test(n) && n.slice(5) < cutoff);
     await Promise.all(stale.map(n => env.PROGRESS_KV.delete(n).catch(() => {})));
   } catch (e) { /* snapshot must never break a progress write */ }
 }

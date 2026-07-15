@@ -21,6 +21,10 @@ const CORS_HEADERS = {
 };
 
 const RETENTION_DAYS = 30;
+// Matches ONLY real daily snapshot keys (snap_YYYY-MM-DD). Critical: the
+// `last_snapshot` marker and any other key must never be JSON-parsed as a
+// snapshot — that caused the ?series=1 crash (parsing "2026-07-15" as JSON).
+const SNAP_RE = /^snap_\d{4}-\d{2}-\d{2}$/;
 
 function pinOk(request, env) {
   if (!env.TEACHER_PIN && !env.TEACHER_PIN2) return true;
@@ -57,7 +61,7 @@ export async function onRequestGet(context) {
     // Returns { dates:[...], series:{ studentId:[ {date,xp,level,acc,due} ] } }.
     if (url.searchParams.get('series')) {
       const { keys } = await env.PROGRESS_KV.list({ prefix: 'snap_' });
-      const dates = keys.map(k => k.name.slice(5)).sort();
+      const dates = keys.map(k => k.name).filter(n => SNAP_RE.test(n)).map(n => n.slice(5)).sort();
       const series = {};
       for (const date of dates) {
         const snap = await env.PROGRESS_KV.get('snap_' + date, { type: 'json' });
@@ -88,16 +92,16 @@ export async function onRequestGet(context) {
     const key = 'snap_' + today;
     const existing = await env.PROGRESS_KV.get(key);
     if (existing) {
-      await env.PROGRESS_KV.put('snap_last', today);
+      await env.PROGRESS_KV.put('last_snapshot', today);
       return new Response(JSON.stringify({ ok: true, key, already: true }), { status: 200, headers: CORS_HEADERS });
     }
     const { keys } = await env.PROGRESS_KV.list();
     const studentKeys = keys.map(k => k.name).filter(n => n.startsWith('stu_'));
     const students = await Promise.all(studentKeys.map(n => env.PROGRESS_KV.get(n, { type: 'json' }).catch(() => null)));
     await env.PROGRESS_KV.put(key, JSON.stringify({ date: today, students: students.filter(Boolean) }));
-    await env.PROGRESS_KV.put('snap_last', today);
+    await env.PROGRESS_KV.put('last_snapshot', today);
     const cutoff = new Date(Date.now() - RETENTION_DAYS * 86400000).toISOString().slice(0, 10);
-    const stale = keys.map(k => k.name).filter(n => n.startsWith('snap_') && n.slice(5) < cutoff);
+    const stale = keys.map(k => k.name).filter(n => SNAP_RE.test(n) && n.slice(5) < cutoff);
     await Promise.all(stale.map(n => env.PROGRESS_KV.delete(n).catch(() => {})));
     return new Response(JSON.stringify({ ok: true, key, students: students.filter(Boolean).length, pruned: stale.length }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {

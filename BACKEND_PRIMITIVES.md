@@ -119,6 +119,19 @@ The time-series foundation for DB #1/#4 and AUTO #8/#11/#20/#25/#29.
 Note: nightly OFF-SITE backup (#81) is a separate concern from trends and is
 still open — the ⬇ Backup JSON button remains the manual path.
 
+### Post-harness fixes (2026-07-15)
+- **Route:** `studentconfig.js` renamed to **`student-config.js`** — Pages routes
+  by filename, so the old name served `/api/studentconfig` while every caller
+  used `/api/student-config`. Keep it hyphenated.
+- **Snapshot marker:** the once/day lock key was `snap_last`, which shares the
+  `snap_` prefix — so `list({prefix:'snap_'})` picked it up and tried to
+  JSON-parse its value `"2026-07-15"`, crashing `?series=1`. Renamed to
+  **`last_snapshot`** (snapshot.js + progress.js) and added a `SNAP_RE`
+  (`/^snap_\d{4}-\d{2}-\d{2}$/`) guard to every place that lists+parses
+  snapshots (snapshot.js series & prune, rules.js series build). A leftover
+  `snap_last` key may linger in prod KV — harmless (ignored by the guard);
+  delete via `DELETE /api/progress?studentId=snap_last&pin=...` if desired.
+
 ## Rules engine — DONE 2026-07-15 (session 4)
 
 The generic "WHEN condition DO action" primitive behind the zero-touch cluster
