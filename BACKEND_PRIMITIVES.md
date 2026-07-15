@@ -100,6 +100,24 @@ Dashboard (`spanish-teacher-dashboard.html`):
   N assigned) + buttons `📌 assign+due`, `🎚️ goal`, `⚡ level`, `⏸️ freeze`,
   backed by `loadConfigs()` / `_patchStudentCfg()` / `assignWithDue()`.
 
+## Snapshot / trend backbone — DONE 2026-07-15 (session 3)
+
+The time-series foundation for DB #1/#4 and AUTO #8/#11/#20/#25/#29.
+
+- `snapshot.js`: retention 7 -> **30 days**; new **`?series=1`** (PIN) returns
+  `{ dates, series:{ studentId:[ {date,xp,level,acc,due} ] } }`; writes a
+  `snap_last` marker.
+- `progress.js`: **automatic daily snapshot** — the first student write each day
+  fires `maybeDailySnapshot(env)` via `context.waitUntil()` (off the response
+  path, guarded by `snap_last` as a once/day lock). This REPLACES a Cloudflare
+  cron trigger, which Pages Functions don't reliably support — no separate
+  scheduled worker to deploy or keep in sync. Dashboard-open still snapshots too.
+- Dashboard: `loadSeries()` + `_sparkline()` render a per-student **XP sparkline
+  + delta** on each roster card (first consumer, proves the backbone).
+
+Note: nightly OFF-SITE backup (#81) is a separate concern from trends and is
+still open — the ⬇ Backup JSON button remains the manual path.
+
 ## Not done yet (next sessions)
 - Apply difficulty / checkpointThreshold / dailyGoal in the student app
   (deferred pending live-test — they touch checkpoint + exercise mechanics).

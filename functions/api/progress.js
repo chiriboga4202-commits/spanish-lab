@@ -23,6 +23,30 @@ export async function onRequestOptions() {
   return new Response('', { status: 200, headers: CORS_HEADERS });
 }
 
+// Automatic daily snapshot (2026-07-15) — the trend backbone. Cloudflare Pages
+// Functions have no reliable cron trigger, so instead of standing up a separate
+// scheduled worker we piggyback on the student write path: the FIRST progress
+// write each day captures snap_<today>. Runs inside context.waitUntil() so it
+// never adds latency to the student's response. `snap_last` is set optimistically
+// up front as a cheap once-per-day lock (a rare double-run just overwrites, which
+// is harmless). Mirrors snapshot.js's snap_ record shape + 30-day retention.
+async function maybeDailySnapshot(env) {
+  try {
+    const today = new Date().toISOString().slice(0, 10);
+    if ((await env.PROGRESS_KV.get('snap_last')) === today) return;
+    await env.PROGRESS_KV.put('snap_last', today); // optimistic once/day lock
+    const key = 'snap_' + today;
+    if (await env.PROGRESS_KV.get(key)) return;
+    const { keys } = await env.PROGRESS_KV.list();
+    const studentKeys = keys.map(k => k.name).filter(n => n.startsWith('stu_'));
+    const students = await Promise.all(studentKeys.map(n => env.PROGRESS_KV.get(n, { type: 'json' }).catch(() => null)));
+    await env.PROGRESS_KV.put(key, JSON.stringify({ date: today, students: students.filter(Boolean) }));
+    const cutoff = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
+    const stale = keys.map(k => k.name).filter(n => n.startsWith('snap_') && n.slice(5) < cutoff);
+    await Promise.all(stale.map(n => env.PROGRESS_KV.delete(n).catch(() => {})));
+  } catch (e) { /* snapshot must never break a progress write */ }
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
 
@@ -56,6 +80,8 @@ export async function onRequestPost(context) {
         }
       }
     } catch (e) { /* auto-approve must never break a progress write */ }
+    // Trend backbone: capture today's snapshot once/day, off the response path.
+    try { context.waitUntil(maybeDailySnapshot(env)); } catch (e) {}
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });

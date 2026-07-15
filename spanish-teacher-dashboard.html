@@ -2617,6 +2617,24 @@ async function loadConfigs() {
     if (res.ok) _cfgCache = (await res.json()).configs || {};
   } catch (e) {}
 }
+
+// ── TREND BACKBONE CONSUMER (2026-07-15) — per-student sparklines ─────────────
+let _seriesCache = {};
+async function loadSeries() {
+  try {
+    const res = await fetch(API_BASE + '/api/snapshot?series=1', { headers: teacherPinHeaders() });
+    if (res.ok) _seriesCache = (await res.json()).series || {};
+  } catch (e) {}
+}
+// Tiny inline SVG sparkline from a numeric array.
+function _sparkline(vals, w, h) {
+  w = w || 96; h = h || 22;
+  if (!vals || vals.length < 2) return '';
+  const min = Math.min(...vals), max = Math.max(...vals), span = (max - min) || 1;
+  const pts = vals.map((v, i) => ((i / (vals.length - 1)) * w).toFixed(1) + ',' + (h - ((v - min) / span) * h).toFixed(1)).join(' ');
+  return '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" style="vertical-align:middle;overflow:visible">' +
+    '<polyline points="' + pts + '" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+}
 async function _patchStudentCfg(sid, patch) {
   try {
     const res = await fetch(API_BASE + '/api/student-config', {
@@ -2934,6 +2952,7 @@ async function refreshStudentProgress() {
     const students = await fetchRoster(true);
     await loadNotes();          // #39/#41 display overrides + notes
     await loadConfigs();        // 2026-07-15 per-student config (goal/freeze/assignments)
+    await loadSeries();         // 2026-07-15 trend backbone (sparklines)
     await loadYesterdaySnap();  // #26 trend arrows
     if (!students.length) {
       nameEl.textContent = 'No students yet';
@@ -2997,6 +3016,15 @@ async function refreshStudentProgress() {
           ' <span style="font-weight:400;color:var(--text3);font-size:11px">· Lv ' + (s.level || 1) + ' · ' + (s.xp || 0) + ' XP · ' + (s.dueCount || 0) + ' due · ' + _fmtAge(s.lastActive) + '</span>' +
         '</summary>' +
         pathLine +
+        // 2026-07-15 trend backbone: XP-over-time sparkline + delta (up to 30d)
+        (function () {
+          const ser = _seriesCache[s.studentId];
+          if (!ser || ser.length < 2) return '';
+          const xps = ser.map(p => p.xp || 0);
+          const delta = xps[xps.length - 1] - xps[0];
+          return '<div style="margin-top:6px;display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text3)">' +
+            _sparkline(xps) + '<span>' + (delta >= 0 ? '+' : '') + delta + ' XP · ' + ser.length + 'd</span></div>';
+        })() +
         '<div style="margin-top:8px">' + bars + '</div>' +
         // Teacher mirror (2026-07-05): the student's own AI session recap and
         // mistake clusters, exactly as the student saw them.
