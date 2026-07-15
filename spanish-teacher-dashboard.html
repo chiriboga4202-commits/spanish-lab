@@ -2525,19 +2525,22 @@ async function aiLessonPlan() {
 }
 // #13 announcement composer
 async function composeAnnouncement() {
-  const text = prompt('Announcement to every student (empty clears the banner):', '');
+  // Targets the class currently selected in the roster filter; 'All classes'
+  // (no filter) posts the global banner every student sees.
+  const target = _classFilter ? ('class "' + classNameOf(_classFilter) + '"') : 'EVERY student (all classes)';
+  const text = prompt('Announcement to ' + target + ' (empty clears that banner):', '');
   if (text === null) return;
   try {
     const res = await fetch(API_BASE + '/api/announce', {
       method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
-      body: JSON.stringify({ text })
+      body: JSON.stringify({ text, class: _classFilter || 'all' })
     });
     if (res.status === 401) {
       const pin = (prompt('Teacher PIN:') || '').trim();
       if (pin) { localStorage.setItem('td_pin', pin); return composeAnnouncement(); }
       return;
     }
-    showToast(text.trim() ? '📣 Announced — students see it on next load' : 'Banner cleared', 2500);
+    showToast(text.trim() ? '📣 Announced to ' + target + ' — students see it on next load' : 'Banner cleared', 2800);
   } catch (e) { showToast('Failed: ' + e.message, 2500); }
 }
 // #29-lite one-tap JSON backup of everything in KV
@@ -3046,6 +3049,7 @@ async function refreshStudentProgress() {
     // #26: remember which student cards were open so auto-refresh doesn't collapse them
     const openSids = new Set([...container.querySelectorAll('details[data-sid][open]')].map(d => d.dataset.sid));
     container.innerHTML = students.map((s, i) => {
+     try { // 2026-07-15 per-card guard: one bad record can't blank the roster
       const m = s.mastery || {};
       const cfg = _cfgCache[s.studentId] || {}; // 2026-07-15 per-student config
       const bars = STUDENT_CONCEPTS.map(c => {
@@ -3163,6 +3167,11 @@ async function refreshStudentProgress() {
         '</div>' +
         '<div id="ai-sum-' + s.studentId + '" style="font-size:11.5px;color:var(--text2);margin-top:5px;white-space:pre-wrap"></div>' +
       '</details>';
+     } catch (err) {
+      return '<details data-sid="' + (s.studentId || '') + '" style="margin-bottom:10px;border:1px solid #ff6b6b;border-radius:8px;padding:8px 10px">' +
+        '<summary style="cursor:pointer;font-size:12px;color:#ff6b6b">⚠ ' + (s.name || s.studentId || 'student') + ' — card render error (rest of roster unaffected)</summary>' +
+        '<div style="font-size:11px;color:var(--text3);margin-top:4px">' + String((err && err.message) || err).replace(/</g, '&lt;') + '</div></details>';
+     }
     }).join('');
     try { renderClassIntel(_fullRoster); } catch (e) {}
     try { ensureRosterControls(); } catch (e) {}

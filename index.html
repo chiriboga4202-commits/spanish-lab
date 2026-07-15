@@ -9348,7 +9348,9 @@ setInterval(refreshPathUnlock, 120000);
 // ── CLASS ANNOUNCEMENT BANNER (backlog #13, 2026-07-05) ──────────────────────
 // Teacher posts via the dashboard; students see it once per announcement.
 function checkAnnouncement() {
-  fetch('/api/announce', { signal: AbortSignal.timeout(8000) })
+  // 2026-07-15 per-class: pass our class so we get this class's banner (falls
+  // back to the global banner server-side when the class has none).
+  fetch('/api/announce?class=' + encodeURIComponent(localStorage.getItem('sl_class_id') || 'default'), { signal: AbortSignal.timeout(8000) })
     .then(r => r.json()).then(d => {
       // #100-lite comeback nudge: when class-in-a-box is on and the student
       // was away 3+ days, the app itself welcomes them back — no teacher tap.
@@ -9945,7 +9947,7 @@ window.addEventListener('error', (e) => {
 // #12(teacher-list) class sheet — a study sheet your teacher pushed to everyone.
 async function openClassSheet() {
   try {
-    const r = await fetch('/api/announce', { signal: AbortSignal.timeout(8000) });
+    const r = await fetch('/api/announce?class=' + encodeURIComponent(localStorage.getItem('sl_class_id') || 'default'), { signal: AbortSignal.timeout(8000) });
     const d = await r.json();
     if (!d.sheet || !d.sheet.md) { showToast('📭 No sheet from your teacher yet', 2500); return; }
     openResources();

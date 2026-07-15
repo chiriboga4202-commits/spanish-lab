@@ -166,9 +166,13 @@ red/amber `⚑ N` flag chips on roster cards from `loadRulesFlags()`.
 - Per-class scoping (Tier-0 completion). STARTED 2026-07-15: dashboard now has a
   **class filter** (`class-filter` select + `_classFilter` + `applyRosterView`
   filter by `s.classId||'default'`; `loadClasses`/`classNameOf`/
-  `refreshClassFilterOptions`; per-student 🏫 class chip). STILL OPEN: per-class
-  announcements (announce.js), per-class path unlocks (path.js), and scoping the
-  class-wide assignment queue — plus making the student app read class-scoped
-  announce/path.
+  `refreshClassFilterOptions`; per-student 🏫 class chip).
+  - Per-class ANNOUNCEMENTS DONE 2026-07-15: `announce.js` GET ?class= + POST
+    {text,class} use key `announcement_<classId>` (class overrides, else global
+    fallback; default/all = global). Dashboard `composeAnnouncement()` targets
+    the currently-filtered class (`_classFilter`); student app passes
+    `?class=sl_class_id` in checkAnnouncement + openClassSheet.
+  - STILL OPEN: per-class path unlocks (path.js), per-class assignment queue,
+    per-class class_auto / class_sheet.
 - Remaining primitives: snapshots-as-backbone, cron, rules engine, realtime,
   web push, parent read-view.

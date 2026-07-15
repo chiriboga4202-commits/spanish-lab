@@ -34,7 +34,16 @@ async function audit(env, action, detail) {
 
 export async function onRequestGet(context) {
   try {
-    const a = (await context.env.PROGRESS_KV.get(KV_KEY, { type: 'json' })) || null;
+    // Per-class announcements (2026-07-15): a student passes ?class=<classId>.
+    // A class-specific announcement OVERRIDES the global one; if the class has
+    // none, they fall back to the global banner (broadcast to everyone).
+    // Backward compatible: no ?class (or ?class=default) => global key only.
+    const cls = new URL(context.request.url).searchParams.get('class');
+    let a = null;
+    if (cls && cls !== 'default') {
+      a = (await context.env.PROGRESS_KV.get(KV_KEY + '_' + cls, { type: 'json' })) || null;
+    }
+    if (!a) a = (await context.env.PROGRESS_KV.get(KV_KEY, { type: 'json' })) || null;
     // classAuto (backlog #100-lite): students read this flag on load — when
     // on, the app runs its own comeback nudges without teacher involvement.
     const classAuto = (await context.env.PROGRESS_KV.get('class_auto', { type: 'json' })) === true;
@@ -79,16 +88,20 @@ export async function onRequestPost(context) {
     }
   }
   const text = String(body.text || '').slice(0, 300);
+  // Target a class: {text, class}. Omitted / 'default' / 'all' => global banner.
+  const cls = body.class;
+  const key = (cls && cls !== 'default' && cls !== 'all') ? KV_KEY + '_' + cls : KV_KEY;
+  const scope = key === KV_KEY ? 'all' : cls;
   try {
     if (!text.trim()) {
-      await env.PROGRESS_KV.delete(KV_KEY);
-      await audit(env, 'announcement', 'cleared');
-      return new Response(JSON.stringify({ ok: true, cleared: true }), { status: 200, headers: CORS_HEADERS });
+      await env.PROGRESS_KV.delete(key);
+      await audit(env, 'announcement', 'cleared (' + scope + ')');
+      return new Response(JSON.stringify({ ok: true, cleared: true, scope }), { status: 200, headers: CORS_HEADERS });
     }
     const rec = { text: text.trim(), ts: Date.now() };
-    await env.PROGRESS_KV.put(KV_KEY, JSON.stringify(rec));
-    await audit(env, 'announcement', text.trim());
-    return new Response(JSON.stringify({ ok: true, announcement: rec }), { status: 200, headers: CORS_HEADERS });
+    await env.PROGRESS_KV.put(key, JSON.stringify(rec));
+    await audit(env, 'announcement', '[' + scope + '] ' + text.trim());
+    return new Response(JSON.stringify({ ok: true, announcement: rec, scope }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
   }
