@@ -2739,6 +2739,29 @@ async function assignWithDue(sid) {
   } catch (e) { showToast('Failed: ' + e.message, 2500); }
 }
 
+// ── CLASS FILTER (2026-07-15) — view the roster one class at a time ──────────
+let _classesCache = [];
+let _classFilter = localStorage.getItem('td_class_filter') || ''; // '' = all
+async function loadClasses() {
+  try {
+    const res = await fetch(API_BASE + '/api/classes?ensureDefault=1', { headers: teacherPinHeaders() });
+    if (res.ok) _classesCache = (await res.json()).classes || [];
+  } catch (e) {}
+}
+function classNameOf(classId) {
+  const c = _classesCache.find(x => x.id === (classId || 'default'));
+  return c ? c.name : (classId || 'default');
+}
+// Populate the filter dropdown from the class registry, preserving selection.
+function refreshClassFilterOptions() {
+  const sel = document.getElementById('class-filter');
+  if (!sel) return;
+  const opts = ['<option value="">All classes</option>']
+    .concat(_classesCache.map(c => '<option value="' + c.id + '"' + (c.id === _classFilter ? ' selected' : '') + '>' + (c.name || c.id) + '</option>'));
+  sel.innerHTML = opts.join('');
+  sel.value = _classFilter;
+}
+
 // ── CLASS MANAGER (2026-07-15) — multi-tenancy registry via /api/classes ─────
 async function manageClasses() {
   try {
@@ -2774,12 +2797,16 @@ function ensureRosterControls() {
     '<select class="inp" style="font-size:12px;padding:6px;" onchange="_rosterSort=this.value;refreshStudentProgress()">' +
       '<option value="recent">Last active</option><option value="name">Name</option>' +
       '<option value="accuracy">Accuracy ↑</option><option value="topic">Topic</option></select>' +
+    '<select id="class-filter" class="inp" style="font-size:12px;padding:6px;" onchange="_classFilter=this.value;localStorage.setItem(\'td_class_filter\',this.value);refreshStudentProgress()">' +
+      '<option value="">All classes</option></select>' +
     '<button class="queue-concept-btn" style="white-space:nowrap" onclick="manageClasses()">🏫 Classes</button>' +
     '<button class="queue-concept-btn" style="white-space:nowrap" onclick="manageRules()">⚙️ Rules</button>';
   anchor.parentElement.insertBefore(c, anchor.nextSibling);
 }
 function applyRosterView(students) {
   let list = students;
+  // 2026-07-15 multi-tenancy: scope to the selected class (absent classId = default)
+  if (_classFilter) list = list.filter(s => (s.classId || 'default') === _classFilter);
   if (_rosterFilter) list = list.filter(s => ((s.name || '') + s.studentId).toLowerCase().includes(_rosterFilter));
   const acc = s => { let c = 0, t = 0; Object.values(s.mastery || {}).forEach(m => { c += m.correct; t += m.total; }); return t ? c / t : 1; };
   if (_rosterSort === 'name') list = [...list].sort((a, b) => (a.name || a.studentId).localeCompare(b.name || b.studentId));
@@ -3002,6 +3029,7 @@ async function refreshStudentProgress() {
     await loadSeries();         // 2026-07-15 trend backbone (sparklines)
     await evaluateRulesOnce();  // 2026-07-15 run automation rules once per load
     await loadRulesFlags();     // 2026-07-15 automation flags for the cards
+    await loadClasses();        // 2026-07-15 class registry for the filter
     await loadYesterdaySnap();  // #26 trend arrows
     if (!students.length) {
       nameEl.textContent = 'No students yet';
@@ -3070,6 +3098,8 @@ async function refreshStudentProgress() {
             const tip = fl.map(f => f.message).join(' · ').replace(/"/g, '&quot;');
             return ' <span title="' + tip + '" style="background:' + (red ? '#ff6b6b' : '#f6a623') + ';color:#0a0a0a;font-size:9px;font-weight:800;border-radius:6px;padding:1px 5px;">⚑ ' + fl.length + '</span>';
           })() +
+          // 2026-07-15 class membership (hidden for the default class)
+          ((s.classId && s.classId !== 'default') ? ' <span style="font-size:9px;color:var(--text3);border:1px solid var(--border2);border-radius:6px;padding:1px 5px;">🏫 ' + classNameOf(s.classId) + '</span>' : '') +
           ' <span style="font-weight:400;color:var(--text3);font-size:11px">· Lv ' + (s.level || 1) + ' · ' + (s.xp || 0) + ' XP · ' + (s.dueCount || 0) + ' due · ' + _fmtAge(s.lastActive) + '</span>' +
         '</summary>' +
         pathLine +
@@ -3136,6 +3166,7 @@ async function refreshStudentProgress() {
     }).join('');
     try { renderClassIntel(_fullRoster); } catch (e) {}
     try { ensureRosterControls(); } catch (e) {}
+    try { refreshClassFilterOptions(); } catch (e) {}
     try { aiTriage(); } catch (e) {}
     try { _loadAutoApprove(); } catch (e) {}
     try { _loadClassBox(); } catch (e) {}

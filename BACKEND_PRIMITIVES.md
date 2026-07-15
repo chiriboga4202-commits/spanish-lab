@@ -163,7 +163,12 @@ red/amber `⚑ N` flag chips on roster cards from `loadRulesFlags()`.
 - Apply difficulty / checkpointThreshold / dailyGoal in the student app
   (deferred pending live-test — they touch checkpoint + exercise mechanics).
 - Fold `notes.js` note field into `cfg_` (single per-student store).
-- Per-class scoping of progress/path/announce/assignments (Tier-0 completion:
-  today all class-wide state is still the implicit default class).
+- Per-class scoping (Tier-0 completion). STARTED 2026-07-15: dashboard now has a
+  **class filter** (`class-filter` select + `_classFilter` + `applyRosterView`
+  filter by `s.classId||'default'`; `loadClasses`/`classNameOf`/
+  `refreshClassFilterOptions`; per-student 🏫 class chip). STILL OPEN: per-class
+  announcements (announce.js), per-class path unlocks (path.js), and scoping the
+  class-wide assignment queue — plus making the student app read class-scoped
+  announce/path.
 - Remaining primitives: snapshots-as-backbone, cron, rules engine, realtime,
   web push, parent read-view.
