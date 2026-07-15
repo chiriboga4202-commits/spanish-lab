@@ -46,8 +46,25 @@ body {
   overflow: hidden;
   display: grid;
   grid-template-rows: 52px 1fr;
-  grid-template-columns: 248px 1fr 310px;
-  grid-template-areas: "hd hd hd" "sb mn pn";
+  /* 2026-07-05 restructure (Felipe): STUDENTS are the dashboard now. The
+     tools/roster panel owns the wide center column; the lesson/concept area
+     is fully hidden until the 📖 toggle (or a curriculum click) opens it as
+     a right-hand column. */
+  grid-template-columns: 248px 1fr;
+  grid-template-areas: "hd hd" "sb pn";
+}
+body.lesson-open {
+  grid-template-columns: 248px 1fr 420px;
+  grid-template-areas: "hd hd hd" "sb pn mn";
+}
+@media (min-width: 1024px) {
+  /* !important because the base `main{display:flex}` rule appears later in
+     the sheet and would win the cascade — that left the panel 1px wide. */
+  body:not(.lesson-open) main { display: none !important; }
+  body.lesson-open main { border-left: 1px solid var(--border); }
+  .panel { border-left: none; }
+  /* roster cards breathe in the wide center */
+  .pane { max-width: 900px; margin: 0 auto; width: 100%; }
 }
 /* ── PHONE/TABLET LAYOUT (2026-07-05, rebuilt after the resolution audit):
    breakpoint raised 700→1023 (the 3-col grid needs ~1100px; at 740 the main
@@ -3933,7 +3950,36 @@ window.addEventListener('DOMContentLoaded', () => {
     window._tdPrevOpen = parseInt(localStorage.getItem('td_last_open') || '0');
     localStorage.setItem('td_last_open', String(Date.now()));
   } catch (e) {}
+  try { initLessonToggle(); } catch (e) {}
 });
+
+// ── LESSON COLUMN TOGGLE (2026-07-05 restructure) ────────────────────────────
+// Students own the screen; the lesson/concept area lives behind this toggle.
+// Clicking anything in the curriculum sidebar auto-opens it — intent is clear.
+function setLessonOpen(open) {
+  document.body.classList.toggle('lesson-open', !!open);
+  try { localStorage.setItem('td_lesson_open', open ? '1' : '0'); } catch (e) {}
+  const b = document.getElementById('lesson-toggle-btn');
+  if (b) b.style.opacity = open ? '1' : '.6';
+}
+function initLessonToggle() {
+  if (document.getElementById('lesson-toggle-btn')) return;
+  const host = document.querySelector('header .hd-center') || document.querySelector('header');
+  if (!host) return;
+  const b = document.createElement('button');
+  b.id = 'lesson-toggle-btn';
+  b.textContent = '📖 Lesson';
+  b.title = 'Show/hide the lesson & concept column';
+  b.style.cssText = 'margin-left:10px;background:none;border:1px solid var(--border2);color:var(--text2);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:11.5px;flex-shrink:0;';
+  b.onclick = () => setLessonOpen(!document.body.classList.contains('lesson-open'));
+  host.appendChild(b);
+  setLessonOpen(localStorage.getItem('td_lesson_open') === '1');
+  // curriculum click = they want the lesson — open the column for them
+  const aside = document.querySelector('aside');
+  if (aside) aside.addEventListener('click', (e) => {
+    if (window.innerWidth >= 1024 && e.target.closest('.module, .lesson-item')) setLessonOpen(true);
+  });
+}
 
 // ─── TOAST ─────────────────────────────────────────────────────────────────────────────
 
