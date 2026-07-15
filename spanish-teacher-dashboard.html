@@ -2607,6 +2607,95 @@ async function assignToStudent(sid) {
   } catch (e) { showToast('Failed: ' + e.message, 2500); }
 }
 
+// ── PER-STUDENT CONFIG (2026-07-15) — reads/writes /api/student-config ────────
+// Backs the per-student control panel on each roster card: goal / difficulty /
+// freeze plus dated assignments. Mirrors the _notesCache load pattern.
+let _cfgCache = {};
+async function loadConfigs() {
+  try {
+    const res = await fetch(API_BASE + '/api/student-config', { headers: teacherPinHeaders() });
+    if (res.ok) _cfgCache = (await res.json()).configs || {};
+  } catch (e) {}
+}
+async function _patchStudentCfg(sid, patch) {
+  try {
+    const res = await fetch(API_BASE + '/api/student-config', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ studentId: sid, patch })
+    });
+    if (res.status === 401) { const p = (prompt('Teacher PIN:') || '').trim(); if (p) { localStorage.setItem('td_pin', p); return _patchStudentCfg(sid, patch); } return false; }
+    if (res.ok) { const d = await res.json(); if (d.config) _cfgCache[sid] = d.config; }
+    return true;
+  } catch (e) { showToast('Failed: ' + e.message, 2500); return false; }
+}
+async function setStudentGoal(sid) {
+  const cur = _cfgCache[sid] || {};
+  const v = prompt('Daily XP goal for this student (blank = class default):', cur.dailyGoal != null ? cur.dailyGoal : '');
+  if (v === null) return;
+  const goal = v.trim() === '' ? null : Math.max(0, parseInt(v.trim()) || 0);
+  await _patchStudentCfg(sid, { dailyGoal: goal });
+  showToast('🎚️ Goal updated', 1600); refreshStudentProgress();
+}
+async function setStudentDifficulty(sid) {
+  const cur = _cfgCache[sid] || {};
+  const raw = prompt('Difficulty override — beginner / normal / hard (blank = default):', cur.difficulty || '');
+  if (raw === null) return;
+  const v = raw.trim().toLowerCase();
+  const d = ['beginner', 'normal', 'hard'].includes(v) ? v : null;
+  await _patchStudentCfg(sid, { difficulty: d });
+  showToast('⚡ Difficulty updated', 1600); refreshStudentProgress();
+}
+async function toggleStudentFreeze(sid) {
+  const cur = _cfgCache[sid] || {};
+  const next = !cur.frozen;
+  if (next && !confirm('Pause this student\'s access? They see a "paused by your teacher" screen until you unpause. Lifts within ~2 min of unpausing.')) return;
+  await _patchStudentCfg(sid, { frozen: next });
+  showToast(next ? '⏸️ Student paused' : '▶️ Student resumed', 1800); refreshStudentProgress();
+}
+async function assignWithDue(sid) {
+  const s = _lastRoster.find(x => x.studentId === sid);
+  const pick = prompt('Assign ONE topic with a due date to ' + ((s && s.name) || sid) + ':\n' +
+    TD_PATH.map((k, i) => (i + 1) + '. ' + k).join('\n') + '\n\nEnter topic number:', '');
+  if (pick === null) return;
+  const n = parseInt((pick || '').trim());
+  if (!(n >= 1 && n <= TD_PATH.length)) { showToast('Invalid topic', 2000); return; }
+  const dueStr = prompt('Due date (YYYY-MM-DD, blank = no due date):', '');
+  if (dueStr === null) return;
+  let due = null;
+  if (dueStr.trim()) { const t = Date.parse(dueStr.trim()); if (!isNaN(t)) due = t; }
+  try {
+    const res = await fetch(API_BASE + '/api/student-config', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ studentId: sid, addAssignment: { concept: TD_PATH[n - 1], mode: 'mixed', count: 10, due } })
+    });
+    if (res.status === 401) { const p = (prompt('Teacher PIN:') || '').trim(); if (p) { localStorage.setItem('td_pin', p); return assignWithDue(sid); } return; }
+    if (res.ok) { const d = await res.json(); if (d.config) _cfgCache[sid] = d.config; }
+    showToast('📌 Assignment added' + (due ? ' (due ' + dueStr.trim() + ')' : ''), 2500);
+    refreshStudentProgress();
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
+
+// ── CLASS MANAGER (2026-07-15) — multi-tenancy registry via /api/classes ─────
+async function manageClasses() {
+  try {
+    let res = await fetch(API_BASE + '/api/classes?ensureDefault=1', { headers: teacherPinHeaders() });
+    if (res.status === 401) { const p = (prompt('Teacher PIN:') || '').trim(); if (p) { localStorage.setItem('td_pin', p); return manageClasses(); } return; }
+    const list = (await res.json()).classes || [];
+    const lines = list.map(c => '• ' + c.name + (c.code ? '   —   join code: ' + c.code : '   (default class)')).join('\n');
+    const name = prompt('YOUR CLASSES:\n\n' + (lines || '(none yet)') + '\n\n──────────\nType a name to CREATE a new class (or Cancel):', '');
+    if (name === null || !name.trim()) return;
+    res = await fetch(API_BASE + '/api/classes', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ name: name.trim() })
+    });
+    if (res.ok) {
+      const c = (await res.json()).class;
+      showToast('🏫 Created "' + c.name + '" — code ' + c.code, 5000);
+      alert('Class "' + c.name + '" created.\n\nJoin code:  ' + c.code + '\n\nGive this code to that class’s students — they enter it on their first screen to be grouped under this class.');
+    } else { showToast('Create failed', 2500); }
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
+
 // #16 ROSTER SEARCH / SORT
 let _rosterFilter = '', _rosterSort = 'recent';
 function ensureRosterControls() {
@@ -2620,7 +2709,8 @@ function ensureRosterControls() {
     '<input class="inp" placeholder="🔎 Find student…" style="flex:1;font-size:12px;padding:6px 9px;" oninput="_rosterFilter=this.value.toLowerCase();refreshStudentProgress()">' +
     '<select class="inp" style="font-size:12px;padding:6px;" onchange="_rosterSort=this.value;refreshStudentProgress()">' +
       '<option value="recent">Last active</option><option value="name">Name</option>' +
-      '<option value="accuracy">Accuracy ↑</option><option value="topic">Topic</option></select>';
+      '<option value="accuracy">Accuracy ↑</option><option value="topic">Topic</option></select>' +
+    '<button class="queue-concept-btn" style="white-space:nowrap" onclick="manageClasses()">🏫 Classes</button>';
   anchor.parentElement.insertBefore(c, anchor.nextSibling);
 }
 function applyRosterView(students) {
@@ -2843,6 +2933,7 @@ async function refreshStudentProgress() {
   try {
     const students = await fetchRoster(true);
     await loadNotes();          // #39/#41 display overrides + notes
+    await loadConfigs();        // 2026-07-15 per-student config (goal/freeze/assignments)
     await loadYesterdaySnap();  // #26 trend arrows
     if (!students.length) {
       nameEl.textContent = 'No students yet';
@@ -2860,6 +2951,7 @@ async function refreshStudentProgress() {
     const openSids = new Set([...container.querySelectorAll('details[data-sid][open]')].map(d => d.dataset.sid));
     container.innerHTML = students.map((s, i) => {
       const m = s.mastery || {};
+      const cfg = _cfgCache[s.studentId] || {}; // 2026-07-15 per-student config
       const bars = STUDENT_CONCEPTS.map(c => {
         const cm = m[c.key];
         if (!cm || !cm.total) return '';
@@ -2941,6 +3033,18 @@ async function refreshStudentProgress() {
           '<button class="queue-concept-btn" onclick="aiStudentSummary(\'' + s.studentId + '\')">🤖 AI summary</button>' +
           '<button class="queue-concept-btn" style="opacity:.7" onclick="editStudentNote(\'' + s.studentId + '\')">📝 note</button>' +
           '<button class="queue-concept-btn" style="opacity:.7" onclick="renameStudent(\'' + s.studentId + '\')">✏️ rename</button>' +
+        '</div>' +
+        // 2026-07-15 per-student control panel (config primitive): live status
+        // badges + one-tap controls for goal / difficulty / freeze / dated work.
+        '<div style="margin-top:6px;display:flex;gap:5px;flex-wrap:wrap;align-items:center">' +
+          (cfg.frozen ? '<span style="background:#ff6b6b;color:#0a0a0a;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px">⏸️ PAUSED</span>' : '') +
+          (cfg.dailyGoal != null ? '<span style="font-size:10px;color:var(--text3);border:1px solid var(--border2);border-radius:6px;padding:2px 6px">🎚️ goal ' + cfg.dailyGoal + '</span>' : '') +
+          (cfg.difficulty ? '<span style="font-size:10px;color:var(--text3);border:1px solid var(--border2);border-radius:6px;padding:2px 6px">⚡ ' + cfg.difficulty + '</span>' : '') +
+          ((cfg.assignments || []).filter(a => a && a.status !== 'done').length ? '<span style="font-size:10px;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:2px 6px">📌 ' + (cfg.assignments || []).filter(a => a && a.status !== 'done').length + ' assigned</span>' : '') +
+          '<button class="queue-concept-btn" style="opacity:.7" onclick="assignWithDue(\'' + s.studentId + '\')">📌 assign+due</button>' +
+          '<button class="queue-concept-btn" style="opacity:.7" onclick="setStudentGoal(\'' + s.studentId + '\')">🎚️ goal</button>' +
+          '<button class="queue-concept-btn" style="opacity:.7" onclick="setStudentDifficulty(\'' + s.studentId + '\')">⚡ level</button>' +
+          '<button class="queue-concept-btn" style="opacity:.7;border-color:' + (cfg.frozen ? '#4ade80;color:#4ade80' : '#ff6b6b;color:#ff6b6b') + '" onclick="toggleStudentFreeze(\'' + s.studentId + '\')">' + (cfg.frozen ? '▶️ resume' : '⏸️ freeze') + '</button>' +
         '</div>' +
         '<div id="ai-sum-' + s.studentId + '" style="font-size:11.5px;color:var(--text2);margin-top:5px;white-space:pre-wrap"></div>' +
       '</details>';

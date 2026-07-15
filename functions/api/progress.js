@@ -103,7 +103,12 @@ export async function onRequestGet(context) {
     const students = await Promise.all(
       keys.map((k) => env.PROGRESS_KV.get(k.name, { type: 'json' }).catch(() => null))
     );
-    return new Response(JSON.stringify({ students: students.filter(Boolean) }), { status: 200, headers: CORS_HEADERS });
+    // Shape-guard (2026-07-15): list() returns EVERY key in the namespace —
+    // teacher_queue, announcement, path_unlocks, the new cfg_* configs, etc.
+    // Only real student records carry a studentId; the cfg_ primitive tags
+    // itself _type:'cfg'. Filtering here keeps non-students out of the roster.
+    const roster = students.filter((s) => s && s.studentId && s._type !== 'cfg');
+    return new Response(JSON.stringify({ students: roster }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
   }

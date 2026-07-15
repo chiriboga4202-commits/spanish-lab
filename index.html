@@ -8230,6 +8230,9 @@ function syncProgressToTeacher(force = false) {
   const payload = {
     studentId: getStudentId(),
     name: localStorage.getItem('sl_name') || 'Unnamed student',
+    // Multi-tenancy (2026-07-15): rides along on the existing 60s sync so
+    // progress.js can tag the record. Absent/'default' == the implicit class.
+    classId: localStorage.getItem('sl_class_id') || 'default',
     xp,
     level: getLevelInfo(xp).level,
     bestStreak,
@@ -8963,7 +8966,9 @@ function maybePromptName(attempt = 0) {
       '<div style="background:var(--surface,#1c1c22);border:1px solid var(--border,#333);border-radius:14px;padding:22px;max-width:340px;width:100%;">' +
         '<div style="font-size:16px;font-weight:700;margin-bottom:6px;">👋 ¿Cómo te llamas?</div>' +
         '<div style="font-size:12.5px;opacity:.75;margin-bottom:12px;">Your name shows up on your teacher’s dashboard so they can follow your progress.</div>' +
-        '<input id="name-prompt-inp" class="modal-inp" style="width:100%;box-sizing:border-box;margin-bottom:12px;" placeholder="e.g. Maria" maxlength="40">' +
+        '<input id="name-prompt-inp" class="modal-inp" style="width:100%;box-sizing:border-box;margin-bottom:10px;" placeholder="e.g. Maria" maxlength="40">' +
+        '<input id="class-code-inp" class="modal-inp" style="width:100%;box-sizing:border-box;margin-bottom:6px;text-transform:uppercase;" placeholder="Class code (optional)" maxlength="8">' +
+        '<div id="class-code-msg" style="font-size:11.5px;opacity:.7;min-height:14px;margin-bottom:10px;"></div>' +
         '<div style="display:flex;gap:8px;align-items:center;">' +
           '<button class="cfg-btn" style="flex:1;" onclick="saveNamePrompt()">Save</button>' +
           '<button class="cfg-btn" style="opacity:.6;" onclick="skipNamePrompt()">Skip</button>' +
@@ -8977,15 +8982,43 @@ function maybePromptName(attempt = 0) {
     }
   } catch (e) {}
 }
-function saveNamePrompt() {
+async function saveNamePrompt() {
   const inp = document.getElementById('name-prompt-inp');
   const name = inp ? inp.value.trim() : '';
   if (name) localStorage.setItem('sl_name', name);
   localStorage.setItem('sl_name_prompted', '1');
+  // Optional class-code join (2026-07-15): resolve before closing so classId
+  // is set before the first synced payload leaves.
+  const codeInp = document.getElementById('class-code-inp');
+  const code = codeInp ? codeInp.value.trim() : '';
+  if (code) {
+    const msg = document.getElementById('class-code-msg');
+    if (msg) { msg.textContent = 'Joining…'; msg.style.color = ''; }
+    const ok = await joinClass(code);
+    if (!ok) {
+      if (msg) { msg.textContent = 'No class found with that code — check with your teacher.'; msg.style.color = '#e06666'; }
+      return; // keep the modal open so they can fix the code (name is already saved)
+    }
+  }
   const ov = document.getElementById('name-prompt-overlay');
   if (ov) ov.remove();
   try { if (typeof saveAndRefreshName === 'function') saveAndRefreshName(); } catch (e) {}
   try { syncProgressToTeacher(true); } catch (e) {}
+}
+// Resolve a class code -> classId via /api/join and persist it. Returns true on
+// success. Safe to call from Settings later too.
+async function joinClass(rawCode) {
+  const code = String(rawCode || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (!code) return false;
+  try {
+    const r = await fetch('/api/join?code=' + encodeURIComponent(code));
+    if (!r.ok) return false;
+    const d = await r.json();
+    if (!d || !d.found || !d.classId) return false;
+    localStorage.setItem('sl_class_id', d.classId);
+    if (d.className) localStorage.setItem('sl_class_name', d.className);
+    return true;
+  } catch (e) { return false; }
 }
 function skipNamePrompt() {
   localStorage.setItem('sl_name_prompted', '1');
@@ -8993,6 +9026,51 @@ function skipNamePrompt() {
   if (ov) ov.remove();
 }
 setTimeout(() => maybePromptName(), 3000);
+
+// ── PER-STUDENT CONFIG (2026-07-15) ──────────────────────────────────────────
+// Reads this student's teacher-set config from /api/student-config and applies
+// it. This session applies the two safe/high-value controls — freeze (blocks
+// the app) and personal assignments — and STORES the rest (difficulty,
+// checkpointThreshold, dailyGoal) in window._slCfg for later application once
+// their deeper hooks (exercise gen / PATH_SECTIONS / goal ring) are live-tested.
+window._slCfg = (() => { try { return JSON.parse(localStorage.getItem('sl_cfg') || 'null'); } catch { return null; } })();
+function getPersonalAssignments() {
+  try { return (window._slCfg && Array.isArray(window._slCfg.assignments)) ? window._slCfg.assignments.filter(a => a && a.status !== 'done') : []; }
+  catch { return []; }
+}
+function applyStudentConfig(cfg) {
+  if (!cfg || typeof cfg !== 'object') return;
+  window._slCfg = cfg;
+  try { localStorage.setItem('sl_cfg', JSON.stringify(cfg)); } catch (e) {}
+  // Freeze: a teacher can pause a student's access (unpaid, misbehaving, etc.).
+  try {
+    const existing = document.getElementById('sl-frozen-overlay');
+    if (cfg.frozen) {
+      if (!existing) {
+        const ov = document.createElement('div');
+        ov.id = 'sl-frozen-overlay';
+        ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9000;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;';
+        ov.innerHTML = '<div style="max-width:320px;"><div style="font-size:40px;margin-bottom:10px;">⏸️</div><div style="font-size:17px;font-weight:700;margin-bottom:8px;color:#fff;">Paused by your teacher</div><div style="font-size:13px;opacity:.75;color:#fff;">Your access is on hold right now. Check in with your teacher — it’ll lift automatically once they turn it back on.</div></div>';
+        document.body.appendChild(ov);
+      }
+    } else if (existing) {
+      existing.remove();
+    }
+  } catch (e) {}
+  try { if (typeof renderAssignmentBanner === 'function') renderAssignmentBanner(); } catch (e) {}
+}
+function fetchStudentConfig() {
+  try {
+    const id = getStudentId();
+    fetch('/api/student-config?studentId=' + encodeURIComponent(id))
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d && d.config) applyStudentConfig(d.config); })
+      .catch(() => {});
+  } catch (e) {}
+}
+if (window._slCfg) applyStudentConfig(window._slCfg); // apply cached immediately
+setTimeout(fetchStudentConfig, 3500);
+setInterval(fetchStudentConfig, 120000); // re-check every 2 min (freeze/assignments)
 
 // ── EXPLANATION STYLE CONTRACT (2026-07-05) ──────────────────────────────────
 // Shared prompt prefix for EVERY explanatory AI feature (study sheets, session
@@ -10870,13 +10948,27 @@ function renderAssignmentBanner() {
   const banner = document.getElementById('assignment-banner');
   const items = document.getElementById('assignment-items');
   if (!banner || !items) return;
-  if (!q.length) { banner.classList.remove('visible'); return; }
+  // Personal assignments (2026-07-15) from the per-student config primitive —
+  // these carry an optional due date the old class-wide queue never had.
+  const personal = (typeof getPersonalAssignments === 'function') ? getPersonalAssignments() : [];
+  if (!q.length && !personal.length) { banner.classList.remove('visible'); return; }
   banner.classList.add('visible');
-  items.innerHTML = q.map(c => {
+  const classHtml = q.map(c => {
     const m = conceptMastery[c.key];
     const pct = m && m.total ? Math.round(m.correct/m.total*100) : 0;
     return `<span class="assignment-item">${c.name} ${pct}%</span>`;
   }).join('');
+  const personalHtml = personal.map(a => {
+    const cn = (CONCEPTS.find(c => c.key === a.concept) || {}).name || a.concept || a.mode || 'Practice';
+    let due = '';
+    if (a.due) {
+      const d = new Date(a.due), today = new Date();
+      const overdue = a.due < today.setHours(0,0,0,0);
+      due = ` · ${overdue ? '⚠ due ' : 'due '}${d.toLocaleDateString(undefined,{month:'short',day:'numeric'})}`;
+    }
+    return `<span class="assignment-item" style="border:1px solid var(--accent);">📌 ${cn}${a.count ? ' ×'+a.count : ''}${due}</span>`;
+  }).join('');
+  items.innerHTML = classHtml + personalHtml;
 }
 
 // ── #48 PROGRESS SHARE CANVAS ─────────────────────────────────────────────────
