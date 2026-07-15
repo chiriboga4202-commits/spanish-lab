@@ -9,7 +9,8 @@ live in the existing `PROGRESS_KV` namespace; no new binding needed.
 New files:
 - `functions/api/classes.js`        — class registry (teacher, PIN)
 - `functions/api/join.js`           — class-code lookup (student, open)
-- `functions/api/studentconfig.js`  — per-student config store
+- `functions/api/student-config.js` — per-student config store (filename MUST
+  stay hyphenated: Pages routes by filename -> /api/student-config)
 
 Edited:
 - `functions/api/progress.js`       — roster GET now shape-guards `list()`:

@@ -1,4 +1,7 @@
-// functions/api/studentconfig.js — per-student config primitive (2026-07-15).
+// functions/api/student-config.js — per-student config primitive (2026-07-15).
+// NOTE: filename MUST stay hyphenated — Pages routes by filename, so this file
+// serves /api/student-config (what every caller uses). Renamed from
+// studentconfig.js on 2026-07-15 after the harness caught the route mismatch.
 //
 // The dependency that unlocks the whole "Student Control" backlog cluster
 // (AUTO #32/#33/#34/#35/#36/#38, DB #9/#10/#15). One KV record per student:
