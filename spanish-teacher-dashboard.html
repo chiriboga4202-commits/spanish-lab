@@ -2635,6 +2635,52 @@ function _sparkline(vals, w, h) {
   return '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" style="vertical-align:middle;overflow:visible">' +
     '<polyline points="' + pts + '" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>';
 }
+
+// ── RULES ENGINE (2026-07-15) — automation flags + management ────────────────
+let _rulesFlags = {};
+async function loadRulesFlags() {
+  try {
+    const res = await fetch(API_BASE + '/api/rules', { headers: teacherPinHeaders() });
+    if (res.ok) _rulesFlags = (await res.json()).flags || {};
+  } catch (e) {}
+}
+// Evaluate the rules once per dashboard load (not on every 90s auto-refresh).
+async function evaluateRulesOnce() {
+  if (window._rulesRan) return;
+  window._rulesRan = true;
+  try {
+    await fetch(API_BASE + '/api/rules', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ evaluate: true })
+    });
+  } catch (e) {}
+}
+async function manageRules() {
+  try {
+    let res = await fetch(API_BASE + '/api/rules', { headers: teacherPinHeaders() });
+    if (res.status === 401) { const p = (prompt('Teacher PIN:') || '').trim(); if (p) { localStorage.setItem('td_pin', p); return manageRules(); } return; }
+    let rules = (await res.json()).rules || [];
+    const list = rules.length
+      ? rules.map((r, i) => (i + 1) + '. [' + (r.enabled ? 'ON ' : 'off') + '] ' + r.name + '   (when ' + r.when.metric + ' ' + r.when.op + ' ' + r.when.value + ' → ' + r.action.type + ')').join('\n')
+      : '(no rules yet — press S to install 3 safe starters)';
+    const choice = (prompt('AUTOMATION RULES  (WHEN condition DO action):\n\n' + list + '\n\n──────────\n  R  = run rules now\n  S  = install 3 starter rules (flag-only, safe)\n  T# = toggle rule number on/off (e.g. T2)\n  X  = clear all flags\n', 'R') || '').trim();
+    if (!choice) return;
+    const up = choice.toUpperCase();
+    const post = (b) => fetch(API_BASE + '/api/rules', { method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() }, body: JSON.stringify(b) });
+    if (up === 'R') {
+      const d = await (await post({ evaluate: true })).json();
+      showToast('⚙️ Ran rules — ' + ((d.actions || []).length) + ' action(s)', 3000);
+      await loadRulesFlags(); refreshStudentProgress(); return;
+    }
+    if (up === 'S') { await post({ seedDefaults: true }); showToast('✅ Starter rules installed', 2500); return manageRules(); }
+    if (up === 'X') { await post({ clearFlags: true }); showToast('Flags cleared', 2000); await loadRulesFlags(); refreshStudentProgress(); return; }
+    if (up[0] === 'T') {
+      const n = parseInt(up.slice(1)); const r = rules[n - 1];
+      if (r) { await post({ toggleRule: { id: r.id, enabled: !r.enabled } }); showToast('Toggled "' + r.name + '"', 2000); return manageRules(); }
+      showToast('No rule ' + n, 2000);
+    }
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
 async function _patchStudentCfg(sid, patch) {
   try {
     const res = await fetch(API_BASE + '/api/student-config', {
@@ -2728,7 +2774,8 @@ function ensureRosterControls() {
     '<select class="inp" style="font-size:12px;padding:6px;" onchange="_rosterSort=this.value;refreshStudentProgress()">' +
       '<option value="recent">Last active</option><option value="name">Name</option>' +
       '<option value="accuracy">Accuracy ↑</option><option value="topic">Topic</option></select>' +
-    '<button class="queue-concept-btn" style="white-space:nowrap" onclick="manageClasses()">🏫 Classes</button>';
+    '<button class="queue-concept-btn" style="white-space:nowrap" onclick="manageClasses()">🏫 Classes</button>' +
+    '<button class="queue-concept-btn" style="white-space:nowrap" onclick="manageRules()">⚙️ Rules</button>';
   anchor.parentElement.insertBefore(c, anchor.nextSibling);
 }
 function applyRosterView(students) {
@@ -2953,6 +3000,8 @@ async function refreshStudentProgress() {
     await loadNotes();          // #39/#41 display overrides + notes
     await loadConfigs();        // 2026-07-15 per-student config (goal/freeze/assignments)
     await loadSeries();         // 2026-07-15 trend backbone (sparklines)
+    await evaluateRulesOnce();  // 2026-07-15 run automation rules once per load
+    await loadRulesFlags();     // 2026-07-15 automation flags for the cards
     await loadYesterdaySnap();  // #26 trend arrows
     if (!students.length) {
       nameEl.textContent = 'No students yet';
@@ -3013,6 +3062,14 @@ async function refreshStudentProgress() {
           ((window._tdPrevOpen && new Date(s.lastActive || 0).getTime() > window._tdPrevOpen) ? ' <span style="background:var(--accent);color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:1px 5px;">NEW</span>' : '') +
           // error telemetry: this student's app threw a JS error in the last 24h
           (s.lastError ? ' <span title="' + String(s.lastError.msg || '').replace(/"/g, '&quot;') + '" style="font-size:10px;">⚠️</span>' : '') +
+          // 2026-07-15 automation flags raised by the rules engine
+          (function () {
+            const fl = _rulesFlags[s.studentId];
+            if (!fl || !fl.length) return '';
+            const red = fl.some(f => f.level === 'red');
+            const tip = fl.map(f => f.message).join(' · ').replace(/"/g, '&quot;');
+            return ' <span title="' + tip + '" style="background:' + (red ? '#ff6b6b' : '#f6a623') + ';color:#0a0a0a;font-size:9px;font-weight:800;border-radius:6px;padding:1px 5px;">⚑ ' + fl.length + '</span>';
+          })() +
           ' <span style="font-weight:400;color:var(--text3);font-size:11px">· Lv ' + (s.level || 1) + ' · ' + (s.xp || 0) + ' XP · ' + (s.dueCount || 0) + ' due · ' + _fmtAge(s.lastActive) + '</span>' +
         '</summary>' +
         pathLine +

@@ -118,6 +118,33 @@ The time-series foundation for DB #1/#4 and AUTO #8/#11/#20/#25/#29.
 Note: nightly OFF-SITE backup (#81) is a separate concern from trends and is
 still open — the ⬇ Backup JSON button remains the manual path.
 
+## Rules engine — DONE 2026-07-15 (session 4)
+
+The generic "WHEN condition DO action" primitive behind the zero-touch cluster
+(AUTO #1-5, #9, #14, #100). New `functions/api/rules.js`.
+
+- Rules: `{ id, name, enabled, when:{metric,op,value,window}, action:{type,params} }`
+  stored in KV key `rules`.
+- Metrics: `inactive_days`, `accuracy_pct`, `xp_gain` (over `window` days, from the
+  snapshot series), `due_count`. Ops: gt/gte/lt/lte/eq.
+- Actions: `flag` (-> `rules_flags` {studentId:[...]}, teacher-facing),
+  `assign_concept` (-> cfg assignment), `set_goal` (-> cfg dailyGoal).
+- Dedupe: `rules_state` {ruleId:{studentId:ts}} with a ~20h cooldown so nothing
+  spams. Respects `vacation`.
+- Endpoint ops (all PIN): GET {rules,flags,meta}; POST {evaluate}|{seedDefaults}|
+  {rules:[...]}|{rule:{...}}|{toggleRule}|{deleteRule}|{clearFlags}|{clearFlagsFor}.
+- SAFE BY DEFAULT: 3 seeded starter rules are flag-only (inactive 3+ days, accuracy
+  <55%, no XP gained in 7d). assign_concept/set_goal only run for rules the teacher
+  creates.
+
+TRIGGER: evaluates on dashboard open (once/load, not per 90s auto-refresh) + a
+"Run now" button. No Cloudflare cron (Pages can't) and no write-path cross-file
+import (avoided as fragile). Fully-autonomous running = a future scheduled task
+hitting POST {evaluate:true} — offered but not built (needs a PIN-handling call).
+
+Dashboard: `⚙️ Rules` button -> `manageRules()` (list/toggle/seed/run/clear);
+red/amber `⚑ N` flag chips on roster cards from `loadRulesFlags()`.
+
 ## Not done yet (next sessions)
 - Apply difficulty / checkpointThreshold / dailyGoal in the student app
   (deferred pending live-test — they touch checkpoint + exercise mechanics).
