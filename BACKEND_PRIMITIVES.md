@@ -178,9 +178,22 @@ Fully wrapped so a rules error can never break a progress write.
 - Dashboard: per-card `👪 parent link` button -> `parentLink()` mints token +
   copies the shareable URL.
 
+## Engagement — nudge system DONE 2026-07-15 (session 6)
+Re-engagement primitive turning the rules engine into student-facing action.
+- `student-config.js` POST {studentId, nudge} sets `cfg.nudge={text,ts}` (empty clears).
+- `rules.js` new **`nudge`** action type -> writes `cfg.nudge` for matching students.
+- Student app: `applyStudentConfig` shows `cfg.nudge` as a warm dismissible banner
+  once per nudge (`sl_nudge_seen` ts gate). `showNudgeBanner()`.
+- Dashboard: `💬 nudge` button per card (`nudgeStudent`); `⚙️ Rules -> N` installs
+  a one-tap auto re-engagement rule (inactive_days>=5 -> nudge).
+- Diagnostic: `../engagement_report.mjs` (roster + snapshot series -> funnel /
+  activation / retention / resurrection / path drop-off). NOTE: activation &
+  retention need accrued snapshot history + real (non-test) students to be valid.
+
 ## Not done yet (next sessions)
 - Apply difficulty / checkpointThreshold in the student app (dailyGoal done;
   these two still need live-testing — checkpoint/exercise mechanics)
+- Activation (day-1 win) build — deferred until real engagement data exists.
   (deferred pending live-test — they touch checkpoint + exercise mechanics).
 - Fold `notes.js` note field into `cfg_` (single per-student store).
 - Per-class scoping (Tier-0 completion). STARTED 2026-07-15: dashboard now has a

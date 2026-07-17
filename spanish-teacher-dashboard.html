@@ -2666,7 +2666,7 @@ async function manageRules() {
     const list = rules.length
       ? rules.map((r, i) => (i + 1) + '. [' + (r.enabled ? 'ON ' : 'off') + '] ' + r.name + '   (when ' + r.when.metric + ' ' + r.when.op + ' ' + r.when.value + ' → ' + r.action.type + ')').join('\n')
       : '(no rules yet — press S to install 3 safe starters)';
-    const choice = (prompt('AUTOMATION RULES  (WHEN condition DO action):\n\n' + list + '\n\n──────────\n  R  = run rules now\n  S  = install 3 starter rules (flag-only, safe)\n  T# = toggle rule number on/off (e.g. T2)\n  X  = clear all flags\n', 'R') || '').trim();
+    const choice = (prompt('AUTOMATION RULES  (WHEN condition DO action):\n\n' + list + '\n\n──────────\n  R  = run rules now\n  S  = install 3 starter rules (flag-only, safe)\n  N  = install auto re-engagement nudge (inactive 5d -> warm banner)\n  T# = toggle rule number on/off (e.g. T2)\n  X  = clear all flags\n', 'R') || '').trim();
     if (!choice) return;
     const up = choice.toUpperCase();
     const post = (b) => fetch(API_BASE + '/api/rules', { method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() }, body: JSON.stringify(b) });
@@ -2676,6 +2676,10 @@ async function manageRules() {
       await loadRulesFlags(); refreshStudentProgress(); return;
     }
     if (up === 'S') { await post({ seedDefaults: true }); showToast('✅ Starter rules installed', 2500); return manageRules(); }
+    if (up === 'N') {
+      await post({ rule: { name: 'Re-engage lapsed (5d)', enabled: true, when: { metric: 'inactive_days', op: 'gte', value: 5 }, action: { type: 'nudge', params: { message: 'We miss you! Even 5 minutes today keeps your streak alive. 💪' } } } });
+      showToast('✅ Auto re-engagement nudge installed', 2800); return manageRules();
+    }
     if (up === 'X') { await post({ clearFlags: true }); showToast('Flags cleared', 2000); await loadRulesFlags(); refreshStudentProgress(); return; }
     if (up[0] === 'T') {
       const n = parseInt(up.slice(1)); const r = rules[n - 1];
@@ -2757,6 +2761,22 @@ async function parentLink(sid) {
     const url = base + '/parent.html?sid=' + encodeURIComponent(sid) + '&token=' + encodeURIComponent(token);
     try { await navigator.clipboard.writeText(url); showToast('👪 Parent link copied', 2500); } catch (e) {}
     prompt('Read-only parent link (copied) — share with this student\'s parent:', url);
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
+
+// ── NUDGE (2026-07-15) — send a re-engagement message to one student ─────────
+async function nudgeStudent(sid) {
+  const s = _lastRoster.find(x => x.studentId === sid);
+  const text = prompt('Personal nudge for ' + ((s && s.name) || sid) + ' — they see it as a warm banner next time they open the app (empty clears):',
+    'We miss you! Even 5 minutes today keeps your streak alive. 💪');
+  if (text === null) return;
+  try {
+    const res = await fetch(API_BASE + '/api/student-config', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ studentId: sid, nudge: text })
+    });
+    if (res.status === 401) { const p = (prompt('Teacher PIN:') || '').trim(); if (p) { localStorage.setItem('td_pin', p); return nudgeStudent(sid); } return; }
+    showToast(text.trim() ? '💬 Nudge queued — they see it on next open' : 'Nudge cleared', 2800);
   } catch (e) { showToast('Failed: ' + e.message, 2500); }
 }
 
@@ -3175,6 +3195,7 @@ async function refreshStudentProgress() {
           '<button class="queue-concept-btn" style="opacity:.7" onclick="editStudentNote(\'' + s.studentId + '\')">📝 note</button>' +
           '<button class="queue-concept-btn" style="opacity:.7" onclick="renameStudent(\'' + s.studentId + '\')">✏️ rename</button>' +
           '<button class="queue-concept-btn" style="opacity:.7" onclick="parentLink(\'' + s.studentId + '\')">👪 parent link</button>' +
+          '<button class="queue-concept-btn" style="opacity:.7" onclick="nudgeStudent(\'' + s.studentId + '\')">💬 nudge</button>' +
         '</div>' +
         // 2026-07-15 per-student control panel (config primitive): live status
         // badges + one-tap controls for goal / difficulty / freeze / dated work.

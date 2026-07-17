@@ -28,7 +28,7 @@ const CORS_HEADERS = {
 const COOLDOWN_MS = 20 * 3600 * 1000; // act at most ~once/day per rule+student
 const METRICS = ['inactive_days', 'accuracy_pct', 'xp_gain', 'due_count'];
 const OPS = ['gt', 'gte', 'lt', 'lte', 'eq'];
-const ACTION_TYPES = ['flag', 'assign_concept', 'set_goal'];
+const ACTION_TYPES = ['flag', 'assign_concept', 'set_goal', 'nudge'];
 
 function pinOk(request, env) {
   if (!env.TEACHER_PIN && !env.TEACHER_PIN2) return true;
@@ -153,6 +153,12 @@ export async function evaluateRules(env) {
           cfg.updatedTs = now; dirtyCfg.add(s.studentId);
         }
         did = 'assign_concept';
+      } else if (a.type === 'nudge') {
+        // Re-engagement: set a personal message the student sees on next open.
+        const cfg = await cfgFor(s.studentId);
+        cfg.nudge = { text: tmpl((a.params && a.params.message) || rule.name, v), ts: now };
+        cfg.updatedTs = now; dirtyCfg.add(s.studentId);
+        did = 'nudge';
       }
       if (did) {
         state[rule.id][s.studentId] = now;

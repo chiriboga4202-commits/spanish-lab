@@ -1354,6 +1354,12 @@ body.light-theme .modal, body.light-theme .gateway-card, body.light-theme .revie
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer" title="Say 'siguiente' / 'next' out loud to advance to the next exercise, hands-free. Off by default — turns on your microphone only if you enable this.">
         <input type="checkbox" id="m-voice-next" onchange="setVoiceNextEnabled(this.checked)"> 🎙️ Voice "next"
       </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer" title="Stronger colors and outlines for easier reading.">
+        <input type="checkbox" id="m-contrast" onchange="setHighContrast(this.checked)"> 🔆 High contrast
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer" title="A more legible font (Atkinson Hyperlegible) that's easier for many readers, including with dyslexia.">
+        <input type="checkbox" id="m-dys" onchange="setDyslexiaFont(this.checked)"> 🔡 Readable font
+      </label>
     </div>
 
     <div class="modal-row">
@@ -9067,6 +9073,28 @@ function applyStudentConfig(cfg) {
       if (typeof updateDailyDisplay === 'function') updateDailyDisplay();
     }
   } catch (e) {}
+  // 2026-07-15 re-engagement nudge: show a warm personal banner once per nudge
+  // (a lapsed/fading student returns and sees a message from their teacher/rule).
+  try {
+    if (cfg.nudge && cfg.nudge.text) {
+      const seen = parseInt(localStorage.getItem('sl_nudge_seen') || '0');
+      if ((cfg.nudge.ts || 0) > seen) {
+        showNudgeBanner(cfg.nudge.text);
+        localStorage.setItem('sl_nudge_seen', String(cfg.nudge.ts || Date.now()));
+      }
+    }
+  } catch (e) {}
+}
+function showNudgeBanner(text) {
+  try {
+    const old = document.getElementById('sl-nudge'); if (old) old.remove();
+    const el = document.createElement('div');
+    el.id = 'sl-nudge';
+    el.style.cssText = 'position:fixed;left:12px;right:12px;top:12px;z-index:600;background:linear-gradient(135deg,var(--accent,#5b8dee),#a855f7);color:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 8px 30px rgba(0,0,0,.4);display:flex;align-items:center;gap:10px;font-size:13.5px;max-width:520px;margin:0 auto;';
+    el.innerHTML = '<span style="font-size:20px">👋</span><span style="flex:1">' + String(text).replace(/</g, '&lt;') + '</span><button onclick="this.parentElement.remove()" style="background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:8px;padding:4px 9px;cursor:pointer;font-size:12px;flex-shrink:0">Got it</button>';
+    document.body.appendChild(el);
+    setTimeout(() => { const n = document.getElementById('sl-nudge'); if (n) n.remove(); }, 15000);
+  } catch (e) {}
 }
 function fetchStudentConfig() {
   try {
@@ -9837,6 +9865,43 @@ setTimeout(function ariaPass() {
     });
   } catch (e) {}
 }, 2000);
+
+// #62/#65 accessibility toggles (2026-07-15): high-contrast + readable font.
+// Both are opt-in body classes with reversible CSS-variable / font overrides —
+// the default look is untouched. The readable font (Atkinson Hyperlegible) is
+// lazy-loaded only when turned on, with system fallbacks if the CDN is blocked.
+function _loadReadableFont() {
+  if (document.getElementById('dys-font-link')) return;
+  const l = document.createElement('link');
+  l.id = 'dys-font-link'; l.rel = 'stylesheet';
+  l.href = 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap';
+  document.head.appendChild(l);
+}
+function setHighContrast(on) {
+  document.body.classList.toggle('hc', !!on);
+  try { localStorage.setItem('sl_contrast', on ? '1' : '0'); } catch (e) {}
+}
+function setDyslexiaFont(on) {
+  if (on) _loadReadableFont();
+  document.body.classList.toggle('dys', !!on);
+  try { localStorage.setItem('sl_dysfont', on ? '1' : '0'); } catch (e) {}
+}
+(function initA11yPrefs() {
+  try {
+    const st = document.createElement('style');
+    st.textContent =
+      'body.hc{ --text2:#eaf0ff; --text3:#c4ccdd; --border:#8089a6; --border2:#6f7796; }' +
+      'body.hc button, body.hc .concept-chip, body.hc .mode-tab, body.hc .cfg-btn, body.hc .modal-inp, body.hc .modal-sel{ outline:1px solid #8089a6; }' +
+      "body.dys, body.dys button, body.dys input, body.dys select, body.dys textarea{ font-family:'Atkinson Hyperlegible','Trebuchet MS',Verdana,sans-serif !important; }";
+    document.head.appendChild(st);
+    const hc = localStorage.getItem('sl_contrast') === '1';
+    const dz = localStorage.getItem('sl_dysfont') === '1';
+    if (hc) document.body.classList.add('hc');
+    if (dz) { _loadReadableFont(); document.body.classList.add('dys'); }
+    const cb = document.getElementById('m-contrast'); if (cb) cb.checked = hc;
+    const db = document.getElementById('m-dys'); if (db) db.checked = dz;
+  } catch (e) {}
+})();
 
 // #98 accent color picker — personalization for free.
 function applyAccentColor(c) {

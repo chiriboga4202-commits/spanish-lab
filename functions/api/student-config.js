@@ -167,6 +167,13 @@ export async function onRequestPost(context) {
       cfg.assignments = body.setAssignments.slice(0, 100);
     }
 
+    // Re-engagement nudge (2026-07-15): a personal message the student sees as
+    // a warm banner next time they open the app. Empty clears it.
+    if ('nudge' in body) {
+      const t = String(body.nudge || '').slice(0, 220).trim();
+      cfg.nudge = t ? { text: t, ts: Date.now() } : null;
+    }
+
     // Parent read-only link (2026-07-15): mint a stable unguessable token once.
     // The token is the auth for /api/parent — no PIN, no student PII beyond
     // their own progress. Reused if it already exists so the link stays stable.
