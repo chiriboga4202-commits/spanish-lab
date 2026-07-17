@@ -11580,6 +11580,176 @@ document.addEventListener('keydown', e => {
   window.openFeed = openFeed; window.closeFeed = closeFeed;
 })();
 
+// ── MITOS COMIC READER (2026-07-15) — story-first comic, live level switching ──
+// Self-contained webtoon-style reader for the "MITOS" saga (mythology -> history).
+// Content-first: real myth in graded Spanish at 3 live-switchable levels
+// (Fácil/Intermedio/Nativo), English subtitle, tap-gloss, TTS read-along, silent
+// vocab capture. Placeholder art now (styled panels); real generated images drop
+// into panel.img later. Injects its own CSS/DOM/button — no existing HTML touched.
+(function initComic() {
+  const EP = {
+    id: 'mitos-s1e1', series: 'MITOS', season: 1, episode: 1, title: 'El Ladrón del Fuego',
+    grad: ['#1a1030', '#3a1c1c'],
+    panels: [
+      { emoji: '🌑', en: 'Long ago, humans lived in darkness, cold and afraid.', levels: {
+        facil: { es: 'Los humanos vivían en la oscuridad. Tenían frío.', words: { oscuridad: 'darkness', 'frío': 'cold' } },
+        intermedio: { es: 'Hace mucho tiempo, los humanos vivían en la oscuridad, con frío y miedo.', words: { oscuridad: 'darkness', miedo: 'fear' } },
+        nativo: { es: 'En tiempos remotos, la humanidad malvivía entre tinieblas, aterida y temerosa.', words: { tinieblas: 'gloom/darkness', aterida: 'numb with cold' } } } },
+      { emoji: '👁️', en: 'Prometheus, a Titan, watched them from afar and pitied them.', levels: {
+        facil: { es: 'Prometeo era un titán. Miraba a los humanos y sentía pena.', words: { 'titán': 'titan', pena: 'pity' } },
+        intermedio: { es: 'Prometeo, un titán, los miraba desde lejos y sentía pena por ellos.', words: { 'desde lejos': 'from afar', pena: 'pity' } },
+        nativo: { es: 'Prometeo, titán de mente astuta, los contemplaba a lo lejos, conmovido por su miseria.', words: { astuta: 'cunning', contemplaba: 'gazed at', conmovido: 'moved' } } } },
+      { emoji: '⚡', en: 'On Olympus, Zeus kept the fire, and the gods would not share it.', levels: {
+        facil: { es: 'En el Olimpo, Zeus tenía el fuego. Los dioses no lo compartían.', words: { fuego: 'fire', dioses: 'gods' } },
+        intermedio: { es: 'En el Olimpo, Zeus guardaba el fuego, y los dioses no querían compartirlo.', words: { guardaba: 'kept/guarded', compartirlo: 'share it' } },
+        nativo: { es: 'En las alturas del Olimpo, Zeus custodiaba el fuego, celoso, negándoselo a los mortales.', words: { custodiaba: 'guarded', celoso: 'jealous', mortales: 'mortals' } } } },
+      { emoji: '🔥', en: "Prometheus decided to help — he stole a spark of the gods' fire.", levels: {
+        facil: { es: 'Prometeo decidió ayudar. Robó una chispa de fuego.', words: { 'decidió': 'decided', 'robó': 'stole', chispa: 'spark' } },
+        intermedio: { es: 'Prometeo tomó una decisión: robó una chispa del fuego de los dioses.', words: { 'robó': 'stole', chispa: 'spark' } },
+        nativo: { es: 'Prometeo se resolvió a desafiar a los dioses y hurtó una chispa de su fuego sagrado.', words: { 'desafiar': 'to defy', 'hurtó': 'pilfered', sagrado: 'sacred' } } } },
+      { emoji: '🙏', en: 'He came down and gave them fire — for the first time, humans had light.', levels: {
+        facil: { es: 'Bajó a la tierra y dio el fuego a los humanos. Tuvieron luz.', words: { 'bajó': 'came down', luz: 'light' } },
+        intermedio: { es: 'Bajó a la tierra y les dio el fuego. Por primera vez, los humanos tuvieron luz.', words: { 'por primera vez': 'for the first time', luz: 'light' } },
+        nativo: { es: 'Descendió a la tierra y les entregó el fuego; por vez primera, la humanidad conoció la luz.', words: { 'descendió': 'descended', 'entregó': 'handed over', 'conoció': 'came to know' } } } },
+      { emoji: '😠', en: 'Zeus saw the lights on earth and filled with rage. — Who dared?', levels: {
+        facil: { es: 'Zeus vio el fuego en la tierra. Se enojó mucho.', words: { 'vio': 'saw', 'se enojó': 'got angry' } },
+        intermedio: { es: 'Zeus vio las luces en la tierra y se llenó de ira. —¿Quién se atrevió?', words: { ira: 'rage', 'se atrevió': 'dared' } },
+        nativo: { es: 'Zeus divisó las lumbres en la tierra y se encendió en cólera. —¿Quién osó tal cosa?', words: { 'divisó': 'spotted', 'cólera': 'wrath', 'osó': 'dared' } } } },
+      { emoji: '🦅', en: "Prometheus's punishment was only beginning. From the sky, an eagle descended…", levels: {
+        facil: { es: 'El castigo de Prometeo empezaba. Un águila bajaba del cielo…', words: { castigo: 'punishment', 'águila': 'eagle' } },
+        intermedio: { es: 'El castigo de Prometeo apenas comenzaba. En el cielo, un águila descendía…', words: { 'apenas comenzaba': 'was only beginning', 'águila': 'eagle' } },
+        nativo: { es: 'El suplicio de Prometeo apenas comenzaba. Del cielo sangriento, un águila descendía…', words: { suplicio: 'torment', sangriento: 'bloody', 'descendía': 'was descending' } } } },
+    ],
+    closing: { es: 'Prometeo lo perdió todo por un regalo. ¿Tú qué habrías arriesgado?', en: 'Prometheus lost everything for a gift. What would you have risked?' }
+  };
+
+  const LEVELS = ['facil', 'intermedio', 'nativo'];
+  const LABEL = { facil: 'Fácil', intermedio: 'Intermedio', nativo: 'Nativo' };
+  let level = localStorage.getItem('sl_mitos_level') || 'facil';
+  let showEN = localStorage.getItem('sl_mitos_en') !== '0';
+  let muted = false, overlay, scroll, io;
+  const esc = s => String(s == null ? '' : s).replace(/</g, '&lt;');
+
+  const css = document.createElement('style');
+  css.textContent =
+    '#comic-fab{position:fixed;right:16px;bottom:140px;z-index:400;width:54px;height:54px;border-radius:50%;border:none;background:linear-gradient(135deg,#b8860b,#7a1f1f);color:#fff;font-size:24px;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.5);}' +
+    '#mitos-overlay{position:fixed;inset:0;z-index:800;background:#08060c;display:none;flex-direction:column;}' +
+    '#mitos-overlay.open{display:flex;}' +
+    '#mitos-top{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;gap:8px;padding:10px 12px;background:linear-gradient(180deg,rgba(0,0,0,.7),transparent);}' +
+    '#mitos-top .m-x{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:34px;height:34px;font-size:15px;cursor:pointer;}' +
+    '#mitos-seg{display:flex;background:rgba(255,255,255,.1);border-radius:16px;overflow:hidden;}' +
+    '#mitos-seg button{background:none;border:none;color:#ccc;font-size:12px;padding:6px 11px;cursor:pointer;}' +
+    '#mitos-seg button.on{background:#b8860b;color:#111;font-weight:700;}' +
+    '.m-toggle{background:rgba(255,255,255,.13);border:none;color:#fff;border-radius:14px;padding:6px 10px;font-size:12px;cursor:pointer;margin-left:auto;}' +
+    '#mitos-scroll{flex:1;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;}' +
+    '#mitos-scroll::-webkit-scrollbar{display:none;}' +
+    '.m-panel{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;}' +
+    '.m-art{flex:1;min-height:52vh;display:flex;align-items:center;justify-content:center;font-size:110px;filter:drop-shadow(0 8px 30px rgba(0,0,0,.6));}' +
+    '.m-cap{background:linear-gradient(180deg,transparent,rgba(0,0,0,.85) 22%);padding:40px 22px 96px;}' +
+    '.m-es{font-size:22px;line-height:1.5;font-weight:600;color:#fff;max-width:600px;margin:0 auto;}' +
+    '.m-es .fw{cursor:pointer;border-bottom:1px dashed rgba(255,255,255,.3);}' +
+    '.m-en{margin-top:12px;font-size:14.5px;color:#b9b2c8;max-width:600px;margin-left:auto;margin-right:auto;}' +
+    '.m-en.off{display:none;}' +
+    '.m-play{margin-top:14px;background:rgba(255,255,255,.14);border:none;color:#fff;border-radius:20px;padding:8px 16px;font-size:13px;cursor:pointer;}' +
+    '.m-end{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;}' +
+    '.m-gloss{position:fixed;z-index:900;background:#1c1c26;border:1px solid #444;border-radius:10px;padding:8px 12px;color:#fff;font-size:14px;max-width:240px;box-shadow:0 8px 30px rgba(0,0,0,.6);}' +
+    '@media(min-width:700px){.m-panel,.m-end{max-width:520px;margin:0 auto;}}';
+  document.head.appendChild(css);
+
+  const fab = document.createElement('button');
+  fab.id = 'comic-fab'; fab.textContent = '📖'; fab.title = 'MITOS — read a myth in Spanish';
+  fab.setAttribute('aria-label', 'Open MITOS comic'); fab.onclick = openComic;
+  document.body.appendChild(fab);
+
+  function wordSpans(es, words) {
+    const glo = {}; Object.keys(words || {}).forEach(k => glo[k.toLowerCase()] = words[k]);
+    return String(es).split(/(\s+)/).map(tok => {
+      const bare = tok.replace(/[^\p{L}]/gu, '').toLowerCase();
+      // match single word or a multiword key that starts here is skipped for simplicity
+      if (bare && glo[bare]) return '<span class="fw" data-g="' + String(glo[bare]).replace(/"/g, '&quot;') + '">' + esc(tok) + '</span>';
+      return esc(tok);
+    }).join('');
+  }
+  function collectVocab(words) {
+    try { const v = JSON.parse(localStorage.getItem('sl_mitos_vocab') || '{}'); Object.keys(words || {}).forEach(k => v[k] = words[k]); localStorage.setItem('sl_mitos_vocab', JSON.stringify(v)); } catch (e) {}
+  }
+  function showGloss(el, g) {
+    document.querySelectorAll('.m-gloss').forEach(p => p.remove());
+    if (!g) return;
+    const pop = document.createElement('div'); pop.className = 'm-gloss'; pop.textContent = g;
+    document.body.appendChild(pop);
+    const r = el.getBoundingClientRect();
+    pop.style.left = Math.max(8, Math.min(window.innerWidth - pop.offsetWidth - 8, r.left)) + 'px';
+    pop.style.top = Math.max(8, r.top - pop.offsetHeight - 8) + 'px';
+    setTimeout(() => pop.remove(), 2600);
+  }
+  function renderPanel(p, i) {
+    const card = document.createElement('div'); card.className = 'm-panel'; card.dataset.i = i;
+    card.innerHTML =
+      '<div class="m-art" style="background:radial-gradient(circle at 50% 40%, ' + EP.grad[0] + ', ' + EP.grad[1] + ');">' + p.emoji + '</div>' +
+      '<div class="m-cap"><div class="m-es"></div><div class="m-en' + (showEN ? '' : ' off') + '">' + esc(p.en) + '</div>' +
+      '<button class="m-play" aria-label="Read aloud">🔊 Escuchar</button></div>';
+    card.querySelector('.m-play').onclick = () => { try { speakSpanish(p.levels[level].es); } catch (e) {} };
+    paintCaption(card, p);
+    if (io) io.observe(card);
+    return card;
+  }
+  function paintCaption(card, p) {
+    const lv = p.levels[level] || p.levels.facil;
+    const esEl = card.querySelector('.m-es');
+    esEl.innerHTML = wordSpans(lv.es, lv.words);
+    esEl.querySelectorAll('.fw').forEach(w => w.onclick = e => showGloss(e.target, e.target.dataset.g));
+  }
+  function repaintAll() {
+    if (!scroll) return;
+    scroll.querySelectorAll('.m-panel').forEach(card => { const p = EP.panels[+card.dataset.i]; if (p) paintCaption(card, p); });
+  }
+  function setLevel(lv) {
+    level = lv; try { localStorage.setItem('sl_mitos_level', lv); } catch (e) {}
+    if (overlay) overlay.querySelectorAll('#mitos-seg button').forEach(b => b.classList.toggle('on', b.dataset.lv === lv));
+    repaintAll();
+  }
+  function toggleEN() {
+    showEN = !showEN; try { localStorage.setItem('sl_mitos_en', showEN ? '1' : '0'); } catch (e) {}
+    if (scroll) scroll.querySelectorAll('.m-en').forEach(el => el.classList.toggle('off', !showEN));
+    if (overlay) overlay.querySelector('.m-toggle').textContent = showEN ? '🇬🇧 EN on' : '🇬🇧 EN off';
+  }
+  function openComic() {
+    if (!overlay) {
+      overlay = document.createElement('div'); overlay.id = 'mitos-overlay';
+      overlay.innerHTML =
+        '<div id="mitos-top"><button class="m-x" aria-label="Close">✕</button>' +
+          '<div id="mitos-seg">' + LEVELS.map(l => '<button data-lv="' + l + '"' + (l === level ? ' class="on"' : '') + '>' + LABEL[l] + '</button>').join('') + '</div>' +
+          '<button class="m-toggle">' + (showEN ? '🇬🇧 EN on' : '🇬🇧 EN off') + '</button>' +
+        '</div><div id="mitos-scroll"></div>';
+      document.body.appendChild(overlay);
+      scroll = overlay.querySelector('#mitos-scroll');
+      overlay.querySelector('.m-x').onclick = closeComic;
+      overlay.querySelector('.m-toggle').onclick = toggleEN;
+      overlay.querySelectorAll('#mitos-seg button').forEach(b => b.onclick = () => setLevel(b.dataset.lv));
+      io = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (en.isIntersecting && en.intersectionRatio > 0.6) {
+            const p = EP.panels[+en.target.dataset.i];
+            if (p) { collectVocab(p.levels[level].words); if (!muted) { try { speakSpanish(p.levels[level].es); } catch (e) {} } }
+          }
+        });
+      }, { threshold: [0, 0.6, 1] });
+      EP.panels.forEach((p, i) => scroll.appendChild(renderPanel(p, i)));
+      const end = document.createElement('div'); end.className = 'm-end';
+      end.innerHTML = '<div style="font-size:60px">🔥</div><div style="font-size:15px;color:#c9c2d8;max-width:420px;line-height:1.6;margin:14px 0">' + esc(EP.closing.es) + '</div><div style="font-size:13px;color:#8a8398;max-width:420px">' + esc(EP.closing.en) + '</div><div style="margin-top:22px;color:#b8860b;font-weight:700">Continuará… — Episodio 2 próximamente</div>';
+      scroll.appendChild(end);
+    }
+    overlay.classList.add('open'); document.body.style.overflow = 'hidden';
+  }
+  function closeComic() {
+    if (overlay) overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    try { window.speechSynthesis.cancel(); } catch (e) {}
+  }
+  window.openComic = openComic;
+})();
+
 // ── BOOTSTRAP (2026-07-01) ────────────────────────────────────────────────────
 // init() was defined but never actually called anywhere in the file — nothing
 // wired it to page load (no <body onload>, no DOMContentLoaded listener). That
