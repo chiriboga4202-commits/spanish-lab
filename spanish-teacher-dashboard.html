@@ -2913,10 +2913,10 @@ async function pushClassSheet() {
   try {
     const res = await fetch(API_BASE + '/api/announce', {
       method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
-      body: JSON.stringify({ sheet: { title, md } })
+      body: JSON.stringify({ sheet: { title, md }, class: _classFilter || 'all' })
     });
     if (res.status === 401) { const p = (prompt('Teacher PIN:') || '').trim(); if (p) { localStorage.setItem('td_pin', p); return pushClassSheet(); } return; }
-    showToast('📩 Pushed — students find it under 📚 Study → From your teacher', 3500);
+    showToast('📩 Pushed to ' + (_classFilter ? classNameOf(_classFilter) : 'all classes') + ' — students find it under 📚 Study → From your teacher', 3500);
   } catch (e) { showToast('Failed: ' + e.message, 2500); }
 }
 
@@ -2946,10 +2946,10 @@ function dailySnapshot() {
 // #100-lite CLASS-IN-A-BOX — one switch: auto-approve + comeback nudges + snapshots.
 async function setClassBox(on) {
   try {
-    await setAutoApprove(on);
+    await setAutoApprove(on); // already class-scoped
     const res = await fetch(API_BASE + '/api/announce', {
       method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
-      body: JSON.stringify({ classAuto: !!on })
+      body: JSON.stringify({ classAuto: !!on, class: _classFilter || 'all' })
     });
     if (res.status === 401) {
       const pin = (prompt('Teacher PIN:') || '').trim();
@@ -2965,7 +2965,7 @@ async function setClassBox(on) {
 }
 async function _loadClassBox() {
   try {
-    const res = await fetch(API_BASE + '/api/announce');
+    const res = await fetch(API_BASE + '/api/announce' + (_classFilter ? ('?class=' + encodeURIComponent(_classFilter)) : ''));
     const d = await res.json();
     const cb = document.getElementById('class-box-cb');
     if (cb) cb.checked = d.classAuto === true;
@@ -2978,10 +2978,12 @@ async function _loadClassBox() {
 // progress.js unlocks the next topic the moment a student's sync reports a
 // passed checkpoint — built for sharing the app without active supervision.
 async function setAutoApprove(on) {
+  // Targets the class in the roster filter; 'All classes' sets the global default.
+  const scope = _classFilter ? ('class "' + classNameOf(_classFilter) + '"') : 'all classes (global default)';
   try {
     const res = await fetch(API_BASE + '/api/path', {
       method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
-      body: JSON.stringify({ auto: !!on })
+      body: JSON.stringify({ auto: !!on, class: _classFilter || 'all' })
     });
     if (res.status === 401) {
       const pin = (prompt('Teacher PIN:') || '').trim();
@@ -2990,12 +2992,14 @@ async function setAutoApprove(on) {
       if (cb) cb.checked = !on;
       return;
     }
-    showToast(on ? '🤖 Auto-approve ON — passed checkpoints unlock instantly' : 'Auto-approve off — you approve each advance', 3000);
+    showToast((on ? '🤖 Auto-approve ON for ' : 'Auto-approve OFF for ') + scope, 3000);
   } catch (e) { showToast('Failed: ' + e.message, 2500); }
 }
 async function _loadAutoApprove() {
   try {
-    const res = await fetch(API_BASE + '/api/path', { headers: teacherPinHeaders() });
+    // Reflect the policy for the currently-filtered class (its flag or global).
+    const q = _classFilter ? ('?class=' + encodeURIComponent(_classFilter)) : '';
+    const res = await fetch(API_BASE + '/api/path' + q, { headers: teacherPinHeaders() });
     if (!res.ok) return;
     const d = await res.json();
     const cb = document.getElementById('auto-approve-cb');
@@ -3901,7 +3905,7 @@ function syncQueueToServer(q) {
   fetch(API_BASE + '/api/assignments', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
-    body: JSON.stringify({ queue: q })
+    body: JSON.stringify({ queue: q, class: _classFilter || 'all' }) // 2026-07-15 per-class
   }).then(r => {
     if (r.status === 401) {
       const pin = (prompt('Teacher PIN required to update the class queue:') || '').trim();
@@ -3919,7 +3923,7 @@ function renderQueue() {
   if (list) refreshQueueList();
   // Pull the server's copy in case this dashboard was reopened on a different
   // device/session than whichever one last edited the queue.
-  fetch(API_BASE + '/api/assignments').then(r => r.json()).then(data => {
+  fetch(API_BASE + '/api/assignments' + (_classFilter ? ('?class=' + encodeURIComponent(_classFilter)) : '')).then(r => r.json()).then(data => {
     if (!Array.isArray(data?.queue)) return;
     const local = JSON.parse(localStorage.getItem('sl_teacher_queue') || '[]');
     if (JSON.stringify(data.queue) === JSON.stringify(local)) return;

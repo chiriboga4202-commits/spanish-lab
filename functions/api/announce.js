@@ -44,11 +44,22 @@ export async function onRequestGet(context) {
       a = (await context.env.PROGRESS_KV.get(KV_KEY + '_' + cls, { type: 'json' })) || null;
     }
     if (!a) a = (await context.env.PROGRESS_KV.get(KV_KEY, { type: 'json' })) || null;
+    const cscoped = cls && cls !== 'default';
     // classAuto (backlog #100-lite): students read this flag on load — when
     // on, the app runs its own comeback nudges without teacher involvement.
-    const classAuto = (await context.env.PROGRESS_KV.get('class_auto', { type: 'json' })) === true;
-    // class sheet (backlog #12): a study sheet the teacher pushed to everyone.
-    const sheet = (await context.env.PROGRESS_KV.get('class_sheet', { type: 'json' })) || null;
+    // Per-class (2026-07-15): class flag wins if set, else the global default.
+    let classAuto;
+    if (cscoped) {
+      const c = await context.env.PROGRESS_KV.get('class_auto_' + cls, { type: 'json' });
+      classAuto = (c === true || c === false) ? c : ((await context.env.PROGRESS_KV.get('class_auto', { type: 'json' })) === true);
+    } else {
+      classAuto = (await context.env.PROGRESS_KV.get('class_auto', { type: 'json' })) === true;
+    }
+    // class sheet (backlog #12): a study sheet the teacher pushed. Class sheet
+    // overrides the global one; falls back to global when the class has none.
+    let sheet = null;
+    if (cscoped) sheet = (await context.env.PROGRESS_KV.get('class_sheet_' + cls, { type: 'json' })) || null;
+    if (!sheet) sheet = (await context.env.PROGRESS_KV.get('class_sheet', { type: 'json' })) || null;
     return new Response(JSON.stringify({ announcement: a, classAuto, sheet }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
@@ -66,9 +77,10 @@ export async function onRequestPost(context) {
   // class-in-a-box master flag (backlog #100-lite)
   if (typeof body.classAuto === 'boolean') {
     try {
-      await env.PROGRESS_KV.put('class_auto', JSON.stringify(body.classAuto));
-      await audit(env, 'class-in-a-box', body.classAuto ? 'ON' : 'OFF');
-      return new Response(JSON.stringify({ ok: true, classAuto: body.classAuto }), { status: 200, headers: CORS_HEADERS });
+      const ck = (body.class && body.class !== 'default' && body.class !== 'all') ? 'class_auto_' + body.class : 'class_auto';
+      await env.PROGRESS_KV.put(ck, JSON.stringify(body.classAuto));
+      await audit(env, 'class-in-a-box', (ck === 'class_auto' ? 'all' : body.class) + ' ' + (body.classAuto ? 'ON' : 'OFF'));
+      return new Response(JSON.stringify({ ok: true, classAuto: body.classAuto, scope: ck === 'class_auto' ? 'all' : body.class }), { status: 200, headers: CORS_HEADERS });
     } catch (err) {
       return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
     }
@@ -76,11 +88,12 @@ export async function onRequestPost(context) {
   // class sheet push (backlog #12): {sheet:{title, md}}; empty md clears.
   if (body.sheet && typeof body.sheet === 'object') {
     try {
+      const sk = (body.class && body.class !== 'default' && body.class !== 'all') ? 'class_sheet_' + body.class : 'class_sheet';
       const md = String(body.sheet.md || '').slice(0, 20000);
-      if (!md.trim()) { await env.PROGRESS_KV.delete('class_sheet'); await audit(env, 'class-sheet', 'cleared'); }
+      if (!md.trim()) { await env.PROGRESS_KV.delete(sk); await audit(env, 'class-sheet', 'cleared (' + (sk === 'class_sheet' ? 'all' : body.class) + ')'); }
       else {
-        await env.PROGRESS_KV.put('class_sheet', JSON.stringify({ title: String(body.sheet.title || 'From your teacher').slice(0, 80), md, ts: Date.now() }));
-        await audit(env, 'class-sheet', body.sheet.title);
+        await env.PROGRESS_KV.put(sk, JSON.stringify({ title: String(body.sheet.title || 'From your teacher').slice(0, 80), md, ts: Date.now() }));
+        await audit(env, 'class-sheet', '[' + (sk === 'class_sheet' ? 'all' : body.class) + '] ' + body.sheet.title);
       }
       return new Response(JSON.stringify({ ok: true }), { status: 200, headers: CORS_HEADERS });
     } catch (err) {

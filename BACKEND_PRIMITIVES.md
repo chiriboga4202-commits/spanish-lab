@@ -172,7 +172,25 @@ red/amber `⚑ N` flag chips on roster cards from `loadRulesFlags()`.
     fallback; default/all = global). Dashboard `composeAnnouncement()` targets
     the currently-filtered class (`_classFilter`); student app passes
     `?class=sl_class_id` in checkAnnouncement + openClassSheet.
-  - STILL OPEN: per-class path unlocks (path.js), per-class assignment queue,
-    per-class class_auto / class_sheet.
+  - Per-class AUTO-APPROVE DONE 2026-07-15: path unlocks were already
+    per-student; the only global path state was `path_auto`. Now `path.js` POST
+    {auto,class} + GET ?class= use `path_auto_<classId>` (class flag wins if
+    set, else global). `progress.js` auto-approve reads the student's class
+    policy (`body.classId` -> `path_auto_<classId>` -> global fallback).
+    Dashboard `setAutoApprove`/`_loadAutoApprove` target `_classFilter`.
+  - Per-class ASSIGNMENT QUEUE + CLASS POLICIES DONE 2026-07-15: `assignments.js`
+    GET ?class= / POST {queue,class} use `teacher_queue_<classId>` (else global);
+    `announce.js` scopes `class_auto_<classId>` + `class_sheet_<classId>` (else
+    global). Dashboard syncQueueToServer/renderQueue/setClassBox/pushClassSheet/
+    _loadClassBox target `_classFilter`; student app passes `&class=sl_class_id`.
+  - MULTI-TENANCY COMPLETE for core teaching controls. Remaining: per-class path
+    VARIANTS = the deferred KV-driven curriculum primitive (separate/larger).
+
+## Student overrides — dailyGoal DONE 2026-07-15 (session 5)
+`applyStudentConfig()` now applies `cfg.dailyGoal` at runtime (sets the module
+`dailyGoal` var + `updateDailyDisplay()`), WITHOUT writing `sl_daily_goal` — so
+the student's own goal returns if the teacher clears the override. difficulty +
+checkpointThreshold still STORED-not-applied: they touch exercise-gen /
+PATH_SECTIONS (checkpoint pass logic) and need live-testing before wiring.
 - Remaining primitives: snapshots-as-backbone, cron, rules engine, realtime,
   web push, parent read-view.

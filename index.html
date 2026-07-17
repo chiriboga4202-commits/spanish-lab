@@ -9058,6 +9058,15 @@ function applyStudentConfig(cfg) {
     }
   } catch (e) {}
   try { if (typeof renderAssignmentBanner === 'function') renderAssignmentBanner(); } catch (e) {}
+  // 2026-07-15: teacher-set daily-goal override. SAFE — only changes the
+  // runtime goal target + its display; never writes sl_daily_goal, so the
+  // student's own goal returns if the teacher clears the override (on reload).
+  try {
+    if (cfg.dailyGoal != null && typeof dailyGoal !== 'undefined') {
+      dailyGoal = cfg.dailyGoal;
+      if (typeof updateDailyDisplay === 'function') updateDailyDisplay();
+    }
+  } catch (e) {}
 }
 function fetchStudentConfig() {
   try {
@@ -10094,7 +10103,7 @@ const STORY_FALLBACK = {
   // no regression if this fetch fails.
   // 2026-07-05 (#32): ?studentId also brings this student's PERSONAL queue —
   // class-wide and personal assignments merge (personal first, deduped).
-  fetch('/api/assignments?studentId=' + encodeURIComponent(getStudentId())).then(r => r.json()).then(data => {
+  fetch('/api/assignments?studentId=' + encodeURIComponent(getStudentId()) + '&class=' + encodeURIComponent(localStorage.getItem('sl_class_id') || 'default')).then(r => r.json()).then(data => {
     const remoteQ = Array.isArray(data?.queue) ? data.queue : null;
     if (!remoteQ) return;
     const personal = Array.isArray(data?.personal) ? data.personal : [];

@@ -71,7 +71,16 @@ export async function onRequestPost(context) {
     try {
       const ps = body.pathState;
       if (ps && ps.ready && typeof ps.unlocked === 'number') {
-        const auto = (await env.PROGRESS_KV.get('path_auto', { type: 'json' })) === true;
+        // Per-class auto-approve (2026-07-15): this student's class policy wins
+        // if set (path_auto_<classId>), otherwise the global path_auto default.
+        const cid = body.classId || 'default';
+        let auto;
+        if (cid && cid !== 'default') {
+          const c = await env.PROGRESS_KV.get('path_auto_' + cid, { type: 'json' });
+          auto = (c === true || c === false) ? c : ((await env.PROGRESS_KV.get('path_auto', { type: 'json' })) === true);
+        } else {
+          auto = (await env.PROGRESS_KV.get('path_auto', { type: 'json' })) === true;
+        }
         if (auto) {
           const map = (await env.PROGRESS_KV.get('path_unlocks', { type: 'json' })) || {};
           const next = Math.min(ps.unlocked + 1, 20);

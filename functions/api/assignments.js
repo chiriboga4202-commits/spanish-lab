@@ -31,10 +31,16 @@ export async function onRequestOptions() {
 export async function onRequestGet(context) {
   const { request, env } = context;
   try {
-    const queue = (await env.PROGRESS_KV.get(KV_KEY, { type: 'json' })) || [];
+    // Per-class queue (2026-07-15): ?class=<id> returns that class's queue if
+    // set, else the global queue. Backward compatible (no class => global).
+    const url = new URL(request.url);
+    const cls = url.searchParams.get('class');
+    let queue = null;
+    if (cls && cls !== 'default' && cls !== 'all') queue = await env.PROGRESS_KV.get(KV_KEY + '_' + cls, { type: 'json' });
+    if (!queue) queue = (await env.PROGRESS_KV.get(KV_KEY, { type: 'json' })) || [];
     // Per-student assignments (backlog #32, 2026-07-05): ?studentId=X also
     // returns that student's personal queue alongside the class-wide one.
-    const studentId = new URL(request.url).searchParams.get('studentId');
+    const studentId = url.searchParams.get('studentId');
     if (studentId) {
       const per = (await env.PROGRESS_KV.get('teacher_queue_per', { type: 'json' })) || {};
       return new Response(JSON.stringify({ queue, personal: per[studentId] || [] }), { status: 200, headers: CORS_HEADERS });
@@ -75,8 +81,10 @@ export async function onRequestPost(context) {
       await env.PROGRESS_KV.put('teacher_queue_per', JSON.stringify(per));
       return new Response(JSON.stringify({ ok: true, studentId: body.studentId }), { status: 200, headers: CORS_HEADERS });
     }
-    await env.PROGRESS_KV.put(KV_KEY, JSON.stringify(body.queue));
-    return new Response(JSON.stringify({ ok: true }), { status: 200, headers: CORS_HEADERS });
+    // Class-wide queue, optionally scoped to a class: {queue, class}.
+    const key = (body.class && body.class !== 'default' && body.class !== 'all') ? KV_KEY + '_' + body.class : KV_KEY;
+    await env.PROGRESS_KV.put(key, JSON.stringify(body.queue));
+    return new Response(JSON.stringify({ ok: true, scope: key === KV_KEY ? 'all' : body.class }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
   }

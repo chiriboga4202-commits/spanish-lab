@@ -43,7 +43,16 @@ export async function onRequestGet(context) {
     if (!pinOk(request, env)) {
       return new Response(JSON.stringify({ error: 'PIN required' }), { status: 401, headers: CORS_HEADERS });
     }
-    const auto = (await env.PROGRESS_KV.get('path_auto', { type: 'json' })) === true;
+    // Per-class auto-approve (2026-07-15): ?class=<id> reports that class's
+    // policy — its own flag if set, else the global default.
+    const cls = url.searchParams.get('class');
+    let auto;
+    if (cls && cls !== 'default' && cls !== 'all') {
+      const c = await env.PROGRESS_KV.get('path_auto_' + cls, { type: 'json' });
+      auto = (c === true || c === false) ? c : ((await env.PROGRESS_KV.get('path_auto', { type: 'json' })) === true);
+    } else {
+      auto = (await env.PROGRESS_KV.get('path_auto', { type: 'json' })) === true;
+    }
     return new Response(JSON.stringify({ map, auto }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
@@ -67,8 +76,11 @@ export async function onRequestPost(context) {
   // Felipe sharing the app with students he won't actively supervise.
   if (typeof body.auto === 'boolean') {
     try {
-      await env.PROGRESS_KV.put('path_auto', JSON.stringify(body.auto));
-      return new Response(JSON.stringify({ ok: true, auto: body.auto }), { status: 200, headers: CORS_HEADERS });
+      // {auto, class}: omitted/'default'/'all' => global flag; else per-class.
+      const cls = body.class;
+      const key = (cls && cls !== 'default' && cls !== 'all') ? 'path_auto_' + cls : 'path_auto';
+      await env.PROGRESS_KV.put(key, JSON.stringify(body.auto));
+      return new Response(JSON.stringify({ ok: true, auto: body.auto, scope: key === 'path_auto' ? 'all' : cls }), { status: 200, headers: CORS_HEADERS });
     } catch (err) {
       return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });
     }
