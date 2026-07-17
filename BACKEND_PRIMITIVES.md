@@ -159,8 +159,28 @@ hitting POST {evaluate:true} — offered but not built (needs a PIN-handling cal
 Dashboard: `⚙️ Rules` button -> `manageRules()` (list/toggle/seed/run/clear);
 red/amber `⚑ N` flag chips on roster cards from `loadRulesFlags()`.
 
+## Autonomous rules — DONE 2026-07-15 (session 5)
+`rules.js` now `export`s `evaluateRules`. `progress.js` imports it and runs
+`maybeRunRules(env)` via `context.waitUntil` on the student write path, guarded
+by an hourly marker `rules_last` (YYYY-MM-DDTHH). So the engine runs itself
+whenever any student syncs (≤once/hour), no dashboard-open needed, no cron, no
+secret. The cross-file import was verified to resolve (dynamic-import test).
+Fully wrapped so a rules error can never break a progress write.
+
+## Parent read-only view — DONE 2026-07-15 (session 5, Tier-3)
+- `student-config.js` POST {studentId, genParentToken} mints a stable
+  `cfg.parentToken` (reused if present).
+- NEW `functions/api/parent.js`: GET ?studentId=&token= validates the token
+  against that student's cfg, returns a CURATED read-only slice (name, level,
+  xp, streak, topic, per-topic mastery %). No PIN, single-student scope, no
+  answer logs / errors / notes.
+- NEW `parent.html`: self-contained read-only page (`?sid=&token=`).
+- Dashboard: per-card `👪 parent link` button -> `parentLink()` mints token +
+  copies the shareable URL.
+
 ## Not done yet (next sessions)
-- Apply difficulty / checkpointThreshold / dailyGoal in the student app
+- Apply difficulty / checkpointThreshold in the student app (dailyGoal done;
+  these two still need live-testing — checkpoint/exercise mechanics)
   (deferred pending live-test — they touch checkpoint + exercise mechanics).
 - Fold `notes.js` note field into `cfg_` (single per-student store).
 - Per-class scoping (Tier-0 completion). STARTED 2026-07-15: dashboard now has a

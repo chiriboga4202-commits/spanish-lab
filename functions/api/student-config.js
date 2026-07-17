@@ -167,6 +167,13 @@ export async function onRequestPost(context) {
       cfg.assignments = body.setAssignments.slice(0, 100);
     }
 
+    // Parent read-only link (2026-07-15): mint a stable unguessable token once.
+    // The token is the auth for /api/parent — no PIN, no student PII beyond
+    // their own progress. Reused if it already exists so the link stays stable.
+    if (body.genParentToken && !cfg.parentToken) {
+      cfg.parentToken = 'pt_' + Math.random().toString(36).slice(2, 11) + Math.random().toString(36).slice(2, 7);
+    }
+
     cfg.updatedTs = Date.now();
     await env.PROGRESS_KV.put(key(body.studentId), JSON.stringify(cfg));
     await audit(env, 'cfg.update', { studentId: body.studentId });

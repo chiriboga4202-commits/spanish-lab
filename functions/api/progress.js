@@ -12,12 +12,27 @@
 // -> bind it to this Pages project under Settings -> Functions -> KV
 // namespace bindings, with variable name PROGRESS_KV.
 
+import { evaluateRules } from './rules.js';
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type, x-teacher-pin',
   'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
   'Content-Type': 'application/json',
 };
+
+// Autonomous rules (2026-07-15): the engine runs itself off the student write
+// path — at most once per clock-hour — so it no longer depends on the teacher
+// opening the dashboard. Runs inside waitUntil (never delays the sync response)
+// and is fully wrapped so a rules error can never break a progress write.
+async function maybeRunRules(env) {
+  try {
+    const hourKey = new Date().toISOString().slice(0, 13); // YYYY-MM-DDTHH
+    if ((await env.PROGRESS_KV.get('rules_last')) === hourKey) return;
+    await env.PROGRESS_KV.put('rules_last', hourKey); // optimistic hourly lock
+    await evaluateRules(env);
+  } catch (e) { /* autonomy must never break a progress write */ }
+}
 
 export async function onRequestOptions() {
   return new Response('', { status: 200, headers: CORS_HEADERS });
@@ -93,6 +108,8 @@ export async function onRequestPost(context) {
     } catch (e) { /* auto-approve must never break a progress write */ }
     // Trend backbone: capture today's snapshot once/day, off the response path.
     try { context.waitUntil(maybeDailySnapshot(env)); } catch (e) {}
+    // Autonomy: run the rules engine at most once/hour, off the response path.
+    try { context.waitUntil(maybeRunRules(env)); } catch (e) {}
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers: CORS_HEADERS });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS });

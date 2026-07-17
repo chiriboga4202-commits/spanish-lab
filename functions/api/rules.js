@@ -83,7 +83,8 @@ function testOp(v, op, target) {
 function tmpl(str, value) { return String(str || '').replace(/\{value\}/g, value); }
 
 // ── the engine ───────────────────────────────────────────────────────────────
-async function evaluateRules(env) {
+// Exported so progress.js can run it on the write path (autonomous mode).
+export async function evaluateRules(env) {
   const rules = ((await env.PROGRESS_KV.get('rules', { type: 'json' })) || []).filter(r => r && r.enabled);
   if (!rules.length) return { ran: true, actions: [], note: 'no enabled rules' };
 
