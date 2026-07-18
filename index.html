@@ -11477,33 +11477,39 @@ document.addEventListener('keydown', e => {
   const LABEL = { facil: 'Fácil', intermedio: 'Intermedio', nativo: 'Nativo' };
   let level = localStorage.getItem('sl_mitos_level') || 'facil';
   let showEN = localStorage.getItem('sl_mitos_en') !== '0';
-  let muted = false, overlay, scroll, io;
+  let overlay, stage, nav, idx = 0;
+  const N = EP.panels.length;
   const esc = s => String(s == null ? '' : s).replace(/</g, '&lt;');
 
   const css = document.createElement('style');
   css.textContent =
     '#comic-fab{position:fixed;right:16px;bottom:140px;z-index:400;width:54px;height:54px;border-radius:50%;border:none;background:linear-gradient(135deg,#b8860b,#7a1f1f);color:#fff;font-size:24px;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.5);}' +
-    '#mitos-overlay{position:fixed;inset:0;z-index:800;background:#08060c;display:none;flex-direction:column;}' +
-    '#mitos-overlay.open{display:flex;}' +
-    '#mitos-top{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;gap:8px;padding:10px 12px;background:linear-gradient(180deg,rgba(0,0,0,.7),transparent);}' +
-    '#mitos-top .m-x{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:34px;height:34px;font-size:15px;cursor:pointer;}' +
+    '#mitos-overlay{position:fixed;inset:0;z-index:800;background:#08060c;display:none;}' +
+    '#mitos-overlay.open{display:flex;flex-direction:column;}' +
+    '#mitos-bars{display:flex;gap:4px;padding:12px 12px 6px;}' +
+    '#mitos-bars .seg{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.2);}' +
+    '#mitos-bars .seg.done{background:#e9c46a;}' +
+    '#mitos-head{display:flex;align-items:center;gap:8px;padding:0 12px 8px;}' +
+    '#mitos-head .m-x{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;}' +
     '#mitos-seg{display:flex;background:rgba(255,255,255,.1);border-radius:16px;overflow:hidden;}' +
-    '#mitos-seg button{background:none;border:none;color:#ccc;font-size:12px;padding:6px 11px;cursor:pointer;}' +
+    '#mitos-seg button{background:none;border:none;color:#ccc;font-size:12px;padding:5px 10px;cursor:pointer;}' +
     '#mitos-seg button.on{background:#b8860b;color:#111;font-weight:700;}' +
-    '.m-toggle{background:rgba(255,255,255,.13);border:none;color:#fff;border-radius:14px;padding:6px 10px;font-size:12px;cursor:pointer;margin-left:auto;}' +
-    '#mitos-scroll{flex:1;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;}' +
-    '#mitos-scroll::-webkit-scrollbar{display:none;}' +
-    '.m-panel{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;}' +
-    '.m-art{flex:1;min-height:52vh;display:flex;align-items:center;justify-content:center;font-size:110px;filter:drop-shadow(0 8px 30px rgba(0,0,0,.6));}' +
-    '.m-cap{background:linear-gradient(180deg,transparent,rgba(0,0,0,.85) 22%);padding:40px 22px 96px;}' +
+    '.m-toggle{background:rgba(255,255,255,.13);border:none;color:#fff;border-radius:14px;padding:5px 10px;font-size:12px;cursor:pointer;margin-left:auto;}' +
+    '#mitos-stage{flex:1;display:flex;overflow:hidden;}' +
+    '.m-panel{flex:1;display:flex;flex-direction:column;min-height:0;cursor:pointer;}' +
+    '.m-art{flex:1;display:flex;align-items:center;justify-content:center;font-size:120px;filter:drop-shadow(0 8px 30px rgba(0,0,0,.6));}' +
+    '.m-cap{background:linear-gradient(180deg,transparent,rgba(0,0,0,.9) 30%);padding:44px 22px 22px;}' +
     '.m-es{font-size:22px;line-height:1.5;font-weight:600;color:#fff;max-width:600px;margin:0 auto;}' +
     '.m-es .fw{cursor:pointer;border-bottom:1px dashed rgba(255,255,255,.3);}' +
-    '.m-en{margin-top:12px;font-size:14.5px;color:#b9b2c8;max-width:600px;margin-left:auto;margin-right:auto;}' +
+    '.m-en{margin:12px auto 0;font-size:14.5px;color:#b9b2c8;max-width:600px;}' +
     '.m-en.off{display:none;}' +
     '.m-play{margin-top:14px;background:rgba(255,255,255,.14);border:none;color:#fff;border-radius:20px;padding:8px 16px;font-size:13px;cursor:pointer;}' +
-    '.m-end{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;}' +
+    '#mitos-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px calc(16px + env(safe-area-inset-bottom,0));}' +
+    '#mitos-nav button{background:rgba(255,255,255,.14);border:none;color:#fff;border-radius:22px;padding:11px 20px;font-size:14px;cursor:pointer;}' +
+    '#mitos-nav #mitos-next{background:#b8860b;color:#111;font-weight:700;}' +
+    '#mitos-nav #mitos-count{color:#8a8398;font-size:12px;}' +
     '.m-gloss{position:fixed;z-index:900;background:#1c1c26;border:1px solid #444;border-radius:10px;padding:8px 12px;color:#fff;font-size:14px;max-width:240px;box-shadow:0 8px 30px rgba(0,0,0,.6);}' +
-    '@media(min-width:700px){.m-panel,.m-end{max-width:520px;margin:0 auto;}}';
+    '@media(min-width:700px){#mitos-overlay.open{max-width:520px;margin:0 auto;}}';
   document.head.appendChild(css);
 
   const fab = document.createElement('button');
@@ -11515,7 +11521,6 @@ document.addEventListener('keydown', e => {
     const glo = {}; Object.keys(words || {}).forEach(k => glo[k.toLowerCase()] = words[k]);
     return String(es).split(/(\s+)/).map(tok => {
       const bare = tok.replace(/[^\p{L}]/gu, '').toLowerCase();
-      // match single word or a multiword key that starts here is skipped for simplicity
       if (bare && glo[bare]) return '<span class="fw" data-g="' + String(glo[bare]).replace(/"/g, '&quot;') + '">' + esc(tok) + '</span>';
       return esc(tok);
     }).join('');
@@ -11533,64 +11538,81 @@ document.addEventListener('keydown', e => {
     pop.style.top = Math.max(8, r.top - pop.offsetHeight - 8) + 'px';
     setTimeout(() => pop.remove(), 2600);
   }
-  function renderPanel(p, i) {
-    const card = document.createElement('div'); card.className = 'm-panel'; card.dataset.i = i;
-    card.innerHTML =
-      '<div class="m-art" style="background:radial-gradient(circle at 50% 40%, ' + EP.grad[0] + ', ' + EP.grad[1] + ');">' + p.emoji + '</div>' +
+  function updateBars() {
+    if (!overlay) return;
+    overlay.querySelectorAll('#mitos-bars .seg').forEach((s, i) => s.classList.toggle('done', i <= idx));
+  }
+  function paintPanel(speak) {
+    const p = EP.panels[idx], lv = p.levels[level] || p.levels.facil;
+    stage.innerHTML = '<div class="m-panel">' +
+      '<div class="m-art" style="background:radial-gradient(circle at 50% 40%,' + EP.grad[0] + ',' + EP.grad[1] + ');">' + p.emoji + '</div>' +
       '<div class="m-cap"><div class="m-es"></div><div class="m-en' + (showEN ? '' : ' off') + '">' + esc(p.en) + '</div>' +
-      '<button class="m-play" aria-label="Read aloud">🔊 Escuchar</button></div>';
-    card.querySelector('.m-play').onclick = () => { try { speakSpanish(p.levels[level].es); } catch (e) {} };
-    paintCaption(card, p);
-    if (io) io.observe(card);
-    return card;
-  }
-  function paintCaption(card, p) {
-    const lv = p.levels[level] || p.levels.facil;
-    const esEl = card.querySelector('.m-es');
+      '<button class="m-play" aria-label="Read aloud">🔊 Escuchar</button></div></div>';
+    const esEl = stage.querySelector('.m-es');
     esEl.innerHTML = wordSpans(lv.es, lv.words);
-    esEl.querySelectorAll('.fw').forEach(w => w.onclick = e => showGloss(e.target, e.target.dataset.g));
+    esEl.querySelectorAll('.fw').forEach(w => w.onclick = e => { e.stopPropagation(); showGloss(e.target, e.target.dataset.g); });
+    stage.querySelector('.m-play').onclick = e => { e.stopPropagation(); try { speakSpanish(lv.es); } catch (x) {} };
+    stage.querySelector('.m-art').onclick = next;
+    updateBars();
+    nav.querySelector('#mitos-prev').style.visibility = idx === 0 ? 'hidden' : 'visible';
+    nav.querySelector('#mitos-next').textContent = idx === N - 1 ? 'Fin ›' : 'Siguiente ›';
+    nav.querySelector('#mitos-count').textContent = (idx + 1) + ' / ' + N;
+    collectVocab(lv.words);
+    if (speak) { try { speakSpanish(lv.es); } catch (x) {} }
   }
-  function repaintAll() {
-    if (!scroll) return;
-    scroll.querySelectorAll('.m-panel').forEach(card => { const p = EP.panels[+card.dataset.i]; if (p) paintCaption(card, p); });
+  function paintClosing() {
+    stage.innerHTML = '<div class="m-panel" style="align-items:center;justify-content:center;text-align:center;padding:40px 24px;cursor:default">' +
+      '<div style="font-size:64px">🔥</div>' +
+      '<div style="font-size:16px;color:#e9c46a;font-weight:700;margin:14px 0 6px">Fin del episodio 1</div>' +
+      '<div style="font-size:15px;color:#c9c2d8;max-width:420px;line-height:1.6">' + esc(EP.closing.es) + '</div>' +
+      '<div style="font-size:13px;color:#8a8398;max-width:420px;margin-top:8px">' + esc(EP.closing.en) + '</div>' +
+      '<div style="margin-top:24px;color:#b8860b;font-weight:700">Continuará… — Episodio 2 próximamente</div></div>';
+    updateBars();
+    nav.querySelector('#mitos-prev').style.visibility = 'visible';
+    nav.querySelector('#mitos-next').textContent = '↺ Reiniciar';
+    nav.querySelector('#mitos-count').textContent = 'Fin';
+  }
+  function render(speak) { if (idx >= N) paintClosing(); else paintPanel(speak); }
+  function next() {
+    try { window.speechSynthesis.cancel(); } catch (e) {}
+    if (idx >= N) { idx = 0; render(true); return; }
+    idx++; render(true);
+  }
+  function prev() {
+    try { window.speechSynthesis.cancel(); } catch (e) {}
+    if (idx > 0) { idx--; render(true); }
   }
   function setLevel(lv) {
     level = lv; try { localStorage.setItem('sl_mitos_level', lv); } catch (e) {}
-    if (overlay) overlay.querySelectorAll('#mitos-seg button').forEach(b => b.classList.toggle('on', b.dataset.lv === lv));
-    repaintAll();
+    overlay.querySelectorAll('#mitos-seg button').forEach(b => b.classList.toggle('on', b.dataset.lv === lv));
+    if (idx < N) render(false);
   }
   function toggleEN() {
     showEN = !showEN; try { localStorage.setItem('sl_mitos_en', showEN ? '1' : '0'); } catch (e) {}
-    if (scroll) scroll.querySelectorAll('.m-en').forEach(el => el.classList.toggle('off', !showEN));
-    if (overlay) overlay.querySelector('.m-toggle').textContent = showEN ? '🇬🇧 EN on' : '🇬🇧 EN off';
+    const en = stage && stage.querySelector('.m-en'); if (en) en.classList.toggle('off', !showEN);
+    overlay.querySelector('.m-toggle').textContent = showEN ? '🇬🇧 EN on' : '🇬🇧 EN off';
   }
   function openComic() {
     if (!overlay) {
       overlay = document.createElement('div'); overlay.id = 'mitos-overlay';
       overlay.innerHTML =
-        '<div id="mitos-top"><button class="m-x" aria-label="Close">✕</button>' +
+        '<div id="mitos-bars">' + EP.panels.map(() => '<div class="seg"></div>').join('') + '</div>' +
+        '<div id="mitos-head"><button class="m-x" aria-label="Close">✕</button>' +
           '<div id="mitos-seg">' + LEVELS.map(l => '<button data-lv="' + l + '"' + (l === level ? ' class="on"' : '') + '>' + LABEL[l] + '</button>').join('') + '</div>' +
-          '<button class="m-toggle">' + (showEN ? '🇬🇧 EN on' : '🇬🇧 EN off') + '</button>' +
-        '</div><div id="mitos-scroll"></div>';
+          '<button class="m-toggle">' + (showEN ? '🇬🇧 EN on' : '🇬🇧 EN off') + '</button></div>' +
+        '<div id="mitos-stage"></div>' +
+        '<div id="mitos-nav"><button id="mitos-prev">‹ Atrás</button><span id="mitos-count"></span><button id="mitos-next">Siguiente ›</button></div>';
       document.body.appendChild(overlay);
-      scroll = overlay.querySelector('#mitos-scroll');
+      stage = overlay.querySelector('#mitos-stage');
+      nav = overlay.querySelector('#mitos-nav');
       overlay.querySelector('.m-x').onclick = closeComic;
       overlay.querySelector('.m-toggle').onclick = toggleEN;
       overlay.querySelectorAll('#mitos-seg button').forEach(b => b.onclick = () => setLevel(b.dataset.lv));
-      io = new IntersectionObserver(entries => {
-        entries.forEach(en => {
-          if (en.isIntersecting && en.intersectionRatio > 0.6) {
-            const p = EP.panels[+en.target.dataset.i];
-            if (p) { collectVocab(p.levels[level].words); if (!muted) { try { speakSpanish(p.levels[level].es); } catch (e) {} } }
-          }
-        });
-      }, { threshold: [0, 0.6, 1] });
-      EP.panels.forEach((p, i) => scroll.appendChild(renderPanel(p, i)));
-      const end = document.createElement('div'); end.className = 'm-end';
-      end.innerHTML = '<div style="font-size:60px">🔥</div><div style="font-size:15px;color:#c9c2d8;max-width:420px;line-height:1.6;margin:14px 0">' + esc(EP.closing.es) + '</div><div style="font-size:13px;color:#8a8398;max-width:420px">' + esc(EP.closing.en) + '</div><div style="margin-top:22px;color:#b8860b;font-weight:700">Continuará… — Episodio 2 próximamente</div>';
-      scroll.appendChild(end);
+      nav.querySelector('#mitos-prev').onclick = prev;
+      nav.querySelector('#mitos-next').onclick = next;
     }
-    overlay.classList.add('open'); document.body.style.overflow = 'hidden';
+    idx = 0; overlay.classList.add('open'); document.body.style.overflow = 'hidden';
+    render(true);
   }
   function closeComic() {
     if (overlay) overlay.classList.remove('open');
@@ -11599,6 +11621,7 @@ document.addEventListener('keydown', e => {
   }
   window.openComic = openComic;
 })();
+
 
 // ── BOOTSTRAP (2026-07-01) ────────────────────────────────────────────────────
 // init() was defined but never actually called anywhere in the file — nothing
