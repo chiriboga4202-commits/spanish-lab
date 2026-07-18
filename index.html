@@ -11495,7 +11495,7 @@ document.addEventListener('keydown', e => {
     '#mitos-seg button{background:none;border:none;color:#ccc;font-size:12px;padding:5px 10px;cursor:pointer;}' +
     '#mitos-seg button.on{background:#b8860b;color:#111;font-weight:700;}' +
     '.m-toggle{background:rgba(255,255,255,.13);border:none;color:#fff;border-radius:14px;padding:5px 10px;font-size:12px;cursor:pointer;margin-left:auto;}' +
-    '#mitos-stage{flex:1;display:flex;overflow:hidden;}' +
+    '#mitos-stage{flex:1;display:flex;justify-content:center;overflow:hidden;}' +
     '.m-panel{flex:1;display:flex;flex-direction:column;min-height:0;cursor:pointer;}' +
     '.m-art{flex:1;display:flex;align-items:center;justify-content:center;font-size:120px;filter:drop-shadow(0 8px 30px rgba(0,0,0,.6));}' +
     '.m-cap{background:linear-gradient(180deg,transparent,rgba(0,0,0,.9) 30%);padding:44px 22px 22px;}' +
@@ -11512,7 +11512,7 @@ document.addEventListener('keydown', e => {
     '#mitos-nav #mitos-count{color:#8a8398;font-size:12px;}' +
     '.m-gloss{position:fixed;z-index:900;background:#20202c;border:1px solid #5a5468;border-radius:12px;padding:10px 14px;color:#fff;font-size:15px;max-width:270px;box-shadow:0 10px 34px rgba(0,0,0,.7);}' +
     '.m-gloss b{display:block;color:#f0d99b;font-size:13px;margin-bottom:3px;}' +
-    '@media(min-width:700px){#mitos-overlay.open{max-width:520px;margin:0 auto;}}';
+    '@media(min-width:700px){#mitos-bars,#mitos-head,#mitos-nav{width:100%;max-width:560px;margin-left:auto;margin-right:auto;}.m-panel{max-width:560px;width:100%;}}';
   document.head.appendChild(css);
 
   const fab = document.createElement('button');
@@ -11546,7 +11546,18 @@ document.addEventListener('keydown', e => {
   // sl_sm2, but getDueExercise(pool) can only serve cards that exist in an
   // exercise pool — so injecting vocab there would create a phantom due count
   // the main Review mode can't clear. Merge into the main deck later, tested.
-  function vocabStore() { try { return JSON.parse(localStorage.getItem('sl_mitos_vocab') || '{}'); } catch (e) { return {}; } }
+  // Normalises legacy entries: the first build stored a bare gloss string
+  // ({vio:'saw'}); the reader now expects {g,es,ep}. Migrate in place so old
+  // collected words keep their meaning instead of rendering blank.
+  function vocabStore() {
+    try {
+      const raw = JSON.parse(localStorage.getItem('sl_mitos_vocab') || '{}');
+      let changed = false;
+      Object.keys(raw).forEach(k => { if (typeof raw[k] === 'string') { raw[k] = { g: raw[k], es: '', ep: '' }; changed = true; } });
+      if (changed) localStorage.setItem('sl_mitos_vocab', JSON.stringify(raw));
+      return raw;
+    } catch (e) { return {}; }
+  }
   function srsStore() { try { return JSON.parse(localStorage.getItem('sl_mitos_srs') || '{}'); } catch (e) { return {}; } }
   function collectVocab(words, sentence) {
     try {
@@ -11583,8 +11594,8 @@ document.addEventListener('keydown', e => {
       stage.innerHTML = '<div class="m-panel" style="align-items:center;justify-content:center;text-align:center;padding:30px 24px;cursor:default">' +
         '<div style="font-size:11.5px;letter-spacing:1px;color:#8a8398;text-transform:uppercase">Repaso · ' + (qi + 1) + ' / ' + queue.length + '</div>' +
         '<div style="font-size:30px;font-weight:800;color:#fff;margin:16px 0 12px">' + esc(w) + '</div>' +
-        '<div style="font-size:14.5px;color:#b9b2c8;font-style:italic;max-width:440px;line-height:1.6">«' + esc(d.es || '') + '»</div>' +
-        '<div style="font-size:11.5px;color:#6f6a80;margin-top:8px">' + esc(d.ep || '') + '</div>' +
+        (d.es ? '<div style="font-size:14.5px;color:#b9b2c8;font-style:italic;max-width:440px;line-height:1.6">«' + esc(d.es) + '»</div>' : '') +
+        (d.ep ? '<div style="font-size:11.5px;color:#6f6a80;margin-top:8px">' + esc(d.ep) + '</div>' : '') +
         '<div id="mp-ans" style="font-size:19px;color:#e9c46a;font-weight:700;margin-top:24px;min-height:26px"></div>' +
         '<div id="mp-btns" style="margin-top:18px"><button class="m-play" id="mp-show">Ver significado</button></div></div>';
       stage.querySelector('#mp-show').onclick = () => {
