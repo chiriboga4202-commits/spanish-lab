@@ -11590,7 +11590,12 @@ document.addEventListener('keydown', e => {
     let qi = 0;
     function step() {
       if (qi >= queue.length) { paintPracticeDone(queue.length); return; }
-      const w = queue[qi], d = v[w] || {};
+      const w = queue[qi];
+      // Defensive: entries may be a bare gloss string (first build), an object
+      // {g,es,ep} (current), or something odd. Accept all shapes.
+      const rawEntry = v[w];
+      const d = (typeof rawEntry === 'string') ? { g: rawEntry, es: '', ep: '' } : (rawEntry || {});
+      const meaning = d.g || d.gloss || d.meaning || d.en || '';
       stage.innerHTML = '<div class="m-panel" style="align-items:center;justify-content:center;text-align:center;padding:30px 24px;cursor:default">' +
         '<div style="font-size:11.5px;letter-spacing:1px;color:#8a8398;text-transform:uppercase">Repaso · ' + (qi + 1) + ' / ' + queue.length + '</div>' +
         '<div style="font-size:30px;font-weight:800;color:#fff;margin:16px 0 12px">' + esc(w) + '</div>' +
@@ -11599,7 +11604,7 @@ document.addEventListener('keydown', e => {
         '<div id="mp-ans" style="font-size:19px;color:#e9c46a;font-weight:700;margin-top:24px;min-height:26px"></div>' +
         '<div id="mp-btns" style="margin-top:18px"><button class="m-play" id="mp-show">Ver significado</button></div></div>';
       stage.querySelector('#mp-show').onclick = () => {
-        stage.querySelector('#mp-ans').textContent = d.g || '';
+        stage.querySelector('#mp-ans').textContent = meaning || '(sin definición guardada)';
         stage.querySelector('#mp-btns').innerHTML =
           '<button class="m-play" id="mp-no" style="margin-right:8px">No la sabía</button>' +
           '<button class="m-play" id="mp-yes" style="background:#b8860b;color:#111;font-weight:700">La sabía</button>';
