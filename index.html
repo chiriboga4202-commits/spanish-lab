@@ -11439,7 +11439,7 @@ document.addEventListener('keydown', e => {
 (function initComic() {
   const EP = {
     id: 'mitos-s1e1', series: 'MITOS', season: 1, episode: 1, title: 'El Ladrón del Fuego',
-    grad: ['#1a1030', '#3a1c1c'],
+    grad: ['#1a1030', '#3a1c1c'], imgBase: 'mitos/s1e1/p',
     panels: [
       { emoji: '🌑', en: 'Long ago, humans lived in darkness, cold and afraid.', levels: {
         facil: { es: 'Los humanos vivían en la oscuridad. Tenían frío.', words: { oscuridad: 'darkness', 'frío': 'cold' } },
@@ -11642,7 +11642,9 @@ document.addEventListener('keydown', e => {
   function paintPanel(speak) {
     const p = EP.panels[idx], lv = p.levels[level] || p.levels.facil;
     stage.innerHTML = '<div class="m-panel">' +
-      '<div class="m-art" style="background:radial-gradient(circle at 50% 40%,' + EP.grad[0] + ',' + EP.grad[1] + ');">' + p.emoji + '</div>' +
+      '<div class="m-art" style="position:relative;background:radial-gradient(circle at 50% 40%,' + EP.grad[0] + ',' + EP.grad[1] + ');">' + p.emoji +
+        '<img src="' + EP.imgBase + (idx + 1) + '.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.remove()">' +
+      '</div>' +
       '<div class="m-cap"><div class="m-es"></div><div class="m-en' + (showEN ? '' : ' off') + '">' + esc(p.en) + '</div>' +
       '<button class="m-play" aria-label="Read aloud">🔊 Escuchar</button>' +
       (idx === 0 ? '<div class="m-hint">👆 Toca las palabras doradas para ver su significado</div>' : '') +
