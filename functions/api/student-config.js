@@ -146,17 +146,24 @@ export async function onRequestPost(context) {
 
     if (body.addAssignment && typeof body.addAssignment === 'object') {
       const a = body.addAssignment;
-      cfg.assignments.push({
+      const item = {
         id: 'as_' + Math.random().toString(36).slice(2, 9),
-        mode: String(a.mode || '').slice(0, 40),
-        concept: String(a.concept || '').slice(0, 40),
-        count: Math.max(1, Math.min(100, Math.round(Number(a.count) || 10))),
+        type: a.type === 'episode' ? 'episode' : 'practice',
         due: a.due ? Number(a.due) : null,
         note: String(a.note || '').slice(0, 200),
         createdTs: Date.now(),
         status: 'open',
         doneTs: null,
-      });
+      };
+      if (item.type === 'episode') {
+        item.episodeId = String(a.episodeId || '').slice(0, 60);
+        item.title = String(a.title || a.episodeId || '').slice(0, 80);
+      } else {
+        item.mode = String(a.mode || '').slice(0, 40);
+        item.concept = String(a.concept || '').slice(0, 40);
+        item.count = Math.max(1, Math.min(100, Math.round(Number(a.count) || 10)));
+      }
+      cfg.assignments.push(item);
     }
 
     if (body.removeAssignment) {
@@ -172,6 +179,12 @@ export async function onRequestPost(context) {
     if ('nudge' in body) {
       const t = String(body.nudge || '').slice(0, 220).trim();
       cfg.nudge = t ? { text: t, ts: Date.now() } : null;
+    }
+
+    // Teacher-entered email address (Phase 2b) — private, PIN-gated. Empty clears.
+    if ('email' in body) {
+      const em = String(body.email || '').slice(0, 120).trim();
+      cfg.email = em || null;
     }
 
     // Parent read-only link (2026-07-15): mint a stable unguessable token once.

@@ -11035,13 +11035,18 @@ function renderAssignmentBanner() {
     return `<span class="assignment-item">${c.name} ${pct}%</span>`;
   }).join('');
   const personalHtml = personal.map(a => {
-    const cn = (CONCEPTS.find(c => c.key === a.concept) || {}).name || a.concept || a.mode || 'Practice';
     let due = '';
     if (a.due) {
       const d = new Date(a.due), today = new Date();
       const overdue = a.due < today.setHours(0,0,0,0);
       due = ` · ${overdue ? '⚠ due ' : 'due '}${d.toLocaleDateString(undefined,{month:'short',day:'numeric'})}`;
     }
+    // Episode assignment (Phase 2a): tappable, opens the MITOS reader.
+    if (a.type === 'episode' || a.episodeId) {
+      const t = String(a.title || 'Episodio').replace(/</g, '&lt;');
+      return `<span class="assignment-item" style="border:1px solid #b8860b;cursor:pointer" onclick="try{openComic()}catch(e){}">📖 Leer: ${t}${due}</span>`;
+    }
+    const cn = (CONCEPTS.find(c => c.key === a.concept) || {}).name || a.concept || a.mode || 'Practice';
     return `<span class="assignment-item" style="border:1px solid var(--accent);">📌 ${cn}${a.count ? ' ×'+a.count : ''}${due}</span>`;
   }).join('');
   items.innerHTML = classHtml + personalHtml;
@@ -11643,7 +11648,7 @@ document.addEventListener('keydown', e => {
     const p = EP.panels[idx], lv = p.levels[level] || p.levels.facil;
     stage.innerHTML = '<div class="m-panel">' +
       '<div class="m-art" style="position:relative;background:radial-gradient(circle at 50% 40%,' + EP.grad[0] + ',' + EP.grad[1] + ');">' + p.emoji +
-        '<img src="' + EP.imgBase + (idx + 1) + '.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.remove()">' +
+        '<img src="' + EP.imgBase + (idx + 1) + '.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain" onerror="this.remove()">' +
       '</div>' +
       '<div class="m-cap"><div class="m-es"></div><div class="m-en' + (showEN ? '' : ' off') + '">' + esc(p.en) + '</div>' +
       '<button class="m-play" aria-label="Read aloud">🔊 Escuchar</button>' +

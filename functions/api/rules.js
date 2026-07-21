@@ -18,6 +18,8 @@
 // KV keys: rules (array) · rules_flags {studentId:[...]} · rules_state
 // {ruleId:{studentId:ts}} (cooldown dedupe). Shares CORS/PIN with siblings.
 
+import { sendEmail } from './email.js';
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type, x-teacher-pin',
@@ -28,7 +30,7 @@ const CORS_HEADERS = {
 const COOLDOWN_MS = 20 * 3600 * 1000; // act at most ~once/day per rule+student
 const METRICS = ['inactive_days', 'accuracy_pct', 'xp_gain', 'due_count'];
 const OPS = ['gt', 'gte', 'lt', 'lte', 'eq'];
-const ACTION_TYPES = ['flag', 'assign_concept', 'set_goal', 'nudge'];
+const ACTION_TYPES = ['flag', 'assign_concept', 'set_goal', 'nudge', 'assign_episode', 'email'];
 
 function pinOk(request, env) {
   if (!env.TEACHER_PIN && !env.TEACHER_PIN2) return true;
@@ -159,6 +161,23 @@ export async function evaluateRules(env) {
         cfg.nudge = { text: tmpl((a.params && a.params.message) || rule.name, v), ts: now };
         cfg.updatedTs = now; dirtyCfg.add(s.studentId);
         did = 'nudge';
+      } else if (a.type === 'assign_episode') {
+        // Assign a MITOS episode (dedup on episodeId while still open).
+        const cfg = await cfgFor(s.studentId);
+        const epId = a.params && a.params.episodeId;
+        const has = (cfg.assignments || []).some(x => x.status !== 'done' && x.type === 'episode' && x.episodeId === epId);
+        if (epId && !has) {
+          cfg.assignments.push({ id: 'as_' + Math.random().toString(36).slice(2, 9), type: 'episode', episodeId: epId, title: (a.params && a.params.title) || epId, due: null, note: 'auto · ' + (rule.name || 'rule'), createdTs: now, status: 'open', doneTs: null });
+          cfg.updatedTs = now; dirtyCfg.add(s.studentId);
+        }
+        did = 'assign_episode';
+      } else if (a.type === 'email') {
+        // Autonomous email — only to students with an address on file.
+        const cfg = await cfgFor(s.studentId);
+        if (cfg.email) {
+          try { await sendEmail(env, cfg.email, (a.params && a.params.subject) || 'Spanish Lab', tmpl((a.params && a.params.message) || rule.name, v)); } catch (e) {}
+          did = 'email';
+        }
       }
       if (did) {
         state[rule.id][s.studentId] = now;
