@@ -45,6 +45,7 @@ memory (`recall <keyword>`). This file = the map.
 | `rules.js` | PIN | Automation engine (WHEN/DO). Exports `evaluateRules` (progress.js imports it). |
 | `parent.js` | token | Read-only curated progress for one student. |
 | `notes.js` | PIN | Private teacher notes + display renames. |
+| `email.js` | PIN (+ exports sendEmail) | Resend email: POST sends to a student; rules engine imports sendEmail for the `email` action. Needs RESEND_API_KEY + EMAIL_FROM. |
 
 ## KV keys (all in `PROGRESS_KV`)
 - Students: `stu_<id>` (studentId is `stu_`-prefixed random).
@@ -86,6 +87,34 @@ Plus: parent read-only view; per-card render hardening.
 ## Deliberately NOT applied yet
 - Student-side **difficulty** + **checkpointThreshold** overrides (stored in
   `cfg`, not wired — they touch checkpoint/exercise mechanics, need live-testing).
+
+## Student-facing modules (2026-07-15) — all in index.html, self-contained
+Each is its own IIFE: injects its own CSS/DOM, reuses shared globals
+(speakSpanish, ollamaJSON, CONCEPTS, STATIC_EXERCISES, conceptMastery), touches no
+existing HTML. Launched from ONE ✦ launcher (folds the old 📖/📝/🧠 FABs).
+
+- **MITOS comic reader** (`openComic`) — paged webtoon reader for the saga.
+  Episode data `EP` inline (pilot s1e1). 3 live levels (Fácil/Intermedio/Nativo)
+  swap captions instantly; English-subtitle toggle; tap-word gloss; TTS; panel art
+  from `mitos/s1e1/pN.png` (emoji fallback). Vocab captured with sentence+episode
+  → own SM-2 track `sl_mitos_srs` (NOT main deck) + end-of-episode "Practicar".
+  Library plan: `MITOS_LIBRARY.md` (30 chapters); producer `../generate_library.mjs`.
+- **Worksheet player** (`openWorksheet`) — self-contained graded quiz from
+  STATIC_EXERCISES (options SHUFFLED w/ correct-value tracking — banks store answer
+  as option[0]). Assignable (type:'worksheet'); completion → completeAssignment.
+- **El Cerebro** (`openCerebro`) — force-directed knowledge graph on canvas
+  (hand-rolled physics, no lib). Concept-neurons wired by CONCEPTS.requires +
+  association links; MITOS word-neurons; micro-neurons sprout per correct answer
+  (growth = the WEB, not node size). Additive bloom, traveling signals, particles.
+  Tap a concept → in-brain micro-practice feeds REAL conceptMastery (sl_mastery,
+  same store as whole app) + grows it live + ticks a neuronas/sinapsis meter.
+  Decay: sl_concept_seen → stale neurons desaturate + pulse 'repasar'.
+
+## Assignment types (cfg.assignments items)
+`type` ∈ practice {concept,mode,count} · episode {episodeId,title} · worksheet
+{concepts[],size,title}. All carry {id,due,status,doneTs}. Delivered in the
+student's assignment banner (tappable per type); rules engine can auto-assign each
+(assign_concept / assign_episode / assign_worksheet actions).
 
 ## Open / future
 - Tier-3: realtime classroom, web push (VAPID). KV-driven curriculum (per-class

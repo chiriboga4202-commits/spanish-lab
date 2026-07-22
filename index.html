@@ -11898,15 +11898,20 @@ document.addEventListener('keydown', e => {
   function buildGraph() {
     const nodes = [], edges = [], byId = {};
     try {
+      let SEEN = {}; try { SEEN = JSON.parse(localStorage.getItem('sl_concept_seen') || '{}'); } catch (e) {}
       CONCEPTS.forEach(c => {
         const mm = conceptMastery[c.key] || { correct: 0, total: 0 };
         const acc = mm.total ? mm.correct / mm.total : 0;
+        const days = SEEN[c.key] ? (Date.now() - SEEN[c.key]) / 86400000 : 0;
+        const stale = (mm.correct >= 3 && days > 5) ? Math.min(1, (days - 5) / 10) : 0; // forgetting curve
         // Concept size stays STABLE. Learning grows the WEB — synapses + micro-
         // neurons — not the ball. Skill-tree-as-neural-net.
-        const n = { id: 'c:' + c.key, type: 'concept', key: c.key, label: c.name, emoji: c.emoji || '', mastery: acc, attempts: mm.total, correct: mm.correct || 0, r: 13, x: (Math.random() - 0.5) * 320, y: (Math.random() - 0.5) * 320, vx: 0, vy: 0 };
+        const n = { id: 'c:' + c.key, type: 'concept', key: c.key, label: c.name, emoji: c.emoji || '', mastery: acc, attempts: mm.total, correct: mm.correct || 0, stale: stale, r: 13, x: (Math.random() - 0.5) * 320, y: (Math.random() - 0.5) * 320, vx: 0, vy: 0 };
         nodes.push(n); byId[n.id] = n;
       });
       CONCEPTS.forEach(c => (c.requires || []).forEach(rk => { if (byId['c:' + rk]) edges.push({ a: 'c:' + c.key, b: 'c:' + rk, len: 95 }); }));
+      // association links (tricky twins / related ideas) — light when both practiced
+      [['ser-estar', 'por-para'], ['present', 'pret-imp'], ['pret-imp', 'subjunctive'], ['gender', 'obj-pronouns'], ['reflexive', 'obj-pronouns'], ['gustar', 'obj-pronouns'], ['tu-usted', 'reflexive']].forEach(pr => { if (byId['c:' + pr[0]] && byId['c:' + pr[1]]) edges.push({ a: 'c:' + pr[0], b: 'c:' + pr[1], len: 120 }); });
       // micro-neurons: one per correct answer (capped), clustered around concept
       CONCEPTS.forEach(c => {
         const p = byId['c:' + c.key]; if (!p) return; const mm = conceptMastery[c.key] || { correct: 0, total: 0 };
@@ -11959,9 +11964,10 @@ document.addEventListener('keydown', e => {
     g.edges.forEach(e => {
       const a = g.byId[e.a], b = g.byId[e.b]; if (!a || !b) return;
       const active = a.mastery > 0.5 || b.mastery > 0.5, inF = foc && focus.set.has(a.id) && focus.set.has(b.id);
-      const alpha = (inF ? 0.55 : (foc ? 0.05 : (active ? 0.24 : 0.1))) * intro;
+      const strong = a.type === 'concept' && b.type === 'concept' && a.attempts > 0 && b.attempts > 0 && a.mastery > 0.6 && b.mastery > 0.6;
+      const alpha = (inF ? 0.55 : (foc ? 0.05 : (strong ? 0.42 : (active ? 0.24 : 0.1)))) * intro;
       const c = bez(a, b, 0.5);
-      ctx.strokeStyle = 'rgba(130,150,245,' + alpha + ')'; ctx.lineWidth = inF ? 1.7 : 1;
+      ctx.strokeStyle = strong ? 'rgba(150,235,255,' + alpha + ')' : 'rgba(130,150,245,' + alpha + ')'; ctx.lineWidth = inF ? 1.7 : (strong ? 1.4 : 1);
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.quadraticCurveTo(c.cx, c.cy, b.x, b.y); ctx.stroke();
     });
     // traveling signals
@@ -11978,7 +11984,7 @@ document.addEventListener('keydown', e => {
       const c = colorFor(n), lit = n.type === 'concept' && n.mastery >= 0.8;
       const gin = n.born ? Math.min(1, (now - n.born) / 500) : 1;
       const breathe = 1 + 0.06 * Math.sin(tt + n.x * 0.05) + (lit ? 0.1 * Math.sin(tt * 1.6 + n.y) : 0);
-      const rr = n.r * breathe * intro * gin, dim = (foc && !focus.set.has(n.id)) ? 0.22 : 1;
+      const rr = n.r * breathe * intro * gin, dim = ((foc && !focus.set.has(n.id)) ? 0.22 : 1) * (n.stale ? (1 - 0.45 * n.stale) : 1);
       const gr = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, rr * 3.2);
       gr.addColorStop(0, c.glow); gr.addColorStop(0.5, c.glow2); gr.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.globalAlpha = dim; ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(n.x, n.y, rr * 3.2, 0, 6.3); ctx.fill();
@@ -11993,6 +11999,7 @@ document.addEventListener('keydown', e => {
       ctx.fillStyle = c.core; ctx.beginPath(); ctx.arc(n.x, n.y, rr, 0, 6.3); ctx.fill();
       ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.beginPath(); ctx.arc(n.x - rr * 0.28, n.y - rr * 0.28, rr * 0.32, 0, 6.3); ctx.fill();
       if (n.id === foc) { ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(n.x, n.y, rr + 4, 0, 6.3); ctx.stroke(); }
+      if (n.type === 'concept' && n.stale > 0.2) { const pr = 0.5 + 0.5 * Math.sin(now / 380); ctx.strokeStyle = 'rgba(246,166,35,' + (0.25 + 0.45 * pr * n.stale) + ')'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(n.x, n.y, rr + 6 + pr * 2, 0, 6.3); ctx.stroke(); }
       if ((n.type === 'concept' || n.type === 'hub') || view.z > 1.7) { ctx.fillStyle = 'rgba(236,240,250,' + (n.type === 'concept' || n.type === 'hub' ? 0.95 : 0.6) + ')'; ctx.font = '600 ' + (n.type === 'concept' || n.type === 'hub' ? 12 : 9) + 'px -apple-system,Segoe UI,sans-serif'; ctx.textAlign = 'center'; ctx.fillText((n.emoji ? n.emoji + ' ' : '') + n.label, n.x, n.y - rr - 6); }
     });
     ctx.globalAlpha = 1;
@@ -12053,6 +12060,8 @@ document.addEventListener('keydown', e => {
       mm.total++; if (right) { mm.correct++; gained++; }
       conceptMastery[n.key] = mm;
       try { localStorage.setItem('sl_mastery', JSON.stringify(conceptMastery)); } catch (e) {}
+      try { const sn = JSON.parse(localStorage.getItem('sl_concept_seen') || '{}'); sn[n.key] = Date.now(); localStorage.setItem('sl_concept_seen', JSON.stringify(sn)); } catch (e) {}
+      n.stale = 0; // just reviewed → fresh again
       n.correct = mm.correct; n.attempts = mm.total; n.mastery = mm.total ? mm.correct / mm.total : 0;
       g.nodes.forEach(x => { if (x.type === 'micro' && x.parent === n.id) x.health = n.mastery; }); // recolor its cluster
       if (right) {
@@ -12181,6 +12190,34 @@ document.addEventListener('keydown', e => {
     window.addEventListener('resize', () => { if (overlay && overlay.classList.contains('open')) sizeCanvas(); });
   }
   window.openCerebro = openCerebro;
+})();
+
+// ── UNIFIED LAUNCHER (2026-07-15) — one button fans out to the surfaces ───────
+// Folds the 📖/📝/🧠 floating buttons into a single expanding menu (declutter).
+(function initLauncher() {
+  const css = document.createElement('style');
+  css.textContent =
+    '#comic-fab,#ws-fab,#cerebro-fab{display:none !important;}' +
+    '#lx-fab{position:fixed;right:18px;bottom:22px;z-index:410;width:58px;height:58px;border-radius:50%;border:none;background:linear-gradient(135deg,#5b8dee,#8b5cf6);color:#fff;font-size:24px;cursor:pointer;box-shadow:0 8px 26px rgba(91,141,238,.5);}' +
+    '#lx-menu{position:fixed;right:22px;bottom:92px;z-index:410;display:flex;flex-direction:column;gap:12px;align-items:flex-end;pointer-events:none;}' +
+    '#lx-menu.open{pointer-events:auto;}' +
+    '.lx-item{display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(14px);transition:opacity .22s,transform .22s;}' +
+    '#lx-menu.open .lx-item{opacity:1;transform:none;}' +
+    '.lx-item span{background:rgba(18,18,30,.92);color:#e8eef5;font-size:13px;font-weight:600;padding:6px 12px;border-radius:10px;border:1px solid #333;}' +
+    '.lx-item button{width:50px;height:50px;border-radius:50%;border:none;color:#fff;font-size:22px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.45);}';
+  document.head.appendChild(css);
+  const menu = document.createElement('div'); menu.id = 'lx-menu';
+  menu.innerHTML =
+    '<div class="lx-item" style="transition-delay:.02s"><span>Cerebro</span><button aria-label="El Cerebro" style="background:radial-gradient(circle at 40% 35%,#8b5cf6,#4c1d95)" onclick="lxGo(window.openCerebro)">🧠</button></div>' +
+    '<div class="lx-item" style="transition-delay:.06s"><span>Ejercicios</span><button aria-label="Ejercicios" style="background:linear-gradient(135deg,#2a9d8f,#264653)" onclick="lxGo(window.openWorksheet)">📝</button></div>' +
+    '<div class="lx-item" style="transition-delay:.1s"><span>Historias</span><button aria-label="MITOS" style="background:linear-gradient(135deg,#b8860b,#7a1f1f)" onclick="lxGo(window.openComic)">📖</button></div>';
+  document.body.appendChild(menu);
+  const fab = document.createElement('button'); fab.id = 'lx-fab'; fab.textContent = '✦'; fab.setAttribute('aria-label', 'Abrir menú');
+  document.body.appendChild(fab);
+  let open = false;
+  function toggle(o) { open = (o === undefined) ? !open : o; menu.classList.toggle('open', open); fab.textContent = open ? '✕' : '✦'; }
+  fab.onclick = () => toggle();
+  window.lxGo = (fn) => { toggle(false); try { if (typeof fn === 'function') fn(); } catch (e) {} };
 })();
 
 // ── BOOTSTRAP (2026-07-01) ────────────────────────────────────────────────────
