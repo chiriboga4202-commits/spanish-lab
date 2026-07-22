@@ -148,7 +148,7 @@ export async function onRequestPost(context) {
       const a = body.addAssignment;
       const item = {
         id: 'as_' + Math.random().toString(36).slice(2, 9),
-        type: a.type === 'episode' ? 'episode' : 'practice',
+        type: (a.type === 'episode' || a.type === 'worksheet') ? a.type : 'practice',
         due: a.due ? Number(a.due) : null,
         note: String(a.note || '').slice(0, 200),
         createdTs: Date.now(),
@@ -158,6 +158,10 @@ export async function onRequestPost(context) {
       if (item.type === 'episode') {
         item.episodeId = String(a.episodeId || '').slice(0, 60);
         item.title = String(a.title || a.episodeId || '').slice(0, 80);
+      } else if (item.type === 'worksheet') {
+        item.concepts = Array.isArray(a.concepts) ? a.concepts.slice(0, 20).map(c => String(c).slice(0, 40)) : [];
+        item.size = Math.max(1, Math.min(20, Math.round(Number(a.size) || 8)));
+        item.title = String(a.title || 'Hoja de ejercicios').slice(0, 80);
       } else {
         item.mode = String(a.mode || '').slice(0, 40);
         item.concept = String(a.concept || '').slice(0, 40);

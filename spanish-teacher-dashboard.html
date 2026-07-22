@@ -2776,6 +2776,32 @@ async function assignEpisode(sid) {
   } catch (e) { showToast('Failed: ' + e.message, 2500); }
 }
 
+// ── ASSIGN A WORKSHEET (2026-07-15, Phase 2) — auto-graded exercise set ──────
+async function assignWorksheet(sid) {
+  const s = _lastRoster.find(x => x.studentId === sid);
+  const pick = prompt('Worksheet for ' + ((s && s.name) || sid) + '\nPick topics (comma-separated numbers; blank = their studied topics):\n' +
+    TD_PATH.map((k, i) => (i + 1) + '. ' + k).join('\n'), '');
+  if (pick === null) return;
+  const concepts = (pick || '').split(',').map(x => parseInt(x.trim())).filter(n => n >= 1 && n <= TD_PATH.length).map(n => TD_PATH[n - 1]);
+  const sizeStr = prompt('How many questions? (1-20)', '8');
+  if (sizeStr === null) return;
+  const size = Math.max(1, Math.min(20, parseInt(sizeStr) || 8));
+  const dueStr = prompt('Due date (YYYY-MM-DD, blank = none):', '');
+  if (dueStr === null) return;
+  let due = null; if (dueStr.trim()) { const t = Date.parse(dueStr.trim()); if (!isNaN(t)) due = t; }
+  const title = concepts.length ? ('Hoja: ' + concepts.join(', ')) : 'Hoja de ejercicios';
+  try {
+    const res = await fetch(API_BASE + '/api/student-config', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...teacherPinHeaders() },
+      body: JSON.stringify({ studentId: sid, addAssignment: { type: 'worksheet', concepts, size, title, due } })
+    });
+    if (res.status === 401) { const p = (prompt('Teacher PIN:') || '').trim(); if (p) { localStorage.setItem('td_pin', p); return assignWorksheet(sid); } return; }
+    if (res.ok) { const d = await res.json(); if (d.config) _cfgCache[sid] = d.config; }
+    showToast('📝 Worksheet assigned (' + size + ' Qs)' + (due ? ' due ' + dueStr.trim() : ''), 2800);
+    refreshStudentProgress();
+  } catch (e) { showToast('Failed: ' + e.message, 2500); }
+}
+
 // ── PARENT LINK (2026-07-15) — read-only progress link per student ───────────
 async function parentLink(sid) {
   try {
@@ -3266,6 +3292,7 @@ async function refreshStudentProgress() {
           ((cfg.assignments || []).filter(a => a && a.status !== 'done').length ? '<span style="font-size:10px;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:2px 6px">📌 ' + (cfg.assignments || []).filter(a => a && a.status !== 'done').length + ' assigned</span>' : '') +
           '<button class="queue-concept-btn" style="opacity:.7" onclick="assignWithDue(\'' + s.studentId + '\')">📌 assign+due</button>' +
           '<button class="queue-concept-btn" style="opacity:.7" onclick="assignEpisode(\'' + s.studentId + '\')">📖 assign episode</button>' +
+          '<button class="queue-concept-btn" style="opacity:.7" onclick="assignWorksheet(\'' + s.studentId + '\')">📝 assign hoja</button>' +
           '<button class="queue-concept-btn" style="opacity:.7" onclick="setStudentGoal(\'' + s.studentId + '\')">🎚️ goal</button>' +
           '<button class="queue-concept-btn" style="opacity:.7" onclick="setStudentDifficulty(\'' + s.studentId + '\')">⚡ level</button>' +
           '<button class="queue-concept-btn" style="opacity:.7;border-color:' + (cfg.frozen ? '#4ade80;color:#4ade80' : '#ff6b6b;color:#ff6b6b') + '" onclick="toggleStudentFreeze(\'' + s.studentId + '\')">' + (cfg.frozen ? '▶️ resume' : '⏸️ freeze') + '</button>' +

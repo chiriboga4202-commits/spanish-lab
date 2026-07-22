@@ -30,7 +30,7 @@ const CORS_HEADERS = {
 const COOLDOWN_MS = 20 * 3600 * 1000; // act at most ~once/day per rule+student
 const METRICS = ['inactive_days', 'accuracy_pct', 'xp_gain', 'due_count'];
 const OPS = ['gt', 'gte', 'lt', 'lte', 'eq'];
-const ACTION_TYPES = ['flag', 'assign_concept', 'set_goal', 'nudge', 'assign_episode', 'email'];
+const ACTION_TYPES = ['flag', 'assign_concept', 'set_goal', 'nudge', 'assign_episode', 'email', 'assign_worksheet'];
 
 function pinOk(request, env) {
   if (!env.TEACHER_PIN && !env.TEACHER_PIN2) return true;
@@ -178,6 +178,16 @@ export async function evaluateRules(env) {
           try { await sendEmail(env, cfg.email, (a.params && a.params.subject) || 'Spanish Lab', tmpl((a.params && a.params.message) || rule.name, v)); } catch (e) {}
           did = 'email';
         }
+      } else if (a.type === 'assign_worksheet') {
+        // Assign a worksheet (dedup on title while still open).
+        const cfg = await cfgFor(s.studentId);
+        const title = (a.params && a.params.title) || 'Hoja de ejercicios';
+        const has = (cfg.assignments || []).some(x => x.status !== 'done' && x.type === 'worksheet' && x.title === title);
+        if (!has) {
+          cfg.assignments.push({ id: 'as_' + Math.random().toString(36).slice(2, 9), type: 'worksheet', concepts: (a.params && Array.isArray(a.params.concepts)) ? a.params.concepts : [], size: (a.params && a.params.size) || 8, title, due: null, note: 'auto · ' + (rule.name || 'rule'), createdTs: now, status: 'open', doneTs: null });
+          cfg.updatedTs = now; dirtyCfg.add(s.studentId);
+        }
+        did = 'assign_worksheet';
       }
       if (did) {
         state[rule.id][s.studentId] = now;

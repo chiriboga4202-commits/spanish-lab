@@ -11046,6 +11046,12 @@ function renderAssignmentBanner() {
       const t = String(a.title || 'Episodio').replace(/</g, '&lt;');
       return `<span class="assignment-item" style="border:1px solid #b8860b;cursor:pointer" onclick="try{openComic()}catch(e){}">📖 Leer: ${t}${due}</span>`;
     }
+    // Worksheet assignment (Phase 2): tappable, opens the graded worksheet.
+    if (a.type === 'worksheet') {
+      const t = String(a.title || 'Hoja de ejercicios').replace(/</g, '&lt;');
+      const spec = JSON.stringify({ concepts: a.concepts || [], size: a.size || 8, title: a.title || 'Hoja de ejercicios', assignmentId: a.id }).replace(/"/g, '&quot;');
+      return `<span class="assignment-item" style="border:1px solid #2a9d8f;cursor:pointer" data-spec="${spec}" onclick="try{openWorksheet(JSON.parse(this.dataset.spec))}catch(e){}">📝 ${t}${due}</span>`;
+    }
     const cn = (CONCEPTS.find(c => c.key === a.concept) || {}).name || a.concept || a.mode || 'Practice';
     return `<span class="assignment-item" style="border:1px solid var(--accent);">📌 ${cn}${a.count ? ' ×'+a.count : ''}${due}</span>`;
   }).join('');
