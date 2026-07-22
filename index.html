@@ -11448,7 +11448,7 @@ document.addEventListener('keydown', e => {
 // vocab capture. Placeholder art now (styled panels); real generated images drop
 // into panel.img later. Injects its own CSS/DOM/button — no existing HTML touched.
 (function initComic() {
-  const EP = {
+  const CH1 = {
     id: 'mitos-s1e1', series: 'MITOS', season: 1, episode: 1, title: 'El Ladrón del Fuego',
     grad: ['#1a1030', '#3a1c1c'], imgBase: 'mitos/s1e1/p',
     panels: [
@@ -11489,7 +11489,7 @@ document.addEventListener('keydown', e => {
   let level = localStorage.getItem('sl_mitos_level') || 'facil';
   let showEN = localStorage.getItem('sl_mitos_en') !== '0';
   let overlay, stage, nav, idx = 0;
-  const N = EP.panels.length;
+  const N = CH.panels.length;
   const esc = s => String(s == null ? '' : s).replace(/</g, '&lt;');
 
   const css = document.createElement('style');
@@ -11573,7 +11573,7 @@ document.addEventListener('keydown', e => {
   function collectVocab(words, sentence) {
     try {
       const v = vocabStore();
-      Object.keys(words || {}).forEach(k => { if (!v[k]) v[k] = { g: words[k], es: sentence || '', ep: EP.title, ts: Date.now() }; });
+      Object.keys(words || {}).forEach(k => { if (!v[k]) v[k] = { g: words[k], es: sentence || '', ep: CH.title, ts: Date.now() }; });
       localStorage.setItem('sl_mitos_vocab', JSON.stringify(v));
     } catch (e) {}
   }
@@ -11651,10 +11651,10 @@ document.addEventListener('keydown', e => {
     overlay.querySelectorAll('#mitos-bars .seg').forEach((s, i) => s.classList.toggle('done', i <= idx));
   }
   function paintPanel(speak) {
-    const p = EP.panels[idx], lv = p.levels[level] || p.levels.facil;
+    const p = CH.panels[idx], lv = p.levels[level] || p.levels.facil;
     stage.innerHTML = '<div class="m-panel">' +
-      '<div class="m-art" style="position:relative;background:radial-gradient(circle at 50% 40%,' + EP.grad[0] + ',' + EP.grad[1] + ');">' + p.emoji +
-        '<img src="' + EP.imgBase + (idx + 1) + '.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain" onerror="this.remove()">' +
+      '<div class="m-art" style="position:relative;background:radial-gradient(circle at 50% 40%,' + CH.grad[0] + ',' + CH.grad[1] + ');">' + p.emoji +
+        '<img src="' + CH.imgBase + (idx + 1) + '.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain" onerror="this.remove()">' +
       '</div>' +
       '<div class="m-cap"><div class="m-es"></div><div class="m-en' + (showEN ? '' : ' off') + '">' + esc(p.en) + '</div>' +
       '<button class="m-play" aria-label="Read aloud">🔊 Escuchar</button>' +
@@ -11677,8 +11677,8 @@ document.addEventListener('keydown', e => {
     stage.innerHTML = '<div class="m-panel" style="align-items:center;justify-content:center;text-align:center;padding:40px 24px;cursor:default">' +
       '<div style="font-size:64px">🔥</div>' +
       '<div style="font-size:16px;color:#e9c46a;font-weight:700;margin:14px 0 6px">Fin del episodio 1</div>' +
-      '<div style="font-size:15px;color:#c9c2d8;max-width:420px;line-height:1.6">' + esc(EP.closing.es) + '</div>' +
-      '<div style="font-size:13px;color:#8a8398;max-width:420px;margin-top:8px">' + esc(EP.closing.en) + '</div>' +
+      '<div style="font-size:15px;color:#c9c2d8;max-width:420px;line-height:1.6">' + esc(CH.closing.es) + '</div>' +
+      '<div style="font-size:13px;color:#8a8398;max-width:420px;margin-top:8px">' + esc(CH.closing.en) + '</div>' +
       '<div style="margin-top:20px;color:#b8860b;font-weight:700">Continuará… — Episodio 2 próximamente</div>' +
       (dueWords().length ? '<button class="m-play" id="mitos-practice" style="margin-top:22px;background:#b8860b;color:#111;font-weight:700">✨ Practicar ' + dueWords().length + ' palabras</button>' : '') +
       '</div>';
@@ -11714,7 +11714,7 @@ document.addEventListener('keydown', e => {
     if (!overlay) {
       overlay = document.createElement('div'); overlay.id = 'mitos-overlay';
       overlay.innerHTML =
-        '<div id="mitos-bars">' + EP.panels.map(() => '<div class="seg"></div>').join('') + '</div>' +
+        '<div id="mitos-bars">' + CH.panels.map(() => '<div class="seg"></div>').join('') + '</div>' +
         '<div id="mitos-head"><button class="m-x" aria-label="Close">✕</button>' +
           '<div id="mitos-seg">' + LEVELS.map(l => '<button data-lv="' + l + '"' + (l === level ? ' class="on"' : '') + '>' + LABEL[l] + '</button>').join('') + '</div>' +
           '<button class="m-toggle">' + (showEN ? '🇬🇧 EN on' : '🇬🇧 EN off') + '</button></div>' +
