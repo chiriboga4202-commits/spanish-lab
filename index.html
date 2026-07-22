@@ -11889,6 +11889,8 @@ document.addEventListener('keydown', e => {
   let overlay, canvas, ctx, raf, g, running = false;
   const view = { ox: 0, oy: 0, z: 1 };
   let drag = null, panning = false, last = { x: 0, y: 0 }, moved = false;
+  let particles = [], signals = [], bursts = [], t0 = 0;
+  const focus = { id: null, set: new Set() };
 
   function masteryOf(key) {
     try { const m = conceptMastery[key]; if (!m || !m.total) return { s: 0, n: 0 }; return { s: m.correct / m.total, n: m.total }; } catch (e) { return { s: 0, n: 0 }; }
@@ -11914,12 +11916,12 @@ document.addEventListener('keydown', e => {
     return { nodes, edges, byId };
   }
   function colorFor(n) {
-    if (n.type === 'word') return { core: '#9a7fd0', glow: 'rgba(154,127,208,.55)' };
-    if (n.type === 'hub') return { core: '#b8860b', glow: 'rgba(184,134,11,.55)' };
-    if (n.attempts === 0) return { core: '#39404e', glow: 'rgba(90,100,120,.25)' };
-    if (n.mastery >= 0.8) return { core: '#4ade80', glow: 'rgba(74,222,128,.6)' };
-    if (n.mastery >= 0.55) return { core: '#f6a623', glow: 'rgba(246,166,35,.5)' };
-    return { core: '#ff6b6b', glow: 'rgba(255,107,107,.5)' };
+    if (n.type === 'word') return { core: '#c4b0f0', glow: 'rgba(179,157,225,.5)', glow2: 'rgba(140,110,225,.22)' };
+    if (n.type === 'hub') return { core: '#f0c674', glow: 'rgba(230,180,100,.55)', glow2: 'rgba(184,134,11,.22)' };
+    if (n.attempts === 0) return { core: '#6b7690', glow: 'rgba(120,135,175,.26)', glow2: 'rgba(80,92,135,.1)' };
+    if (n.mastery >= 0.8) return { core: '#7cf0ad', glow: 'rgba(92,240,165,.58)', glow2: 'rgba(40,205,145,.26)' };
+    if (n.mastery >= 0.55) return { core: '#ffce80', glow: 'rgba(255,195,100,.52)', glow2: 'rgba(240,155,45,.22)' };
+    return { core: '#ff8a94', glow: 'rgba(255,125,138,.5)', glow2: 'rgba(230,75,95,.2)' };
   }
   function tick() {
     const N = g.nodes;
@@ -11930,26 +11932,75 @@ document.addEventListener('keydown', e => {
     g.edges.forEach(e => { const a = g.byId[e.a], b = g.byId[e.b]; if (!a || !b) return; let dx = b.x - a.x, dy = b.y - a.y; let d = Math.sqrt(dx * dx + dy * dy) || 1; let f = (d - 74) * 0.02, fx = f * dx / d, fy = f * dy / d; a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy; });
     N.forEach(n => { n.vx += -n.x * 0.0015; n.vy += -n.y * 0.0015; n.vx *= 0.86; n.vy *= 0.86; if (n !== drag) { n.x += n.vx; n.y += n.vy; } });
   }
+  function bez(a, b, t) { const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, dx = b.x - a.x, dy = b.y - a.y, L = Math.sqrt(dx * dx + dy * dy) || 1, cx = mx + (-dy / L) * 12, cy = my + (dx / L) * 12, it = 1 - t; return { x: it * it * a.x + 2 * it * t * cx + t * t * b.x, y: it * it * a.y + 2 * it * t * cy + t * t * b.y, cx, cy }; }
   function render() {
-    const W = canvas.width, H = canvas.height;
-    ctx.clearRect(0, 0, W, H);
-    ctx.save(); ctx.translate(W / 2 + view.ox, H / 2 + view.oy); ctx.scale(view.z, view.z);
-    g.edges.forEach(e => { const a = g.byId[e.a], b = g.byId[e.b]; if (!a || !b) return; ctx.strokeStyle = 'rgba(120,140,200,.13)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); });
-    const t = Date.now() / 600;
-    g.nodes.forEach(n => {
-      const c = colorFor(n); const pulse = (n.type !== 'word' && n.mastery >= 0.8) ? (1 + 0.12 * Math.sin(t + n.x)) : 1; const rr = n.r * pulse;
-      const gr = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, rr * 2.6); gr.addColorStop(0, c.glow); gr.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(n.x, n.y, rr * 2.6, 0, 6.3); ctx.fill();
-      ctx.fillStyle = c.core; ctx.beginPath(); ctx.arc(n.x, n.y, rr, 0, 6.3); ctx.fill();
-      if (n.type !== 'word' || view.z > 1.5) { ctx.fillStyle = 'rgba(232,238,248,' + (n.type === 'word' ? 0.55 : 0.92) + ')'; ctx.font = (n.type === 'word' ? 9 : 12) + 'px -apple-system,sans-serif'; ctx.textAlign = 'center'; ctx.fillText((n.emoji ? n.emoji + ' ' : '') + n.label, n.x, n.y - rr - 5); }
-    });
+    const W = canvas.width, H = canvas.height, now = Date.now();
+    // deep space
+    const bg = ctx.createRadialGradient(W / 2, H * 0.42, 0, W / 2, H * 0.42, Math.max(W, H) * 0.8);
+    bg.addColorStop(0, '#100b26'); bg.addColorStop(0.55, '#080611'); bg.addColorStop(1, '#040308');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    ctx.save(); ctx.globalCompositeOperation = 'lighter';
+    particles.forEach(p => { p.x += p.vx; p.y += p.vy; if (p.x < 0) p.x += W; else if (p.x > W) p.x -= W; if (p.y < 0) p.y += H; else if (p.y > H) p.y -= H; ctx.fillStyle = 'rgba(150,140,225,' + p.a + ')'; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.3); ctx.fill(); });
     ctx.restore();
+
+    const intro = Math.min(1, (now - t0) / 900), foc = focus.id, tt = now / 700;
+    ctx.save(); ctx.translate(W / 2 + view.ox, H / 2 + view.oy); ctx.scale(view.z, view.z);
+    ctx.globalCompositeOperation = 'lighter';
+    // synapses (curved, additive)
+    g.edges.forEach(e => {
+      const a = g.byId[e.a], b = g.byId[e.b]; if (!a || !b) return;
+      const active = a.mastery > 0.5 || b.mastery > 0.5, inF = foc && focus.set.has(a.id) && focus.set.has(b.id);
+      const alpha = (inF ? 0.55 : (foc ? 0.05 : (active ? 0.24 : 0.1))) * intro;
+      const c = bez(a, b, 0.5);
+      ctx.strokeStyle = 'rgba(130,150,245,' + alpha + ')'; ctx.lineWidth = inF ? 1.7 : 1;
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.quadraticCurveTo(c.cx, c.cy, b.x, b.y); ctx.stroke();
+    });
+    // traveling signals
+    for (let i = signals.length - 1; i >= 0; i--) {
+      const s = signals[i]; s.p += s.speed; const e = g.edges[s.ei];
+      if (s.p >= 1 || !e) { signals.splice(i, 1); continue; }
+      const a = g.byId[e.a], b = g.byId[e.b]; if (!a || !b) { signals.splice(i, 1); continue; }
+      const pt = bez(a, b, s.p); ctx.fillStyle = s.col; ctx.beginPath(); ctx.arc(pt.x, pt.y, 2.3, 0, 6.3); ctx.fill();
+    }
+    // mastery bursts
+    for (let i = bursts.length - 1; i >= 0; i--) { const bu = bursts[i]; bu.r += 5; bu.a *= 0.93; if (bu.a < 0.03) { bursts.splice(i, 1); continue; } ctx.strokeStyle = 'rgba(150,255,205,' + bu.a + ')'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(bu.x, bu.y, bu.r, 0, 6.3); ctx.stroke(); }
+    // node bloom (additive)
+    g.nodes.forEach(n => {
+      const c = colorFor(n), lit = n.type !== 'word' && n.mastery >= 0.8;
+      const breathe = 1 + 0.06 * Math.sin(tt + n.x * 0.05) + (lit ? 0.1 * Math.sin(tt * 1.6 + n.y) : 0);
+      const rr = n.r * breathe * intro, dim = (foc && !focus.set.has(n.id)) ? 0.22 : 1;
+      const gr = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, rr * 3.2);
+      gr.addColorStop(0, c.glow); gr.addColorStop(0.5, c.glow2); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.globalAlpha = dim; ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(n.x, n.y, rr * 3.2, 0, 6.3); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    // cores + labels (normal blend)
+    ctx.globalCompositeOperation = 'source-over';
+    g.nodes.forEach(n => {
+      const c = colorFor(n), rr = n.r * intro, dim = (foc && !focus.set.has(n.id)) ? 0.3 : 1;
+      ctx.globalAlpha = dim;
+      ctx.fillStyle = c.core; ctx.beginPath(); ctx.arc(n.x, n.y, rr, 0, 6.3); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.beginPath(); ctx.arc(n.x - rr * 0.28, n.y - rr * 0.28, rr * 0.32, 0, 6.3); ctx.fill();
+      if (n.id === foc) { ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(n.x, n.y, rr + 4, 0, 6.3); ctx.stroke(); }
+      if (n.type !== 'word' || view.z > 1.5) { ctx.fillStyle = 'rgba(236,240,250,' + (n.type === 'word' ? 0.6 : 0.95) + ')'; ctx.font = '600 ' + (n.type === 'word' ? 9 : 12) + 'px -apple-system,Segoe UI,sans-serif'; ctx.textAlign = 'center'; ctx.fillText((n.emoji ? n.emoji + ' ' : '') + n.label, n.x, n.y - rr - 6); }
+    });
+    ctx.globalAlpha = 1;
+    ctx.restore();
+    // spawn signals along active synapses
+    if (signals.length < 42 && Math.random() < 0.4) {
+      const act = []; for (let i = 0; i < g.edges.length; i++) { const e = g.edges[i], a = g.byId[e.a], b = g.byId[e.b]; if (a && b && (a.mastery > 0.5 || b.mastery > 0.5)) act.push(i); }
+      if (act.length) signals.push({ ei: act[(Math.random() * act.length) | 0], p: 0, speed: 0.008 + Math.random() * 0.014, col: 'rgba(120,235,255,.9)' });
+    }
   }
   function loop() { if (!running) return; tick(); render(); raf = requestAnimationFrame(loop); }
   function toWorld(px, py) { return { x: (px - canvas.width / 2 - view.ox) / view.z, y: (py - canvas.height / 2 - view.oy) / view.z }; }
   function nodeAt(px, py) { const w = toWorld(px, py); let best = null, bd = 1e9; g.nodes.forEach(n => { const dx = n.x - w.x, dy = n.y - w.y, d = Math.sqrt(dx * dx + dy * dy); if (d < n.r + 6 && d < bd) { bd = d; best = n; } }); return best; }
 
   function tapNode(n) {
+    // focus its subgraph, fire a burst + signals down every synapse
+    focus.id = n.id; focus.set = new Set([n.id]);
+    g.edges.forEach((e, i) => { if (e.a === n.id) { focus.set.add(e.b); signals.push({ ei: i, p: 0, speed: 0.022, col: 'rgba(150,255,210,.95)' }); } else if (e.b === n.id) { focus.set.add(e.a); signals.push({ ei: i, p: 0, speed: 0.022, col: 'rgba(150,255,210,.95)' }); } });
+    bursts.push({ x: n.x, y: n.y, r: n.r, a: 0.85 });
     if (n.type === 'concept') {
       showInsight(n.attempts === 0 ? 'Neurona nueva. Practica para encenderla.' : INSIGHTS[Math.floor(Math.random() * INSIGHTS.length)]);
       try { if (typeof openWorksheet === 'function') openWorksheet({ concepts: [n.key], size: 5, title: 'Reforzar: ' + n.label }); } catch (e) {}
@@ -12007,6 +12058,8 @@ document.addEventListener('keydown', e => {
     }
     overlay.classList.add('open'); document.body.style.overflow = 'hidden';
     sizeCanvas(); g = buildGraph(); view.ox = 0; view.oy = 0; view.z = 1;
+    particles = []; for (let i = 0; i < 70; i++) particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.15, vy: (Math.random() - 0.5) * 0.15, r: Math.random() * 1.4 + 0.3, a: Math.random() * 0.35 + 0.1 });
+    signals = []; bursts = []; t0 = Date.now(); focus.id = null; focus.set = new Set();
     running = true; loop();
     if (!localStorage.getItem('sl_cerebro_intro')) { try { localStorage.setItem('sl_cerebro_intro', '1'); } catch (e) {} modal('🧠 Tu cerebro en español', INTRO, 'Empezar', () => showInsight(INSIGHTS[2])); }
     else setTimeout(() => showInsight(INSIGHTS[Math.floor(Math.random() * INSIGHTS.length)]), 900);
@@ -12029,6 +12082,7 @@ document.addEventListener('keydown', e => {
     });
     canvas.addEventListener('pointerup', ev => {
       if (drag && !moved) tapNode(drag);
+      else if (!drag && !moved) { focus.id = null; focus.set = new Set(); } // tap empty space → unfocus
       drag = null; panning = false;
       try { canvas.releasePointerCapture(ev.pointerId); } catch (e) {}
     });
