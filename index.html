@@ -11864,6 +11864,180 @@ document.addEventListener('keydown', e => {
   window.openWorksheet = openWorksheet;
 })();
 
+// ── EL CEREBRO (2026-07-15) — your knowledge as a living, growing brain ───────
+// A force-directed graph of the learner's knowledge: concept-neurons wired by
+// real prerequisites (CONCEPTS.requires), word-neurons from MITOS, glowing by
+// mastery (conceptMastery). Tap a dim neuron to practice and light it up.
+// Narrated by the real neuroscience of language learning. Hand-rolled physics on
+// canvas — no library. Self-contained (own button/overlay); reuses openWorksheet.
+(function initCerebro() {
+  const INSIGHTS = [
+    'Cada repaso añade mielina: la conexión se vuelve más rápida. Por eso el repaso espaciado funciona.',
+    '«Las neuronas que se activan juntas, se conectan juntas.» Practicar une la palabra con su significado.',
+    'Aprender un idioma cambia tu cerebro de verdad: crea conexiones nuevas que no desaparecen.',
+    'Tu cerebro consolida lo aprendido con el tiempo (y durmiendo). Por eso poco a poco gana a estudiar de golpe.',
+    'Cada neurona encendida aquí es una conexión real creciendo dentro de ti.',
+  ];
+  const INTRO = 'Este es tu cerebro aprendiendo español. Cada concepto y cada palabra es una neurona. ' +
+    'Cuando practicas, se encienden y se conectan — igual que dentro de tu cabeza. Tu cerebro real crece de la misma forma: ' +
+    'aprender un idioma crea conexiones nuevas que se fortalecen con cada repaso.\n\nToca las neuronas apagadas para encenderlas. 🧠';
+  const DEEP = 'Neuroplasticidad: tu cerebro se reorganiza físicamente al aprender — quienes estudian idiomas desarrollan conexiones más densas en las zonas del lenguaje.\n\n' +
+    'Ley de Hebb: «las neuronas que se activan juntas, se conectan juntas». Cada vez que unes una palabra con su idea, refuerzas esa vía exacta.\n\n' +
+    'Mielinización: la repetición recubre la vía de mielina, y recuperar la palabra se vuelve más rápido y automático. Ese es el motivo del repaso espaciado.\n\n' +
+    'Consolidación: los recuerdos se asientan con el tiempo y el sueño. Por eso practicar un poco cada día gana a estudiar todo de golpe.';
+
+  let overlay, canvas, ctx, raf, g, running = false;
+  const view = { ox: 0, oy: 0, z: 1 };
+  let drag = null, panning = false, last = { x: 0, y: 0 }, moved = false;
+
+  function masteryOf(key) {
+    try { const m = conceptMastery[key]; if (!m || !m.total) return { s: 0, n: 0 }; return { s: m.correct / m.total, n: m.total }; } catch (e) { return { s: 0, n: 0 }; }
+  }
+  function buildGraph() {
+    const nodes = [], edges = [], byId = {};
+    try {
+      CONCEPTS.forEach(c => {
+        const m = masteryOf(c.key);
+        const strength = m.n >= 4 ? m.s : m.s * 0.4;
+        const n = { id: 'c:' + c.key, type: 'concept', key: c.key, label: c.name, emoji: c.emoji || '', mastery: strength, attempts: m.n, r: 11 + strength * 11, x: (Math.random() - 0.5) * 320, y: (Math.random() - 0.5) * 320, vx: 0, vy: 0 };
+        nodes.push(n); byId[n.id] = n;
+      });
+      CONCEPTS.forEach(c => (c.requires || []).forEach(rk => { if (byId['c:' + rk]) edges.push({ a: 'c:' + c.key, b: 'c:' + rk }); }));
+    } catch (e) {}
+    let vocab = {}; try { vocab = JSON.parse(localStorage.getItem('sl_mitos_vocab') || '{}'); } catch (e) {}
+    const words = Object.keys(vocab).slice(0, 60);
+    if (words.length) {
+      const hub = { id: 'mitos', type: 'hub', label: 'MITOS', emoji: '📖', mastery: 1, attempts: 1, r: 15, x: 0, y: 0, vx: 0, vy: 0 };
+      nodes.push(hub); byId.mitos = hub;
+      words.forEach(w => { const n = { id: 'w:' + w, type: 'word', word: w, gloss: (vocab[w] && vocab[w].g) || '', label: w, mastery: 0.5, attempts: 1, r: 6, x: (Math.random() - 0.5) * 200, y: (Math.random() - 0.5) * 200, vx: 0, vy: 0 }; nodes.push(n); byId[n.id] = n; edges.push({ a: n.id, b: 'mitos' }); });
+    }
+    return { nodes, edges, byId };
+  }
+  function colorFor(n) {
+    if (n.type === 'word') return { core: '#9a7fd0', glow: 'rgba(154,127,208,.55)' };
+    if (n.type === 'hub') return { core: '#b8860b', glow: 'rgba(184,134,11,.55)' };
+    if (n.attempts === 0) return { core: '#39404e', glow: 'rgba(90,100,120,.25)' };
+    if (n.mastery >= 0.8) return { core: '#4ade80', glow: 'rgba(74,222,128,.6)' };
+    if (n.mastery >= 0.55) return { core: '#f6a623', glow: 'rgba(246,166,35,.5)' };
+    return { core: '#ff6b6b', glow: 'rgba(255,107,107,.5)' };
+  }
+  function tick() {
+    const N = g.nodes;
+    for (let i = 0; i < N.length; i++) for (let j = i + 1; j < N.length; j++) {
+      const a = N[i], b = N[j]; let dx = a.x - b.x, dy = a.y - b.y; let d2 = dx * dx + dy * dy + 0.01;
+      const f = 900 / d2, d = Math.sqrt(d2), fx = f * dx / d, fy = f * dy / d; a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
+    }
+    g.edges.forEach(e => { const a = g.byId[e.a], b = g.byId[e.b]; if (!a || !b) return; let dx = b.x - a.x, dy = b.y - a.y; let d = Math.sqrt(dx * dx + dy * dy) || 1; let f = (d - 74) * 0.02, fx = f * dx / d, fy = f * dy / d; a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy; });
+    N.forEach(n => { n.vx += -n.x * 0.0015; n.vy += -n.y * 0.0015; n.vx *= 0.86; n.vy *= 0.86; if (n !== drag) { n.x += n.vx; n.y += n.vy; } });
+  }
+  function render() {
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+    ctx.save(); ctx.translate(W / 2 + view.ox, H / 2 + view.oy); ctx.scale(view.z, view.z);
+    g.edges.forEach(e => { const a = g.byId[e.a], b = g.byId[e.b]; if (!a || !b) return; ctx.strokeStyle = 'rgba(120,140,200,.13)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); });
+    const t = Date.now() / 600;
+    g.nodes.forEach(n => {
+      const c = colorFor(n); const pulse = (n.type !== 'word' && n.mastery >= 0.8) ? (1 + 0.12 * Math.sin(t + n.x)) : 1; const rr = n.r * pulse;
+      const gr = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, rr * 2.6); gr.addColorStop(0, c.glow); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(n.x, n.y, rr * 2.6, 0, 6.3); ctx.fill();
+      ctx.fillStyle = c.core; ctx.beginPath(); ctx.arc(n.x, n.y, rr, 0, 6.3); ctx.fill();
+      if (n.type !== 'word' || view.z > 1.5) { ctx.fillStyle = 'rgba(232,238,248,' + (n.type === 'word' ? 0.55 : 0.92) + ')'; ctx.font = (n.type === 'word' ? 9 : 12) + 'px -apple-system,sans-serif'; ctx.textAlign = 'center'; ctx.fillText((n.emoji ? n.emoji + ' ' : '') + n.label, n.x, n.y - rr - 5); }
+    });
+    ctx.restore();
+  }
+  function loop() { if (!running) return; tick(); render(); raf = requestAnimationFrame(loop); }
+  function toWorld(px, py) { return { x: (px - canvas.width / 2 - view.ox) / view.z, y: (py - canvas.height / 2 - view.oy) / view.z }; }
+  function nodeAt(px, py) { const w = toWorld(px, py); let best = null, bd = 1e9; g.nodes.forEach(n => { const dx = n.x - w.x, dy = n.y - w.y, d = Math.sqrt(dx * dx + dy * dy); if (d < n.r + 6 && d < bd) { bd = d; best = n; } }); return best; }
+
+  function tapNode(n) {
+    if (n.type === 'concept') {
+      showInsight(n.attempts === 0 ? 'Neurona nueva. Practica para encenderla.' : INSIGHTS[Math.floor(Math.random() * INSIGHTS.length)]);
+      try { if (typeof openWorksheet === 'function') openWorksheet({ concepts: [n.key], size: 5, title: 'Reforzar: ' + n.label }); } catch (e) {}
+    } else if (n.type === 'word') {
+      showInsight('«' + n.word + '» — ' + (n.gloss || '¿?'));
+      try { speakSpanish(n.word); } catch (e) {}
+    } else { showInsight('MITOS: ' + (g.nodes.filter(x => x.type === 'word').length) + ' palabras conectadas.'); }
+  }
+  function showInsight(text) {
+    const el = overlay.querySelector('#cb-insight'); if (!el) return;
+    el.textContent = text; el.style.opacity = '1';
+    clearTimeout(el._t); el._t = setTimeout(() => { el.style.opacity = '0'; }, 5200);
+  }
+
+  const css = document.createElement('style');
+  css.textContent =
+    '#cerebro-fab{position:fixed;right:16px;bottom:264px;z-index:400;width:54px;height:54px;border-radius:50%;border:none;background:radial-gradient(circle at 40% 35%,#8b5cf6,#4c1d95);color:#fff;font-size:24px;cursor:pointer;box-shadow:0 6px 22px rgba(124,58,237,.5);}' +
+    '#cerebro-overlay{position:fixed;inset:0;z-index:800;background:#060812;display:none;flex-direction:column;}' +
+    '#cerebro-overlay.open{display:flex;}' +
+    '#cb-top{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;align-items:center;gap:8px;padding:12px 14px;pointer-events:none;}' +
+    '#cb-top button{pointer-events:auto;}' +
+    '.cb-x{background:rgba(255,255,255,.14);border:none;color:#fff;border-radius:50%;width:34px;height:34px;font-size:15px;cursor:pointer;}' +
+    '.cb-title{color:#c9b8f0;font-weight:800;font-size:15px;}' +
+    '.cb-info{margin-left:auto;background:rgba(255,255,255,.14);border:none;color:#fff;border-radius:16px;padding:6px 12px;font-size:12px;cursor:pointer;}' +
+    '#cb-canvas{flex:1;display:block;touch-action:none;}' +
+    '#cb-insight{position:absolute;left:16px;right:16px;bottom:26px;z-index:2;text-align:center;color:#e6e0f5;font-size:13.5px;background:rgba(20,16,38,.82);border:1px solid #3a2f5a;border-radius:12px;padding:12px 16px;max-width:520px;margin:0 auto;opacity:0;transition:opacity .4s;pointer-events:none;}' +
+    '.cb-modal{position:absolute;inset:0;z-index:5;background:rgba(4,4,10,.86);display:flex;align-items:center;justify-content:center;padding:24px;}' +
+    '.cb-card{background:#141024;border:1px solid #3a2f5a;border-radius:16px;padding:22px;max-width:420px;color:#e6e0f5;}' +
+    '.cb-card h3{margin:0 0 10px;color:#c9b8f0;font-size:17px;}' +
+    '.cb-card p{font-size:14px;line-height:1.6;white-space:pre-wrap;margin:0 0 14px;}' +
+    '.cb-card button{background:#8b5cf6;border:none;color:#fff;border-radius:10px;padding:11px 20px;font-size:14px;font-weight:700;cursor:pointer;width:100%;}';
+  document.head.appendChild(css);
+
+  const fab = document.createElement('button');
+  fab.id = 'cerebro-fab'; fab.textContent = '🧠'; fab.title = 'El Cerebro — tu conocimiento';
+  fab.setAttribute('aria-label', 'Open El Cerebro'); fab.onclick = openCerebro;
+  document.body.appendChild(fab);
+
+  function modal(title, body, btn, onBtn) {
+    const m = document.createElement('div'); m.className = 'cb-modal';
+    m.innerHTML = '<div class="cb-card"><h3>' + title + '</h3><p>' + String(body).replace(/</g, '&lt;') + '</p><button>' + btn + '</button></div>';
+    m.querySelector('button').onclick = () => { m.remove(); if (onBtn) onBtn(); };
+    overlay.appendChild(m);
+  }
+  function sizeCanvas() { canvas.width = overlay.clientWidth; canvas.height = overlay.clientHeight; }
+  function openCerebro() {
+    if (!overlay) {
+      overlay = document.createElement('div'); overlay.id = 'cerebro-overlay';
+      overlay.innerHTML = '<div id="cb-top"><button class="cb-x" aria-label="Close">✕</button><span class="cb-title">🧠 El Cerebro</span><button class="cb-info">¿Cómo aprende tu cerebro?</button></div><canvas id="cb-canvas"></canvas><div id="cb-insight"></div>';
+      document.body.appendChild(overlay);
+      canvas = overlay.querySelector('#cb-canvas'); ctx = canvas.getContext('2d');
+      overlay.querySelector('.cb-x').onclick = closeCerebro;
+      overlay.querySelector('.cb-info').onclick = () => modal('¿Cómo aprende tu cerebro?', DEEP, 'Entendido', null);
+      bindPointer();
+    }
+    overlay.classList.add('open'); document.body.style.overflow = 'hidden';
+    sizeCanvas(); g = buildGraph(); view.ox = 0; view.oy = 0; view.z = 1;
+    running = true; loop();
+    if (!localStorage.getItem('sl_cerebro_intro')) { try { localStorage.setItem('sl_cerebro_intro', '1'); } catch (e) {} modal('🧠 Tu cerebro en español', INTRO, 'Empezar', () => showInsight(INSIGHTS[2])); }
+    else setTimeout(() => showInsight(INSIGHTS[Math.floor(Math.random() * INSIGHTS.length)]), 900);
+  }
+  function closeCerebro() { running = false; if (raf) cancelAnimationFrame(raf); if (overlay) overlay.classList.remove('open'); document.body.style.overflow = ''; try { window.speechSynthesis.cancel(); } catch (e) {} }
+  function bindPointer() {
+    const rect = () => canvas.getBoundingClientRect();
+    canvas.addEventListener('pointerdown', ev => {
+      const r = rect(), px = ev.clientX - r.left, py = ev.clientY - r.top;
+      const n = nodeAt(px, py); moved = false; last = { x: ev.clientX, y: ev.clientY };
+      if (n) { drag = n; } else { panning = true; }
+      canvas.setPointerCapture(ev.pointerId);
+    });
+    canvas.addEventListener('pointermove', ev => {
+      const dx = ev.clientX - last.x, dy = ev.clientY - last.y;
+      if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
+      if (drag) { const r = rect(); const w = toWorld(ev.clientX - r.left, ev.clientY - r.top); drag.x = w.x; drag.y = w.y; drag.vx = 0; drag.vy = 0; }
+      else if (panning) { view.ox += dx; view.oy += dy; }
+      last = { x: ev.clientX, y: ev.clientY };
+    });
+    canvas.addEventListener('pointerup', ev => {
+      if (drag && !moved) tapNode(drag);
+      drag = null; panning = false;
+      try { canvas.releasePointerCapture(ev.pointerId); } catch (e) {}
+    });
+    canvas.addEventListener('wheel', ev => { ev.preventDefault(); const f = ev.deltaY < 0 ? 1.12 : 0.89; view.z = Math.max(0.4, Math.min(3, view.z * f)); }, { passive: false });
+    window.addEventListener('resize', () => { if (overlay && overlay.classList.contains('open')) sizeCanvas(); });
+  }
+  window.openCerebro = openCerebro;
+})();
+
 // ── BOOTSTRAP (2026-07-01) ────────────────────────────────────────────────────
 // init() was defined but never actually called anywhere in the file — nothing
 // wired it to page load (no <body onload>, no DOMContentLoaded listener). That
