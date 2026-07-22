@@ -11901,22 +11901,30 @@ document.addEventListener('keydown', e => {
       CONCEPTS.forEach(c => {
         const mm = conceptMastery[c.key] || { correct: 0, total: 0 };
         const acc = mm.total ? mm.correct / mm.total : 0;
-        const vol = Math.min(1, (mm.correct || 0) / 15); // grows with how MUCH you've gotten right
-        const n = { id: 'c:' + c.key, type: 'concept', key: c.key, label: c.name, emoji: c.emoji || '', mastery: acc, vol: vol, attempts: mm.total, correct: mm.correct || 0, r: 9 + vol * 15, x: (Math.random() - 0.5) * 320, y: (Math.random() - 0.5) * 320, vx: 0, vy: 0 };
+        // Concept size stays STABLE. Learning grows the WEB — synapses + micro-
+        // neurons — not the ball. Skill-tree-as-neural-net.
+        const n = { id: 'c:' + c.key, type: 'concept', key: c.key, label: c.name, emoji: c.emoji || '', mastery: acc, attempts: mm.total, correct: mm.correct || 0, r: 13, x: (Math.random() - 0.5) * 320, y: (Math.random() - 0.5) * 320, vx: 0, vy: 0 };
         nodes.push(n); byId[n.id] = n;
       });
-      CONCEPTS.forEach(c => (c.requires || []).forEach(rk => { if (byId['c:' + rk]) edges.push({ a: 'c:' + c.key, b: 'c:' + rk }); }));
+      CONCEPTS.forEach(c => (c.requires || []).forEach(rk => { if (byId['c:' + rk]) edges.push({ a: 'c:' + c.key, b: 'c:' + rk, len: 95 }); }));
+      // micro-neurons: one per correct answer (capped), clustered around concept
+      CONCEPTS.forEach(c => {
+        const p = byId['c:' + c.key]; if (!p) return; const mm = conceptMastery[c.key] || { correct: 0, total: 0 };
+        const acc = mm.total ? mm.correct / mm.total : 1, cnt = Math.min(14, mm.correct || 0);
+        for (let k = 0; k < cnt; k++) { const ang = Math.random() * 6.28, rad = 26 + Math.random() * 10; const m = { id: 'm:' + c.key + ':' + k, type: 'micro', parent: p.id, health: acc, r: 3.6, x: p.x + Math.cos(ang) * rad, y: p.y + Math.sin(ang) * rad, vx: 0, vy: 0, born: 0 }; nodes.push(m); byId[m.id] = m; edges.push({ a: m.id, b: p.id, len: 26 }); }
+      });
     } catch (e) {}
     let vocab = {}; try { vocab = JSON.parse(localStorage.getItem('sl_mitos_vocab') || '{}'); } catch (e) {}
     const words = Object.keys(vocab).slice(0, 60);
     if (words.length) {
       const hub = { id: 'mitos', type: 'hub', label: 'MITOS', emoji: '📖', mastery: 1, attempts: 1, r: 15, x: 0, y: 0, vx: 0, vy: 0 };
       nodes.push(hub); byId.mitos = hub;
-      words.forEach(w => { const n = { id: 'w:' + w, type: 'word', word: w, gloss: (vocab[w] && vocab[w].g) || '', label: w, mastery: 0.5, attempts: 1, r: 6, x: (Math.random() - 0.5) * 200, y: (Math.random() - 0.5) * 200, vx: 0, vy: 0 }; nodes.push(n); byId[n.id] = n; edges.push({ a: n.id, b: 'mitos' }); });
+      words.forEach(w => { const n = { id: 'w:' + w, type: 'word', word: w, gloss: (vocab[w] && vocab[w].g) || '', label: w, mastery: 0.5, attempts: 1, r: 6, x: (Math.random() - 0.5) * 200, y: (Math.random() - 0.5) * 200, vx: 0, vy: 0 }; nodes.push(n); byId[n.id] = n; edges.push({ a: n.id, b: 'mitos', len: 26 }); });
     }
     return { nodes, edges, byId };
   }
   function colorFor(n) {
+    if (n.type === 'micro') { const h = n.health; if (h >= 0.8) return { core: '#7cf0ad', glow: 'rgba(92,240,165,.5)', glow2: 'rgba(40,205,145,.2)' }; if (h >= 0.55) return { core: '#ffce80', glow: 'rgba(255,195,100,.45)', glow2: 'rgba(240,155,45,.18)' }; return { core: '#ff9aa2', glow: 'rgba(255,140,150,.42)', glow2: 'rgba(230,90,110,.16)' }; }
     if (n.type === 'word') return { core: '#c4b0f0', glow: 'rgba(179,157,225,.5)', glow2: 'rgba(140,110,225,.22)' };
     if (n.type === 'hub') return { core: '#f0c674', glow: 'rgba(230,180,100,.55)', glow2: 'rgba(184,134,11,.22)' };
     if (n.attempts === 0) return { core: '#6b7690', glow: 'rgba(120,135,175,.26)', glow2: 'rgba(80,92,135,.1)' };
@@ -11928,9 +11936,9 @@ document.addEventListener('keydown', e => {
     const N = g.nodes;
     for (let i = 0; i < N.length; i++) for (let j = i + 1; j < N.length; j++) {
       const a = N[i], b = N[j]; let dx = a.x - b.x, dy = a.y - b.y; let d2 = dx * dx + dy * dy + 0.01;
-      const f = 900 / d2, d = Math.sqrt(d2), fx = f * dx / d, fy = f * dy / d; a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
+      const f = 620 / d2, d = Math.sqrt(d2), fx = f * dx / d, fy = f * dy / d; a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
     }
-    g.edges.forEach(e => { const a = g.byId[e.a], b = g.byId[e.b]; if (!a || !b) return; let dx = b.x - a.x, dy = b.y - a.y; let d = Math.sqrt(dx * dx + dy * dy) || 1; let f = (d - 74) * 0.02, fx = f * dx / d, fy = f * dy / d; a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy; });
+    g.edges.forEach(e => { const a = g.byId[e.a], b = g.byId[e.b]; if (!a || !b) return; const rest = e.len || 74; let dx = b.x - a.x, dy = b.y - a.y; let d = Math.sqrt(dx * dx + dy * dy) || 1; let f = (d - rest) * 0.024, fx = f * dx / d, fy = f * dy / d; a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy; });
     N.forEach(n => { n.vx += -n.x * 0.0015; n.vy += -n.y * 0.0015; n.vx *= 0.86; n.vy *= 0.86; if (n !== drag) { n.x += n.vx; n.y += n.vy; } });
   }
   function bez(a, b, t) { const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, dx = b.x - a.x, dy = b.y - a.y, L = Math.sqrt(dx * dx + dy * dy) || 1, cx = mx + (-dy / L) * 12, cy = my + (dx / L) * 12, it = 1 - t; return { x: it * it * a.x + 2 * it * t * cx + t * t * b.x, y: it * it * a.y + 2 * it * t * cy + t * t * b.y, cx, cy }; }
@@ -11967,9 +11975,10 @@ document.addEventListener('keydown', e => {
     for (let i = bursts.length - 1; i >= 0; i--) { const bu = bursts[i]; bu.r += 5; bu.a *= 0.93; if (bu.a < 0.03) { bursts.splice(i, 1); continue; } ctx.strokeStyle = 'rgba(150,255,205,' + bu.a + ')'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(bu.x, bu.y, bu.r, 0, 6.3); ctx.stroke(); }
     // node bloom (additive)
     g.nodes.forEach(n => {
-      const c = colorFor(n), lit = n.type !== 'word' && n.mastery >= 0.8;
+      const c = colorFor(n), lit = n.type === 'concept' && n.mastery >= 0.8;
+      const gin = n.born ? Math.min(1, (now - n.born) / 500) : 1;
       const breathe = 1 + 0.06 * Math.sin(tt + n.x * 0.05) + (lit ? 0.1 * Math.sin(tt * 1.6 + n.y) : 0);
-      const rr = n.r * breathe * intro, dim = (foc && !focus.set.has(n.id)) ? 0.22 : 1;
+      const rr = n.r * breathe * intro * gin, dim = (foc && !focus.set.has(n.id)) ? 0.22 : 1;
       const gr = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, rr * 3.2);
       gr.addColorStop(0, c.glow); gr.addColorStop(0.5, c.glow2); gr.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.globalAlpha = dim; ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(n.x, n.y, rr * 3.2, 0, 6.3); ctx.fill();
@@ -11978,12 +11987,13 @@ document.addEventListener('keydown', e => {
     // cores + labels (normal blend)
     ctx.globalCompositeOperation = 'source-over';
     g.nodes.forEach(n => {
-      const c = colorFor(n), rr = n.r * intro, dim = (foc && !focus.set.has(n.id)) ? 0.3 : 1;
+      const gin = n.born ? Math.min(1, (now - n.born) / 500) : 1;
+      const c = colorFor(n), rr = n.r * intro * gin, dim = (foc && !focus.set.has(n.id)) ? 0.3 : 1;
       ctx.globalAlpha = dim;
       ctx.fillStyle = c.core; ctx.beginPath(); ctx.arc(n.x, n.y, rr, 0, 6.3); ctx.fill();
       ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.beginPath(); ctx.arc(n.x - rr * 0.28, n.y - rr * 0.28, rr * 0.32, 0, 6.3); ctx.fill();
       if (n.id === foc) { ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(n.x, n.y, rr + 4, 0, 6.3); ctx.stroke(); }
-      if (n.type !== 'word' || view.z > 1.5) { ctx.fillStyle = 'rgba(236,240,250,' + (n.type === 'word' ? 0.6 : 0.95) + ')'; ctx.font = '600 ' + (n.type === 'word' ? 9 : 12) + 'px -apple-system,Segoe UI,sans-serif'; ctx.textAlign = 'center'; ctx.fillText((n.emoji ? n.emoji + ' ' : '') + n.label, n.x, n.y - rr - 6); }
+      if ((n.type === 'concept' || n.type === 'hub') || view.z > 1.7) { ctx.fillStyle = 'rgba(236,240,250,' + (n.type === 'concept' || n.type === 'hub' ? 0.95 : 0.6) + ')'; ctx.font = '600 ' + (n.type === 'concept' || n.type === 'hub' ? 12 : 9) + 'px -apple-system,Segoe UI,sans-serif'; ctx.textAlign = 'center'; ctx.fillText((n.emoji ? n.emoji + ' ' : '') + n.label, n.x, n.y - rr - 6); }
     });
     ctx.globalAlpha = 1;
     ctx.restore();
@@ -12017,12 +12027,10 @@ document.addEventListener('keydown', e => {
   const esc = s => String(s == null ? '' : s).replace(/</g, '&lt;');
   function shuf(a) { for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function updateHud() {
-    if (!overlay) return;
-    const cs = g.nodes.filter(n => n.type === 'concept');
-    const active = cs.filter(n => n.attempts > 0).length;
-    const strength = cs.length ? Math.round(cs.reduce((s, n) => s + n.vol, 0) / cs.length * 100) : 0;
+    if (!overlay || !g) return;
+    const neurons = g.nodes.length, syn = g.edges.length;
     const el = overlay.querySelector('#cb-hud');
-    if (el) el.innerHTML = '<span class="cb-pill">🧠 Fuerza <b>' + strength + '%</b> · ' + active + '/' + cs.length + ' neuronas activas</span>';
+    if (el) el.innerHTML = '<span class="cb-pill">🧠 <b>' + neurons + '</b> neuronas · <b>' + syn + '</b> sinapsis</span>';
   }
   function pickQuestions(key, count) {
     const b = (typeof STATIC_EXERCISES !== 'undefined' && STATIC_EXERCISES[key]) || {};
@@ -12045,8 +12053,19 @@ document.addEventListener('keydown', e => {
       mm.total++; if (right) { mm.correct++; gained++; }
       conceptMastery[n.key] = mm;
       try { localStorage.setItem('sl_mastery', JSON.stringify(conceptMastery)); } catch (e) {}
-      n.correct = mm.correct; n.attempts = mm.total; n.mastery = mm.total ? mm.correct / mm.total : 0; n.vol = Math.min(1, mm.correct / 15); n.r = 9 + n.vol * 15;
-      if (right) { bursts.push({ x: n.x, y: n.y, r: n.r, a: 0.9 }); g.edges.forEach((e, i) => { if (e.a === n.id || e.b === n.id) signals.push({ ei: i, p: 0, speed: 0.025, col: 'rgba(150,255,210,.95)' }); }); }
+      n.correct = mm.correct; n.attempts = mm.total; n.mastery = mm.total ? mm.correct / mm.total : 0;
+      g.nodes.forEach(x => { if (x.type === 'micro' && x.parent === n.id) x.health = n.mastery; }); // recolor its cluster
+      if (right) {
+        // sprout a NEW micro-neuron + synapse, animating out from the concept
+        const cnt = g.nodes.filter(x => x.type === 'micro' && x.parent === n.id).length;
+        if (cnt < 14) {
+          const ang = Math.random() * 6.28;
+          const m = { id: 'm:' + n.key + ':' + Date.now(), type: 'micro', parent: n.id, health: n.mastery, r: 3.6, x: n.x, y: n.y, vx: Math.cos(ang) * 2.4, vy: Math.sin(ang) * 2.4, born: Date.now() };
+          g.nodes.push(m); g.byId[m.id] = m; g.edges.push({ a: m.id, b: n.id, len: 26 });
+          signals.push({ ei: g.edges.length - 1, p: 0, speed: 0.03, col: 'rgba(150,255,210,.95)' });
+        }
+        bursts.push({ x: n.x, y: n.y, r: n.r, a: 0.85 });
+      }
       updateHud();
     }
     function step() {
