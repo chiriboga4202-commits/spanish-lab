@@ -11496,7 +11496,7 @@ document.addEventListener('keydown', e => {
   // from mitos/chapters/chNN.json once generated (else "próximamente").
   const CATALOG = [
     { n: 1, id: 'mitos-s1e1', arc: 'Grecia', title: 'El Ladrón del Fuego', inline: true },
-    { n: 2, id: 'mitos-ch2', arc: 'Grecia', title: 'La Caja de Pandora' },
+    { n: 2, id: 'mitos-ch2', arc: 'Grecia', title: 'La Caja de Pandora', ready: true, panels: 20 },
     { n: 3, id: 'mitos-ch3', arc: 'Grecia', title: 'El Vuelo de Ícaro' },
     { n: 4, id: 'mitos-ch4', arc: 'Grecia', title: 'Perseo y Medusa' },
     { n: 5, id: 'mitos-ch5', arc: 'Grecia', title: 'El Rapto de Perséfone' },
@@ -11822,15 +11822,17 @@ document.addEventListener('keydown', e => {
     picker.querySelector('#mp-list').innerHTML = CATALOG.map(c => {
       let head = '';
       if (c.arc !== arc) { arc = c.arc; head = '<div class="mp-arc">' + arc + '</div>'; }
+      const playable = c.inline || c.ready;
+      const total = c.inline ? CH1.panels.length : (c.panels || 0);
       const saved = prog[c.id];
       let badge;
-      if (!c.inline) badge = '<span class="mp-b lock">🔒 Próximamente</span>';
-      else if (typeof saved !== 'number') badge = '<span class="mp-b">▶ Empezar</span>';
-      else if (saved >= CH1.panels.length || saved <= 0) badge = '<span class="mp-b done">✓ Leído</span>';
+      if (!playable) badge = '<span class="mp-b lock">🔒 Próximamente</span>';
+      else if (typeof saved !== 'number' || saved <= 0) badge = '<span class="mp-b">▶ Empezar</span>';
+      else if (total && saved >= total) badge = '<span class="mp-b done">✓ Leído</span>';
       else badge = '<span class="mp-b">▶ Reanudar · p' + (saved + 1) + '</span>';
-      return head + '<button class="mp-ch' + (c.inline ? '' : ' locked') + '" data-n="' + c.n + '"><span class="mp-n">' + c.n + '</span><span class="mp-t">' + c.title + '</span>' + badge + '</button>';
+      return head + '<button class="mp-ch' + (playable ? '' : ' locked') + '" data-n="' + c.n + '"><span class="mp-n">' + c.n + '</span><span class="mp-t">' + c.title + '</span>' + badge + '</button>';
     }).join('');
-    picker.querySelectorAll('.mp-ch').forEach(b => b.onclick = () => openChapter(CATALOG[Number(b.dataset.n) - 1]));
+    picker.querySelectorAll('.mp-ch:not(.locked)').forEach(b => b.onclick = () => openChapter(CATALOG[Number(b.dataset.n) - 1]));
     picker.classList.add('open'); document.body.style.overflow = 'hidden';
   }
   function backToPicker() {
