@@ -1,0 +1,1165 @@
+{
+  "series": "MITOS",
+  "chapter": 9,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "Belerofonte y Pegaso",
+  "level": "A2",
+  "grammarFocus": "estar + gerundio",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte, a young man with golden hair and a bronze breastplate, stands looking at the horizon, holding a golden bridle. The blood of the Chimera is drying on his blade.",
+      "en": "Victory is the seed of danger, and Belerophon is still standing amidst the silence of the battlefield.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está mirando el horizonte. Él está pensando en su victoria.",
+          "words": [
+            {
+              "w": "mirando",
+              "g": "looking"
+            },
+            {
+              "w": "pensando",
+              "g": "thinking"
+            },
+            {
+              "w": "victoria",
+              "g": "victory"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Belerofonte está observando el horizonte en silencio. Sigue pensando en su reciente victoria.",
+          "words": [
+            {
+              "w": "observando",
+              "g": "observing"
+            },
+            {
+              "w": "silencio",
+              "g": "silence"
+            },
+            {
+              "w": "reciente",
+              "g": "recent"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Belerofonte está contemplando el horizonte. La victoria aún está resonando en su mente orgullosa.",
+          "words": [
+            {
+              "w": "contemplando",
+              "g": "contemplating"
+            },
+            {
+              "w": "resonando",
+              "g": "echoing"
+            },
+            {
+              "w": "orgullosa",
+              "g": "proud"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pegaso, a massive white winged horse with shimmering feathers, lands beside Belerofonte. Belerofonte reaches out to touch his mane.",
+      "en": "Pegasus is waiting. The beast is breathing heavily, its wings still folded against the mountain wind.",
+      "levels": {
+        "facil": {
+          "es": "Pegaso está esperando. El caballo está respirando muy fuerte.",
+          "words": [
+            {
+              "w": "esperando",
+              "g": "waiting"
+            },
+            {
+              "w": "respirando",
+              "g": "breathing"
+            },
+            {
+              "w": "fuerte",
+              "g": "hard"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Pegaso está esperando a su jinete. El animal está respirando con fuerza tras el combate.",
+          "words": [
+            {
+              "w": "jinete",
+              "g": "rider"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            },
+            {
+              "w": "combate",
+              "g": "combat"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Pegaso está aguardando. La criatura está exhalando vapor mientras sus alas se pliegan con elegancia.",
+          "words": [
+            {
+              "w": "aguardando",
+              "g": "awaiting"
+            },
+            {
+              "w": "exhalando",
+              "g": "exhaling"
+            },
+            {
+              "w": "elegancia",
+              "g": "elegance"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte mounts Pegaso. They rise into the clouds, the Greek landscape shrinking below.",
+      "en": "They are ascending. The hero is rising toward the sun, leaving the earth behind.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está subiendo al cielo. Él está volando muy alto.",
+          "words": [
+            {
+              "w": "subiendo",
+              "g": "climbing"
+            },
+            {
+              "w": "volando",
+              "g": "flying"
+            },
+            {
+              "w": "alto",
+              "g": "high"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Belerofonte está ascendiendo hacia el cielo. El héroe está dejando la tierra atrás.",
+          "words": [
+            {
+              "w": "ascendiendo",
+              "g": "ascending"
+            },
+            {
+              "w": "héroe",
+              "g": "hero"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Belerofonte está surcando los cielos. El joven está ascendiendo hacia el sol, abandonando el plano mortal.",
+          "words": [
+            {
+              "w": "surcando",
+              "g": "sailing"
+            },
+            {
+              "w": "abandonando",
+              "g": "abandoning"
+            },
+            {
+              "w": "mortal",
+              "g": "mortal"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte looks down at his hands, his expression shifting from triumph to arrogance. A faint golden aura begins to surround him.",
+      "en": "Power is changing him. His eyes are burning with a dangerous light as he gazes at the gods' domain.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está cambiando. Él está mirando sus manos con orgullo.",
+          "words": [
+            {
+              "w": "cambiando",
+              "g": "changing"
+            },
+            {
+              "w": "mirando",
+              "g": "looking"
+            },
+            {
+              "w": "orgullo",
+              "g": "pride"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El poder está cambiando al joven. Él está mirando sus manos con una ambición peligrosa.",
+          "words": [
+            {
+              "w": "poder",
+              "g": "power"
+            },
+            {
+              "w": "ambición",
+              "g": "ambition"
+            },
+            {
+              "w": "peligrosa",
+              "g": "dangerous"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El poder está transformándolo. Sus ojos están brillando con una soberbia que roza la locura.",
+          "words": [
+            {
+              "w": "transformándolo",
+              "g": "transforming"
+            },
+            {
+              "w": "brillando",
+              "g": "shining"
+            },
+            {
+              "w": "soberbia",
+              "g": "arrogance"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte points his spear toward Mount Olympus, high above the clouds.",
+      "en": "He is challenging the heavens. The spear is trembling, pointed toward the home of the gods.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está señalando el monte Olimpo. Él está buscando a los dioses.",
+          "words": [
+            {
+              "w": "señalando",
+              "g": "pointing"
+            },
+            {
+              "w": "buscando",
+              "g": "seeking"
+            },
+            {
+              "w": "dioses",
+              "g": "gods"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El héroe está señalando hacia el Olimpo. Él está desafiando el hogar de los inmortales.",
+          "words": [
+            {
+              "w": "señalando",
+              "g": "pointing"
+            },
+            {
+              "w": "desafiando",
+              "g": "challenging"
+            },
+            {
+              "w": "inmortales",
+              "g": "immortals"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Belerofonte está desafiando al Olimpo. Su lanza está apuntando hacia el trono de los dioses.",
+          "words": [
+            {
+              "w": "desafiando",
+              "g": "challenging"
+            },
+            {
+              "w": "apuntando",
+              "g": "aiming"
+            },
+            {
+              "w": "trono",
+              "g": "throne"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte, a young man with golden hair and a bronze breastplate, is riding Pegaso, a magnificent white winged horse with powerful muscles. Below them, the Chimera—a beast with the head of a lion, body of a goat, and tail of a serpent—is breathing fire toward the sky.",
+      "en": "The Chimera is attacking from the earth.",
+      "levels": {
+        "facil": {
+          "es": "La Quimera está atacando desde la tierra.",
+          "words": [
+            {
+              "w": "atacando",
+              "g": "attacking"
+            },
+            {
+              "w": "tierra",
+              "g": "ground"
+            },
+            {
+              "w": "desde",
+              "g": "from"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La Quimera está escupiendo fuego desde abajo.",
+          "words": [
+            {
+              "w": "escupiendo",
+              "g": "spitting"
+            },
+            {
+              "w": "fuego",
+              "g": "fire"
+            },
+            {
+              "w": "abajo",
+              "g": "below"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La Quimera está lanzando sus llamas hacia el cielo.",
+          "words": [
+            {
+              "w": "lanzando",
+              "g": "hurling"
+            },
+            {
+              "w": "llamas",
+              "g": "flames"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte, a young man with golden hair and a bronze breastplate, is gripping the reins of Pegaso, a magnificent white winged horse. He is holding a golden spear, his eyes fixed with intense focus on the monster.",
+      "en": "Belerofonte is preparing his spear.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está preparando su lanza.",
+          "words": [
+            {
+              "w": "preparando",
+              "g": "preparing"
+            },
+            {
+              "w": "lanza",
+              "g": "spear"
+            },
+            {
+              "w": "su",
+              "g": "his"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El héroe está sujetando su lanza con fuerza.",
+          "words": [
+            {
+              "w": "sujetando",
+              "g": "holding"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            },
+            {
+              "w": "héroe",
+              "g": "hero"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Belerofonte está empuñando su arma con determinación.",
+          "words": [
+            {
+              "w": "empuñando",
+              "g": "wielding"
+            },
+            {
+              "w": "determinación",
+              "g": "determination"
+            },
+            {
+              "w": "arma",
+              "g": "weapon"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte, a young man with golden hair and a bronze breastplate, is diving on Pegaso, a magnificent white winged horse. They are swooping down through the smoke and heat of the Chimera's breath.",
+      "en": "Pegaso is diving through the fire.",
+      "levels": {
+        "facil": {
+          "es": "Pegaso está bajando rápido.",
+          "words": [
+            {
+              "w": "bajando",
+              "g": "descending"
+            },
+            {
+              "w": "rápido",
+              "g": "fast"
+            },
+            {
+              "w": "Pegaso",
+              "g": "Pegasus"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El caballo alado está volando a través del fuego.",
+          "words": [
+            {
+              "w": "volando",
+              "g": "flying"
+            },
+            {
+              "w": "través",
+              "g": "through"
+            },
+            {
+              "w": "alado",
+              "g": "winged"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El corcel está descendiendo entre las llamas ardientes.",
+          "words": [
+            {
+              "w": "corcel",
+              "g": "steed"
+            },
+            {
+              "w": "descendiendo",
+              "g": "diving"
+            },
+            {
+              "w": "ardientes",
+              "g": "burning"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte, a young man with golden hair and a bronze breastplate, is thrusting his spear forward as he rides Pegaso, a magnificent white winged horse. The Chimera is reeling back, wounded.",
+      "en": "Belerofonte is hitting the monster.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está golpeando a la bestia.",
+          "words": [
+            {
+              "w": "golpeando",
+              "g": "hitting"
+            },
+            {
+              "w": "bestia",
+              "g": "beast"
+            },
+            {
+              "w": "la",
+              "g": "the"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Él está hiriendo a la criatura mortal.",
+          "words": [
+            {
+              "w": "hiriendo",
+              "g": "wounding"
+            },
+            {
+              "w": "criatura",
+              "g": "creature"
+            },
+            {
+              "w": "mortal",
+              "g": "deadly"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El joven está atravesando el cuerpo de la Quimera.",
+          "words": [
+            {
+              "w": "atravesando",
+              "g": "piercing"
+            },
+            {
+              "w": "cuerpo",
+              "g": "body"
+            },
+            {
+              "w": "joven",
+              "g": "young man"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte, a young man with golden hair and a bronze breastplate, is standing victoriously on the back of Pegaso, a magnificent white winged horse. The Chimera lies defeated below.",
+      "en": "The victory is changing him.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está ganando la batalla.",
+          "words": [
+            {
+              "w": "ganando",
+              "g": "winning"
+            },
+            {
+              "w": "batalla",
+              "g": "battle"
+            },
+            {
+              "w": "está",
+              "g": "is"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El héroe está celebrando su gran victoria.",
+          "words": [
+            {
+              "w": "celebrando",
+              "g": "celebrating"
+            },
+            {
+              "w": "gran",
+              "g": "great"
+            },
+            {
+              "w": "victoria",
+              "g": "victory"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La soberbia está creciendo en su corazón.",
+          "words": [
+            {
+              "w": "soberbia",
+              "g": "pride"
+            },
+            {
+              "w": "creciendo",
+              "g": "growing"
+            },
+            {
+              "w": "corazón",
+              "g": "heart"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte, a young man with golden hair and a bronze breastplate, is riding Pegaso, a white winged horse, high above the clouds. He is looking down at the smoking earth with a smile of arrogance.",
+      "en": "Belerofonte is looking down at the world with pride.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está mirando el mundo desde arriba.",
+          "words": [
+            {
+              "w": "mirando",
+              "g": "looking"
+            },
+            {
+              "w": "mundo",
+              "g": "world"
+            },
+            {
+              "w": "arriba",
+              "g": "above"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Belerofonte está observando la tierra con mucho orgullo.",
+          "words": [
+            {
+              "w": "observando",
+              "g": "observing"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            },
+            {
+              "w": "orgullo",
+              "g": "pride"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Belerofonte está contemplando su conquista, embriagado por su propia soberbia.",
+          "words": [
+            {
+              "w": "contemplando",
+              "g": "contemplating"
+            },
+            {
+              "w": "conquista",
+              "g": "conquest"
+            },
+            {
+              "w": "soberbia",
+              "g": "hubris"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte is touching the soft mane of Pegaso, the white winged horse, while the sun sets behind them.",
+      "en": "He is stroking the horse's neck, feeling invincible.",
+      "levels": {
+        "facil": {
+          "es": "Él está acariciando al caballo.",
+          "words": [
+            {
+              "w": "acariciando",
+              "g": "stroking"
+            },
+            {
+              "w": "caballo",
+              "g": "horse"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Él está acariciando el cuello de Pegaso con confianza.",
+          "words": [
+            {
+              "w": "acariciando",
+              "g": "stroking"
+            },
+            {
+              "w": "cuello",
+              "g": "neck"
+            },
+            {
+              "w": "confianza",
+              "g": "confidence"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Él está acariciando el pelaje de Pegaso, sintiéndose invencible ante los dioses.",
+          "words": [
+            {
+              "w": "pelaje",
+              "g": "fur/coat"
+            },
+            {
+              "w": "invencible",
+              "g": "invincible"
+            },
+            {
+              "w": "dioses",
+              "g": "gods"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A golden lightning bolt strikes the dark sky near Belerofonte and Pegaso. The horse is flinching.",
+      "en": "The sky is changing; a storm is brewing.",
+      "levels": {
+        "facil": {
+          "es": "El cielo está cambiando. Hay una tormenta.",
+          "words": [
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "cambiando",
+              "g": "changing"
+            },
+            {
+              "w": "tormenta",
+              "g": "storm"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El clima está cambiando rápidamente en el cielo.",
+          "words": [
+            {
+              "w": "clima",
+              "g": "weather"
+            },
+            {
+              "w": "cambiando",
+              "g": "changing"
+            },
+            {
+              "w": "rápidamente",
+              "g": "quickly"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El firmamento está oscureciéndose, presagiando la cólera divina.",
+          "words": [
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            },
+            {
+              "w": "oscureciéndose",
+              "g": "darkening"
+            },
+            {
+              "w": "presagiando",
+              "g": "foreshadowing"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte is pointing his spear toward the heavens, challenging the gods.",
+      "en": "Belerofonte is challenging the gods above.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está desafiando a los dioses.",
+          "words": [
+            {
+              "w": "desafiando",
+              "g": "challenging"
+            },
+            {
+              "w": "dioses",
+              "g": "gods"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Belerofonte está gritando hacia el cielo para desafiar a los dioses.",
+          "words": [
+            {
+              "w": "gritando",
+              "g": "shouting"
+            },
+            {
+              "w": "hacia",
+              "g": "towards"
+            },
+            {
+              "w": "desafiar",
+              "g": "to challenge"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Belerofonte está elevando su lanza, osando desafiar el poder del Olimpo.",
+          "words": [
+            {
+              "w": "elevando",
+              "g": "raising"
+            },
+            {
+              "w": "lanza",
+              "g": "spear"
+            },
+            {
+              "w": "osando",
+              "g": "daring"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pegaso is bucking violently in mid-air, trying to throw Belerofonte off his back.",
+      "en": "Pegaso is starting to panic in the air.",
+      "levels": {
+        "facil": {
+          "es": "Pegaso está moviéndose mucho. Tiene miedo.",
+          "words": [
+            {
+              "w": "moviéndose",
+              "g": "moving"
+            },
+            {
+              "w": "mucho",
+              "g": "a lot"
+            },
+            {
+              "w": "miedo",
+              "g": "fear"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Pegaso está volando con nerviosismo y pánico.",
+          "words": [
+            {
+              "w": "volando",
+              "g": "flying"
+            },
+            {
+              "w": "nerviosismo",
+              "g": "nervousness"
+            },
+            {
+              "w": "pánico",
+              "g": "panic"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El corcel alado está encabritándose, presa de un pánico sobrenatural.",
+          "words": [
+            {
+              "w": "corcel",
+              "g": "steed"
+            },
+            {
+              "w": "encabritándose",
+              "g": "rearing up"
+            },
+            {
+              "w": "sobrenatural",
+              "g": "supernatural"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte, a young man with golden hair and a bronze breastplate, is holding the golden bridle tightly. Pegaso, a white winged horse with powerful musculature, is diving through thick clouds.",
+      "en": "Bellerophon is holding the golden bridle. Pegasus is diving through the clouds.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está sujetando la brida de oro. Pegaso está bajando rápido por las nubes.",
+          "words": [
+            {
+              "w": "sujetando",
+              "g": "holding"
+            },
+            {
+              "w": "brida",
+              "g": "bridle"
+            },
+            {
+              "w": "nubes",
+              "g": "clouds"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Belerofonte está sujetando con fuerza la brida de oro. Pegaso está descendiendo entre las nubes.",
+          "words": [
+            {
+              "w": "fuerza",
+              "g": "strength"
+            },
+            {
+              "w": "descendiendo",
+              "g": "descending"
+            },
+            {
+              "w": "entre",
+              "g": "between"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Belerofonte está aferrando con desesperación la brida de oro. Pegaso está surcando las nubes en un descenso vertiginoso.",
+          "words": [
+            {
+              "w": "aferrando",
+              "g": "clutching"
+            },
+            {
+              "w": "surcando",
+              "g": "cleaving"
+            },
+            {
+              "w": "vertiginoso",
+              "g": "dizzying"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The Chimera, a monstrous hybrid of lion, goat, and serpent, is breathing fire upward at the sky.",
+      "en": "The Chimera is breathing fire toward the sky.",
+      "levels": {
+        "facil": {
+          "es": "La Quimera está lanzando fuego al cielo.",
+          "words": [
+            {
+              "w": "lanzando",
+              "g": "throwing"
+            },
+            {
+              "w": "fuego",
+              "g": "fire"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La Quimera está escupiendo llamas hacia lo alto.",
+          "words": [
+            {
+              "w": "escupiendo",
+              "g": "spitting"
+            },
+            {
+              "w": "llamas",
+              "g": "flames"
+            },
+            {
+              "w": "alto",
+              "g": "top"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La Quimera está vomitando un torrente de fuego abrasador hacia el firmamento.",
+          "words": [
+            {
+              "w": "vomitando",
+              "g": "vomiting"
+            },
+            {
+              "w": "torrente",
+              "g": "torrent"
+            },
+            {
+              "w": "abrasador",
+              "g": "scorching"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Belerofonte is standing on Pegasus's back, aiming a spear, his face full of arrogant triumph.",
+      "en": "Bellerophon is aiming his spear. He is feeling very proud.",
+      "levels": {
+        "facil": {
+          "es": "Belerofonte está apuntando con su lanza. Él está muy orgulloso.",
+          "words": [
+            {
+              "w": "apuntando",
+              "g": "aiming"
+            },
+            {
+              "w": "lanza",
+              "g": "spear"
+            },
+            {
+              "w": "orgulloso",
+              "g": "proud"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Belerofonte está apuntando su lanza. Está creyéndose un dios.",
+          "words": [
+            {
+              "w": "apuntando",
+              "g": "aiming"
+            },
+            {
+              "w": "creyéndose",
+              "g": "believing himself"
+            },
+            {
+              "w": "dios",
+              "g": "god"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Belerofonte está apuntando su lanza con soberbia. Está embriagándose de su propia gloria.",
+          "words": [
+            {
+              "w": "soberbia",
+              "g": "arrogance"
+            },
+            {
+              "w": "embriagándose",
+              "g": "intoxicating himself"
+            },
+            {
+              "w": "gloria",
+              "g": "glory"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pegasus is suddenly bucking, his eyes wide with fear, while Belerofonte is losing his balance.",
+      "en": "Pegasus is bucking. Bellerophon is losing his balance.",
+      "levels": {
+        "facil": {
+          "es": "Pegaso está saltando. Belerofonte está perdiendo el equilibrio.",
+          "words": [
+            {
+              "w": "saltando",
+              "g": "jumping"
+            },
+            {
+              "w": "perdiendo",
+              "g": "losing"
+            },
+            {
+              "w": "equilibrio",
+              "g": "balance"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Pegaso está dando coces. Belerofonte está cayendo del caballo.",
+          "words": [
+            {
+              "w": "coces",
+              "g": "kicks"
+            },
+            {
+              "w": "cayendo",
+              "g": "falling"
+            },
+            {
+              "w": "caballo",
+              "g": "horse"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Pegaso está encabritándose violentamente. Belerofonte está perdiendo su posición en el lomo del animal.",
+          "words": [
+            {
+              "w": "encabritándose",
+              "g": "rearing"
+            },
+            {
+              "w": "violentamente",
+              "g": "violently"
+            },
+            {
+              "w": "lomo",
+              "g": "back"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A lightning bolt from Zeus is striking the air near them. The sky is turning black.",
+      "en": "Zeus is throwing a thunderbolt. The sky is turning black.",
+      "levels": {
+        "facil": {
+          "es": "Zeus está tirando un rayo. El cielo está poniéndose negro.",
+          "words": [
+            {
+              "w": "tirando",
+              "g": "throwing"
+            },
+            {
+              "w": "rayo",
+              "g": "lightning"
+            },
+            {
+              "w": "poniéndose",
+              "g": "becoming"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus está lanzando un rayo. El cielo se está oscureciendo rápidamente.",
+          "words": [
+            {
+              "w": "lanzando",
+              "g": "hurling"
+            },
+            {
+              "w": "oscureciendo",
+              "g": "darkening"
+            },
+            {
+              "w": "rápidamente",
+              "g": "quickly"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus está invocando un rayo. El firmamento se está tiñendo de una oscuridad absoluta.",
+          "words": [
+            {
+              "w": "invocando",
+              "g": "summoning"
+            },
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            },
+            {
+              "w": "tiñendo",
+              "g": "dying/coloring"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "El orgullo es una caída que incluso las alas más fuertes no pueden evitar.",
+  "closingBeat": "Quien intenta volar demasiado cerca del sol, termina olvidando que el cielo tiene dueño."
+}

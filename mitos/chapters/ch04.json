@@ -1,0 +1,1173 @@
+{
+  "series": "MITOS",
+  "chapter": 4,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "La Guerra de los Dioses",
+  "level": "A1-A2",
+  "grammarFocus": "presente + familia",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, a young man with golden hair and intense eyes, holds a glowing nectar cup in the shadows of Mount Othrys.",
+      "en": "Hunger is not enough; now, there is the thirst for justice.",
+      "levels": {
+        "facil": {
+          "es": "Zeus tiene sed de justicia. Él mira a su padre.",
+          "words": [
+            {
+              "w": "sed",
+              "g": "thirst"
+            },
+            {
+              "w": "justicia",
+              "g": "justice"
+            },
+            {
+              "w": "padre",
+              "g": "father"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus siente una gran sed de justicia. Observa a su padre en la oscuridad.",
+          "words": [
+            {
+              "w": "siente",
+              "g": "feels"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            },
+            {
+              "w": "observa",
+              "g": "watches"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El hambre no basta; ahora, Zeus reclama una justicia que quema en su sangre.",
+          "words": [
+            {
+              "w": "basta",
+              "g": "is enough"
+            },
+            {
+              "w": "reclama",
+              "g": "demands"
+            },
+            {
+              "w": "sangre",
+              "g": "blood"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Cronus, a towering, bearded titan with cold, obsidian eyes, sits on a throne of jagged stone.",
+      "en": "Cronus rules the world. He fears his own children.",
+      "levels": {
+        "facil": {
+          "es": "Crono es el rey. Él tiene miedo de sus hijos.",
+          "words": [
+            {
+              "w": "rey",
+              "g": "king"
+            },
+            {
+              "w": "miedo",
+              "g": "fear"
+            },
+            {
+              "w": "hijos",
+              "g": "children"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Crono reina sobre el mundo. Teme a su propia familia.",
+          "words": [
+            {
+              "w": "reina",
+              "g": "reigns"
+            },
+            {
+              "w": "teme",
+              "g": "fears"
+            },
+            {
+              "w": "familia",
+              "g": "family"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Crono ostenta el cetro del mundo, pero su corazón alberga el pavor a su estirpe.",
+          "words": [
+            {
+              "w": "ostenta",
+              "g": "wields"
+            },
+            {
+              "w": "alberga",
+              "g": "harbors"
+            },
+            {
+              "w": "estirpe",
+              "g": "lineage"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus hands a golden goblet to Cronus, who looks suspicious.",
+      "en": "Zeus offers a drink. It is not nectar, but a promise of ruin.",
+      "levels": {
+        "facil": {
+          "es": "Zeus da una bebida a su padre. Es una trampa.",
+          "words": [
+            {
+              "w": "da",
+              "g": "gives"
+            },
+            {
+              "w": "bebida",
+              "g": "drink"
+            },
+            {
+              "w": "trampa",
+              "g": "trap"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus le entrega una copa a su padre. La bebida es su ruina.",
+          "words": [
+            {
+              "w": "entrega",
+              "g": "hands over"
+            },
+            {
+              "w": "copa",
+              "g": "cup"
+            },
+            {
+              "w": "ruina",
+              "g": "ruin"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus le ofrece el cáliz; no es néctar, es el sabor de su inevitable caída.",
+          "words": [
+            {
+              "w": "ofrece",
+              "g": "offers"
+            },
+            {
+              "w": "cáliz",
+              "g": "chalice"
+            },
+            {
+              "w": "inevitable",
+              "g": "unavoidable"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Cronus vomits, and glowing, ethereal figures (Hades, Poseidon, Hestia, Demeter, Hera) begin to emerge from his shadow.",
+      "en": "The belly of the Titan opens. His children return to the light.",
+      "levels": {
+        "facil": {
+          "es": "Crono vomita. Sus hermanos salen ahora. Están libres.",
+          "words": [
+            {
+              "w": "vomita",
+              "g": "vomits"
+            },
+            {
+              "w": "hermanos",
+              "g": "siblings"
+            },
+            {
+              "w": "libres",
+              "g": "free"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El vientre del titán se abre. Sus hermanos emergen a la luz.",
+          "words": [
+            {
+              "w": "vientre",
+              "g": "belly"
+            },
+            {
+              "w": "abre",
+              "g": "opens"
+            },
+            {
+              "w": "emergen",
+              "g": "emerge"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Las entrañas del titán se desgarran; sus hermanos, renacidos, reclaman su existencia.",
+          "words": [
+            {
+              "w": "entrañas",
+              "g": "entrails"
+            },
+            {
+              "w": "desgarran",
+              "g": "tear"
+            },
+            {
+              "w": "renacidos",
+              "g": "reborn"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus stands tall at the center, surrounded by his siblings, all looking up toward the peaks of Mount Olympus.",
+      "en": "United by blood, the gods look toward the mountain of war.",
+      "levels": {
+        "facil": {
+          "es": "Zeus y sus hermanos están juntos. Miran a la montaña.",
+          "words": [
+            {
+              "w": "juntos",
+              "g": "together"
+            },
+            {
+              "w": "miran",
+              "g": "look"
+            },
+            {
+              "w": "montaña",
+              "g": "mountain"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus reúne a su familia. Todos miran la montaña de la guerra.",
+          "words": [
+            {
+              "w": "reúne",
+              "g": "gathers"
+            },
+            {
+              "w": "familia",
+              "g": "family"
+            },
+            {
+              "w": "guerra",
+              "g": "war"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Unidos por el vínculo de la sangre, los dioses contemplan la cumbre donde estallará el conflicto.",
+          "words": [
+            {
+              "w": "vínculo",
+              "g": "bond"
+            },
+            {
+              "w": "contemplan",
+              "g": "contemplate"
+            },
+            {
+              "w": "estallará",
+              "g": "will break out"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, a young muscular man with golden hair and intense eyes, stands at the peak of Mount Othrys holding a crackling lightning bolt. He looks toward the horizon where the Titans gather.",
+      "en": "Zeus holds his first weapon. He is ready for the war.",
+      "levels": {
+        "facil": {
+          "es": "Zeus tiene su rayo. Él está listo para la guerra.",
+          "words": [
+            {
+              "w": "rayo",
+              "g": "lightning bolt"
+            },
+            {
+              "w": "listo",
+              "g": "ready"
+            },
+            {
+              "w": "guerra",
+              "g": "war"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus sostiene su primer rayo. Toda su familia está lista para la gran guerra.",
+          "words": [
+            {
+              "w": "sostiene",
+              "g": "holds"
+            },
+            {
+              "w": "familia",
+              "g": "family"
+            },
+            {
+              "w": "gran",
+              "g": "great"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus empuña el rayo primigenio. La familia de los dioses se prepara para el conflicto definitivo.",
+          "words": [
+            {
+              "w": "empuña",
+              "g": "grasps"
+            },
+            {
+              "w": "primigenio",
+              "g": "primal"
+            },
+            {
+              "w": "definitivo",
+              "g": "decisive"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Poseidon, a strong man with a beard and sea-green eyes, stands beside Zeus holding a massive bronze trident.",
+      "en": "Poseidon joins his brother. He carries a powerful trident.",
+      "levels": {
+        "facil": {
+          "es": "Poseidón está con su hermano. Él tiene un tridente.",
+          "words": [
+            {
+              "w": "hermano",
+              "g": "brother"
+            },
+            {
+              "w": "tridente",
+              "g": "trident"
+            },
+            {
+              "w": "tiene",
+              "g": "has"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Poseidón se une a Zeus. Su familia es fuerte y lleva un tridente de bronce.",
+          "words": [
+            {
+              "w": "une",
+              "g": "joins"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            },
+            {
+              "w": "bronce",
+              "g": "bronze"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Poseidón se alía con su hermano. La familia de los olímpicos blande el tridente forjado en el abismo.",
+          "words": [
+            {
+              "w": "alía",
+              "g": "allies"
+            },
+            {
+              "w": "blande",
+              "g": "wields"
+            },
+            {
+              "w": "abismo",
+              "g": "abyss"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades, a man with pale skin and dark robes, emerges from the shadows. He holds a helm of darkness.",
+      "en": "Hades appears from the shadows. He brings the helm of invisibility.",
+      "levels": {
+        "facil": {
+          "es": "Hades viene de las sombras. Él tiene un casco especial.",
+          "words": [
+            {
+              "w": "sombras",
+              "g": "shadows"
+            },
+            {
+              "w": "casco",
+              "g": "helmet"
+            },
+            {
+              "w": "especial",
+              "g": "special"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades sale de la oscuridad. Su familia necesita su casco de invisibilidad.",
+          "words": [
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            },
+            {
+              "w": "necesita",
+              "g": "needs"
+            },
+            {
+              "w": "invisibilidad",
+              "g": "invisibility"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades emerge del inframundo. La familia divina aguarda el poder de su yelmo sombrío.",
+          "words": [
+            {
+              "w": "emerge",
+              "g": "emerges"
+            },
+            {
+              "w": "inframundo",
+              "g": "underworld"
+            },
+            {
+              "w": "yelmo",
+              "g": "helm"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Cronus, a giant Titan with weathered skin and glowing red eyes, stands at the top of the mountain, surrounded by other Titans.",
+      "en": "Cronus looks down. He is angry. The Titans prepare for battle.",
+      "levels": {
+        "facil": {
+          "es": "Crono mira abajo. Él está enojado. Los titanes quieren pelear.",
+          "words": [
+            {
+              "w": "mira",
+              "g": "looks"
+            },
+            {
+              "w": "enojado",
+              "g": "angry"
+            },
+            {
+              "w": "pelelar",
+              "g": "fight"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Crono observa a sus hijos. Está furioso. Toda su familia de titanes se prepara.",
+          "words": [
+            {
+              "w": "observa",
+              "g": "observes"
+            },
+            {
+              "w": "hijos",
+              "g": "children"
+            },
+            {
+              "w": "furioso",
+              "g": "furious"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Crono contempla a los rebeldes. Su ira es infinita. La familia de los titanes clama venganza.",
+          "words": [
+            {
+              "w": "contempla",
+              "g": "contemplates"
+            },
+            {
+              "w": "ira",
+              "g": "wrath"
+            },
+            {
+              "w": "clama",
+              "g": "cries out"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, Poseidon, and Hades stand united in a triangle formation, looking up at the summit.",
+      "en": "The brothers are united. The Titanomachy begins now.",
+      "levels": {
+        "facil": {
+          "es": "Los hermanos están unidos. La guerra empieza ahora.",
+          "words": [
+            {
+              "w": "hermanos",
+              "g": "brothers"
+            },
+            {
+              "w": "unidos",
+              "g": "united"
+            },
+            {
+              "w": "ahora",
+              "g": "now"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los tres hermanos están unidos. Su familia inicia la Titanomaquia hoy.",
+          "words": [
+            {
+              "w": "tres",
+              "g": "three"
+            },
+            {
+              "w": "inicia",
+              "g": "begins"
+            },
+            {
+              "w": "hoy",
+              "g": "today"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los hermanos permanecen unidos. La gran familia olímpica desata la Titanomaquia.",
+          "words": [
+            {
+              "w": "permanecen",
+              "g": "remain"
+            },
+            {
+              "w": "desata",
+              "g": "unleashes"
+            },
+            {
+              "w": "olímpica",
+              "g": "olympian"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, a young man with golden hair and electric blue eyes, stands firm. He holds a glowing lightning bolt. Behind him, Poseidon carries his trident.",
+      "en": "Zeus stands ready with his lightning. Poseidon is by his side.",
+      "levels": {
+        "facil": {
+          "es": "Zeus tiene el rayo. Poseidón está con él.",
+          "words": [
+            {
+              "w": "rayo",
+              "g": "lightning bolt"
+            },
+            {
+              "w": "está",
+              "g": "is"
+            },
+            {
+              "w": "con",
+              "g": "with"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus sostiene su rayo brillante. Su hermano Poseidón lucha junto a él.",
+          "words": [
+            {
+              "w": "sostiene",
+              "g": "holds"
+            },
+            {
+              "w": "brillante",
+              "g": "shining"
+            },
+            {
+              "w": "lucha",
+              "g": "fights"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus empuña el rayo centelleante. Poseidón, su hermano, se posiciona a su flanco.",
+          "words": [
+            {
+              "w": "empuña",
+              "g": "grips"
+            },
+            {
+              "w": "centelleante",
+              "g": "sparkling"
+            },
+            {
+              "w": "flanco",
+              "g": "flank"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Cronus, a giant with obsidian skin and a crown of iron, screams at the sky. His massive titan army stands behind him.",
+      "en": "Cronus screams. His titan family prepares for war.",
+      "levels": {
+        "facil": {
+          "es": "Crono grita. Su familia de titanes prepara la guerra.",
+          "words": [
+            {
+              "w": "grita",
+              "g": "shouts"
+            },
+            {
+              "w": "familia",
+              "g": "family"
+            },
+            {
+              "w": "guerra",
+              "g": "war"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Crono grita con furia. Toda su familia de titanes se prepara para pelear.",
+          "words": [
+            {
+              "w": "furia",
+              "g": "fury"
+            },
+            {
+              "w": "toda",
+              "g": "all"
+            },
+            {
+              "w": "pelear",
+              "g": "to fight"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Crono ruge con ira desmedida. Su estirpe de titanes se alista para la masacre.",
+          "words": [
+            {
+              "w": "ruge",
+              "g": "roars"
+            },
+            {
+              "w": "ira",
+              "g": "wrath"
+            },
+            {
+              "w": "estirpe",
+              "g": "lineage"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades, a man with pale skin and dark robes, puts on his helm of darkness. He becomes partially transparent.",
+      "en": "Hades puts on his helmet. He disappears into the shadows.",
+      "levels": {
+        "facil": {
+          "es": "Hades usa su casco. Él desaparece en la sombra.",
+          "words": [
+            {
+              "w": "usa",
+              "g": "uses"
+            },
+            {
+              "w": "casco",
+              "g": "helmet"
+            },
+            {
+              "w": "sombra",
+              "g": "shadow"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades se pone el casco. Él se vuelve invisible en la oscuridad.",
+          "words": [
+            {
+              "w": "pone",
+              "g": "puts on"
+            },
+            {
+              "w": "invisible",
+              "g": "invisible"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades se ciñe el yelmo. Se desvanece, fundiéndose con las sombras.",
+          "words": [
+            {
+              "w": "ciñe",
+              "g": "fastens"
+            },
+            {
+              "w": "yelmo",
+              "g": "helm"
+            },
+            {
+              "w": "desvanece",
+              "g": "fades"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The sky cracks open. Lightning strikes the mountains where the titans stand.",
+      "en": "The sky breaks. Zeus throws his first lightning bolt.",
+      "levels": {
+        "facil": {
+          "es": "El cielo rompe. Zeus lanza su rayo.",
+          "words": [
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "lanza",
+              "g": "throws"
+            },
+            {
+              "w": "rayo",
+              "g": "bolt"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El cielo se rompe. Zeus lanza el primer rayo contra los titanes.",
+          "words": [
+            {
+              "w": "rompe",
+              "g": "breaks"
+            },
+            {
+              "w": "primer",
+              "g": "first"
+            },
+            {
+              "w": "contra",
+              "g": "against"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El firmamento se resquebraja. Zeus descarga el primer rayo sobre el ejército titánico.",
+          "words": [
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            },
+            {
+              "w": "resquebraja",
+              "g": "cracks"
+            },
+            {
+              "w": "ejército",
+              "g": "army"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Cronus blocks the lightning with his massive hands, sparks flying everywhere.",
+      "en": "Cronus blocks the attack. He is very strong.",
+      "levels": {
+        "facil": {
+          "es": "Crono para el ataque. Él es muy fuerte.",
+          "words": [
+            {
+              "w": "para",
+              "g": "stops"
+            },
+            {
+              "w": "ataque",
+              "g": "attack"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Crono bloquea el ataque. Su fuerza es increíble.",
+          "words": [
+            {
+              "w": "bloquea",
+              "g": "blocks"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            },
+            {
+              "w": "increíble",
+              "g": "incredible"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Crono intercepta el impacto. Su poderío es inmenso.",
+          "words": [
+            {
+              "w": "intercepta",
+              "g": "intercepts"
+            },
+            {
+              "w": "impacto",
+              "g": "impact"
+            },
+            {
+              "w": "poderío",
+              "g": "might"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Poseidón, a tall man with wild hair and a powerful trident, stands in the sea foam. Poseidón raises his trident and hits the earth. The ground shakes violently.",
+      "en": "Poseidon strikes the earth with his trident, shattering the ground beneath the Titans.",
+      "levels": {
+        "facil": {
+          "es": "Poseidón golpea la tierra. El suelo se rompe. Él es fuerte.",
+          "words": [
+            {
+              "w": "golpea",
+              "g": "hits"
+            },
+            {
+              "w": "suelo",
+              "g": "ground"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Poseidón golpea la tierra con su tridente. El suelo tiembla bajo los pies de los Titanes.",
+          "words": [
+            {
+              "w": "tridente",
+              "g": "trident"
+            },
+            {
+              "w": "tiembla",
+              "g": "shakes"
+            },
+            {
+              "w": "pies",
+              "g": "feet"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Poseidón descarga su tridente contra la tierra; el suelo se resquebraja bajo el peso de los Titanes.",
+          "words": [
+            {
+              "w": "descarga",
+              "g": "unleashes"
+            },
+            {
+              "w": "resquebraja",
+              "g": "cracks"
+            },
+            {
+              "w": "peso",
+              "g": "weight"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades, a man in a black cloak with a helmet of darkness, appears out of thin air behind Crono. He strikes.",
+      "en": "Hades, invisible, emerges from the shadows to strike the Titan king.",
+      "levels": {
+        "facil": {
+          "es": "Hades no se ve. Él aparece detrás de Crono. Él ataca ahora.",
+          "words": [
+            {
+              "w": "aparece",
+              "g": "appears"
+            },
+            {
+              "w": "detrás",
+              "g": "behind"
+            },
+            {
+              "w": "ataca",
+              "g": "attacks"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades es invisible. Él sale de la oscuridad y ataca a su padre por sorpresa.",
+          "words": [
+            {
+              "w": "invisible",
+              "g": "invisible"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            },
+            {
+              "w": "sorpresa",
+              "g": "surprise"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Invisible bajo su casco, Hades surge de las sombras para herir al rey de los Titanes.",
+          "words": [
+            {
+              "w": "surge",
+              "g": "emerges"
+            },
+            {
+              "w": "sombras",
+              "g": "shadows"
+            },
+            {
+              "w": "herir",
+              "g": "wound"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Crono roars in pain, his golden blood spilling. He looks up at Zeus, who hovers above with lightning in his hands.",
+      "en": "Crono roars in pain as Zeus prepares the final blow from the sky.",
+      "levels": {
+        "facil": {
+          "es": "Crono grita de dolor. Zeus mira desde arriba. Él tiene mucha ira.",
+          "words": [
+            {
+              "w": "grita",
+              "g": "screams"
+            },
+            {
+              "w": "dolor",
+              "g": "pain"
+            },
+            {
+              "w": "ira",
+              "g": "rage"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Crono grita de dolor. Zeus vuela en el cielo y prepara un rayo final.",
+          "words": [
+            {
+              "w": "vuela",
+              "g": "flies"
+            },
+            {
+              "w": "prepara",
+              "g": "prepares"
+            },
+            {
+              "w": "final",
+              "g": "final"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Crono ruge de dolor mientras Zeus, suspendido en el firmamento, carga el rayo definitivo.",
+          "words": [
+            {
+              "w": "ruge",
+              "g": "roars"
+            },
+            {
+              "w": "suspendido",
+              "g": "suspended"
+            },
+            {
+              "w": "definitivo",
+              "g": "definitive"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus throws a massive bolt of lightning. The entire world seems to burn in white light.",
+      "en": "Zeus unleashes his full power, engulfing the battlefield in blinding light.",
+      "levels": {
+        "facil": {
+          "es": "Zeus lanza el rayo. Todo es luz blanca ahora. Es el fin.",
+          "words": [
+            {
+              "w": "lanza",
+              "g": "throws"
+            },
+            {
+              "w": "luz",
+              "g": "light"
+            },
+            {
+              "w": "fin",
+              "g": "end"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus lanza su rayo más poderoso. Una luz blanca ciega a todos los Titanes.",
+          "words": [
+            {
+              "w": "poderoso",
+              "g": "powerful"
+            },
+            {
+              "w": "ciega",
+              "g": "blinds"
+            },
+            {
+              "w": "todos",
+              "g": "all"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus libera todo su poder; un relámpago cegador inunda el campo de batalla.",
+          "words": [
+            {
+              "w": "libera",
+              "g": "releases"
+            },
+            {
+              "w": "relámpago",
+              "g": "lightning"
+            },
+            {
+              "w": "inunda",
+              "g": "floods"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The smoke clears. Crono is gone, but a dark, swirling abyss remains where he stood. Zeus looks down, his face stern.",
+      "en": "The smoke clears, but the abyss remains open, whispering of a new threat.",
+      "levels": {
+        "facil": {
+          "es": "El humo desaparece. Crono no está. Hay un agujero negro en el suelo.",
+          "words": [
+            {
+              "w": "humo",
+              "g": "smoke"
+            },
+            {
+              "w": "desaparece",
+              "g": "disappears"
+            },
+            {
+              "w": "agujero",
+              "g": "hole"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El humo se disipa. Crono ya no está, pero un abismo oscuro permanece abierto.",
+          "words": [
+            {
+              "w": "disipa",
+              "g": "dissipates"
+            },
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "permanece",
+              "g": "remains"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El humo se disipa. Crono ha desaparecido, pero en su lugar se abre un abismo insondable.",
+          "words": [
+            {
+              "w": "desaparecido",
+              "g": "disappeared"
+            },
+            {
+              "w": "lugar",
+              "g": "place"
+            },
+            {
+              "w": "insondable",
+              "g": "unfathomable"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "El abismo no está vacío; algo dentro comienza a latir con el ritmo de un corazón antiguo.",
+  "closingBeat": "La victoria tiene un precio, y la paz es solo una tregua entre tormentas."
+}

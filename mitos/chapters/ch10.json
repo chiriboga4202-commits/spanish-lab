@@ -1,0 +1,1083 @@
+{
+  "series": "MITOS",
+  "chapter": 10,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "Teseo y el Minotauro",
+  "level": "A2",
+  "grammarFocus": "estar + preposiciones",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo (a man with a lean, muscular build, short dark hair, and a worn leather tunic) stands at the gaping, dark threshold of the Labyrinth, holding a glowing ball of thread. The sky behind him is bruised with sunset.",
+      "en": "The sky belongs to the gods, but the earth belongs to the monster. Teseo stands at the entrance.",
+      "levels": {
+        "facil": {
+          "es": "El cielo es de los dioses. Teseo está en la entrada del laberinto.",
+          "words": [
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "entrada",
+              "g": "entrance"
+            },
+            {
+              "w": "dioses",
+              "g": "gods"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El cielo pertenece a los dioses, pero Teseo está ante las puertas del abismo.",
+          "words": [
+            {
+              "w": "pertenece",
+              "g": "belongs"
+            },
+            {
+              "w": "puertas",
+              "g": "doors"
+            },
+            {
+              "w": "abismo",
+              "g": "abyss"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Si el cielo tiene dueño, la tierra es el dominio de la bestia. Teseo está frente a la boca del infierno.",
+          "words": [
+            {
+              "w": "dueño",
+              "g": "owner"
+            },
+            {
+              "w": "dominio",
+              "g": "domain"
+            },
+            {
+              "w": "infierno",
+              "g": "hell"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ariadna (a woman with flowing dark hair and a silk chiton) stands behind Teseo, pressing the thread into his hand. Her eyes are filled with fear.",
+      "en": "Ariadna is behind him. She gives him the thread of hope.",
+      "levels": {
+        "facil": {
+          "es": "Ariadna está detrás de él. Ella le da el hilo de seda.",
+          "words": [
+            {
+              "w": "detrás",
+              "g": "behind"
+            },
+            {
+              "w": "hilo",
+              "g": "thread"
+            },
+            {
+              "w": "seda",
+              "g": "silk"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ariadna está cerca de Teseo. El hilo está en sus manos con cuidado.",
+          "words": [
+            {
+              "w": "cerca",
+              "g": "near"
+            },
+            {
+              "w": "manos",
+              "g": "hands"
+            },
+            {
+              "w": "cuidado",
+              "g": "care"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ariadna está a sus espaldas, entregándole el ovillo que será su única salvación.",
+          "words": [
+            {
+              "w": "espaldas",
+              "g": "back/shoulders"
+            },
+            {
+              "w": "entregándole",
+              "g": "handing over"
+            },
+            {
+              "w": "salvación",
+              "g": "salvation"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo walks into the cold, stone corridor of the labyrinth. The thread is tied to a pillar at the entrance.",
+      "en": "Teseo enters the maze. He is far from the light now.",
+      "levels": {
+        "facil": {
+          "es": "Teseo está dentro. Él está lejos de la luz.",
+          "words": [
+            {
+              "w": "dentro",
+              "g": "inside"
+            },
+            {
+              "w": "lejos",
+              "g": "far"
+            },
+            {
+              "w": "luz",
+              "g": "light"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Teseo está en el pasillo. Las sombras están sobre él.",
+          "words": [
+            {
+              "w": "pasillo",
+              "g": "corridor"
+            },
+            {
+              "w": "sombras",
+              "g": "shadows"
+            },
+            {
+              "w": "sobre",
+              "g": "over"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Teseo está sumergido en la piedra. La oscuridad está por todas partes.",
+          "words": [
+            {
+              "w": "sumergido",
+              "g": "submerged"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            },
+            {
+              "w": "partes",
+              "g": "parts"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo touches the cold, damp stone walls of the labyrinth, searching for a path.",
+      "en": "The walls are cold. His hands are on the stone.",
+      "levels": {
+        "facil": {
+          "es": "Las paredes están frías. Teseo está en el muro.",
+          "words": [
+            {
+              "w": "paredes",
+              "g": "walls"
+            },
+            {
+              "w": "frías",
+              "g": "cold"
+            },
+            {
+              "w": "muro",
+              "g": "wall"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los muros están húmedos. Sus manos están contra la piedra.",
+          "words": [
+            {
+              "w": "húmedos",
+              "g": "damp"
+            },
+            {
+              "w": "manos",
+              "g": "hands"
+            },
+            {
+              "w": "piedra",
+              "g": "stone"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Las paredes están heladas. Sus dedos están sobre la piedra antigua, buscando una salida.",
+          "words": [
+            {
+              "w": "heladas",
+              "g": "frozen"
+            },
+            {
+              "w": "dedos",
+              "g": "fingers"
+            },
+            {
+              "w": "salida",
+              "g": "exit"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Deep in the shadows, the silhouette of the Minotaur (a massive, horned, bull-headed humanoid) looms, breathing heavily.",
+      "en": "Something is waiting in the dark. It is hungry.",
+      "levels": {
+        "facil": {
+          "es": "El monstruo está cerca. Él está en la sombra.",
+          "words": [
+            {
+              "w": "monstruo",
+              "g": "monster"
+            },
+            {
+              "w": "cerca",
+              "g": "near"
+            },
+            {
+              "w": "sombra",
+              "g": "shadow"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La bestia está esperando. Su aliento está en el aire.",
+          "words": [
+            {
+              "w": "bestia",
+              "g": "beast"
+            },
+            {
+              "w": "esperando",
+              "g": "waiting"
+            },
+            {
+              "w": "aliento",
+              "g": "breath"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La criatura está al acecho. Su presencia está marcada por un rugido sordo en la oscuridad.",
+          "words": [
+            {
+              "w": "criatura",
+              "g": "creature"
+            },
+            {
+              "w": "acecho",
+              "g": "lurking"
+            },
+            {
+              "w": "rugido",
+              "g": "roar"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo, a young man with curly dark hair and a short tunic, holds a thin, shimmering golden thread in his left hand. The thread is attached to the stone doorframe behind him.",
+      "en": "Teseo is at the entrance. The thread is in his hand.",
+      "levels": {
+        "facil": {
+          "es": "Teseo está en la entrada. El hilo está en su mano.",
+          "words": [
+            {
+              "w": "entrada",
+              "g": "entrance"
+            },
+            {
+              "w": "hilo",
+              "g": "thread"
+            },
+            {
+              "w": "mano",
+              "g": "hand"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Teseo está frente a la entrada. El hilo de Ariadna está en su mano izquierda.",
+          "words": [
+            {
+              "w": "frente",
+              "g": "in front of"
+            },
+            {
+              "w": "izquierda",
+              "g": "left"
+            },
+            {
+              "w": "hilo",
+              "g": "thread"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Teseo está ante el umbral. El hilo de oro está en su mano, firme y seguro.",
+          "words": [
+            {
+              "w": "umbral",
+              "g": "threshold"
+            },
+            {
+              "w": "firme",
+              "g": "steady"
+            },
+            {
+              "w": "oro",
+              "g": "gold"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo, a young man with curly dark hair and a short tunic, walks forward into the dark, winding stone corridors of the labyrinth. The golden thread trails behind him.",
+      "en": "He is inside the maze. The thread is behind him.",
+      "levels": {
+        "facil": {
+          "es": "Teseo está dentro del laberinto. El hilo está detrás de él.",
+          "words": [
+            {
+              "w": "dentro",
+              "g": "inside"
+            },
+            {
+              "w": "laberinto",
+              "g": "labyrinth"
+            },
+            {
+              "w": "detrás",
+              "g": "behind"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Teseo está caminando dentro del laberinto. El hilo está detrás de su camino.",
+          "words": [
+            {
+              "w": "caminando",
+              "g": "walking"
+            },
+            {
+              "w": "camino",
+              "g": "path"
+            },
+            {
+              "w": "dentro",
+              "g": "inside"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Teseo está inmerso en el laberinto. El hilo está extendido detrás de sus pasos.",
+          "words": [
+            {
+              "w": "inmerso",
+              "g": "immersed"
+            },
+            {
+              "w": "extendido",
+              "g": "stretched"
+            },
+            {
+              "w": "pasos",
+              "g": "steps"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo, a young man with curly dark hair and a short tunic, stops as he hears a guttural, heavy sound echoing from the darkness ahead.",
+      "en": "A sound is near him. He is between the shadows.",
+      "levels": {
+        "facil": {
+          "es": "Un sonido está cerca. Teseo está entre las sombras.",
+          "words": [
+            {
+              "w": "sonido",
+              "g": "sound"
+            },
+            {
+              "w": "cerca",
+              "g": "near"
+            },
+            {
+              "w": "sombras",
+              "g": "shadows"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Un rugido está cerca de él. Teseo está atrapado entre las sombras oscuras.",
+          "words": [
+            {
+              "w": "rugido",
+              "g": "roar"
+            },
+            {
+              "w": "atrapado",
+              "g": "trapped"
+            },
+            {
+              "w": "oscuras",
+              "g": "dark"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Un bramido está cerca. Teseo está oculto entre las sombras que lo rodean.",
+          "words": [
+            {
+              "w": "bramido",
+              "g": "bellow"
+            },
+            {
+              "w": "oculto",
+              "g": "hidden"
+            },
+            {
+              "w": "rodean",
+              "g": "surround"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo, a young man with curly dark hair and a short tunic, draws his bronze sword. The sword is above his head, reflecting a faint light.",
+      "en": "His sword is above him. The weapon is ready.",
+      "levels": {
+        "facil": {
+          "es": "Su espada está arriba. El arma está lista.",
+          "words": [
+            {
+              "w": "espada",
+              "g": "sword"
+            },
+            {
+              "w": "arriba",
+              "g": "above"
+            },
+            {
+              "w": "lista",
+              "g": "ready"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Su espada de bronce está sobre su cabeza. El arma está lista para luchar.",
+          "words": [
+            {
+              "w": "bronce",
+              "g": "bronze"
+            },
+            {
+              "w": "cabeza",
+              "g": "head"
+            },
+            {
+              "w": "luchar",
+              "g": "fight"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La espada está en alto, sobre su cabeza. El acero está presto al combate.",
+          "words": [
+            {
+              "w": "alto",
+              "g": "high"
+            },
+            {
+              "w": "acero",
+              "g": "steel"
+            },
+            {
+              "w": "presto",
+              "g": "prepared"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo, a young man with curly dark hair and a short tunic, peers around a corner. The Minotauro, a massive creature with the head of a bull and a muscular human body, is waiting in the chamber beyond.",
+      "en": "The beast is before him. Teseo is under the archway.",
+      "levels": {
+        "facil": {
+          "es": "La bestia está delante. Teseo está bajo el arco.",
+          "words": [
+            {
+              "w": "bestia",
+              "g": "beast"
+            },
+            {
+              "w": "delante",
+              "g": "in front"
+            },
+            {
+              "w": "arco",
+              "g": "arch"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La bestia está delante de él. Teseo está bajo el arco de piedra, esperando.",
+          "words": [
+            {
+              "w": "delante",
+              "g": "in front of"
+            },
+            {
+              "w": "piedra",
+              "g": "stone"
+            },
+            {
+              "w": "esperando",
+              "g": "waiting"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La mole está ante él. Teseo está bajo el arco, conteniendo el aliento.",
+          "words": [
+            {
+              "w": "mole",
+              "g": "bulk/beast"
+            },
+            {
+              "w": "ante",
+              "g": "before"
+            },
+            {
+              "w": "conteniendo",
+              "g": "holding back"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo, a young man with curly dark hair and a short white tunic, stands firm. The Minotauro, a massive creature with a bull's head and muscular human body, is behind a pillar.",
+      "en": "The beast is behind the stone column.",
+      "levels": {
+        "facil": {
+          "es": "La bestia está detrás de la columna.",
+          "words": [
+            {
+              "w": "bestia",
+              "g": "beast"
+            },
+            {
+              "w": "detrás",
+              "g": "behind"
+            },
+            {
+              "w": "columna",
+              "g": "column"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La bestia está oculta detrás de la gran columna de piedra.",
+          "words": [
+            {
+              "w": "oculta",
+              "g": "hidden"
+            },
+            {
+              "w": "gran",
+              "g": "large"
+            },
+            {
+              "w": "piedra",
+              "g": "stone"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La fiera está agazapada detrás de la mole de piedra.",
+          "words": [
+            {
+              "w": "fiera",
+              "g": "wild beast"
+            },
+            {
+              "w": "agazapada",
+              "g": "crouching"
+            },
+            {
+              "w": "mole",
+              "g": "mass/block"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo, a young man with curly dark hair and a short white tunic, holds a thin golden thread in his left hand, attached to the wall.",
+      "en": "The thread is on the wall.",
+      "levels": {
+        "facil": {
+          "es": "El hilo está en la pared.",
+          "words": [
+            {
+              "w": "hilo",
+              "g": "thread"
+            },
+            {
+              "w": "pared",
+              "g": "wall"
+            },
+            {
+              "w": "está",
+              "g": "is"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El hilo de Ariadna está pegado a la pared fría.",
+          "words": [
+            {
+              "w": "Ariadna",
+              "g": "Ariadne"
+            },
+            {
+              "w": "pegado",
+              "g": "stuck/attached"
+            },
+            {
+              "w": "fría",
+              "g": "cold"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El hilo salvador está tenso sobre la pared húmeda.",
+          "words": [
+            {
+              "w": "salvador",
+              "g": "saving"
+            },
+            {
+              "w": "tenso",
+              "g": "taut"
+            },
+            {
+              "w": "húmeda",
+              "g": "damp"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The Minotauro emerges, his shadow looming over Teseo, a young man with curly dark hair and a short white tunic.",
+      "en": "The monster is above Teseo.",
+      "levels": {
+        "facil": {
+          "es": "El monstruo está sobre Teseo.",
+          "words": [
+            {
+              "w": "monstruo",
+              "g": "monster"
+            },
+            {
+              "w": "sobre",
+              "g": "above"
+            },
+            {
+              "w": "Teseo",
+              "g": "Theseus"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El monstruo está muy cerca de Teseo.",
+          "words": [
+            {
+              "w": "muy",
+              "g": "very"
+            },
+            {
+              "w": "cerca",
+              "g": "near"
+            },
+            {
+              "w": "monstruo",
+              "g": "monster"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La sombra del engendro está cerniéndose sobre Teseo.",
+          "words": [
+            {
+              "w": "sombra",
+              "g": "shadow"
+            },
+            {
+              "w": "engendro",
+              "g": "abomination"
+            },
+            {
+              "w": "cerniéndose",
+              "g": "looming"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo, a young man with curly dark hair and a short white tunic, is between two walls of the labyrinth.",
+      "en": "Teseo is between the walls.",
+      "levels": {
+        "facil": {
+          "es": "Teseo está entre las paredes.",
+          "words": [
+            {
+              "w": "Teseo",
+              "g": "Theseus"
+            },
+            {
+              "w": "entre",
+              "g": "between"
+            },
+            {
+              "w": "paredes",
+              "g": "walls"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Teseo está entre dos paredes oscuras.",
+          "words": [
+            {
+              "w": "dos",
+              "g": "two"
+            },
+            {
+              "w": "oscuras",
+              "g": "dark"
+            },
+            {
+              "w": "paredes",
+              "g": "walls"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Teseo está atrapado entre los muros del laberinto.",
+          "words": [
+            {
+              "w": "atrapado",
+              "g": "trapped"
+            },
+            {
+              "w": "muros",
+              "g": "walls/ramparts"
+            },
+            {
+              "w": "laberinto",
+              "g": "labyrinth"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The Minotauro lunges forward, claws extended, while Teseo, a young man with curly dark hair and a short white tunic, is under the archway.",
+      "en": "The enemy is under the arch.",
+      "levels": {
+        "facil": {
+          "es": "El enemigo está bajo el arco.",
+          "words": [
+            {
+              "w": "enemigo",
+              "g": "enemy"
+            },
+            {
+              "w": "bajo",
+              "g": "under"
+            },
+            {
+              "w": "arco",
+              "g": "arch"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El enemigo está bajo el arco de piedra.",
+          "words": [
+            {
+              "w": "enemigo",
+              "g": "enemy"
+            },
+            {
+              "w": "arco",
+              "g": "arch"
+            },
+            {
+              "w": "piedra",
+              "g": "stone"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El adversario está bajo el arco de entrada.",
+          "words": [
+            {
+              "w": "adversario",
+              "g": "adversary"
+            },
+            {
+              "w": "entrada",
+              "g": "entrance"
+            },
+            {
+              "w": "arco",
+              "g": "arch"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo, a muscular youth with dark curly hair and a short white tunic, stands firm. The Minotauro, a hulking man with a bull's head and heavy horns, is behind a pillar.",
+      "en": "The beast is behind the column.",
+      "levels": {
+        "facil": {
+          "es": "La bestia está detrás de la columna.",
+          "words": [
+            "bestia",
+            "beast",
+            "detrás",
+            "behind",
+            "columna",
+            "column"
+          ]
+        },
+        "intermedio": {
+          "es": "El monstruo está escondido detrás de la gran columna.",
+          "words": [
+            "monstruo",
+            "monster",
+            "escondido",
+            "hidden",
+            "detrás",
+            "behind"
+          ]
+        },
+        "nativo": {
+          "es": "La bestia aguarda tras la columna, acechante.",
+          "words": [
+            "aguarda",
+            "awaits",
+            "tras",
+            "behind",
+            "acechante",
+            "lurking"
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo, a muscular youth with dark curly hair and a short white tunic, holds a bronze sword. He is in front of the labyrinth's heart.",
+      "en": "Teseo is in front of the center.",
+      "levels": {
+        "facil": {
+          "es": "Teseo está delante del centro.",
+          "words": [
+            "Teseo",
+            "Theseus",
+            "delante",
+            "in front",
+            "centro",
+            "center"
+          ]
+        },
+        "intermedio": {
+          "es": "Teseo está de pie frente al corazón del laberinto.",
+          "words": [
+            "pie",
+            "foot",
+            "frente",
+            "in front",
+            "corazón",
+            "heart"
+          ]
+        },
+        "nativo": {
+          "es": "Teseo se halla ante el epicentro del horror.",
+          "words": [
+            "halla",
+            "is/finds himself",
+            "ante",
+            "before",
+            "epicentro",
+            "epicenter"
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The Minotauro charges. Teseo is between two jagged stone walls.",
+      "en": "He is between two cold walls.",
+      "levels": {
+        "facil": {
+          "es": "Él está entre dos paredes frías.",
+          "words": [
+            "entre",
+            "between",
+            "paredes",
+            "walls",
+            "frías",
+            "cold"
+          ]
+        },
+        "intermedio": {
+          "es": "Teseo está atrapado entre dos muros de piedra.",
+          "words": [
+            "atrapado",
+            "trapped",
+            "entre",
+            "between",
+            "muros",
+            "walls"
+          ]
+        },
+        "nativo": {
+          "es": "Se encuentra confinado entre dos muros gélidos.",
+          "words": [
+            "confinado",
+            "confined",
+            "entre",
+            "between",
+            "gélidos",
+            "icy"
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo strikes. His sword is inside the beast's chest.",
+      "en": "The sword is inside the enemy.",
+      "levels": {
+        "facil": {
+          "es": "La espada está dentro del enemigo.",
+          "words": [
+            "espada",
+            "sword",
+            "dentro",
+            "inside",
+            "enemigo",
+            "enemy"
+          ]
+        },
+        "intermedio": {
+          "es": "La espada está hundida dentro del pecho del Minotauro.",
+          "words": [
+            "hundida",
+            "sunken",
+            "dentro",
+            "inside",
+            "pecho",
+            "chest"
+          ]
+        },
+        "nativo": {
+          "es": "El bronce está enterrado en el corazón de la bestia.",
+          "words": [
+            "bronce",
+            "bronze",
+            "enterrado",
+            "buried",
+            "corazón",
+            "heart"
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Teseo stands over the fallen beast. The golden thread is near his feet, leading back to the exit.",
+      "en": "The thread is near his feet.",
+      "levels": {
+        "facil": {
+          "es": "El hilo está cerca de sus pies.",
+          "words": [
+            "hilo",
+            "thread",
+            "cerca",
+            "near",
+            "pies",
+            "feet"
+          ]
+        },
+        "intermedio": {
+          "es": "El hilo de Ariadna está cerca de los pies de Teseo.",
+          "words": [
+            "hilo",
+            "thread",
+            "cerca",
+            "near",
+            "pies",
+            "feet"
+          ]
+        },
+        "nativo": {
+          "es": "El hilo de oro reposa junto a sus pies, prometiendo el retorno.",
+          "words": [
+            "reposa",
+            "rests",
+            "junto",
+            "next to",
+            "retorno",
+            "return"
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "The Minotauro falls, but the labyrinth begins to tremble. Teseo follows the thread, yet he hears a second, deeper roar echoing from the shadows ahead.",
+  "closingBeat": "In the heart of the dark, even the hero must rely on a fragile string to survive."
+}

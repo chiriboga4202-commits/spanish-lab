@@ -1,0 +1,1173 @@
+{
+  "series": "MITOS",
+  "chapter": 20,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "El Fin de la Edad Heroica",
+  "level": "B1",
+  "grammarFocus": "pasado + reflexión",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A close-up of a weathered, battle-scarred hand letting go of a broken bronze sword, dropping it into the dark, cold Aegean sand.",
+      "en": "The destiny is claimed, but the sword falls.",
+      "levels": {
+        "facil": {
+          "es": "El destino se cumplió. La espada cae al suelo.",
+          "words": [
+            {
+              "w": "cumplió",
+              "g": "fulfilled"
+            },
+            {
+              "w": "espada",
+              "g": "sword"
+            },
+            {
+              "w": "cae",
+              "g": "falls"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El destino fue reclamado, y la espada cayó para siempre.",
+          "words": [
+            {
+              "w": "reclamado",
+              "g": "claimed"
+            },
+            {
+              "w": "siempre",
+              "g": "forever"
+            },
+            {
+              "w": "cayó",
+              "g": "fell"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El destino quedó sellado, mas el acero se rindió ante la arena.",
+          "words": [
+            {
+              "w": "sellado",
+              "g": "sealed"
+            },
+            {
+              "w": "acero",
+              "g": "steel"
+            },
+            {
+              "w": "rindió",
+              "g": "surrendered"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. An aging, weary Achilles, his golden armor dull and dented, standing alone on a cliffside, looking toward a fading Olympus.",
+      "en": "The age of giants was ending; the gods turned their backs.",
+      "levels": {
+        "facil": {
+          "es": "La era de los héroes terminó. Los dioses se fueron lejos.",
+          "words": [
+            {
+              "w": "era",
+              "g": "era"
+            },
+            {
+              "w": "terminó",
+              "g": "ended"
+            },
+            {
+              "w": "lejos",
+              "g": "far away"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La era de los gigantes terminaba; los dioses se alejaron del mundo.",
+          "words": [
+            {
+              "w": "gigantes",
+              "g": "giants"
+            },
+            {
+              "w": "terminaba",
+              "g": "was ending"
+            },
+            {
+              "w": "alejaron",
+              "g": "moved away"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La era de los titanes se extinguía, mientras las deidades le daban la espalda al mundo.",
+          "words": [
+            {
+              "w": "extinguía",
+              "g": "was fading"
+            },
+            {
+              "w": "deidades",
+              "g": "deities"
+            },
+            {
+              "w": "espalda",
+              "g": "back"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. A wide shot of a Greek battlefield at twilight, littered with silent, abandoned weapons. No soldiers remain, only ghosts of the past.",
+      "en": "Silence claimed the fields where legends once fought.",
+      "levels": {
+        "facil": {
+          "es": "Todo estaba en silencio. Las leyendas ya no luchaban.",
+          "words": [
+            {
+              "w": "silencio",
+              "g": "silence"
+            },
+            {
+              "w": "leyendas",
+              "g": "legends"
+            },
+            {
+              "w": "luchaban",
+              "g": "fought"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El silencio reinó en los campos donde las leyendas pelearon.",
+          "words": [
+            {
+              "w": "reinó",
+              "g": "reigned"
+            },
+            {
+              "w": "campos",
+              "g": "fields"
+            },
+            {
+              "w": "pelearon",
+              "g": "fought"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El silencio sepultó los campos donde otrora colisionaron las leyendas.",
+          "words": [
+            {
+              "w": "sepultó",
+              "g": "buried"
+            },
+            {
+              "w": "otrora",
+              "g": "formerly"
+            },
+            {
+              "w": "colisionaron",
+              "g": "collided"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. A close-up of a young, ordinary man with dirt-stained hands, picking up a rusted plow where a sword once lay.",
+      "en": "The sword became a plow; the hero became a laborer.",
+      "levels": {
+        "facil": {
+          "es": "El hombre tomó el arado. El héroe ya no existe.",
+          "words": [
+            {
+              "w": "hombre",
+              "g": "man"
+            },
+            {
+              "w": "arado",
+              "g": "plow"
+            },
+            {
+              "w": "existe",
+              "g": "exists"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La espada se convirtió en arado; el héroe fue ahora un campesino.",
+          "words": [
+            {
+              "w": "convirtió",
+              "g": "turned into"
+            },
+            {
+              "w": "campesino",
+              "g": "peasant"
+            },
+            {
+              "w": "ahora",
+              "g": "now"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El hierro de la guerra mutó en herramienta de labranza; el héroe cedió su lugar al trabajador.",
+          "words": [
+            {
+              "w": "mutó",
+              "g": "mutated"
+            },
+            {
+              "w": "labranza",
+              "g": "farming"
+            },
+            {
+              "w": "cedió",
+              "g": "yielded"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. A high-angle shot of a growing city-state, smoke rising from hearths, not war fires, under a vast, empty sky.",
+      "en": "The age of men had begun, quiet and heavy with memory.",
+      "levels": {
+        "facil": {
+          "es": "La era de los hombres empezó. Había mucha memoria.",
+          "words": [
+            {
+              "w": "empezó",
+              "g": "began"
+            },
+            {
+              "w": "memoria",
+              "g": "memory"
+            },
+            {
+              "w": "hombres",
+              "g": "men"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Comenzó la era de los hombres, marcada por el recuerdo.",
+          "words": [
+            {
+              "w": "comenzó",
+              "g": "began"
+            },
+            {
+              "w": "marcada",
+              "g": "marked"
+            },
+            {
+              "w": "recuerdo",
+              "g": "memory"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Alboró la edad de los mortales, impregnada de una nostalgia inmensa.",
+          "words": [
+            {
+              "w": "alboró",
+              "g": "dawned"
+            },
+            {
+              "w": "mortales",
+              "g": "mortals"
+            },
+            {
+              "w": "nostalgia",
+              "g": "nostalgia"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. An aging, bearded king sits on a dusty stone throne in a ruined palace, his armor rusted and covered in cobwebs.",
+      "en": "The kings of old sat on silent thrones. They remembered the glory of the gods.",
+      "levels": {
+        "facil": {
+          "es": "El viejo rey estaba en su trono. Él recordaba a los dioses.",
+          "words": [
+            {
+              "w": "rey",
+              "g": "king"
+            },
+            {
+              "w": "trono",
+              "g": "throne"
+            },
+            {
+              "w": "recordaba",
+              "g": "remembered"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los antiguos reyes ocupaban tronos silenciosos. Recordaban la gloria que los dioses dejaron atrás.",
+          "words": [
+            {
+              "w": "antiguos",
+              "g": "ancient"
+            },
+            {
+              "w": "ocupaban",
+              "g": "occupied"
+            },
+            {
+              "w": "gloria",
+              "g": "glory"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los monarcas de antaño languidecían en tronos mudos, evocando la gloria perdida de los inmortales.",
+          "words": [
+            {
+              "w": "antaño",
+              "g": "yore"
+            },
+            {
+              "w": "languidecían",
+              "g": "languished"
+            },
+            {
+              "w": "evocando",
+              "g": "evoking"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A massive, crumbling statue of Zeus stands in a forest, vines crawling over the marble face.",
+      "en": "The statues of the gods lost their eyes. Stone does not see the new world.",
+      "levels": {
+        "facil": {
+          "es": "Las estatuas de piedra no tenían ojos. El mundo cambió mucho.",
+          "words": [
+            {
+              "w": "estatuas",
+              "g": "statues"
+            },
+            {
+              "w": "piedra",
+              "g": "stone"
+            },
+            {
+              "w": "cambió",
+              "g": "changed"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Las estatuas de los dioses perdieron sus ojos. La piedra ya no observaba el nuevo mundo.",
+          "words": [
+            {
+              "w": "perdieron",
+              "g": "lost"
+            },
+            {
+              "w": "observaba",
+              "g": "observed"
+            },
+            {
+              "w": "mundo",
+              "g": "world"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los ídolos de mármol perdieron la mirada. La piedra inerte quedó ciega ante el devenir de los hombres.",
+          "words": [
+            {
+              "w": "ídolos",
+              "g": "idols"
+            },
+            {
+              "w": "inerte",
+              "g": "inert"
+            },
+            {
+              "w": "devenir",
+              "g": "becoming"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A group of children playing in the dirt, building a small sandcastle shaped like a labyrinth.",
+      "en": "Children played in the dirt. They knew nothing of the monsters that once lived.",
+      "levels": {
+        "facil": {
+          "es": "Los niños jugaban en la tierra. Ellos no conocían a los monstruos.",
+          "words": [
+            {
+              "w": "niños",
+              "g": "children"
+            },
+            {
+              "w": "jugaban",
+              "g": "played"
+            },
+            {
+              "w": "conocían",
+              "g": "knew"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los niños jugaban en el polvo. Desconocían las historias de los monstruos de ayer.",
+          "words": [
+            {
+              "w": "polvo",
+              "g": "dust"
+            },
+            {
+              "w": "desconocían",
+              "g": "were unaware of"
+            },
+            {
+              "w": "historias",
+              "g": "stories"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La infancia jugaba en el polvo, ajena a las sombras de los monstruos que antaño asolaron la tierra.",
+          "words": [
+            {
+              "w": "infancia",
+              "g": "childhood"
+            },
+            {
+              "w": "ajena",
+              "g": "unaware"
+            },
+            {
+              "w": "asolaron",
+              "g": "devastated"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. An elderly storyteller sitting by a dying fire, gesturing to a group of listeners in the shadows.",
+      "en": "The storyteller spoke of heroes. His voice was the only bridge to the past.",
+      "levels": {
+        "facil": {
+          "es": "El hombre hablaba de los héroes. Su voz era el pasado.",
+          "words": [
+            {
+              "w": "hablaba",
+              "g": "spoke"
+            },
+            {
+              "w": "héroes",
+              "g": "heroes"
+            },
+            {
+              "w": "voz",
+              "g": "voice"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El anciano contaba historias de héroes. Su voz era el único puente hacia el pasado.",
+          "words": [
+            {
+              "w": "anciano",
+              "g": "elder"
+            },
+            {
+              "w": "contaba",
+              "g": "told"
+            },
+            {
+              "w": "puente",
+              "g": "bridge"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El aedo narraba las gestas heroicas; su voz, un puente frágil hacia un tiempo que se desvanecía.",
+          "words": [
+            {
+              "w": "aedo",
+              "g": "bard"
+            },
+            {
+              "w": "gestas",
+              "g": "deeds"
+            },
+            {
+              "w": "desvanecía",
+              "g": "faded"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A blacksmith forging an iron tool, sparks flying into the dark, empty sky.",
+      "en": "The fire in the forge was cold. The age of iron replaced the age of gold.",
+      "levels": {
+        "facil": {
+          "es": "El fuego de la fragua estaba frío. Ahora era la era del hierro.",
+          "words": [
+            {
+              "w": "fuego",
+              "g": "fire"
+            },
+            {
+              "w": "fragua",
+              "g": "forge"
+            },
+            {
+              "w": "hierro",
+              "g": "iron"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El fuego de la fragua se apagaba. La era del hierro reemplazó a la era del oro.",
+          "words": [
+            {
+              "w": "apagaba",
+              "g": "faded out"
+            },
+            {
+              "w": "reemplazó",
+              "g": "replaced"
+            },
+            {
+              "w": "oro",
+              "g": "gold"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El fuego de la forja languidecía. La era del oro sucumbió ante la dureza del hierro.",
+          "words": [
+            {
+              "w": "languidecía",
+              "g": "languished"
+            },
+            {
+              "w": "sucumbió",
+              "g": "succumbed"
+            },
+            {
+              "w": "dureza",
+              "g": "hardness"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. An old man with a long white beard and worn, dirt-stained tunic sits by a dying hearth, pointing toward the mountains.",
+      "en": "The old man pointed to the mountains. Once, gods walked there.",
+      "levels": {
+        "facil": {
+          "es": "El anciano señaló las montañas. Antes, los dioses caminaban allí.",
+          "words": [
+            {
+              "w": "señaló",
+              "g": "pointed"
+            },
+            {
+              "w": "montañas",
+              "g": "mountains"
+            },
+            {
+              "w": "antes",
+              "g": "before"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El anciano señaló hacia las cumbres. Antaño, los dioses recorrían esas tierras.",
+          "words": [
+            {
+              "w": "antaño",
+              "g": "long ago"
+            },
+            {
+              "w": "cumbres",
+              "g": "peaks"
+            },
+            {
+              "w": "recorrían",
+              "g": "traversed"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El anciano señaló hacia el horizonte. Antaño, las pisadas de los dioses marcaron aquellos senderos.",
+          "words": [
+            {
+              "w": "horizonte",
+              "g": "horizon"
+            },
+            {
+              "w": "pisadas",
+              "g": "footsteps"
+            },
+            {
+              "w": "senderos",
+              "g": "paths"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A close-up of a broken marble statue of a hero, half-buried in the sand, vines growing over the cracked face.",
+      "en": "The statues of the heroes were broken. Time forgot their names.",
+      "levels": {
+        "facil": {
+          "es": "Las estatuas de los héroes estaban rotas. El tiempo olvidó sus nombres.",
+          "words": [
+            {
+              "w": "estatuas",
+              "g": "statues"
+            },
+            {
+              "w": "rotas",
+              "g": "broken"
+            },
+            {
+              "w": "olvidó",
+              "g": "forgot"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Las estatuas de los héroes yacían fragmentadas. El tiempo borró sus nombres de la memoria.",
+          "words": [
+            {
+              "w": "yacían",
+              "g": "lay"
+            },
+            {
+              "w": "fragmentadas",
+              "g": "fragmented"
+            },
+            {
+              "w": "borró",
+              "g": "erased"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Las efigies de los héroes yacían en el olvido. El paso de los siglos erosionó sus identidades.",
+          "words": [
+            {
+              "w": "efigies",
+              "g": "effigies"
+            },
+            {
+              "w": "olvido",
+              "g": "oblivion"
+            },
+            {
+              "w": "erosionó",
+              "g": "eroded"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The old man with a long white beard and worn, dirt-stained tunic stares into the embers. His eyes look sad and reflective.",
+      "en": "He remembered the battles. He felt the silence of the gods.",
+      "levels": {
+        "facil": {
+          "es": "Él recordaba las batallas. Sentía el silencio de los dioses.",
+          "words": [
+            {
+              "w": "recordaba",
+              "g": "remembered"
+            },
+            {
+              "w": "batallas",
+              "g": "battles"
+            },
+            {
+              "w": "silencio",
+              "g": "silence"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Él rememoraba antiguas batallas. Percibía el profundo silencio de los dioses.",
+          "words": [
+            {
+              "w": "rememoraba",
+              "g": "recalled"
+            },
+            {
+              "w": "percibía",
+              "g": "perceived"
+            },
+            {
+              "w": "profundo",
+              "g": "deep"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Evocaba los fragores de antaño y, en su pecho, pesaba la ausencia de los inmortales.",
+          "words": [
+            {
+              "w": "evocaba",
+              "g": "evoked"
+            },
+            {
+              "w": "fragores",
+              "g": "din/clash"
+            },
+            {
+              "w": "ausencia",
+              "g": "absence"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A group of young men in the background are forging iron swords, sparks flying, ignoring the old man.",
+      "en": "The young men forged iron. They did not care about the past.",
+      "levels": {
+        "facil": {
+          "es": "Los jóvenes forjaban hierro. No les importaba el pasado.",
+          "words": [
+            {
+              "w": "jóvenes",
+              "g": "young men"
+            },
+            {
+              "w": "forjaban",
+              "g": "forged"
+            },
+            {
+              "w": "hierro",
+              "g": "iron"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los jóvenes forjaban espadas de hierro. El pasado no les interesaba ya.",
+          "words": [
+            {
+              "w": "espadas",
+              "g": "swords"
+            },
+            {
+              "w": "interesaba",
+              "g": "interested"
+            },
+            {
+              "w": "ya",
+              "g": "anymore"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Aquella juventud forjaba su propio destino en hierro, indiferente a los ecos del ayer.",
+          "words": [
+            {
+              "w": "juventud",
+              "g": "youth"
+            },
+            {
+              "w": "destino",
+              "g": "destiny"
+            },
+            {
+              "w": "indiferente",
+              "g": "indifferent"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A view of the Greek sky, dark and empty, with no chariots or divine omens, just normal clouds.",
+      "en": "The sky was empty. The gods had left the world.",
+      "levels": {
+        "facil": {
+          "es": "El cielo estaba vacío. Los dioses dejaron el mundo.",
+          "words": [
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "vacío",
+              "g": "empty"
+            },
+            {
+              "w": "dejaron",
+              "g": "left"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El firmamento lucía vacío. Los dioses se habían alejado del mundo.",
+          "words": [
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            },
+            {
+              "w": "lucía",
+              "g": "looked"
+            },
+            {
+              "w": "alejado",
+              "g": "withdrawn"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El firmamento permanecía mudo; los olímpicos se habían retirado a las sombras del mito.",
+          "words": [
+            {
+              "w": "permanecía",
+              "g": "remained"
+            },
+            {
+              "w": "olímpicos",
+              "g": "Olympians"
+            },
+            {
+              "w": "retirado",
+              "g": "withdrawn"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. An aging, weary King with a silver-streaked beard and faded bronze armor stands on a cliff, looking down at a valley where smoke rises from new, industrial iron forges.",
+      "en": "The old king watched the smoke. The era of bronze was buried in the ashes.",
+      "levels": {
+        "facil": {
+          "es": "El viejo rey miraba el humo. La era del bronce moría en las cenizas.",
+          "words": [
+            {
+              "w": "viejo",
+              "g": "old"
+            },
+            {
+              "w": "humo",
+              "g": "smoke"
+            },
+            {
+              "w": "cenizas",
+              "g": "ashes"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El anciano monarca observaba el humo negro. La gloriosa edad del bronce quedaba sepultada bajo las cenizas.",
+          "words": [
+            {
+              "w": "anciano",
+              "g": "elderly"
+            },
+            {
+              "w": "sepultada",
+              "g": "buried"
+            },
+            {
+              "w": "gloriosa",
+              "g": "glorious"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El soberano contemplaba el humo ascendente; presenció cómo la edad del bronce se extinguía entre las cenizas de un tiempo olvidado.",
+          "words": [
+            {
+              "w": "contemplaba",
+              "g": "gazed at"
+            },
+            {
+              "w": "ascendente",
+              "g": "rising"
+            },
+            {
+              "w": "extinguía",
+              "g": "faded away"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A massive stone statue of Zeus, cracked and overgrown with vines, stands forgotten in a dark, silent forest.",
+      "en": "Stone gods remained silent. They no longer answered the prayers of men.",
+      "levels": {
+        "facil": {
+          "es": "Los dioses de piedra estaban callados. Ya no escuchaban a los hombres.",
+          "words": [
+            {
+              "w": "piedra",
+              "g": "stone"
+            },
+            {
+              "w": "callados",
+              "g": "silent"
+            },
+            {
+              "w": "escuchaban",
+              "g": "listened"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Las estatuas de piedra permanecían en silencio absoluto. Los dioses habían dejado de atender las plegarias humanas.",
+          "words": [
+            {
+              "w": "estatuas",
+              "g": "statues"
+            },
+            {
+              "w": "absoluto",
+              "g": "absolute"
+            },
+            {
+              "w": "plegarias",
+              "g": "prayers"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los ídolos de piedra se sumían en un mutismo perpetuo; los inmortales desoyeron, para siempre, el eco de las súplicas mortales.",
+          "words": [
+            {
+              "w": "sumían",
+              "g": "plunged into"
+            },
+            {
+              "w": "mutismo",
+              "g": "silence"
+            },
+            {
+              "w": "desoyeron",
+              "g": "ignored"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. An empty throne room where sunlight hits dust motes dancing in the air; the heavy, ornate royal crown lies abandoned on the cold floor.",
+      "en": "The throne was empty. He reflected on everything that was lost.",
+      "levels": {
+        "facil": {
+          "es": "El trono estaba vacío. Él pensaba en todo lo que perdió.",
+          "words": [
+            {
+              "w": "trono",
+              "g": "throne"
+            },
+            {
+              "w": "vacío",
+              "g": "empty"
+            },
+            {
+              "w": "perdió",
+              "g": "lost"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El trono permanecía desierto. El rey reflexionaba sobre todo aquello que se había perdido en la historia.",
+          "words": [
+            {
+              "w": "desierto",
+              "g": "deserted"
+            },
+            {
+              "w": "reflexionaba",
+              "g": "reflected"
+            },
+            {
+              "w": "aquello",
+              "g": "that which"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El trono quedó desolado. Ante su mirada, desfilaron los ecos de una grandeza que el tiempo devoró sin clemencia.",
+          "words": [
+            {
+              "w": "desolado",
+              "g": "desolate"
+            },
+            {
+              "w": "desfilaron",
+              "g": "marched past"
+            },
+            {
+              "w": "clemencia",
+              "g": "mercy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The aging King walks away into a thick, swirling mist, his silhouette becoming indistinct.",
+      "en": "He walked toward the horizon, leaving his name to the wind.",
+      "levels": {
+        "facil": {
+          "es": "Caminó hacia el horizonte. Dejó su nombre al viento.",
+          "words": [
+            {
+              "w": "caminó",
+              "g": "walked"
+            },
+            {
+              "w": "horizonte",
+              "g": "horizon"
+            },
+            {
+              "w": "viento",
+              "g": "wind"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Caminó hasta el horizonte, entregando su nombre al viento del olvido.",
+          "words": [
+            {
+              "w": "entregando",
+              "g": "handing over"
+            },
+            {
+              "w": "olvido",
+              "g": "oblivion"
+            },
+            {
+              "w": "nombre",
+              "g": "name"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Se adentró en el horizonte, entregando su legado al viento inclemente del olvido.",
+          "words": [
+            {
+              "w": "adentró",
+              "g": "entered"
+            },
+            {
+              "w": "legado",
+              "g": "legacy"
+            },
+            {
+              "w": "inclemente",
+              "g": "inclement"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A close-up of a new iron sword being held by a young, callous hand; in the reflection of the metal, a dark, ominous shadow begins to loom.",
+      "en": "But in the shadows, something ancient stirred to life.",
+      "levels": {
+        "facil": {
+          "es": "Pero en las sombras, algo antiguo despertaba.",
+          "words": [
+            {
+              "w": "sombras",
+              "g": "shadows"
+            },
+            {
+              "w": "antiguo",
+              "g": "ancient"
+            },
+            {
+              "w": "despertaba",
+              "g": "awakened"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Sin embargo, en la oscuridad, algo antiguo comenzaba a despertar.",
+          "words": [
+            {
+              "w": "embargo",
+              "g": "however"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            },
+            {
+              "w": "comenzaba",
+              "g": "began"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "No obstante, en el umbral de las sombras, un mal ancestral aguardaba su turno.",
+          "words": [
+            {
+              "w": "obstante",
+              "g": "nevertheless"
+            },
+            {
+              "w": "umbral",
+              "g": "threshold"
+            },
+            {
+              "w": "ancestral",
+              "g": "ancestral"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "A medida que el hierro reemplaza al bronce, una sombra que los dioses olvidaron sellar empieza a extenderse por los campos de los hombres.",
+  "closingBeat": "El mito termina donde la historia humana comienza a sangrar."
+}

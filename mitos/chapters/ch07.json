@@ -1,0 +1,1038 @@
+{
+  "series": "MITOS",
+  "chapter": 7,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "El Vuelo de Ícaro",
+  "level": "A2",
+  "grammarFocus": "poder/querer + adjetivos",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Dédalo, a man with a tired face and graying beard, kneels on the stone floor of a dark cell, holding a single, glowing seed that pulses like a dying star.",
+      "en": "The seed of the cycle rests in Dédalo’s palm, still burning with the memory of the light.",
+      "levels": {
+        "facil": {
+          "es": "La semilla brilla en la mano de Dédalo. Él quiere ser libre.",
+          "words": [
+            {
+              "w": "semilla",
+              "g": "seed"
+            },
+            {
+              "w": "mano",
+              "g": "hand"
+            },
+            {
+              "w": "libre",
+              "g": "free"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La semilla brilla en la palma de Dédalo. Él quiere ser libre otra vez.",
+          "words": [
+            {
+              "w": "brilla",
+              "g": "shines"
+            },
+            {
+              "w": "palma",
+              "g": "palm"
+            },
+            {
+              "w": "otra vez",
+              "g": "again"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La semilla palpita en la mano de Dédalo. Él quiere ser libre, desesperado por escapar.",
+          "words": [
+            {
+              "w": "palpita",
+              "g": "pulses"
+            },
+            {
+              "w": "desesperado",
+              "g": "desperate"
+            },
+            {
+              "w": "escapar",
+              "g": "escape"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Dédalo, a man with a tired face and graying beard, works feverishly in the shadows, crafting giant bird wings out of wood, twine, and melting beeswax.",
+      "en": "With wax and wood, Dédalo builds a way out. He is powerful and focused.",
+      "levels": {
+        "facil": {
+          "es": "Dédalo usa cera y madera. Él puede ser un pájaro ahora.",
+          "words": [
+            {
+              "w": "cera",
+              "g": "wax"
+            },
+            {
+              "w": "madera",
+              "g": "wood"
+            },
+            {
+              "w": "pájaro",
+              "g": "bird"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Dédalo construye alas con cera y madera. Él puede ser fuerte hoy.",
+          "words": [
+            {
+              "w": "construye",
+              "g": "builds"
+            },
+            {
+              "w": "alas",
+              "g": "wings"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Dédalo ensambla alas de cera y madera. Puede ser invencible, puede ser el aire.",
+          "words": [
+            {
+              "w": "ensambla",
+              "g": "assembles"
+            },
+            {
+              "w": "invencible",
+              "g": "invincible"
+            },
+            {
+              "w": "aire",
+              "g": "air"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Ícaro, a young man with a slender build and golden hair, watches his father with wide, excited eyes, touching the feathers of the completed wings.",
+      "en": "Ícaro reaches out. He wants to be fast, he wants to be high.",
+      "levels": {
+        "facil": {
+          "es": "Ícaro toca las alas. Él quiere ser rápido.",
+          "words": [
+            {
+              "w": "toca",
+              "g": "touches"
+            },
+            {
+              "w": "rápido",
+              "g": "fast"
+            },
+            {
+              "w": "alas",
+              "g": "wings"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ícaro mira las alas con deseo. Él quiere ser muy alto.",
+          "words": [
+            {
+              "w": "deseo",
+              "g": "desire"
+            },
+            {
+              "w": "alto",
+              "g": "high"
+            },
+            {
+              "w": "mira",
+              "g": "looks at"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ícaro contempla las alas con anhelo. Quiere ser veloz, quiere ser libre.",
+          "words": [
+            {
+              "w": "contempla",
+              "g": "contemplates"
+            },
+            {
+              "w": "anhelo",
+              "g": "yearning"
+            },
+            {
+              "w": "veloz",
+              "g": "swift"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Dédalo, a man with a tired face and graying beard, fastens the wings onto Ícaro’s back with a serious, grave expression.",
+      "en": "Dédalo warns him: 'Do not fly too high. You can be careful.'",
+      "levels": {
+        "facil": {
+          "es": "Dédalo dice: 'No vueles alto. Puedes ser prudente'.",
+          "words": [
+            {
+              "w": "vueles",
+              "g": "fly"
+            },
+            {
+              "w": "prudente",
+              "g": "cautious"
+            },
+            {
+              "w": "dice",
+              "g": "says"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Dédalo advierte a su hijo: 'No vueles alto. Puedes ser inteligente'.",
+          "words": [
+            {
+              "w": "advierte",
+              "g": "warns"
+            },
+            {
+              "w": "hijo",
+              "g": "son"
+            },
+            {
+              "w": "inteligente",
+              "g": "intelligent"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Dédalo dicta el límite: 'No alcances el sol. Puedes ser sabio, hijo'.",
+          "words": [
+            {
+              "w": "dicta",
+              "g": "dictates"
+            },
+            {
+              "w": "límite",
+              "g": "limit"
+            },
+            {
+              "w": "sabio",
+              "g": "wise"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Dédalo and Ícaro, a man with a tired face and graying beard and a young man with a slender build and golden hair, stand on the edge of a high cliff overlooking the Aegean sea.",
+      "en": "The sea waits below. They want to be gone, they want to be far.",
+      "levels": {
+        "facil": {
+          "es": "El mar está abajo. Ellos quieren ser libres ahora.",
+          "words": [
+            {
+              "w": "mar",
+              "g": "sea"
+            },
+            {
+              "w": "abajo",
+              "g": "below"
+            },
+            {
+              "w": "ahora",
+              "g": "now"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El mar se extiende abajo. Ellos quieren ser lejanos pronto.",
+          "words": [
+            {
+              "w": "extiende",
+              "g": "extends"
+            },
+            {
+              "w": "lejanos",
+              "g": "far away"
+            },
+            {
+              "w": "pronto",
+              "g": "soon"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El abismo marino espera. Quieren ser fugitivos, quieren ser inalcanzables.",
+          "words": [
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "fugitivos",
+              "g": "fugitives"
+            },
+            {
+              "w": "inalcanzables",
+              "g": "unreachable"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Dédalo, a man with graying hair and intense, furrowed brows, and Ícaro, a slender youth with golden curls, stand on the edge of a jagged cliff, their wax-and-feather wings strapped to their backs.",
+      "en": "The wind pulls at their feathers. Daedalus looks worried; Icarus is eager.",
+      "levels": {
+        "facil": {
+          "es": "El viento es fuerte. Dédalo quiere ser cuidadoso. Ícaro quiere ser libre.",
+          "words": [
+            {
+              "w": "viento",
+              "g": "wind"
+            },
+            {
+              "w": "cuidadoso",
+              "g": "careful"
+            },
+            {
+              "w": "libre",
+              "g": "free"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El viento agita las plumas. Dédalo puede ser prudente, pero Ícaro quiere ser audaz.",
+          "words": [
+            {
+              "w": "agita",
+              "g": "shakes"
+            },
+            {
+              "w": "prudente",
+              "g": "prudent"
+            },
+            {
+              "w": "audaz",
+              "g": "daring"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El viento azota sus alas. Dédalo desea ser cauto, mientras Ícaro, impaciente, quiere ser intrépido.",
+          "words": [
+            {
+              "w": "azota",
+              "g": "whips"
+            },
+            {
+              "w": "cauto",
+              "g": "cautious"
+            },
+            {
+              "w": "intrépido",
+              "g": "fearless"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Dédalo and Ícaro leap from the cliffside, their massive wings catching the updraft.",
+      "en": "They jump. The sky is immense. They can be masters of the air.",
+      "levels": {
+        "facil": {
+          "es": "Saltan al aire. Ellos pueden ser rápidos. El cielo es muy grande.",
+          "words": [
+            {
+              "w": "saltan",
+              "g": "jump"
+            },
+            {
+              "w": "rápidos",
+              "g": "fast"
+            },
+            {
+              "w": "grande",
+              "g": "big"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El salto es perfecto. Ahora pueden ser dueños del aire, ligeros y veloces.",
+          "words": [
+            {
+              "w": "perfecto",
+              "g": "perfect"
+            },
+            {
+              "w": "dueños",
+              "g": "owners"
+            },
+            {
+              "w": "ligeros",
+              "g": "light"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Se lanzan al vacío. Pueden ser, al fin, señores del firmamento, inmensos y soberanos.",
+          "words": [
+            {
+              "w": "vacío",
+              "g": "void"
+            },
+            {
+              "w": "firmamento",
+              "g": "sky"
+            },
+            {
+              "w": "soberanos",
+              "g": "sovereign"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close-up on Ícaro’s face, eyes wide with wonder, wind rushing past his golden curls.",
+      "en": "Icarus feels the power. He wants to be higher than the birds.",
+      "levels": {
+        "facil": {
+          "es": "Ícaro está feliz. Él quiere ser más alto que los pájaros.",
+          "words": [
+            {
+              "w": "feliz",
+              "g": "happy"
+            },
+            {
+              "w": "alto",
+              "g": "high"
+            },
+            {
+              "w": "pájaros",
+              "g": "birds"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Siente la altura. Ícaro quiere ser capaz de tocar las nubes blancas.",
+          "words": [
+            {
+              "w": "altura",
+              "g": "height"
+            },
+            {
+              "w": "capaz",
+              "g": "capable"
+            },
+            {
+              "w": "nubes",
+              "g": "clouds"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La euforia lo domina. Ícaro quiere ser invencible, ascendiendo más allá de las aves.",
+          "words": [
+            {
+              "w": "euforia",
+              "g": "euphoria"
+            },
+            {
+              "w": "invencible",
+              "g": "invincible"
+            },
+            {
+              "w": "ascendiendo",
+              "g": "ascending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Dédalo looks back from a lower altitude, gesturing urgently for Ícaro to stay level.",
+      "en": "Daedalus warns him. He wants Icarus to be safe and steady.",
+      "levels": {
+        "facil": {
+          "es": "Dédalo grita. Él quiere ser padre. Ícaro debe ser tranquilo.",
+          "words": [
+            {
+              "w": "grita",
+              "g": "shouts"
+            },
+            {
+              "w": "padre",
+              "g": "father"
+            },
+            {
+              "w": "tranquilo",
+              "g": "calm"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Dédalo advierte el peligro. Él quiere ser protector, pero su hijo no escucha.",
+          "words": [
+            {
+              "w": "advierte",
+              "g": "warns"
+            },
+            {
+              "w": "peligro",
+              "g": "danger"
+            },
+            {
+              "w": "protector",
+              "g": "protective"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Dédalo implora moderación. Quiere ser el guía, temiendo que Ícaro sea imprudente.",
+          "words": [
+            {
+              "w": "implora",
+              "g": "begs"
+            },
+            {
+              "w": "moderación",
+              "g": "moderation"
+            },
+            {
+              "w": "imprudente",
+              "g": "reckless"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ícaro ignores his father, banking upward toward the bright, blinding sun, his wings glowing in the light.",
+      "en": "Icarus keeps climbing. He wants to be a god in the light.",
+      "levels": {
+        "facil": {
+          "es": "Ícaro vuela al sol. Él quiere ser poderoso y brillante.",
+          "words": [
+            {
+              "w": "vuela",
+              "g": "flies"
+            },
+            {
+              "w": "poderoso",
+              "g": "powerful"
+            },
+            {
+              "w": "brillante",
+              "g": "bright"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Él ignora el consejo. Ícaro quiere ser como un dios en el cielo.",
+          "words": [
+            {
+              "w": "ignora",
+              "g": "ignores"
+            },
+            {
+              "w": "consejo",
+              "g": "advice"
+            },
+            {
+              "w": "dios",
+              "g": "god"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Desafía toda advertencia. Ícaro quiere ser una deidad, fundiéndose con la luz solar.",
+          "words": [
+            {
+              "w": "desafía",
+              "g": "defies"
+            },
+            {
+              "w": "deidad",
+              "g": "deity"
+            },
+            {
+              "w": "fundiéndose",
+              "g": "merging"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Dédalo: middle-aged, greying beard, weathered tunic. Ícaro: lean youth, athletic, wide eyes. Ícaro ascending rapidly toward the blinding sun, wings of wax and feathers glistening.",
+      "en": "Icarus wants to be powerful. He feels invincible.",
+      "levels": {
+        "facil": {
+          "es": "Ícaro quiere ser poderoso. Él se siente invencible.",
+          "words": [
+            "poderoso, strong",
+            "sentir, to feel",
+            "invencible, invincible"
+          ]
+        },
+        "intermedio": {
+          "es": "Ícaro quiere ser muy poderoso. Él se siente invencible en el cielo.",
+          "words": [
+            "poderoso, mighty",
+            "sentirse, to feel oneself",
+            "invencible, unbeatable"
+          ]
+        },
+        "nativo": {
+          "es": "Ícaro anhela ser poderoso. Se siente invencible ante la inmensidad.",
+          "words": [
+            "anhelar, to crave",
+            "poderoso, potent",
+            "invencible, unstoppable"
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Dédalo, below and far behind, shouting with a desperate, fearful expression, reaching out a hand.",
+      "en": "Dadalus wants to be careful. He is afraid.",
+      "levels": {
+        "facil": {
+          "es": "Dédalo quiere ser cuidadoso. Él tiene miedo.",
+          "words": [
+            "cuidadoso, careful",
+            "miedo, fear",
+            "querer, to want"
+          ]
+        },
+        "intermedio": {
+          "es": "Dédalo quiere ser precavido. Está muy preocupado por su hijo.",
+          "words": [
+            "precavido, cautious",
+            "preocupado, worried",
+            "hijo, son"
+          ]
+        },
+        "nativo": {
+          "es": "Dédalo desea ser precavido. El temor nubla su juicio.",
+          "words": [
+            "desear, to desire",
+            "precavido, prudent",
+            "temor, dread"
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Close-up on Ícaro's face, sweat glistening, eyes wide with manic joy, the sun's glare reflecting in his pupils.",
+      "en": "Icarus wants to be fast. He ignores the warnings.",
+      "levels": {
+        "facil": {
+          "es": "Ícaro quiere ser rápido. Él ignora a su padre.",
+          "words": [
+            "rápido, fast",
+            "ignorar, to ignore",
+            "padre, father"
+          ]
+        },
+        "intermedio": {
+          "es": "Ícaro quiere ser más rápido. Ignora los consejos de Dédalo.",
+          "words": [
+            "rápido, swift",
+            "ignorar, to disregard",
+            "consejo, advice"
+          ]
+        },
+        "nativo": {
+          "es": "Ícaro anhela ser veloz. Desoye las advertencias de su padre.",
+          "words": [
+            "veloz, rapid",
+            "desoír, to ignore",
+            "advertencia, warning"
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. The wax on the wings beginning to soften and drip, small feathers detaching and floating away like embers.",
+      "en": "The wax wants to be solid, but it becomes soft.",
+      "levels": {
+        "facil": {
+          "es": "La cera quiere ser dura. Pero es blanda.",
+          "words": [
+            "cera, wax",
+            "dura, hard",
+            "blanda, soft"
+          ]
+        },
+        "intermedio": {
+          "es": "La cera quiere ser resistente, pero se vuelve blanda.",
+          "words": [
+            "resistente, resistant",
+            "blanda, soft",
+            "volver, to become"
+          ]
+        },
+        "nativo": {
+          "es": "La cera intenta ser firme, mas se torna maleable.",
+          "words": [
+            "firme, solid",
+            "mas, but",
+            "maleable, pliable"
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Ícaro soaring higher, his silhouette framed directly against the massive, burning solar disc.",
+      "en": "Icarus wants to be tall. He reaches the limit.",
+      "levels": {
+        "facil": {
+          "es": "Ícaro quiere ser alto. Él llega al límite.",
+          "words": [
+            "alto, high",
+            "límite, limit",
+            "llegar, to reach"
+          ]
+        },
+        "intermedio": {
+          "es": "Ícaro quiere ser muy alto. Alcanza su límite peligroso.",
+          "words": [
+            "alto, high",
+            "alcanzar, to reach",
+            "peligroso, dangerous"
+          ]
+        },
+        "nativo": {
+          "es": "Ícaro anhela la altura suprema. Rozando el límite absoluto.",
+          "words": [
+            "altura, height",
+            "suprema, supreme",
+            "rozar, to brush"
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Icarus, a youth with golden curls and lean athletic build, feels the sun burning his shoulders. The wax wings begin to lose their shape, feathers drifting away like autumn leaves in the high wind.",
+      "en": "The sun is too strong. The wax becomes liquid.",
+      "levels": {
+        "facil": {
+          "es": "El sol quiere ser muy fuerte. La cera puede ser líquida.",
+          "words": [
+            {
+              "w": "fuerte",
+              "g": "strong"
+            },
+            {
+              "w": "líquida",
+              "g": "liquid"
+            },
+            {
+              "w": "cera",
+              "g": "wax"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El sol quiere ser abrasador. La cera ya no puede ser resistente.",
+          "words": [
+            {
+              "w": "abrasador",
+              "g": "scorching"
+            },
+            {
+              "w": "resistente",
+              "g": "durable"
+            },
+            {
+              "w": "ya no",
+              "g": "no longer"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El sol quiere ser implacable. La cera, antes firme, no puede ser más que un río ardiente.",
+          "words": [
+            {
+              "w": "implacable",
+              "g": "relentless"
+            },
+            {
+              "w": "ardiente",
+              "g": "burning"
+            },
+            {
+              "w": "firme",
+              "g": "solid"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Icarus looks down in terror. His wings are disintegrating. He tries to flap harder, but the structure is failing.",
+      "en": "Icarus wants to fly, but he cannot be fast anymore.",
+      "levels": {
+        "facil": {
+          "es": "Ícaro quiere volar, pero no puede ser rápido.",
+          "words": [
+            {
+              "w": "volar",
+              "g": "to fly"
+            },
+            {
+              "w": "rápido",
+              "g": "fast"
+            },
+            {
+              "w": "pero",
+              "g": "but"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ícaro quiere seguir volando, pero ya no puede ser veloz.",
+          "words": [
+            {
+              "w": "seguir",
+              "g": "to continue"
+            },
+            {
+              "w": "veloz",
+              "g": "swift"
+            },
+            {
+              "w": "volando",
+              "g": "flying"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ícaro quiere desafiar al viento, pero su cuerpo no puede ser más que un peso muerto.",
+          "words": [
+            {
+              "w": "desafiar",
+              "g": "to challenge"
+            },
+            {
+              "w": "peso",
+              "g": "weight"
+            },
+            {
+              "w": "muerto",
+              "g": "dead"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A wide shot of the sky. Daedalus, a middle-aged man with a weathered face and stubble, looks back in horror as Icarus begins to plummet.",
+      "en": "Daedalus wants to help, but he cannot be close.",
+      "levels": {
+        "facil": {
+          "es": "Dédalo quiere ayudar. Él no puede ser cerca.",
+          "words": [
+            {
+              "w": "ayudar",
+              "g": "to help"
+            },
+            {
+              "w": "cerca",
+              "g": "near"
+            },
+            {
+              "w": "él",
+              "g": "he"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Dédalo quiere salvar a su hijo, pero no puede ser capaz de alcanzarlo.",
+          "words": [
+            {
+              "w": "salvar",
+              "g": "to save"
+            },
+            {
+              "w": "capaz",
+              "g": "capable"
+            },
+            {
+              "w": "hijo",
+              "g": "son"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Dédalo quiere desesperadamente salvarlo, mas el destino no puede ser cambiado.",
+          "words": [
+            {
+              "w": "desesperadamente",
+              "g": "desperately"
+            },
+            {
+              "w": "mas",
+              "g": "but"
+            },
+            {
+              "w": "cambiado",
+              "g": "changed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Icarus falls through the clouds, his face a mask of shock, limbs flailing, the blue Aegean sea rushing up to meet him.",
+      "en": "Icarus is afraid. He wants to be safe, but he is falling.",
+      "levels": {
+        "facil": {
+          "es": "Ícaro tiene miedo. Él quiere ser salvo, pero cae.",
+          "words": [
+            {
+              "w": "miedo",
+              "g": "fear"
+            },
+            {
+              "w": "salvo",
+              "g": "safe"
+            },
+            {
+              "w": "cae",
+              "g": "falls"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El joven quiere estar a salvo, pero la gravedad quiere ser la dueña.",
+          "words": [
+            {
+              "w": "joven",
+              "g": "young man"
+            },
+            {
+              "w": "gravedad",
+              "g": "gravity"
+            },
+            {
+              "w": "dueña",
+              "g": "owner"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ícaro, aterrado, quiere ser libre, mas el abismo quiere ser su lecho.",
+          "words": [
+            {
+              "w": "aterrado",
+              "g": "terrified"
+            },
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "lecho",
+              "g": "bed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A single white feather floats on the surface of the dark, churning Aegean sea. Daedalus is a tiny silhouette in the distance, screaming into the void.",
+      "en": "The sea is cold and vast. Will he be forgotten?",
+      "levels": {
+        "facil": {
+          "es": "El mar es grande. ¿Él quiere ser olvidado?",
+          "words": [
+            {
+              "w": "mar",
+              "g": "sea"
+            },
+            {
+              "w": "grande",
+              "g": "big"
+            },
+            {
+              "w": "olvidado",
+              "g": "forgotten"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El mar quiere ser su tumba. ¿Ícaro puede ser recordado?",
+          "words": [
+            {
+              "w": "tumba",
+              "g": "tomb"
+            },
+            {
+              "w": "recordado",
+              "g": "remembered"
+            },
+            {
+              "w": "ser",
+              "g": "to be"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El mar quiere ser el guardián de su secreto. ¿Quién puede ser testigo de su ambición?",
+          "words": [
+            {
+              "w": "guardián",
+              "g": "guardian"
+            },
+            {
+              "w": "secreto",
+              "g": "secret"
+            },
+            {
+              "w": "testigo",
+              "g": "witness"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "El mar devora el silencio; Dédalo, solo en la inmensidad, comprende que la libertad tiene un precio que él nunca quiso pagar.",
+  "closingBeat": "La soberbia del vuelo siempre termina en la humildad de las olas."
+}

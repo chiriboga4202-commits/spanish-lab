@@ -3,7 +3,7 @@
 // back to the last cached copy when offline. Never caches /api/* responses —
 // live data must stay live; offline API calls just fail and the apps already
 // handle that gracefully (static fallbacks, cached rosters, etc.).
-const CACHE = 'spanish-lab-v1';
+const CACHE = 'spanish-lab-v2';
 const SHELL = ['/', '/index.html', '/spanish-teacher-dashboard.html', '/exercises.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', (e) => {

@@ -1,0 +1,1173 @@
+{
+  "series": "MITOS",
+  "chapter": 6,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "El Rapto de Perséfone",
+  "level": "A2",
+  "grammarFocus": "gustar + estaciones",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perséfone, a young woman with olive skin and cascading dark hair dressed in a light chiton, stands in a golden meadow. Behind her, the earth begins to crack like dry, hungry lips.",
+      "en": "The earth hungers, and the golden meadow trembles under Perséfone's feet.",
+      "levels": {
+        "facil": {
+          "es": "La tierra tiene hambre. Perséfone camina en el campo.",
+          "words": [
+            {
+              "w": "tierra",
+              "g": "earth"
+            },
+            {
+              "w": "hambre",
+              "g": "hunger"
+            },
+            {
+              "w": "campo",
+              "g": "field"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La tierra tiene hambre. Perséfone camina por el campo dorado mientras el suelo tiembla.",
+          "words": [
+            {
+              "w": "suelo",
+              "g": "ground"
+            },
+            {
+              "w": "tiembla",
+              "g": "trembles"
+            },
+            {
+              "w": "dorado",
+              "g": "golden"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La tierra reclama su tributo. Perséfone ignora que el suelo se fractura bajo sus pies.",
+          "words": [
+            {
+              "w": "reclama",
+              "g": "claims"
+            },
+            {
+              "w": "tributo",
+              "g": "tribute"
+            },
+            {
+              "w": "fractura",
+              "g": "fractures"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. From a dark, smoky fissure in the ground, Hades emerges. He is a tall, imposing man with long, obsidian-black hair and a dark chiton, his eyes burning like coal.",
+      "en": "From the shadows, Hades rises to claim what he desires.",
+      "levels": {
+        "facil": {
+          "es": "Hades sale de la oscuridad. Él quiere a Perséfone.",
+          "words": [
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            },
+            {
+              "w": "quiere",
+              "g": "wants"
+            },
+            {
+              "w": "sale",
+              "g": "comes out"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades emerge de las sombras. Él desea llevarse a Perséfone al inframundo.",
+          "words": [
+            {
+              "w": "emerge",
+              "g": "emerges"
+            },
+            {
+              "w": "sombras",
+              "g": "shadows"
+            },
+            {
+              "w": "inframundo",
+              "g": "underworld"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades se alza desde el abismo. Su mirada es un incendio de posesión oscura.",
+          "words": [
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "incendio",
+              "g": "fire"
+            },
+            {
+              "w": "posesión",
+              "g": "possession"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades grabs Perséfone’s wrist; she looks terrified. The flowers around them instantly wither and turn to ash.",
+      "en": "The flowers die because Hades does not like the spring.",
+      "levels": {
+        "facil": {
+          "es": "Hades toma su mano. A Hades no le gusta la primavera.",
+          "words": [
+            {
+              "w": "mano",
+              "g": "hand"
+            },
+            {
+              "w": "gusta",
+              "g": "likes"
+            },
+            {
+              "w": "primavera",
+              "g": "spring"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades la atrapa con fuerza. A él no le gusta nada la primavera.",
+          "words": [
+            {
+              "w": "atrapa",
+              "g": "catches"
+            },
+            {
+              "w": "fuerza",
+              "g": "force"
+            },
+            {
+              "w": "nada",
+              "g": "at all"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades la sujeta con firmeza. A él le repugna la primavera y su vitalidad.",
+          "words": [
+            {
+              "w": "sujeta",
+              "g": "holds"
+            },
+            {
+              "w": "firmeza",
+              "g": "firmness"
+            },
+            {
+              "w": "repugna",
+              "g": "disgusts"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Deméter, a woman with golden hair woven with stalks of wheat and a maternal but fierce expression, stands in the distance, sensing the sudden change in the air.",
+      "en": "Demeter senses the loss, and the summer ends abruptly.",
+      "levels": {
+        "facil": {
+          "es": "Deméter siente el miedo. A ella le gusta el verano.",
+          "words": [
+            {
+              "w": "siente",
+              "g": "feels"
+            },
+            {
+              "w": "miedo",
+              "g": "fear"
+            },
+            {
+              "w": "verano",
+              "g": "summer"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Deméter siente una pérdida. A ella le gusta mucho el cálido verano.",
+          "words": [
+            {
+              "w": "pérdida",
+              "g": "loss"
+            },
+            {
+              "w": "cálido",
+              "g": "warm"
+            },
+            {
+              "w": "mucho",
+              "g": "a lot"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Deméter presiente la traición. A ella le duele perder su amado verano.",
+          "words": [
+            {
+              "w": "presiente",
+              "g": "senses"
+            },
+            {
+              "w": "traición",
+              "g": "betrayal"
+            },
+            {
+              "w": "amado",
+              "g": "beloved"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades pulls Perséfone into the dark void of the earth. Above them, the sky turns grey and cold, marking the start of winter.",
+      "en": "The light vanishes, and winter begins to take hold.",
+      "levels": {
+        "facil": {
+          "es": "Ellos bajan. A nadie le gusta el invierno.",
+          "words": [
+            {
+              "w": "bajan",
+              "g": "go down"
+            },
+            {
+              "w": "nadie",
+              "g": "nobody"
+            },
+            {
+              "w": "invierno",
+              "g": "winter"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Descienden a la oscuridad. A los mortales no les gusta el invierno.",
+          "words": [
+            {
+              "w": "descienden",
+              "g": "descend"
+            },
+            {
+              "w": "mortales",
+              "g": "mortals"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Descienden a las sombras. A la tierra ya no le gusta el frío invierno.",
+          "words": [
+            {
+              "w": "sombras",
+              "g": "shadows"
+            },
+            {
+              "w": "frío",
+              "g": "cold"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades, a towering figure with obsidian skin and eyes like dying coals, drags a weeping Persephone, a young woman with pale skin and flowing golden hair, toward the yawning abyss of the Underworld.",
+      "en": "Hades drags her deep into the earth. To him, the spring is nothing; he prefers the silence of the shadows.",
+      "levels": {
+        "facil": {
+          "es": "Hades baja a la tierra. A él no le gusta la primavera. Él prefiere la oscuridad.",
+          "words": [
+            {
+              "w": "baja",
+              "g": "goes down"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            },
+            {
+              "w": "prefiere",
+              "g": "prefers"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades la arrastra a las profundidades. A él le disgusta la primavera; prefiere el silencio de las sombras.",
+          "words": [
+            {
+              "w": "arrastra",
+              "g": "drags"
+            },
+            {
+              "w": "profundidades",
+              "g": "depths"
+            },
+            {
+              "w": "disgusta",
+              "g": "dislikes"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades la sumerge en el abismo. La primavera le resulta ajena; su alma solo ansía el silencio eterno de las sombras.",
+          "words": [
+            {
+              "w": "sumerge",
+              "g": "submerges"
+            },
+            {
+              "w": "ajena",
+              "g": "foreign"
+            },
+            {
+              "w": "ansía",
+              "g": "yearns"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Demeter, a woman with warm features and robes patterned like wheat fields, stands in a blooming meadow that is rapidly turning gray and brittle.",
+      "en": "Demeter searches for her daughter. The flowers die quickly. To the goddess, the autumn is a time of pain.",
+      "levels": {
+        "facil": {
+          "es": "Deméter busca a su hija. Las flores mueren. A ella no le gusta el otoño.",
+          "words": [
+            {
+              "w": "busca",
+              "g": "searches"
+            },
+            {
+              "w": "mueren",
+              "g": "die"
+            },
+            {
+              "w": "otoño",
+              "g": "autumn"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Deméter busca a su hija. Las flores se marchitan pronto. A la diosa le duele el otoño.",
+          "words": [
+            {
+              "w": "marchitan",
+              "g": "wither"
+            },
+            {
+              "w": "pronto",
+              "g": "soon"
+            },
+            {
+              "w": "diosa",
+              "g": "goddess"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Deméter clama por su hija mientras la vida se marchita. Para ella, el otoño es una herida abierta.",
+          "words": [
+            {
+              "w": "clama",
+              "g": "cries out"
+            },
+            {
+              "w": "marchita",
+              "g": "withers"
+            },
+            {
+              "w": "herida",
+              "g": "wound"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A vast field of wheat turning black and dry under a darkening sky, reflecting Demeter’s growing sorrow.",
+      "en": "The fields turn dry and cold. The earth is sad. To the world, the winter is a punishment.",
+      "levels": {
+        "facil": {
+          "es": "El campo está seco y frío. La tierra está triste. A los hombres no les gusta el invierno.",
+          "words": [
+            {
+              "w": "campo",
+              "g": "field"
+            },
+            {
+              "w": "seco",
+              "g": "dry"
+            },
+            {
+              "w": "triste",
+              "g": "sad"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los campos se vuelven secos y fríos. La tierra sufre. A los mortales les horroriza el invierno.",
+          "words": [
+            {
+              "w": "vuelven",
+              "g": "become"
+            },
+            {
+              "w": "sufre",
+              "g": "suffers"
+            },
+            {
+              "w": "horroriza",
+              "g": "horrifies"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los campos se tornan gélidos y estériles. La tierra agoniza; para los mortales, el invierno es un castigo cruel.",
+          "words": [
+            {
+              "w": "tornan",
+              "g": "turn"
+            },
+            {
+              "w": "gélidos",
+              "g": "icy"
+            },
+            {
+              "w": "agoniza",
+              "g": "agonizes"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Demeter standing alone on a snowy mountain, her wheat-patterned robes now covered in frost, looking toward the horizon.",
+      "en": "Demeter refuses to let the earth bloom. She is angry. To her, summer is a memory of her lost daughter.",
+      "levels": {
+        "facil": {
+          "es": "Deméter no quiere flores. Ella está enojada. A ella le gusta el verano, pero ahora está triste.",
+          "words": [
+            {
+              "w": "quiere",
+              "g": "wants"
+            },
+            {
+              "w": "enojada",
+              "g": "angry"
+            },
+            {
+              "w": "verano",
+              "g": "summer"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Deméter impide que la tierra florezca. Está llena de ira. A ella le gusta el verano, pero lo ha perdido.",
+          "words": [
+            {
+              "w": "impide",
+              "g": "prevents"
+            },
+            {
+              "w": "florezca",
+              "g": "bloom"
+            },
+            {
+              "w": "ira",
+              "g": "anger"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Deméter prohíbe el renacer de la tierra. Su ira es glacial. El verano, antaño su favorito, es ahora un eco de su pérdida.",
+          "words": [
+            {
+              "w": "prohíbe",
+              "g": "forbids"
+            },
+            {
+              "w": "glacial",
+              "g": "icy"
+            },
+            {
+              "w": "antaño",
+              "g": "formerly"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades watching Persephone from a dark throne in the Underworld, his expression unreadable as she sits in the shadows.",
+      "en": "Down below, Hades watches her. He wants her to stay. To him, the darkness is a beautiful home.",
+      "levels": {
+        "facil": {
+          "es": "Hades mira a Perséfone. Él quiere que ella se quede. A él le gusta mucho la oscuridad.",
+          "words": [
+            {
+              "w": "mira",
+              "g": "watches"
+            },
+            {
+              "w": "quede",
+              "g": "stay"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "En el inframundo, Hades la observa. Quiere que ella permanezca allí. A él le fascina la oscuridad.",
+          "words": [
+            {
+              "w": "inframundo",
+              "g": "underworld"
+            },
+            {
+              "w": "observa",
+              "g": "observes"
+            },
+            {
+              "w": "fascina",
+              "g": "fascinates"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "En las profundidades, Hades la contempla. Desea retenerla. Para él, la oscuridad es un hogar soberano y perfecto.",
+          "words": [
+            {
+              "w": "contempla",
+              "g": "contemplates"
+            },
+            {
+              "w": "retenerla",
+              "g": "keep her"
+            },
+            {
+              "w": "soberano",
+              "g": "sovereign"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perséfone, a young woman with long flowing dark hair and a simple white tunic, sits on a cold obsidian throne. Hades, a tall, imposing man with dark robes and a crown of iron, watches her from the shadows.",
+      "en": "Perséfone hates the cold darkness of the underworld.",
+      "levels": {
+        "facil": {
+          "es": "A Perséfone no le gusta el inframundo. Es oscuro y frío.",
+          "words": [
+            {
+              "w": "inframundo",
+              "g": "underworld"
+            },
+            {
+              "w": "oscuro",
+              "g": "dark"
+            },
+            {
+              "w": "frío",
+              "g": "cold"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "A Perséfone le disgusta el inframundo; detesta la oscuridad eterna.",
+          "words": [
+            {
+              "w": "disgusta",
+              "g": "displeases"
+            },
+            {
+              "w": "detesta",
+              "g": "hates"
+            },
+            {
+              "w": "eterna",
+              "g": "eternal"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "A Perséfone le es ajena esta penumbra; el inframundo le causa un profundo rechazo.",
+          "words": [
+            {
+              "w": "ajena",
+              "g": "foreign"
+            },
+            {
+              "w": "penumbra",
+              "g": "gloom"
+            },
+            {
+              "w": "rechazo",
+              "g": "rejection"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades approaches Perséfone, holding a single, glowing red pomegranate. His expression is possessive.",
+      "en": "Hades offers her a fruit. He wants her to stay.",
+      "levels": {
+        "facil": {
+          "es": "Hades le da una fruta. Él quiere que ella se quede.",
+          "words": [
+            {
+              "w": "fruta",
+              "g": "fruit"
+            },
+            {
+              "w": "quiere",
+              "g": "wants"
+            },
+            {
+              "w": "quede",
+              "g": "stays"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades le ofrece una granada. Desea que ella permanezca a su lado.",
+          "words": [
+            {
+              "w": "ofrece",
+              "g": "offers"
+            },
+            {
+              "w": "granada",
+              "g": "pomegranate"
+            },
+            {
+              "w": "permanezca",
+              "g": "remain"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades le tiende una granada; su intención es retenerla mediante un pacto secreto.",
+          "words": [
+            {
+              "w": "tiende",
+              "g": "extends"
+            },
+            {
+              "w": "intención",
+              "g": "intent"
+            },
+            {
+              "w": "retenerla",
+              "g": "to keep her"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Deméter, a mature woman with a crown of wheat and golden robes, stands in a barren, snowy field, weeping.",
+      "en": "Deméter misses the summer. She hates the winter.",
+      "levels": {
+        "facil": {
+          "es": "A Deméter le gusta el verano. No le gusta el invierno.",
+          "words": [
+            {
+              "w": "verano",
+              "g": "summer"
+            },
+            {
+              "w": "invierno",
+              "g": "winter"
+            },
+            {
+              "w": "gusta",
+              "g": "likes"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "A Deméter le encantaba el verano. Ahora odia el invierno gélido.",
+          "words": [
+            {
+              "w": "encantaba",
+              "g": "loved"
+            },
+            {
+              "w": "odia",
+              "g": "hates"
+            },
+            {
+              "w": "gélido",
+              "g": "icy"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Deméter añora la calidez del verano; el invierno le resulta una afrenta insoportable.",
+          "words": [
+            {
+              "w": "añora",
+              "g": "longs for"
+            },
+            {
+              "w": "calidez",
+              "g": "warmth"
+            },
+            {
+              "w": "afrenta",
+              "g": "insult"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close up on Perséfone’s hand reaching out toward the pomegranate seed.",
+      "en": "She is hungry. The fruit looks sweet.",
+      "levels": {
+        "facil": {
+          "es": "Ella tiene hambre. La fruta parece dulce.",
+          "words": [
+            {
+              "w": "hambre",
+              "g": "hunger"
+            },
+            {
+              "w": "parece",
+              "g": "seems"
+            },
+            {
+              "w": "dulce",
+              "g": "sweet"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Tiene mucha hambre. La fruta roja parece muy dulce.",
+          "words": [
+            {
+              "w": "mucha",
+              "g": "a lot"
+            },
+            {
+              "w": "roja",
+              "g": "red"
+            },
+            {
+              "w": "parece",
+              "g": "appears"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El hambre la consume; el fruto le ofrece un dulzor prohibido y tentador.",
+          "words": [
+            {
+              "w": "consume",
+              "g": "consumes"
+            },
+            {
+              "w": "fruto",
+              "g": "fruit"
+            },
+            {
+              "w": "prohibido",
+              "g": "forbidden"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perséfone bites into the seed. Shadows swirl around her.",
+      "en": "She eats one seed. The trap is set.",
+      "levels": {
+        "facil": {
+          "es": "Ella come una semilla. Es una trampa.",
+          "words": [
+            {
+              "w": "come",
+              "g": "eats"
+            },
+            {
+              "w": "semilla",
+              "g": "seed"
+            },
+            {
+              "w": "trampa",
+              "g": "trap"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Come una semilla pequeña. Hades ha preparado una trampa.",
+          "words": [
+            {
+              "w": "pequeña",
+              "g": "small"
+            },
+            {
+              "w": "preparado",
+              "g": "prepared"
+            },
+            {
+              "w": "trampa",
+              "g": "trap"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Al ingerir la semilla, el destino se sella; ha caído en la trampa del inframundo.",
+          "words": [
+            {
+              "w": "ingerir",
+              "g": "to ingest"
+            },
+            {
+              "w": "destino",
+              "g": "fate"
+            },
+            {
+              "w": "sella",
+              "g": "seals"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades, a towering figure with pale skin, obsidian armor, and flowing dark robes, stands over a glowing, pomegranate-seed-stained Perséfone in the dim underworld throne room.",
+      "en": "Hades smiles. The trap is closed.",
+      "levels": {
+        "facil": {
+          "es": "Hades sonríe. La trampa funciona.",
+          "words": [
+            {
+              "w": "sonríe",
+              "g": "smiles"
+            },
+            {
+              "w": "trampa",
+              "g": "trap"
+            },
+            {
+              "w": "funciona",
+              "g": "works"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades sonríe con malicia. Su trampa ha funcionado.",
+          "words": [
+            {
+              "w": "malicia",
+              "g": "malice"
+            },
+            {
+              "w": "trampa",
+              "g": "trap"
+            },
+            {
+              "w": "funcionado",
+              "g": "worked"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades esboza una mueca gélida. La trampa ha reclamado su presa.",
+          "words": [
+            {
+              "w": "esboza",
+              "g": "sketches/forms"
+            },
+            {
+              "w": "mueca",
+              "g": "grimace"
+            },
+            {
+              "w": "reclamado",
+              "g": "claimed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Above ground, Deméter, a regal woman with flowing wheat-colored hair and a golden robe, screams at the sky as the green earth turns to grey frost.",
+      "en": "Demeter hates the winter. Her grief freezes the world.",
+      "levels": {
+        "facil": {
+          "es": "A Deméter no le gusta el invierno. La tierra muere.",
+          "words": [
+            {
+              "w": "invierno",
+              "g": "winter"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            },
+            {
+              "w": "muere",
+              "g": "dies"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "A Deméter le disgusta el invierno. Su tristeza congela el mundo.",
+          "words": [
+            {
+              "w": "disgusta",
+              "g": "dislikes"
+            },
+            {
+              "w": "tristeza",
+              "g": "sadness"
+            },
+            {
+              "w": "congela",
+              "g": "freezes"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Deméter aborrece el invierno. Su duelo marchita toda la vida.",
+          "words": [
+            {
+              "w": "aborrece",
+              "g": "loathes"
+            },
+            {
+              "w": "duelo",
+              "g": "mourning"
+            },
+            {
+              "w": "marchita",
+              "g": "withers"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perséfone, young with dark flowing hair and a tattered white chiton, realizes the pomegranate seed has bound her to the shadows.",
+      "en": "Perséfone is now a prisoner of the dark.",
+      "levels": {
+        "facil": {
+          "es": "Perséfone es una prisionera ahora.",
+          "words": [
+            {
+              "w": "prisionera",
+              "g": "prisoner"
+            },
+            {
+              "w": "ahora",
+              "g": "now"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Perséfone se convierte en prisionera de las sombras.",
+          "words": [
+            {
+              "w": "convierte",
+              "g": "becomes"
+            },
+            {
+              "w": "prisionera",
+              "g": "prisoner"
+            },
+            {
+              "w": "sombras",
+              "g": "shadows"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Perséfone queda encadenada al reino de las sombras.",
+          "words": [
+            {
+              "w": "encadenada",
+              "g": "chained"
+            },
+            {
+              "w": "reino",
+              "g": "realm"
+            },
+            {
+              "w": "sombras",
+              "g": "shadows"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Deméter walks through a blizzard, her hands desperate, searching for her daughter.",
+      "en": "She searches, but the snow covers her tracks.",
+      "levels": {
+        "facil": {
+          "es": "Ella busca. El invierno es muy largo.",
+          "words": [
+            {
+              "w": "busca",
+              "g": "searches"
+            },
+            {
+              "w": "invierno",
+              "g": "winter"
+            },
+            {
+              "w": "largo",
+              "g": "long"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Deméter busca a su hija bajo un invierno eterno.",
+          "words": [
+            {
+              "w": "busca",
+              "g": "searches"
+            },
+            {
+              "w": "hija",
+              "g": "daughter"
+            },
+            {
+              "w": "eterno",
+              "g": "eternal"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Deméter vaga incansable mientras el invierno reclama la tierra.",
+          "words": [
+            {
+              "w": "vaga",
+              "g": "wanders"
+            },
+            {
+              "w": "incansable",
+              "g": "tireless"
+            },
+            {
+              "w": "reclama",
+              "g": "claims"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades places a hand on Perséfone’s shoulder; they stand before the gates of the underworld.",
+      "en": "The bargain is struck. She belongs to him now.",
+      "levels": {
+        "facil": {
+          "es": "El trato está hecho. Ella es suya.",
+          "words": [
+            {
+              "w": "trato",
+              "g": "deal"
+            },
+            {
+              "w": "hecho",
+              "g": "done"
+            },
+            {
+              "w": "suya",
+              "g": "his"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El pacto está sellado. Ella le pertenece a él.",
+          "words": [
+            {
+              "w": "pacto",
+              "g": "covenant"
+            },
+            {
+              "w": "sellado",
+              "g": "sealed"
+            },
+            {
+              "w": "pertenece",
+              "g": "belongs"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El pacto ha sido sellado; el destino de Perséfone está ligado al inframundo.",
+          "words": [
+            {
+              "w": "pacto",
+              "g": "covenant"
+            },
+            {
+              "w": "sellado",
+              "g": "sealed"
+            },
+            {
+              "w": "ligado",
+              "g": "bound"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "Pero la primavera no puede morir para siempre. ¿Qué precio pedirá Hades por su libertad?",
+  "closingBeat": "El ciclo de la vida y la muerte comienza con una sola semilla."
+}

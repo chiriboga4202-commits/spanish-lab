@@ -1,0 +1,1193 @@
+{
+  "series": "MITOS",
+  "chapter": 3,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "Del Caos a los Titanes",
+  "level": "A1",
+  "grammarFocus": "hay / haber + sustantivos",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A glowing, ethereal spark of light drifts through a vast, infinite dark void.",
+      "en": "But even in that light, the void remains. Before anything else, there is only Chaos.",
+      "levels": {
+        "facil": {
+          "es": "La luz brilla. Pero al principio, solo hay Caos.",
+          "words": [
+            {
+              "w": "Caos",
+              "g": "Chaos"
+            },
+            {
+              "w": "luz",
+              "g": "light"
+            },
+            {
+              "w": "hay",
+              "g": "there is"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La luz viaja por la oscuridad. Antes de todo, hay Caos infinito.",
+          "words": [
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            },
+            {
+              "w": "infinito",
+              "g": "infinite"
+            },
+            {
+              "w": "hay",
+              "g": "there is"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Aun con esa luz, el vacío persiste. Antes de que nada existiera, solo había Caos.",
+          "words": [
+            {
+              "w": "vacío",
+              "g": "void"
+            },
+            {
+              "w": "persiste",
+              "g": "persists"
+            },
+            {
+              "w": "había",
+              "g": "there was"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Gaia, a woman with skin like cracked earth and hair made of moss and roots, emerges from the swirling abyss.",
+      "en": "From the depth, Gaia emerges. Beneath her feet, there is only silence.",
+      "levels": {
+        "facil": {
+          "es": "Nace Gea. Bajo ella, hay silencio.",
+          "words": [
+            {
+              "w": "Gea",
+              "g": "Gaia"
+            },
+            {
+              "w": "silencio",
+              "g": "silence"
+            },
+            {
+              "w": "bajo",
+              "g": "under"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Gea surge de la nada. En su mundo, hay tierra y silencio.",
+          "words": [
+            {
+              "w": "surge",
+              "g": "emerges"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            },
+            {
+              "w": "nada",
+              "g": "nothingness"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Del abismo surge Gea. Bajo sus pies, solo hay una calma eterna.",
+          "words": [
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "eterna",
+              "g": "eternal"
+            },
+            {
+              "w": "pies",
+              "g": "feet"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Uranus, a man with skin like the night sky filled with constellations, descends toward Gaia.",
+      "en": "Above, Uranus appears. In the sky, there are stars.",
+      "levels": {
+        "facil": {
+          "es": "Arriba, Urano aparece. En el cielo, hay estrellas.",
+          "words": [
+            {
+              "w": "Urano",
+              "g": "Uranus"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "estrellas",
+              "g": "stars"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Urano desciende. En el firmamento, hay luces brillantes.",
+          "words": [
+            {
+              "w": "desciende",
+              "g": "descends"
+            },
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            },
+            {
+              "w": "brillantes",
+              "g": "shining"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Urano desciende sobre ella. En la bóveda celeste, hay constelaciones.",
+          "words": [
+            {
+              "w": "bóveda",
+              "g": "vault"
+            },
+            {
+              "w": "celeste",
+              "g": "celestial"
+            },
+            {
+              "w": "constelaciones",
+              "g": "constellations"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Gaia and Uranus embrace, and golden light explodes between them.",
+      "en": "They join. Between them, there is raw power.",
+      "levels": {
+        "facil": {
+          "es": "Ellos se unen. Entre ellos, hay gran fuerza.",
+          "words": [
+            {
+              "w": "unen",
+              "g": "unite"
+            },
+            {
+              "w": "fuerza",
+              "g": "force"
+            },
+            {
+              "w": "entre",
+              "g": "between"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Se abrazan. En su unión, hay mucha energía.",
+          "words": [
+            {
+              "w": "abrazan",
+              "g": "embrace"
+            },
+            {
+              "w": "unión",
+              "g": "union"
+            },
+            {
+              "w": "energía",
+              "g": "energy"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Se funden en un abrazo. Entre sus cuerpos, hay un poder elemental.",
+          "words": [
+            {
+              "w": "funden",
+              "g": "merge"
+            },
+            {
+              "w": "cuerpos",
+              "g": "bodies"
+            },
+            {
+              "w": "elemental",
+              "g": "elemental"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Massive, towering humanoid figures—the first Titans—rise from the ground around Gaia and Uranus.",
+      "en": "The Titans are born. In the world, there are new gods.",
+      "levels": {
+        "facil": {
+          "es": "Los Titanes nacen. En el mundo, hay nuevos dioses.",
+          "words": [
+            {
+              "w": "Titanes",
+              "g": "Titans"
+            },
+            {
+              "w": "nacen",
+              "g": "are born"
+            },
+            {
+              "w": "dioses",
+              "g": "gods"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Nacen los Titanes. En la tierra, hay seres poderosos.",
+          "words": [
+            {
+              "w": "seres",
+              "g": "beings"
+            },
+            {
+              "w": "poderosos",
+              "g": "powerful"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Surgen los primeros Titanes. En este mundo joven, hay deidades gigantescas.",
+          "words": [
+            {
+              "w": "primeros",
+              "g": "first"
+            },
+            {
+              "w": "deidades",
+              "g": "deities"
+            },
+            {
+              "w": "gigantescas",
+              "g": "gigantic"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Gea, a giant woman with skin of dark soil and hair of green vines, stands on the primordial earth. Above her, the starry cloak of Uranus, a man with skin of shifting nebulae and constellations, looms.",
+      "en": "There is light in the sky. There is power in the ground.",
+      "levels": {
+        "facil": {
+          "es": "Hay luz en el cielo. Hay poder en la tierra.",
+          "words": [
+            {
+              "w": "luz",
+              "g": "light"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "poder",
+              "g": "power"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay una luz brillante en el cielo. Hay mucho poder antiguo en la tierra.",
+          "words": [
+            {
+              "w": "brillante",
+              "g": "bright"
+            },
+            {
+              "w": "antiguo",
+              "g": "ancient"
+            },
+            {
+              "w": "mucha",
+              "g": "much"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay una luz incandescente en el firmamento. Hay un poder primigenio en las entrañas de la tierra.",
+          "words": [
+            {
+              "w": "incandescente",
+              "g": "glowing"
+            },
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            },
+            {
+              "w": "primigenio",
+              "g": "primordial"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Gea, a giant woman with skin of dark soil and hair of green vines, looks upward as massive, golden, glowing figures emerge from the horizon.",
+      "en": "There are new children. There are giants in the world.",
+      "levels": {
+        "facil": {
+          "es": "Hay hijos nuevos. Hay gigantes en el mundo.",
+          "words": [
+            {
+              "w": "hijos",
+              "g": "children"
+            },
+            {
+              "w": "nuevos",
+              "g": "new"
+            },
+            {
+              "w": "gigantes",
+              "g": "giants"
+            },
+            {
+              "w": "mundo",
+              "g": "world"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay niños nuevos y fuertes. Hay gigantes poderosos en todo el mundo.",
+          "words": [
+            {
+              "w": "niños",
+              "g": "children"
+            },
+            {
+              "w": "fuertes",
+              "g": "strong"
+            },
+            {
+              "w": "poderosos",
+              "g": "powerful"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay descendientes colosales. Hay titanes inmensos caminando por el mundo.",
+          "words": [
+            {
+              "w": "descendientes",
+              "g": "descendants"
+            },
+            {
+              "w": "colosales",
+              "g": "colossal"
+            },
+            {
+              "w": "caminando",
+              "g": "walking"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Oceanus and Tethys, two towering titans with shimmering, liquid-like skin, rise from a churning, golden sea.",
+      "en": "There is water in the ocean. There are waves in the sea.",
+      "levels": {
+        "facil": {
+          "es": "Hay agua en el océano. Hay olas en el mar.",
+          "words": [
+            {
+              "w": "agua",
+              "g": "water"
+            },
+            {
+              "w": "océano",
+              "g": "ocean"
+            },
+            {
+              "w": "olas",
+              "g": "waves"
+            },
+            {
+              "w": "mar",
+              "g": "sea"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay mucha agua en el océano profundo. Hay olas gigantes en el mar.",
+          "words": [
+            {
+              "w": "profundo",
+              "g": "deep"
+            },
+            {
+              "w": "gigantes",
+              "g": "giant"
+            },
+            {
+              "w": "mucha",
+              "g": "much"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay una vasta agua en el océano. Hay olas turbulentas en el mar infinito.",
+          "words": [
+            {
+              "w": "vasta",
+              "g": "vast"
+            },
+            {
+              "w": "turbulentas",
+              "g": "turbulent"
+            },
+            {
+              "w": "infinito",
+              "g": "infinite"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hyperion, a titan with eyes like burning suns, walks across a landscape of molten gold.",
+      "en": "There is fire in the land. There is a sun in the sky.",
+      "levels": {
+        "facil": {
+          "es": "Hay fuego en la tierra. Hay un sol en el cielo.",
+          "words": [
+            {
+              "w": "fuego",
+              "g": "fire"
+            },
+            {
+              "w": "tierra",
+              "g": "land"
+            },
+            {
+              "w": "sol",
+              "g": "sun"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay mucho fuego en la tierra. Hay un sol brillante en el cielo.",
+          "words": [
+            {
+              "w": "mucho",
+              "g": "much"
+            },
+            {
+              "w": "brillante",
+              "g": "bright"
+            },
+            {
+              "w": "fuego",
+              "g": "fire"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay un fuego eterno en la tierra. Hay un sol radiante en el firmamento.",
+          "words": [
+            {
+              "w": "eterno",
+              "g": "eternal"
+            },
+            {
+              "w": "radiante",
+              "g": "radiant"
+            },
+            {
+              "w": "firmamento",
+              "g": "sky"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The Titans gather in a circle, looking up at Uranus, who watches them with an expression of cold, distant authority.",
+      "en": "There are many brothers. There is order in the chaos.",
+      "levels": {
+        "facil": {
+          "es": "Hay muchos hermanos. Hay orden en el caos.",
+          "words": [
+            {
+              "w": "muchos",
+              "g": "many"
+            },
+            {
+              "w": "hermanos",
+              "g": "brothers"
+            },
+            {
+              "w": "orden",
+              "g": "order"
+            },
+            {
+              "w": "caos",
+              "g": "chaos"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay muchos hermanos poderosos. Hay un poco de orden en el caos.",
+          "words": [
+            {
+              "w": "poderosos",
+              "g": "powerful"
+            },
+            {
+              "w": "poco",
+              "g": "little"
+            },
+            {
+              "w": "orden",
+              "g": "order"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay una multitud de hermanos. Hay un nuevo orden emergiendo del caos.",
+          "words": [
+            {
+              "w": "multitud",
+              "g": "multitude"
+            },
+            {
+              "w": "emergiendo",
+              "g": "emerging"
+            },
+            {
+              "w": "orden",
+              "g": "order"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Gea, a woman with skin like cracked earth and eyes of moss, rises from the primordial ground, her hair blending into roots.",
+      "en": "There is a new shape in the earth; Gea, the Mother, rises from the dust.",
+      "levels": {
+        "facil": {
+          "es": "Hay una forma nueva en la tierra. Gea, la madre, nace del polvo.",
+          "words": [
+            {
+              "w": "forma",
+              "g": "shape"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            },
+            {
+              "w": "polvo",
+              "g": "dust"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay una figura nueva en la tierra virgen; Gea, la Madre, surge del polvo antiguo.",
+          "words": [
+            {
+              "w": "figura",
+              "g": "figure"
+            },
+            {
+              "w": "surge",
+              "g": "arises"
+            },
+            {
+              "w": "antiguo",
+              "g": "ancient"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay una presencia latente en la tierra primigenia; Gea, la Madre, emerge de las entrañas del polvo.",
+          "words": [
+            {
+              "w": "presencia",
+              "g": "presence"
+            },
+            {
+              "w": "primigenia",
+              "g": "primordial"
+            },
+            {
+              "w": "emerge",
+              "g": "emerges"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Urano, a giant man made of starlit obsidian and swirling nebulas, descends from the heights to cover Gea.",
+      "en": "There is a vast sky above; Urano, the Father, descends to meet the earth.",
+      "levels": {
+        "facil": {
+          "es": "Hay un cielo grande arriba. Urano, el padre, baja a la tierra.",
+          "words": [
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "grande",
+              "g": "big"
+            },
+            {
+              "w": "baja",
+              "g": "descends"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay un firmamento vasto arriba; Urano, el Padre, desciende para abrazar a la tierra.",
+          "words": [
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            },
+            {
+              "w": "vasto",
+              "g": "vast"
+            },
+            {
+              "w": "abrazar",
+              "g": "embrace"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay una bóveda infinita sobre el mundo; Urano, el Padre, desciende para cubrir la faz de la tierra.",
+          "words": [
+            {
+              "w": "bóveda",
+              "g": "vault"
+            },
+            {
+              "w": "infinita",
+              "g": "infinite"
+            },
+            {
+              "w": "cubrir",
+              "g": "cover"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Gea (skin of cracked earth) and Urano (starlit obsidian) touch hands, sparking golden light.",
+      "en": "There is a powerful union between the sky and the ground.",
+      "levels": {
+        "facil": {
+          "es": "Hay una unión fuerte entre el cielo y la tierra.",
+          "words": [
+            {
+              "w": "unión",
+              "g": "union"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            },
+            {
+              "w": "entre",
+              "g": "between"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay una alianza poderosa entre el cielo estrellado y la tierra fértil.",
+          "words": [
+            {
+              "w": "alianza",
+              "g": "alliance"
+            },
+            {
+              "w": "estrellado",
+              "g": "starry"
+            },
+            {
+              "w": "fértil",
+              "g": "fertile"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay un vínculo sagrado y primordial entre el firmamento y la materia terrestre.",
+          "words": [
+            {
+              "w": "vínculo",
+              "g": "bond"
+            },
+            {
+              "w": "sagrado",
+              "g": "sacred"
+            },
+            {
+              "w": "materia",
+              "g": "matter"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Six giant silhouettes, the first Titans, emerge from the mist behind Gea and Urano.",
+      "en": "There are six titans, the first children, born from this union.",
+      "levels": {
+        "facil": {
+          "es": "Hay seis titanes, los primeros hijos, nacidos de esta unión.",
+          "words": [
+            {
+              "w": "seis",
+              "g": "six"
+            },
+            {
+              "w": "titanes",
+              "g": "titans"
+            },
+            {
+              "w": "hijos",
+              "g": "children"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay seis titanes, los hijos primogénitos, que nacen de esta unión divina.",
+          "words": [
+            {
+              "w": "primogénitos",
+              "g": "firstborn"
+            },
+            {
+              "w": "nacen",
+              "g": "born"
+            },
+            {
+              "w": "divina",
+              "g": "divine"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay seis colosos, la estirpe primigenia, que brotan de aquel encuentro cósmico.",
+          "words": [
+            {
+              "w": "colosos",
+              "g": "colossi"
+            },
+            {
+              "w": "estirpe",
+              "g": "lineage"
+            },
+            {
+              "w": "brotan",
+              "g": "sprout"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The Titans stand tall, radiating raw energy; the world around them begins to take structured form.",
+      "en": "There is a new order in the world; the Titans take their place.",
+      "levels": {
+        "facil": {
+          "es": "Hay un orden nuevo en el mundo. Los titanes ocupan su lugar.",
+          "words": [
+            {
+              "w": "orden",
+              "g": "order"
+            },
+            {
+              "w": "nuevo",
+              "g": "new"
+            },
+            {
+              "w": "lugar",
+              "g": "place"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay un orden naciente en el mundo; los titanes toman su lugar con poder.",
+          "words": [
+            {
+              "w": "naciente",
+              "g": "nascent"
+            },
+            {
+              "w": "toman",
+              "g": "take"
+            },
+            {
+              "w": "poder",
+              "g": "power"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay una arquitectura de poder en el cosmos; los titanes reclaman su dominio absoluto.",
+          "words": [
+            {
+              "w": "arquitectura",
+              "g": "architecture"
+            },
+            {
+              "w": "reclaman",
+              "g": "claim"
+            },
+            {
+              "w": "dominio",
+              "g": "dominion"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Urano, a towering figure of swirling nebulae and starlight, stands above the lush, verdant body of Gea, who reclines as the living earth.",
+      "en": "There is a deep bond between the sky and the ground.",
+      "levels": {
+        "facil": {
+          "es": "Hay una unión fuerte entre el cielo y la tierra.",
+          "words": [
+            {
+              "w": "unión",
+              "g": "union"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay un vínculo profundo entre el cielo estrellado y la tierra fértil.",
+          "words": [
+            {
+              "w": "vínculo",
+              "g": "bond"
+            },
+            {
+              "w": "profundo",
+              "g": "deep"
+            },
+            {
+              "w": "fértil",
+              "g": "fertile"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay una alianza primigenia entre el firmamento sideral y la tierra fecunda.",
+          "words": [
+            {
+              "w": "primigenia",
+              "g": "primal"
+            },
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            },
+            {
+              "w": "sideral",
+              "g": "starry"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Cronos, the youngest Titan with eyes like cold flint, stares up at his father Urano with growing resentment.",
+      "en": "There is a dark shadow growing in the heart of the youngest son.",
+      "levels": {
+        "facil": {
+          "es": "Hay una sombra oscura en el hijo menor.",
+          "words": [
+            {
+              "w": "sombra",
+              "g": "shadow"
+            },
+            {
+              "w": "oscura",
+              "g": "dark"
+            },
+            {
+              "w": "hijo",
+              "g": "son"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay un rencor que crece en el corazón del hijo más joven.",
+          "words": [
+            {
+              "w": "rencor",
+              "g": "resentment"
+            },
+            {
+              "w": "crece",
+              "g": "grows"
+            },
+            {
+              "w": "corazón",
+              "g": "heart"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay una semilla de insurrección gestándose en el espíritu del vástago menor.",
+          "words": [
+            {
+              "w": "semilla",
+              "g": "seed"
+            },
+            {
+              "w": "insurrección",
+              "g": "insurrection"
+            },
+            {
+              "w": "vástago",
+              "g": "offspring"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Gea whispers to Cronos, her face etched with ancient sorrow and secret plans.",
+      "en": "There are secrets between the mother and her son.",
+      "levels": {
+        "facil": {
+          "es": "Hay secretos entre la madre y el hijo.",
+          "words": [
+            {
+              "w": "secretos",
+              "g": "secrets"
+            },
+            {
+              "w": "madre",
+              "g": "mother"
+            },
+            {
+              "w": "entre",
+              "g": "between"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay planes ocultos que la tierra susurra a su hijo.",
+          "words": [
+            {
+              "w": "planes",
+              "g": "plans"
+            },
+            {
+              "w": "ocultos",
+              "g": "hidden"
+            },
+            {
+              "w": "susurra",
+              "g": "whispers"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay conspiraciones silenciosas tejidas entre la madre y su prole.",
+          "words": [
+            {
+              "w": "conspiraciones",
+              "g": "conspiracies"
+            },
+            {
+              "w": "tejidas",
+              "g": "woven"
+            },
+            {
+              "w": "prole",
+              "g": "offspring"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Cronos holds a jagged, glowing sickle of adamantine, forged in the depths of the earth.",
+      "en": "There is a weapon of power ready for the coup.",
+      "levels": {
+        "facil": {
+          "es": "Hay un arma poderosa en sus manos.",
+          "words": [
+            {
+              "w": "arma",
+              "g": "weapon"
+            },
+            {
+              "w": "poderosa",
+              "g": "powerful"
+            },
+            {
+              "w": "manos",
+              "g": "hands"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hay un filo de metal divino preparado para el golpe.",
+          "words": [
+            {
+              "w": "filo",
+              "g": "blade/edge"
+            },
+            {
+              "w": "metal",
+              "g": "metal"
+            },
+            {
+              "w": "golpe",
+              "g": "strike"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hay un acero de adamantina forjado para el parricidio.",
+          "words": [
+            {
+              "w": "acero",
+              "g": "steel"
+            },
+            {
+              "w": "adamantina",
+              "g": "adamantine"
+            },
+            {
+              "w": "parricidio",
+              "g": "parricide"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Urano looks down, unaware, as Cronos steps out from the shadows of the earth.",
+      "en": "There is no peace left in the cosmos.",
+      "levels": {
+        "facil": {
+          "es": "Ya no hay paz en el mundo.",
+          "words": [
+            {
+              "w": "ya no",
+              "g": "no longer"
+            },
+            {
+              "w": "paz",
+              "g": "peace"
+            },
+            {
+              "w": "mundo",
+              "g": "world"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ya no hay tranquilidad en el cosmos naciente.",
+          "words": [
+            {
+              "w": "tranquilidad",
+              "g": "tranquility"
+            },
+            {
+              "w": "cosmos",
+              "g": "cosmos"
+            },
+            {
+              "w": "naciente",
+              "g": "nascent"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ya no hay sosiego en la vasta extensión del universo.",
+          "words": [
+            {
+              "w": "sosiego",
+              "g": "calm"
+            },
+            {
+              "w": "vasta",
+              "g": "vast"
+            },
+            {
+              "w": "extensión",
+              "g": "expanse"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "The sickle rises. The sky is about to bleed, and the golden age of the Titans is about to end in a single, brutal stroke.",
+  "closingBeat": "In the beginning, there was only existence; now, there is the hunger for dominion."
+}

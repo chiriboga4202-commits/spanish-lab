@@ -1,0 +1,1173 @@
+{
+  "series": "MITOS",
+  "chapter": 17,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "La Cólera del Mar",
+  "level": "B1",
+  "grammarFocus": "pretérito + mar/viaje",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a rugged man with a graying beard and intense, weary eyes, stands on the deck of his ship looking back at the dark, smoking silhouette of the Cyclops' island.",
+      "en": "The blade was sharp, but the price was heavier. Ulises turned his back on the island.",
+      "levels": {
+        "facil": {
+          "es": "Ulises miró atrás. El cuchillo no fue suficiente.",
+          "words": [
+            {
+              "w": "miró",
+              "g": "looked"
+            },
+            {
+              "w": "atrás",
+              "g": "back"
+            },
+            {
+              "w": "cuchillo",
+              "g": "knife"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La astucia fue su arma, pero el precio del acero fue muy alto. Ulises abandonó la isla.",
+          "words": [
+            {
+              "w": "astucia",
+              "g": "cunning"
+            },
+            {
+              "w": "arma",
+              "g": "weapon"
+            },
+            {
+              "w": "abandonó",
+              "g": "left"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El acero cumplió su cometido, mas el costo de la astucia quedó grabado en las cenizas de la isla.",
+          "words": [
+            {
+              "w": "cometido",
+              "g": "task"
+            },
+            {
+              "w": "mas",
+              "g": "but"
+            },
+            {
+              "w": "grabado",
+              "g": "etched"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Polifemo, a gargantuan, one-eyed giant with blood-matted hair and a deep, raw wound where his eye once was, kneels on the shore, screaming toward the horizon.",
+      "en": "Polyphemus felt the pain in his face. He screamed his father's name to the waves.",
+      "levels": {
+        "facil": {
+          "es": "El cíclope gritó mucho. Él llamó a su padre, Poseidón.",
+          "words": [
+            {
+              "w": "cíclope",
+              "g": "cyclops"
+            },
+            {
+              "w": "gritó",
+              "g": "shouted"
+            },
+            {
+              "w": "llamó",
+              "g": "called"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El gigante sintió el dolor profundo. Gritó el nombre de su padre hacia el mar.",
+          "words": [
+            {
+              "w": "gigante",
+              "g": "giant"
+            },
+            {
+              "w": "dolor",
+              "g": "pain"
+            },
+            {
+              "w": "hacia",
+              "g": "towards"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Polifemo bramó su agonía a los vientos, invocando la justicia de Poseidón sobre las aguas.",
+          "words": [
+            {
+              "w": "bramó",
+              "g": "roared"
+            },
+            {
+              "w": "agonía",
+              "g": "agony"
+            },
+            {
+              "w": "invocando",
+              "g": "invoking"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Under the deep ocean, Poseidon’s hand, massive and adorned with coral, grips a trident, glowing with a bioluminescent blue aura.",
+      "en": "Below the surface, the earth shook. The god of the sea awoke.",
+      "levels": {
+        "facil": {
+          "es": "El dios del mar despertó. El agua se movió.",
+          "words": [
+            {
+              "w": "dios",
+              "g": "god"
+            },
+            {
+              "w": "despertó",
+              "g": "woke up"
+            },
+            {
+              "w": "movió",
+              "g": "moved"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Bajo el agua, Poseidón escuchó el grito. El océano empezó a cambiar.",
+          "words": [
+            {
+              "w": "bajo",
+              "g": "under"
+            },
+            {
+              "w": "escuchó",
+              "g": "heard"
+            },
+            {
+              "w": "empezó",
+              "g": "began"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "En el abismo, el tridente de Poseidón vibró. La ira del océano despertó de su letargo.",
+          "words": [
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "vibró",
+              "g": "vibrated"
+            },
+            {
+              "w": "letargo",
+              "g": "slumber"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises stands at the helm of his ship, looking up as the sky turns a violent, bruised purple. The sails are catching a sudden, unnatural gale.",
+      "en": "The wind changed instantly. The calm sky vanished.",
+      "levels": {
+        "facil": {
+          "es": "El viento cambió rápido. El cielo estuvo gris.",
+          "words": [
+            {
+              "w": "viento",
+              "g": "wind"
+            },
+            {
+              "w": "cambió",
+              "g": "changed"
+            },
+            {
+              "w": "estuvo",
+              "g": "was"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Un viento fuerte sopló de repente. El cielo se oscureció sobre el barco.",
+          "words": [
+            {
+              "w": "fuerte",
+              "g": "strong"
+            },
+            {
+              "w": "sopló",
+              "g": "blew"
+            },
+            {
+              "w": "oscureció",
+              "g": "darkened"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Un vendaval antinatural azotó las velas; el firmamento se tornó de un color plomizo.",
+          "words": [
+            {
+              "w": "vendaval",
+              "g": "gale"
+            },
+            {
+              "w": "azotó",
+              "g": "lashed"
+            },
+            {
+              "w": "firmamento",
+              "g": "sky"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Huge, liquid walls of water tower over the ship, shaped vaguely like the face of a vengeful god.",
+      "en": "Massive waves rose up. The sea became a prison.",
+      "levels": {
+        "facil": {
+          "es": "Olas grandes subieron. El mar fue una trampa.",
+          "words": [
+            {
+              "w": "olas",
+              "g": "waves"
+            },
+            {
+              "w": "subieron",
+              "g": "rose"
+            },
+            {
+              "w": "trampa",
+              "g": "trap"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Grandes muros de agua rodearon el barco. El viaje se convirtió en una pesadilla.",
+          "words": [
+            {
+              "w": "muros",
+              "g": "walls"
+            },
+            {
+              "w": "rodearon",
+              "g": "surrounded"
+            },
+            {
+              "w": "pesadilla",
+              "g": "nightmare"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Inmensas murallas de agua se alzaron, cercando la embarcación en una danza de muerte.",
+          "words": [
+            {
+              "w": "inmensas",
+              "g": "immense"
+            },
+            {
+              "w": "cercando",
+              "g": "enclosing"
+            },
+            {
+              "w": "embarcación",
+              "g": "vessel"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a rugged, bearded warrior with a weary face and leather armor, grips the ship's mast tightly while waves crash over the deck.",
+      "en": "Ulises held the mast with force.",
+      "levels": {
+        "facil": {
+          "es": "Ulises agarró el mástil con fuerza.",
+          "words": [
+            {
+              "w": "agarró",
+              "g": "grabbed"
+            },
+            {
+              "w": "mástil",
+              "g": "mast"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises se aferró al mástil con todas sus fuerzas.",
+          "words": [
+            {
+              "w": "aferró",
+              "g": "clung"
+            },
+            {
+              "w": "mástil",
+              "g": "mast"
+            },
+            {
+              "w": "fuerzas",
+              "g": "strength"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ulises se aferró con desesperación al mástil de madera.",
+          "words": [
+            {
+              "w": "aferró",
+              "g": "clung"
+            },
+            {
+              "w": "desesperación",
+              "g": "desperation"
+            },
+            {
+              "w": "mástil",
+              "g": "mast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The ship tilts dangerously as a massive wave rises, Ulises is seen shouting orders to his crew of bearded Greek sailors.",
+      "en": "The ship tilted and the men screamed.",
+      "levels": {
+        "facil": {
+          "es": "El barco se inclinó y los hombres gritaron.",
+          "words": [
+            {
+              "w": "barco",
+              "g": "ship"
+            },
+            {
+              "w": "inclinó",
+              "g": "tilted"
+            },
+            {
+              "w": "gritaron",
+              "g": "screamed"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El barco se inclinó bruscamente y los hombres gritaron de miedo.",
+          "words": [
+            {
+              "w": "inclinó",
+              "g": "tilted"
+            },
+            {
+              "w": "bruscamente",
+              "g": "abruptly"
+            },
+            {
+              "w": "miedo",
+              "g": "fear"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El navío escoró violentamente entre los alaridos de la tripulación.",
+          "words": [
+            {
+              "w": "navío",
+              "g": "vessel"
+            },
+            {
+              "w": "escoró",
+              "g": "heeled over"
+            },
+            {
+              "w": "alaridos",
+              "g": "howls"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A giant, translucent hand of Poseidon emerging from the dark sea, pushing the ship towards the abyss.",
+      "en": "The ocean god pushed the boat.",
+      "levels": {
+        "facil": {
+          "es": "El dios del mar empujó el barco.",
+          "words": [
+            {
+              "w": "dios",
+              "g": "god"
+            },
+            {
+              "w": "mar",
+              "g": "sea"
+            },
+            {
+              "w": "empujó",
+              "g": "pushed"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El dios del mar golpeó la nave con furia.",
+          "words": [
+            {
+              "w": "golpeó",
+              "g": "hit"
+            },
+            {
+              "w": "nave",
+              "g": "vessel"
+            },
+            {
+              "w": "furia",
+              "g": "fury"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El dios de los abismos embistió la nave con saña.",
+          "words": [
+            {
+              "w": "abismos",
+              "g": "abysses"
+            },
+            {
+              "w": "embistió",
+              "g": "rammed"
+            },
+            {
+              "w": "saña",
+              "g": "cruelty"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Sailors falling into the churning, dark water, their faces filled with terror.",
+      "en": "The sailors fell into the cold water.",
+      "levels": {
+        "facil": {
+          "es": "Los marineros cayeron al agua fría.",
+          "words": [
+            {
+              "w": "marineros",
+              "g": "sailors"
+            },
+            {
+              "w": "cayeron",
+              "g": "fell"
+            },
+            {
+              "w": "fría",
+              "g": "cold"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los marineros cayeron al agua oscura del océano.",
+          "words": [
+            {
+              "w": "marineros",
+              "g": "sailors"
+            },
+            {
+              "w": "cayeron",
+              "g": "fell"
+            },
+            {
+              "w": "oscura",
+              "g": "dark"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los hombres cayeron en las fauces del océano tempestuoso.",
+          "words": [
+            {
+              "w": "fauces",
+              "g": "jaws"
+            },
+            {
+              "w": "océano",
+              "g": "ocean"
+            },
+            {
+              "w": "tempestuoso",
+              "g": "stormy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a rugged, bearded warrior with a weary face and leather armor, looks up at the sky, his eyes showing a mix of defiance and sorrow.",
+      "en": "Ulises looked at the sky and prayed.",
+      "levels": {
+        "facil": {
+          "es": "Ulises miró al cielo y rezó.",
+          "words": [
+            {
+              "w": "miró",
+              "g": "looked"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "rezó",
+              "g": "prayed"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises observó el cielo y pidió ayuda a los dioses.",
+          "words": [
+            {
+              "w": "observó",
+              "g": "observed"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "ayuda",
+              "g": "help"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ulises contempló la tormenta y clamó ante los cielos impasibles.",
+          "words": [
+            {
+              "w": "contempló",
+              "g": "contemplated"
+            },
+            {
+              "w": "clamó",
+              "g": "cried out"
+            },
+            {
+              "w": "impasibles",
+              "g": "unmoved"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a rugged man with short dark hair and a beard, grips the wet wooden mast while a giant wave crashes behind him.",
+      "en": "Ulises held onto the mast tightly as the waves rose high.",
+      "levels": {
+        "facil": {
+          "es": "Ulises agarró el mástil. Las olas subieron muy alto.",
+          "words": [
+            {
+              "w": "agarró",
+              "g": "grabbed"
+            },
+            {
+              "w": "mástil",
+              "g": "mast"
+            },
+            {
+              "w": "olas",
+              "g": "waves"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises se aferró al mástil mientras las olas se alzaban con violencia.",
+          "words": [
+            {
+              "w": "aferró",
+              "g": "clung"
+            },
+            {
+              "w": "alzaban",
+              "g": "rose"
+            },
+            {
+              "w": "violencia",
+              "g": "violence"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ulises se aferró al mástil con desesperación mientras las olas se alzaban como muros de agua.",
+          "words": [
+            {
+              "w": "aferró",
+              "g": "clung"
+            },
+            {
+              "w": "desesperación",
+              "g": "desperation"
+            },
+            {
+              "w": "muros",
+              "g": "walls"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Poseidón, a colossal figure with a long white beard and a trident, emerges from the swirling ocean depths.",
+      "en": "Poseidon emerged from the deep sea to punish the mortal.",
+      "levels": {
+        "facil": {
+          "es": "Poseidón salió del mar. Él quiso castigar al hombre.",
+          "words": [
+            {
+              "w": "salió",
+              "g": "emerged"
+            },
+            {
+              "w": "mar",
+              "g": "sea"
+            },
+            {
+              "w": "castigar",
+              "g": "punish"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Poseidón emergió de las profundidades del mar para castigar al mortal.",
+          "words": [
+            {
+              "w": "emergió",
+              "g": "emerged"
+            },
+            {
+              "w": "profundidades",
+              "g": "depths"
+            },
+            {
+              "w": "mortal",
+              "g": "mortal"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Poseidón emergió de los abismos marinos, imponente, para ejecutar su venganza contra el mortal.",
+          "words": [
+            {
+              "w": "abismos",
+              "g": "abysses"
+            },
+            {
+              "w": "imponente",
+              "g": "imposing"
+            },
+            {
+              "w": "venganza",
+              "g": "vengeance"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A massive wooden ship fragment breaks in two under the force of the water.",
+      "en": "The ship broke into two pieces under the force of the water.",
+      "levels": {
+        "facil": {
+          "es": "El barco se rompió en dos partes por el agua.",
+          "words": [
+            {
+              "w": "barco",
+              "g": "ship"
+            },
+            {
+              "w": "rompió",
+              "g": "broke"
+            },
+            {
+              "w": "partes",
+              "g": "pieces"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La nave se partió en dos fragmentos debido a la fuerza del océano.",
+          "words": [
+            {
+              "w": "nave",
+              "g": "ship"
+            },
+            {
+              "w": "partió",
+              "g": "split"
+            },
+            {
+              "w": "fragmentos",
+              "g": "fragments"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La nave se fragmentó en astillas bajo la furia implacable del océano embravecido.",
+          "words": [
+            {
+              "w": "astillas",
+              "g": "splinters"
+            },
+            {
+              "w": "implacable",
+              "g": "relentless"
+            },
+            {
+              "w": "embravecido",
+              "g": "raging"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a rugged man with short dark hair and a beard, is thrown into the turbulent sea, struggling to breathe.",
+      "en": "Ulises fell into the sea and struggled to stay afloat.",
+      "levels": {
+        "facil": {
+          "es": "Ulises cayó al mar. Él intentó nadar mucho.",
+          "words": [
+            {
+              "w": "cayó",
+              "g": "fell"
+            },
+            {
+              "w": "intentó",
+              "g": "tried"
+            },
+            {
+              "w": "nadar",
+              "g": "swim"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises cayó al mar y luchó para mantenerse a flote entre las olas.",
+          "words": [
+            {
+              "w": "cayó",
+              "g": "fell"
+            },
+            {
+              "w": "luchó",
+              "g": "struggled"
+            },
+            {
+              "w": "flote",
+              "g": "afloat"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ulises se hundió en el abismo, luchando desesperadamente por alcanzar la superficie.",
+          "words": [
+            {
+              "w": "hundió",
+              "g": "sank"
+            },
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "superficie",
+              "g": "surface"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A lightning bolt strikes the horizon, illuminating the dark, chaotic sea.",
+      "en": "A storm lightning bolt crossed the sky, illuminating the chaos.",
+      "levels": {
+        "facil": {
+          "es": "Un rayo cruzó el cielo y dio luz al mar.",
+          "words": [
+            {
+              "w": "rayo",
+              "g": "lightning"
+            },
+            {
+              "w": "cruzó",
+              "g": "crossed"
+            },
+            {
+              "w": "luz",
+              "g": "light"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Un rayo cruzó el cielo, iluminando brevemente el caos del océano.",
+          "words": [
+            {
+              "w": "cruzó",
+              "g": "crossed"
+            },
+            {
+              "w": "iluminando",
+              "g": "illuminating"
+            },
+            {
+              "w": "caos",
+              "g": "chaos"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Un relámpago surcó el firmamento, rasgando la oscuridad y revelando la magnitud del desastre.",
+          "words": [
+            {
+              "w": "relámpago",
+              "g": "lightning"
+            },
+            {
+              "w": "surcó",
+              "g": "traversed"
+            },
+            {
+              "w": "firmamento",
+              "g": "sky"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Odysseus, a man with a thick, dark beard, rugged features, and a tunic torn by the storm, clings desperately to a jagged piece of wooden wreckage as the waves toss him.",
+      "en": "Ulises clung to the wood. The sea pulled him down into the dark abyss.",
+      "levels": {
+        "facil": {
+          "es": "Ulises se agarró a la madera. El mar lo arrastró al fondo oscuro.",
+          "words": [
+            {
+              "w": "agarró",
+              "g": "grabbed"
+            },
+            {
+              "w": "madera",
+              "g": "wood"
+            },
+            {
+              "w": "arrastró",
+              "g": "dragged"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises se aferró a los restos del barco. El mar tiró de él hacia el abismo oscuro.",
+          "words": [
+            {
+              "w": "aferró",
+              "g": "clung"
+            },
+            {
+              "w": "restos",
+              "g": "remains"
+            },
+            {
+              "w": "abismo",
+              "g": "abyss"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ulises se aferró a la madera astillada mientras el océano, implacable, lo sumergió en el abismo.",
+          "words": [
+            {
+              "w": "astillada",
+              "g": "splintered"
+            },
+            {
+              "w": "implacable",
+              "g": "relentless"
+            },
+            {
+              "w": "sumergió",
+              "g": "submerged"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A massive, towering wall of water rises behind Odysseus, shaped vaguely like a monstrous, trident-wielding hand.",
+      "en": "Poseidon rose from the depths. His anger turned the water into a wall.",
+      "levels": {
+        "facil": {
+          "es": "Poseidón salió del agua. Su ira creó una gran ola.",
+          "words": [
+            {
+              "w": "salió",
+              "g": "emerged"
+            },
+            {
+              "w": "ira",
+              "g": "wrath"
+            },
+            {
+              "w": "ola",
+              "g": "wave"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Poseidón emergió de las profundidades. Su cólera transformó el mar en un muro gigante.",
+          "words": [
+            {
+              "w": "emergió",
+              "g": "emerged"
+            },
+            {
+              "w": "profundidades",
+              "g": "depths"
+            },
+            {
+              "w": "transformó",
+              "g": "transformed"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Poseidón se alzó desde las profundidades; su cólera divina erigió un muro líquido contra el héroe.",
+          "words": [
+            {
+              "w": "alzó",
+              "g": "rose up"
+            },
+            {
+              "w": "cólera",
+              "g": "wrath"
+            },
+            {
+              "w": "erigió",
+              "g": "erected"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Odysseus, face etched with exhaustion and terror, looks up at the looming wall of water above him.",
+      "en": "Ulises looked up. He understood that this was the god's punishment.",
+      "levels": {
+        "facil": {
+          "es": "Ulises miró arriba. Él supo que era el castigo del dios.",
+          "words": [
+            {
+              "w": "miró",
+              "g": "looked"
+            },
+            {
+              "w": "supo",
+              "g": "knew"
+            },
+            {
+              "w": "castigo",
+              "g": "punishment"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises miró hacia arriba. Comprendió que aquel era el castigo del dios.",
+          "words": [
+            {
+              "w": "hacia arriba",
+              "g": "upward"
+            },
+            {
+              "w": "comprendió",
+              "g": "understood"
+            },
+            {
+              "w": "aquel",
+              "g": "that"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ulises alzó la vista y comprendió, con horror, el peso del castigo divino.",
+          "words": [
+            {
+              "w": "alzó",
+              "g": "raised"
+            },
+            {
+              "w": "horror",
+              "g": "terror"
+            },
+            {
+              "w": "divino",
+              "g": "divine"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The wave crashes down, swallowing Odysseus completely in a swirl of white foam and dark blue water.",
+      "en": "The wave crashed. The sea swallowed the hero whole.",
+      "levels": {
+        "facil": {
+          "es": "La ola cayó. El mar se tragó al héroe.",
+          "words": [
+            {
+              "w": "cayó",
+              "g": "fell"
+            },
+            {
+              "w": "tragó",
+              "g": "swallowed"
+            },
+            {
+              "w": "héroe",
+              "g": "hero"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La ola rompió con fuerza. El océano engulló al héroe por completo.",
+          "words": [
+            {
+              "w": "rompió",
+              "g": "broke"
+            },
+            {
+              "w": "engulló",
+              "g": "engulfed"
+            },
+            {
+              "w": "completo",
+              "g": "completely"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La ola estalló con furia; el océano engulló al héroe en un vórtice de espuma y silencio.",
+          "words": [
+            {
+              "w": "estalló",
+              "g": "burst"
+            },
+            {
+              "w": "vórtice",
+              "g": "vortex"
+            },
+            {
+              "w": "espuma",
+              "g": "foam"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A wide shot of the empty, churning sea at dawn. A single, broken piece of wood floats on the surface. Silence returns.",
+      "en": "The storm passed. Only the silence of the sea remained.",
+      "levels": {
+        "facil": {
+          "es": "La tormenta pasó. Solo quedó el silencio del mar.",
+          "words": [
+            {
+              "w": "tormenta",
+              "g": "storm"
+            },
+            {
+              "w": "pasó",
+              "g": "passed"
+            },
+            {
+              "w": "quedó",
+              "g": "remained"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La tempestad cesó. Solo permaneció el silencio absoluto del océano.",
+          "words": [
+            {
+              "w": "tempestad",
+              "g": "tempest"
+            },
+            {
+              "w": "cesó",
+              "g": "ceased"
+            },
+            {
+              "w": "permaneció",
+              "g": "remained"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La tempestad se desvaneció. Tras el caos, solo persistió el silencio sepulcral del horizonte.",
+          "words": [
+            {
+              "w": "desvaneció",
+              "g": "vanished"
+            },
+            {
+              "w": "persistió",
+              "g": "persisted"
+            },
+            {
+              "w": "sepulcral",
+              "g": "sepulchral"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "¿Ha terminado el viaje de Ulises, o es el océano un guardián de secretos aún más profundos?",
+  "closingBeat": "El mar perdona la vida, pero nunca olvida la ofensa."
+}

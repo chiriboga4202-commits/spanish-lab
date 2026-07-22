@@ -1,0 +1,1173 @@
+{
+  "series": "MITOS",
+  "chapter": 12,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "Jasón y el Vellocino",
+  "level": "A2-B1",
+  "grammarFocus": "pretérito (introducción)",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Jasón, a man with piercing eyes and a golden mantle, stands on the deck of the Argo, looking back at the receding shore of Iolcos, his face marked by the weight of destiny.",
+      "en": "The cycle of pain broke, but a new path opened. Jasón stepped onto the ship.",
+      "levels": {
+        "facil": {
+          "es": "El ciclo de dolor terminó. Jasón subió al barco.",
+          "words": [
+            {
+              "w": "terminó",
+              "g": "ended"
+            },
+            {
+              "w": "subió",
+              "g": "climbed/boarded"
+            },
+            {
+              "w": "barco",
+              "g": "ship"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El ciclo de dolor se rompió, pero un nuevo camino nació. Jasón subió al Argo.",
+          "words": [
+            {
+              "w": "rompió",
+              "g": "broke"
+            },
+            {
+              "w": "nació",
+              "g": "was born"
+            },
+            {
+              "w": "camino",
+              "g": "path"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El ciclo de dolor se quebró, abriendo una nueva senda. Jasón abordó el Argo con firmeza.",
+          "words": [
+            {
+              "w": "quebró",
+              "g": "shattered"
+            },
+            {
+              "w": "senda",
+              "g": "path"
+            },
+            {
+              "w": "abordó",
+              "g": "boarded"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hercules and Orpheus stand beside Jasón, a man with piercing eyes and a golden mantle, as the sails of the Argo unfurl against a stormy sky.",
+      "en": "He gathered the heroes. Hercules and Orpheus arrived at the port.",
+      "levels": {
+        "facil": {
+          "es": "Él llamó a los héroes. Hércules y Orfeo llegaron al puerto.",
+          "words": [
+            {
+              "w": "llamó",
+              "g": "called"
+            },
+            {
+              "w": "llegaron",
+              "g": "arrived"
+            },
+            {
+              "w": "puerto",
+              "g": "port"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Jasón reunió a los héroes. Hércules y Orfeo llegaron al puerto del Argo.",
+          "words": [
+            {
+              "w": "reunió",
+              "g": "gathered"
+            },
+            {
+              "w": "héroes",
+              "g": "heroes"
+            },
+            {
+              "w": "llegaron",
+              "g": "arrived"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Jasón convocó a los valientes. Hércules y Orfeo arribaron al puerto para la travesía.",
+          "words": [
+            {
+              "w": "convocó",
+              "g": "summoned"
+            },
+            {
+              "w": "valientes",
+              "g": "brave ones"
+            },
+            {
+              "w": "arribaron",
+              "g": "arrived"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Jasón, a man with piercing eyes and a golden mantle, points toward the horizon where the sun sets in a blood-red sky.",
+      "en": "They looked at the horizon. The destination was far away.",
+      "levels": {
+        "facil": {
+          "es": "Ellos miraron el horizonte. El destino fue muy lejos.",
+          "words": [
+            {
+              "w": "miraron",
+              "g": "looked"
+            },
+            {
+              "w": "horizonte",
+              "g": "horizon"
+            },
+            {
+              "w": "lejos",
+              "g": "far"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Miraron hacia el horizonte. El destino estuvo muy lejos de Grecia.",
+          "words": [
+            {
+              "w": "hacia",
+              "g": "towards"
+            },
+            {
+              "w": "destino",
+              "g": "destination"
+            },
+            {
+              "w": "estuvo",
+              "g": "was"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Otearon el horizonte. El destino se halló más allá de lo conocido.",
+          "words": [
+            {
+              "w": "otearon",
+              "g": "scanned/looked"
+            },
+            {
+              "w": "halló",
+              "g": "was found"
+            },
+            {
+              "w": "conocido",
+              "g": "known"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close-up on the hands of Jasón, a man with piercing eyes and a golden mantle, gripping the wooden railing of the ship as it leaves the harbor.",
+      "en": "The wood of the ship creaked. The journey began.",
+      "levels": {
+        "facil": {
+          "es": "La madera del barco sonó. El viaje empezó.",
+          "words": [
+            {
+              "w": "madera",
+              "g": "wood"
+            },
+            {
+              "w": "sonó",
+              "g": "sounded/creaked"
+            },
+            {
+              "w": "empezó",
+              "g": "began"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La madera crujió bajo el peso. El viaje comenzó en ese instante.",
+          "words": [
+            {
+              "w": "crujió",
+              "g": "creaked"
+            },
+            {
+              "w": "peso",
+              "g": "weight"
+            },
+            {
+              "w": "comenzó",
+              "g": "began"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La madera del casco crujió. La travesía dio inicio ante el mar abierto.",
+          "words": [
+            {
+              "w": "casco",
+              "g": "hull"
+            },
+            {
+              "w": "travesía",
+              "g": "voyage"
+            },
+            {
+              "w": "inicio",
+              "g": "start"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Jasón, a man with piercing eyes and a golden mantle, stands tall as the Argo cuts through the dark, churning waves of the Aegean Sea.",
+      "en": "The sea was dangerous. They searched for the Golden Fleece.",
+      "levels": {
+        "facil": {
+          "es": "El mar fue peligroso. Ellos buscaron el vellocino de oro.",
+          "words": [
+            {
+              "w": "peligroso",
+              "g": "dangerous"
+            },
+            {
+              "w": "buscaron",
+              "g": "searched"
+            },
+            {
+              "w": "vellocino",
+              "g": "fleece"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El mar fue peligroso. Buscaron el místico vellocino de oro.",
+          "words": [
+            {
+              "w": "mar",
+              "g": "sea"
+            },
+            {
+              "w": "místico",
+              "g": "mystical"
+            },
+            {
+              "w": "buscaron",
+              "g": "searched"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El mar se tornó traicionero. Partieron en busca del mítico vellocino de oro.",
+          "words": [
+            {
+              "w": "tornó",
+              "g": "turned/became"
+            },
+            {
+              "w": "traicionero",
+              "g": "treacherous"
+            },
+            {
+              "w": "mítico",
+              "g": "mythical"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Jasón, a young man with curly dark hair and a bronze breastplate, stands at the helm of the Argo, looking at the stormy sky. He holds a wooden rudder firmly.",
+      "en": "Jasón took the rudder and guided the ship.",
+      "levels": {
+        "facil": {
+          "es": "Jasón tomó el timón. Él guio el barco.",
+          "words": [
+            {
+              "w": "tomó",
+              "g": "took"
+            },
+            {
+              "w": "timón",
+              "g": "rudder"
+            },
+            {
+              "w": "guio",
+              "g": "guided"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Jasón tomó el timón con fuerza y guio el Argo a través de las olas.",
+          "words": [
+            {
+              "w": "fuerza",
+              "g": "strength"
+            },
+            {
+              "w": "través",
+              "g": "through"
+            },
+            {
+              "w": "olas",
+              "g": "waves"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Jasón asió el timón con firmeza y guio la nave a través de la tormenta.",
+          "words": [
+            {
+              "w": "asió",
+              "g": "grasped"
+            },
+            {
+              "w": "firmeza",
+              "g": "firmness"
+            },
+            {
+              "w": "nave",
+              "g": "vessel"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a muscular man with a lion skin cloak, pulls a heavy rope on the deck, his face strained with effort.",
+      "en": "Heracles pulled the ropes with great strength.",
+      "levels": {
+        "facil": {
+          "es": "Heracles tiró de las cuerdas. Usó mucha fuerza.",
+          "words": [
+            {
+              "w": "tiró",
+              "g": "pulled"
+            },
+            {
+              "w": "cuerdas",
+              "g": "ropes"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Heracles tiró de las cuerdas pesadas con su gran fuerza física.",
+          "words": [
+            {
+              "w": "pesadas",
+              "g": "heavy"
+            },
+            {
+              "w": "física",
+              "g": "physical"
+            },
+            {
+              "w": "gran",
+              "g": "great"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Heracles tensó las cuerdas con una fuerza sobrehumana contra el viento.",
+          "words": [
+            {
+              "w": "tensó",
+              "g": "tightened"
+            },
+            {
+              "w": "sobrehumana",
+              "g": "superhuman"
+            },
+            {
+              "w": "viento",
+              "g": "wind"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo, a slender man with a lyre, sits on the deck, his fingers plucking the strings as he looks at the sea.",
+      "en": "Orfeo played his lyre and sang to the sea.",
+      "levels": {
+        "facil": {
+          "es": "Orfeo tocó su lira. Cantó para el mar.",
+          "words": [
+            {
+              "w": "tocó",
+              "g": "played"
+            },
+            {
+              "w": "lira",
+              "g": "lyre"
+            },
+            {
+              "w": "cantó",
+              "g": "sang"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Orfeo tocó una canción en su lira y calmó el mar agitado.",
+          "words": [
+            {
+              "w": "canción",
+              "g": "song"
+            },
+            {
+              "w": "calmó",
+              "g": "calmed"
+            },
+            {
+              "w": "agitado",
+              "g": "agitated"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Orfeo pulsó las cuerdas de su lira y su canto amansó las olas.",
+          "words": [
+            {
+              "w": "pulsó",
+              "g": "plucked"
+            },
+            {
+              "w": "canto",
+              "g": "singing"
+            },
+            {
+              "w": "amansó",
+              "g": "tamed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A giant, swirling whirlpool appears in the water near the Argo. The heroes look down in terror.",
+      "en": "They saw a dangerous whirlpool in the water.",
+      "levels": {
+        "facil": {
+          "es": "Ellos vieron un remolino peligroso en el agua.",
+          "words": [
+            {
+              "w": "vieron",
+              "g": "saw"
+            },
+            {
+              "w": "remolino",
+              "g": "whirlpool"
+            },
+            {
+              "w": "agua",
+              "g": "water"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los héroes vieron un remolino inmenso que amenazó al barco.",
+          "words": [
+            {
+              "w": "héroes",
+              "g": "heroes"
+            },
+            {
+              "w": "inmenso",
+              "g": "immense"
+            },
+            {
+              "w": "amenazó",
+              "g": "threatened"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Divisaron un remolino voraz que amenazaba con devorar la embarcación.",
+          "words": [
+            {
+              "w": "divisaron",
+              "g": "spied"
+            },
+            {
+              "w": "voraz",
+              "g": "voracious"
+            },
+            {
+              "w": "devorar",
+              "g": "devour"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Jasón shouts orders, pointing forward. The crew reacts quickly, moving in unison.",
+      "en": "Jasón shouted an order and the crew reacted.",
+      "levels": {
+        "facil": {
+          "es": "Jasón gritó una orden. La tripulación reaccionó rápido.",
+          "words": [
+            {
+              "w": "gritó",
+              "g": "shouted"
+            },
+            {
+              "w": "orden",
+              "g": "order"
+            },
+            {
+              "w": "tripulación",
+              "g": "crew"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Jasón gritó una orden y toda la tripulación trabajó junta.",
+          "words": [
+            {
+              "w": "toda",
+              "g": "all"
+            },
+            {
+              "w": "trabajó",
+              "g": "worked"
+            },
+            {
+              "w": "junta",
+              "g": "together"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Jasón exclamó una orden severa y la tripulación actuó al instante.",
+          "words": [
+            {
+              "w": "exclamó",
+              "g": "exclaimed"
+            },
+            {
+              "w": "severa",
+              "g": "stern"
+            },
+            {
+              "w": "instante",
+              "g": "instant"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Jasón, a young man with golden armor and a determined face, points toward the horizon. In the distance, the jagged, dark peaks of Colchis emerge from the mist.",
+      "en": "Jasón pointed to the dark horizon. The land of Colchis finally appeared.",
+      "levels": {
+        "facil": {
+          "es": "Jasón señaló al horizonte. La tierra de Cólquide apareció.",
+          "words": [
+            {
+              "w": "señaló",
+              "g": "pointed"
+            },
+            {
+              "w": "apareció",
+              "g": "appeared"
+            },
+            {
+              "w": "tierra",
+              "g": "land"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Jasón señaló el horizonte oscuro. Por fin, la tierra de Cólquide apareció ante ellos.",
+          "words": [
+            {
+              "w": "señaló",
+              "g": "pointed"
+            },
+            {
+              "w": "apareció",
+              "g": "appeared"
+            },
+            {
+              "w": "oscuro",
+              "g": "dark"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Jasón señaló el horizonte sombrío. Tras días de travesía, la tierra de Cólquide apareció entre la bruma.",
+          "words": [
+            {
+              "w": "señaló",
+              "g": "pointed"
+            },
+            {
+              "w": "apareció",
+              "g": "appeared"
+            },
+            {
+              "w": "travesía",
+              "g": "journey"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a giant man with a lion skin cloak, grips the oars tightly, his muscles tense. The ship Argo cuts through the dark, icy waters.",
+      "en": "Heracles grabbed the heavy oars. He rowed with all his strength.",
+      "levels": {
+        "facil": {
+          "es": "Heracles agarró los remos. Él remó con mucha fuerza.",
+          "words": [
+            {
+              "w": "agarró",
+              "g": "grabbed"
+            },
+            {
+              "w": "remó",
+              "g": "rowed"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Heracles agarró los remos pesados. Él remó con todas sus fuerzas contra la corriente.",
+          "words": [
+            {
+              "w": "agarró",
+              "g": "grabbed"
+            },
+            {
+              "w": "remó",
+              "g": "rowed"
+            },
+            {
+              "w": "pesados",
+              "g": "heavy"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Heracles aferró los remos pesados. Remó con una fuerza titánica contra la corriente hostil.",
+          "words": [
+            {
+              "w": "aferró",
+              "g": "gripped"
+            },
+            {
+              "w": "remó",
+              "g": "rowed"
+            },
+            {
+              "w": "titánica",
+              "g": "titanic"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The Argo enters a narrow, rocky strait. Sharp cliffs loom over the ship like teeth.",
+      "en": "The ship entered the narrow strait. The rocks stood like giants.",
+      "levels": {
+        "facil": {
+          "es": "El barco entró en el estrecho. Las rocas fueron gigantes.",
+          "words": [
+            {
+              "w": "entró",
+              "g": "entered"
+            },
+            {
+              "w": "fueron",
+              "g": "were"
+            },
+            {
+              "w": "estrecho",
+              "g": "strait"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El barco entró en el estrecho rocoso. Las rocas gigantes vigilaron el paso.",
+          "words": [
+            {
+              "w": "entró",
+              "g": "entered"
+            },
+            {
+              "w": "vigilaron",
+              "g": "watched"
+            },
+            {
+              "w": "rocoso",
+              "g": "rocky"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La nave se adentró en el estrecho. Las rocas, como gigantes de piedra, vigilaron el paso del Argo.",
+          "words": [
+            {
+              "w": "adentró",
+              "g": "entered"
+            },
+            {
+              "w": "vigilaron",
+              "g": "watched"
+            },
+            {
+              "w": "nave",
+              "g": "ship"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A sudden, thick fog descends upon the Argo. The heroes look around, confused and wary.",
+      "en": "A thick fog arrived suddenly. The heroes looked for the path.",
+      "levels": {
+        "facil": {
+          "es": "Una niebla espesa llegó de repente. Los héroes buscaron el camino.",
+          "words": [
+            {
+              "w": "llegó",
+              "g": "arrived"
+            },
+            {
+              "w": "buscaron",
+              "g": "looked for"
+            },
+            {
+              "w": "niebla",
+              "g": "fog"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Una niebla espesa llegó de repente. Los héroes buscaron el camino perdido en la oscuridad.",
+          "words": [
+            {
+              "w": "llegó",
+              "g": "arrived"
+            },
+            {
+              "w": "buscaron",
+              "g": "looked for"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Una bruma espesa descendió de repente. Los héroes buscaron el camino, pero la oscuridad reinó.",
+          "words": [
+            {
+              "w": "descendió",
+              "g": "descended"
+            },
+            {
+              "w": "buscaron",
+              "g": "searched"
+            },
+            {
+              "w": "reinó",
+              "g": "reigned"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Jasón stands at the bow, drawing his sword. A mysterious glowing light flickers in the distance.",
+      "en": "Jasón drew his sword. A strange light appeared in the distance.",
+      "levels": {
+        "facil": {
+          "es": "Jasón sacó su espada. Una luz extraña apareció lejos.",
+          "words": [
+            {
+              "w": "sacó",
+              "g": "drew/took out"
+            },
+            {
+              "w": "apareció",
+              "g": "appeared"
+            },
+            {
+              "w": "espada",
+              "g": "sword"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Jasón desenvainó su espada. Una luz extraña apareció en la distancia.",
+          "words": [
+            {
+              "w": "desenvainó",
+              "g": "drew (sword)"
+            },
+            {
+              "w": "apareció",
+              "g": "appeared"
+            },
+            {
+              "w": "distancia",
+              "g": "distance"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Jasón desenvainó su acero. Una luz espectral apareció en la lejanía, desafiando la niebla.",
+          "words": [
+            {
+              "w": "desenvainó",
+              "g": "drew"
+            },
+            {
+              "w": "apareció",
+              "g": "appeared"
+            },
+            {
+              "w": "lejanía",
+              "g": "distance"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Jasón, a young man with curly dark hair and a bronze breastplate, stands at the bow of the Argo, eyes wide as the mist clears to reveal the Colchian shore.",
+      "en": "The mist vanished. A golden glow bathed the dark beach.",
+      "levels": {
+        "facil": {
+          "es": "La niebla desapareció. Una luz de oro iluminó la playa oscura.",
+          "words": [
+            {
+              "w": "desapareció",
+              "g": "disappeared"
+            },
+            {
+              "w": "luz",
+              "g": "light"
+            },
+            {
+              "w": "playa",
+              "g": "beach"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La niebla se disipó de pronto. Un fulgor dorado bañó la costa oscura.",
+          "words": [
+            {
+              "w": "disipó",
+              "g": "dissipated"
+            },
+            {
+              "w": "fulgor",
+              "g": "glow"
+            },
+            {
+              "w": "costa",
+              "g": "coast"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La niebla se desvaneció. Un resplandor áureo bañó la orilla sombría.",
+          "words": [
+            {
+              "w": "desvaneció",
+              "g": "vanished"
+            },
+            {
+              "w": "áureo",
+              "g": "golden"
+            },
+            {
+              "w": "sombría",
+              "g": "gloomy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. High in the branches of a massive, ancient oak tree, the Golden Fleece hangs, pulsing with magical light.",
+      "en": "High in the tree, the Golden Fleece shone like a star.",
+      "levels": {
+        "facil": {
+          "es": "Arriba en el árbol, el Vellocino brilló como una estrella.",
+          "words": [
+            {
+              "w": "árbol",
+              "g": "tree"
+            },
+            {
+              "w": "brilló",
+              "g": "shone"
+            },
+            {
+              "w": "estrella",
+              "g": "star"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "En lo alto del árbol, el Vellocino de Oro brilló con fuerza.",
+          "words": [
+            {
+              "w": "alto",
+              "g": "high"
+            },
+            {
+              "w": "Vellocino",
+              "g": "fleece"
+            },
+            {
+              "w": "fuerza",
+              "g": "force"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "En la copa del árbol, el Vellocino refulgió con intensidad divina.",
+          "words": [
+            {
+              "w": "copa",
+              "g": "treetop"
+            },
+            {
+              "w": "refulgió",
+              "g": "gleamed"
+            },
+            {
+              "w": "divina",
+              "g": "divine"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A monstrous dragon with emerald scales and glowing eyes emerges from behind the tree.",
+      "en": "A giant dragon appeared and guarded the treasure.",
+      "levels": {
+        "facil": {
+          "es": "Un dragón gigante apareció y cuidó el tesoro.",
+          "words": [
+            {
+              "w": "dragón",
+              "g": "dragon"
+            },
+            {
+              "w": "cuidó",
+              "g": "guarded"
+            },
+            {
+              "w": "tesoro",
+              "g": "treasure"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Un enorme dragón surgió y protegió el vellocino.",
+          "words": [
+            {
+              "w": "surgió",
+              "g": "emerged"
+            },
+            {
+              "w": "protegió",
+              "g": "protected"
+            },
+            {
+              "w": "enorme",
+              "g": "huge"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Un dragón colosal emergió de las sombras y custodiaba el premio.",
+          "words": [
+            {
+              "w": "colosal",
+              "g": "colossal"
+            },
+            {
+              "w": "custodiaba",
+              "g": "guarded"
+            },
+            {
+              "w": "premio",
+              "g": "prize"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Jasón grips his sword hilt, his face showing a mix of awe and terror.",
+      "en": "Jasón took his sword. He trembled for a second.",
+      "levels": {
+        "facil": {
+          "es": "Jasón tomó su espada. Él tembló por un segundo.",
+          "words": [
+            {
+              "w": "tomó",
+              "g": "took"
+            },
+            {
+              "w": "espada",
+              "g": "sword"
+            },
+            {
+              "w": "tembló",
+              "g": "trembled"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Jasón agarró su espada con fuerza. Sintió miedo por un momento.",
+          "words": [
+            {
+              "w": "agarró",
+              "g": "grabbed"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            },
+            {
+              "w": "momento",
+              "g": "moment"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Jasón desenvainó su acero. Un escalofrío recorrió su cuerpo.",
+          "words": [
+            {
+              "w": "desenvainó",
+              "g": "unsheathed"
+            },
+            {
+              "w": "acero",
+              "g": "steel"
+            },
+            {
+              "w": "escalofrío",
+              "g": "shiver"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The dragon opens its massive jaws, smoke pouring out, facing the small, solitary hero.",
+      "en": "The dragon opened its mouth. The fight began now.",
+      "levels": {
+        "facil": {
+          "es": "El dragón abrió la boca. La batalla empezó ahora.",
+          "words": [
+            {
+              "w": "abrió",
+              "g": "opened"
+            },
+            {
+              "w": "boca",
+              "g": "mouth"
+            },
+            {
+              "w": "batalla",
+              "g": "battle"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El dragón abrió sus fauces. El combate comenzó en ese instante.",
+          "words": [
+            {
+              "w": "fauces",
+              "g": "jaws"
+            },
+            {
+              "w": "combate",
+              "g": "combat"
+            },
+            {
+              "w": "instante",
+              "g": "instant"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El dragón abrió sus fauces. La lucha decisiva dio comienzo.",
+          "words": [
+            {
+              "w": "fauces",
+              "g": "jaws"
+            },
+            {
+              "w": "decisiva",
+              "g": "decisive"
+            },
+            {
+              "w": "comienzo",
+              "g": "start"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "El dragón lanza una llamarada devastadora mientras Jasón salta hacia la oscuridad del bosque prohibido. ¿Podrá un mortal vencer a una bestia que nunca duerme?",
+  "closingBeat": "La gloria tiene un precio que solo los valientes se atreven a pagar."
+}

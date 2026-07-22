@@ -1,0 +1,1038 @@
+{
+  "series": "MITOS",
+  "chapter": 1,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "El Ladrón del Fuego",
+  "level": "A1",
+  "grammarFocus": "ser vs estar",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometheus, a lean Titan with bronze skin and wild, dark hair, stands on a jagged peak looking down at a freezing, dark earth.",
+      "en": "The world is cold and dark.",
+      "levels": {
+        "facil": {
+          "es": "El mundo es frío y oscuro.",
+          "words": [
+            "frío (cold)",
+            "oscuro (dark)",
+            "mundo (world)"
+          ]
+        },
+        "intermedio": {
+          "es": "El mundo está frío y sumido en la oscuridad.",
+          "words": [
+            "sumido (submerged)",
+            "oscuridad (darkness)",
+            "está (is - state)"
+          ]
+        },
+        "nativo": {
+          "es": "El mundo es un páramo gélido; la humanidad está sumida en una oscuridad eterna.",
+          "words": [
+            "páramo (wasteland)",
+            "gélido (icy)",
+            "eterna (eternal)"
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometheus, a lean Titan with bronze skin and wild, dark hair, watches tiny, shivering humans huddled in caves.",
+      "en": "The humans are suffering; they are weak.",
+      "levels": {
+        "facil": {
+          "es": "Los humanos sufren. Ellos son débiles.",
+          "words": [
+            "sufren (suffer)",
+            "débiles (weak)",
+            "humanos (humans)"
+          ]
+        },
+        "intermedio": {
+          "es": "Los humanos sufren mucho. Están débiles por el frío.",
+          "words": [
+            "mucho (a lot)",
+            "están (are - condition)",
+            "frío (cold)"
+          ]
+        },
+        "nativo": {
+          "es": "La humanidad es frágil y está a merced de un invierno sin fin.",
+          "words": [
+            "frágil (fragile)",
+            "merced (mercy)",
+            "invierno (winter)"
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometheus, a lean Titan with bronze skin and wild, dark hair, looks upward toward the glowing, golden gates of Mount Olympus.",
+      "en": "Prometheus is a Titan. He is brave.",
+      "levels": {
+        "facil": {
+          "es": "Prometeo es un titán. Él es valiente.",
+          "words": [
+            "titán (titan)",
+            "valiente (brave)",
+            "Prometeo (Prometheus)"
+          ]
+        },
+        "intermedio": {
+          "es": "Prometeo es un titán. Él está decidido a ayudar.",
+          "words": [
+            "decidido (determined)",
+            "ayudar (to help)",
+            "es (is - identity)"
+          ]
+        },
+        "nativo": {
+          "es": "Prometeo es un titán de voluntad férrea; está dispuesto a desafiar a los cielos.",
+          "words": [
+            "voluntad (will)",
+            "férrea (iron)",
+            "desafiar (defy)"
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometheus, a lean Titan with bronze skin and wild, dark hair, sneaks into the golden forge of Olympus where the fire of the gods burns bright.",
+      "en": "The fire is inside the forge. It is divine.",
+      "levels": {
+        "facil": {
+          "es": "El fuego está en la fragua. Es divino.",
+          "words": [
+            "fuego (fire)",
+            "fragua (forge)",
+            "divino (divine)"
+          ]
+        },
+        "intermedio": {
+          "es": "El fuego está dentro de la fragua. Es un regalo prohibido.",
+          "words": [
+            "dentro (inside)",
+            "regalo (gift)",
+            "prohibido (forbidden)"
+          ]
+        },
+        "nativo": {
+          "es": "El fuego sagrado está en la fragua; su esencia es divina y prohibida para los mortales.",
+          "words": [
+            "sagrado (sacred)",
+            "esencia (essence)",
+            "mortales (mortals)"
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometheus, a lean Titan with bronze skin and wild, dark hair, reaches out with a hollow fennel stalk to steal a spark.",
+      "en": "Prometheus is stealing the fire now.",
+      "levels": {
+        "facil": {
+          "es": "Prometeo roba el fuego ahora.",
+          "words": [
+            "roba (steals)",
+            "fuego (fire)",
+            "ahora (now)"
+          ]
+        },
+        "intermedio": {
+          "es": "Prometeo está robando el fuego de los dioses.",
+          "words": [
+            "robando (stealing)",
+            "dioses (gods)",
+            "está (is - action)"
+          ]
+        },
+        "nativo": {
+          "es": "Prometeo está consumando el robo; el fuego es suyo, capturado en el tallo de hinojo.",
+          "words": [
+            "consumando (completing)",
+            "tallo (stalk)",
+            "hinojo (fennel)"
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometeo, a tall titan with long, messy dark hair and weary eyes, holds a hollow fennel stalk. He is inside the glowing, golden forge of Olympus.",
+      "en": "Prometheus is inside the forge. The fire is bright.",
+      "levels": {
+        "facil": {
+          "es": "Prometeo está en la fragua. El fuego es brillante.",
+          "words": [
+            {
+              "w": "fragua",
+              "g": "forge"
+            },
+            {
+              "w": "brillante",
+              "g": "bright"
+            },
+            {
+              "w": "está",
+              "g": "is (location)"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Prometeo está dentro de la fragua divina. El fuego es inmenso y dorado.",
+          "words": [
+            {
+              "w": "divina",
+              "g": "divine"
+            },
+            {
+              "w": "inmenso",
+              "g": "immense"
+            },
+            {
+              "w": "dorado",
+              "g": "golden"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Prometeo está en el corazón de la fragua. El fuego es un sol cautivo.",
+          "words": [
+            {
+              "w": "corazón",
+              "g": "heart"
+            },
+            {
+              "w": "cautivo",
+              "g": "captive"
+            },
+            {
+              "w": "fragua",
+              "g": "forge"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close-up on Prometeo’s hand, a titan with long, messy dark hair, as he carefully captures a spark into the hollow stalk.",
+      "en": "The spark is hot. Prometheus is very careful.",
+      "levels": {
+        "facil": {
+          "es": "La chispa es caliente. Prometeo está muy atento.",
+          "words": [
+            {
+              "w": "chispa",
+              "g": "spark"
+            },
+            {
+              "w": "caliente",
+              "g": "hot"
+            },
+            {
+              "w": "atento",
+              "g": "careful"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La chispa es peligrosa. Prometeo está siendo muy cuidadoso.",
+          "words": [
+            {
+              "w": "peligrosa",
+              "g": "dangerous"
+            },
+            {
+              "w": "siendo",
+              "g": "being"
+            },
+            {
+              "w": "cuidadoso",
+              "g": "careful"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La chispa es abrasadora. Prometeo está concentrado en su osadía.",
+          "words": [
+            {
+              "w": "abrasadora",
+              "g": "scorching"
+            },
+            {
+              "w": "concentrado",
+              "g": "focused"
+            },
+            {
+              "w": "osadía",
+              "g": "daring"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometeo, a titan with long, messy dark hair, turns to leave the forge. He looks nervous.",
+      "en": "The titan is nervous. The palace is silent.",
+      "levels": {
+        "facil": {
+          "es": "El titán está nervioso. El palacio es silencioso.",
+          "words": [
+            {
+              "w": "titán",
+              "g": "titan"
+            },
+            {
+              "w": "nervioso",
+              "g": "nervous"
+            },
+            {
+              "w": "silencioso",
+              "g": "silent"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El titán está inquieto. El palacio está en silencio absoluto.",
+          "words": [
+            {
+              "w": "inquieto",
+              "g": "restless"
+            },
+            {
+              "w": "absoluto",
+              "g": "absolute"
+            },
+            {
+              "w": "silencio",
+              "g": "silence"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El titán está tenso. El palacio es una tumba de silencio.",
+          "words": [
+            {
+              "w": "tenso",
+              "g": "tense"
+            },
+            {
+              "w": "tumba",
+              "g": "tomb"
+            },
+            {
+              "w": "silencio",
+              "g": "silence"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, a massive figure with a white beard and lightning-bolt eyes, stands at the edge of the shadows, watching Prometeo.",
+      "en": "Zeus is watching. He is angry.",
+      "levels": {
+        "facil": {
+          "es": "Zeus está mirando. Él es un dios enojado.",
+          "words": [
+            {
+              "w": "mirando",
+              "g": "watching"
+            },
+            {
+              "w": "dios",
+              "g": "god"
+            },
+            {
+              "w": "enojado",
+              "g": "angry"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus está observando. Su mirada es de pura furia.",
+          "words": [
+            {
+              "w": "observando",
+              "g": "observing"
+            },
+            {
+              "w": "mirada",
+              "g": "gaze"
+            },
+            {
+              "w": "furia",
+              "g": "fury"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus está al acecho. Su presencia es una tempestad.",
+          "words": [
+            {
+              "w": "acecho",
+              "g": "lurk"
+            },
+            {
+              "w": "presencia",
+              "g": "presence"
+            },
+            {
+              "w": "tempestad",
+              "g": "storm"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometeo, a titan with long, messy dark hair, runs through the marble halls of Olympus, clutching the glowing stalk.",
+      "en": "Prometheus is running. The path is long.",
+      "levels": {
+        "facil": {
+          "es": "Prometeo está corriendo. El camino es largo.",
+          "words": [
+            {
+              "w": "corriendo",
+              "g": "running"
+            },
+            {
+              "w": "camino",
+              "g": "path"
+            },
+            {
+              "w": "largo",
+              "g": "long"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Prometeo está huyendo. El pasillo es interminable.",
+          "words": [
+            {
+              "w": "huyendo",
+              "g": "fleeing"
+            },
+            {
+              "w": "pasillo",
+              "g": "hallway"
+            },
+            {
+              "w": "interminable",
+              "g": "endless"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Prometeo está escapando. La huida es desesperada.",
+          "words": [
+            {
+              "w": "escapando",
+              "g": "escaping"
+            },
+            {
+              "w": "huida",
+              "g": "escape"
+            },
+            {
+              "w": "desesperada",
+              "g": "desperate"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometeo, a tall titan with lean, muscular build and messy dark hair, runs through the hall clutching a glowing fennel stalk. He is terrified.",
+      "en": "Prometheus is afraid. The stolen fire is in his hands.",
+      "levels": {
+        "facil": {
+          "es": "Prometeo está asustado. El fuego robado está en sus manos.",
+          "words": [
+            {
+              "w": "asustado",
+              "g": "scared"
+            },
+            {
+              "w": "robado",
+              "g": "stolen"
+            },
+            {
+              "w": "manos",
+              "g": "hands"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Prometeo está aterrorizado. El fuego que él ha robado está en sus manos.",
+          "words": [
+            {
+              "w": "aterrorizado",
+              "g": "terrified"
+            },
+            {
+              "w": "robado",
+              "g": "stolen"
+            },
+            {
+              "w": "manos",
+              "g": "hands"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Prometeo está presa del pánico. El fuego sagrado, ahora un botín prohibido, está en sus manos.",
+          "words": [
+            {
+              "w": "presa",
+              "g": "victim/prey"
+            },
+            {
+              "w": "botín",
+              "g": "loot"
+            },
+            {
+              "w": "prohibido",
+              "g": "forbidden"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, a powerful god with a thick white beard and regal robes, stands at the edge of Olympus, looking down at the earth.",
+      "en": "Zeus is at the edge of the palace. He is the master of the sky.",
+      "levels": {
+        "facil": {
+          "es": "Zeus está en el borde. Él es el señor del cielo.",
+          "words": [
+            {
+              "w": "borde",
+              "g": "edge"
+            },
+            {
+              "w": "señor",
+              "g": "master"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus está en el borde del palacio. Él es el poderoso señor del cielo.",
+          "words": [
+            {
+              "w": "borde",
+              "g": "edge"
+            },
+            {
+              "w": "poderoso",
+              "g": "powerful"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus está en el umbral del palacio. Él es el soberano absoluto del firmamento.",
+          "words": [
+            {
+              "w": "umbral",
+              "g": "threshold"
+            },
+            {
+              "w": "soberano",
+              "g": "sovereign"
+            },
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus raises his hand; a bolt of lightning begins to form.",
+      "en": "The lightning is ready. The god is angry.",
+      "levels": {
+        "facil": {
+          "es": "El rayo está listo. El dios está enojado.",
+          "words": [
+            {
+              "w": "rayo",
+              "g": "lightning"
+            },
+            {
+              "w": "listo",
+              "g": "ready"
+            },
+            {
+              "w": "enojado",
+              "g": "angry"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El rayo está preparado. El dios está muy furioso ahora.",
+          "words": [
+            {
+              "w": "preparado",
+              "g": "prepared"
+            },
+            {
+              "w": "furioso",
+              "g": "furious"
+            },
+            {
+              "w": "ahora",
+              "g": "now"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El rayo está presto para ser lanzado. El dios está sumido en una furia ciega.",
+          "words": [
+            {
+              "w": "presto",
+              "g": "ready/quick"
+            },
+            {
+              "w": "sumido",
+              "g": "submerged"
+            },
+            {
+              "w": "ciega",
+              "g": "blind"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometeo jumps from a ledge, escaping into the clouds.",
+      "en": "Prometheus is fast. He is brave.",
+      "levels": {
+        "facil": {
+          "es": "Prometeo es rápido. Él es valiente.",
+          "words": [
+            {
+              "w": "rápido",
+              "g": "fast"
+            },
+            {
+              "w": "valiente",
+              "g": "brave"
+            },
+            {
+              "w": "es",
+              "g": "is (trait)"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Prometeo es muy rápido. Él es un titán valiente.",
+          "words": [
+            {
+              "w": "rápido",
+              "g": "fast"
+            },
+            {
+              "w": "valiente",
+              "g": "brave"
+            },
+            {
+              "w": "titán",
+              "g": "titan"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Prometeo es veloz en su huida. Él es audaz ante el peligro inminente.",
+          "words": [
+            {
+              "w": "veloz",
+              "g": "swift"
+            },
+            {
+              "w": "audaz",
+              "g": "bold"
+            },
+            {
+              "w": "inminente",
+              "g": "imminent"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A massive shadow of Zeus looms over the path ahead of Prometeo.",
+      "en": "The path is dangerous. The shadow is big.",
+      "levels": {
+        "facil": {
+          "es": "El camino es peligroso. La sombra es grande.",
+          "words": [
+            {
+              "w": "camino",
+              "g": "path"
+            },
+            {
+              "w": "peligroso",
+              "g": "dangerous"
+            },
+            {
+              "w": "sombra",
+              "g": "shadow"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El camino es muy peligroso. La sombra del dios es enorme.",
+          "words": [
+            {
+              "w": "camino",
+              "g": "path"
+            },
+            {
+              "w": "peligroso",
+              "g": "dangerous"
+            },
+            {
+              "w": "enorme",
+              "g": "enormous"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El camino es traicionero. La sombra del tirano es inmensa sobre él.",
+          "words": [
+            {
+              "w": "traicionero",
+              "g": "treacherous"
+            },
+            {
+              "w": "tirano",
+              "g": "tyrant"
+            },
+            {
+              "w": "inmensa",
+              "g": "immense"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometheus, a titan with rugged features and wild hair, holds a glowing fennel stalk containing the spark of heaven, running desperately toward the mortal world.",
+      "en": "Prometheus reaches the mortals, his hands trembling as he offers the stolen ember.",
+      "levels": {
+        "facil": {
+          "es": "Prometeo llega con los humanos. El fuego es pequeño.",
+          "words": [
+            {
+              "w": "llega",
+              "g": "arrives"
+            },
+            {
+              "w": "pequeño",
+              "g": "small"
+            },
+            {
+              "w": "humanos",
+              "g": "humans"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Prometeo está entre los hombres. El fuego es un regalo valioso.",
+          "words": [
+            {
+              "w": "entre",
+              "g": "among"
+            },
+            {
+              "w": "regalo",
+              "g": "gift"
+            },
+            {
+              "w": "valioso",
+              "g": "valuable"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Prometeo se encuentra ante los mortales, ofreciendo el fuego sagrado.",
+          "words": [
+            {
+              "w": "mortales",
+              "g": "mortals"
+            },
+            {
+              "w": "ofreciendo",
+              "g": "offering"
+            },
+            {
+              "w": "sagrado",
+              "g": "sacred"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, a towering figure with a white beard and thunderbolt in hand, descends from the clouds, his eyes glowing with divine wrath.",
+      "en": "Zeus is furious. His anger is cold and absolute.",
+      "levels": {
+        "facil": {
+          "es": "Zeus está muy enojado. Él es un dios terrible.",
+          "words": [
+            {
+              "w": "enojado",
+              "g": "angry"
+            },
+            {
+              "w": "dios",
+              "g": "god"
+            },
+            {
+              "w": "terrible",
+              "g": "terrible"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus está furioso. Su castigo es inevitable ahora.",
+          "words": [
+            {
+              "w": "furioso",
+              "g": "furious"
+            },
+            {
+              "w": "castigo",
+              "g": "punishment"
+            },
+            {
+              "w": "inevitable",
+              "g": "inevitable"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus desciende con furia divina; su ira es una sentencia absoluta.",
+          "words": [
+            {
+              "w": "desciende",
+              "g": "descends"
+            },
+            {
+              "w": "sentencia",
+              "g": "sentence"
+            },
+            {
+              "w": "absoluta",
+              "g": "absolute"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Prometheus is chained to a jagged, desolate mountain peak by Zeus’s invisible, glowing shackles.",
+      "en": "The chains are heavy and cold. Prometheus is trapped forever.",
+      "levels": {
+        "facil": {
+          "es": "Las cadenas son pesadas. Prometeo está atrapado.",
+          "words": [
+            {
+              "w": "cadenas",
+              "g": "chains"
+            },
+            {
+              "w": "pesadas",
+              "g": "heavy"
+            },
+            {
+              "w": "atrapado",
+              "g": "trapped"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Las cadenas son de hierro eterno. Prometeo está prisionero en la roca.",
+          "words": [
+            {
+              "w": "hierro",
+              "g": "iron"
+            },
+            {
+              "w": "eterno",
+              "g": "eternal"
+            },
+            {
+              "w": "prisionero",
+              "g": "prisoner"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Unas cadenas forjadas en el abismo aprisionan al titán contra la piedra.",
+          "words": [
+            {
+              "w": "forjadas",
+              "g": "forged"
+            },
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "aprisionan",
+              "g": "imprison"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. An eagle, its wings spanning the sky, descends toward the mountain peak where Prometheus is chained.",
+      "en": "The eagle is ready. The sky is dark and silent.",
+      "levels": {
+        "facil": {
+          "es": "El águila está lista. El cielo está oscuro.",
+          "words": [
+            {
+              "w": "águila",
+              "g": "eagle"
+            },
+            {
+              "w": "lista",
+              "g": "ready"
+            },
+            {
+              "w": "oscuro",
+              "g": "dark"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Un águila gigante está sobre la montaña. El ambiente es tenso.",
+          "words": [
+            {
+              "w": "gigante",
+              "g": "giant"
+            },
+            {
+              "w": "montaña",
+              "g": "mountain"
+            },
+            {
+              "w": "tenso",
+              "g": "tense"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Un águila de proporciones titánicas planea sobre la cumbre desolada.",
+          "words": [
+            {
+              "w": "proporciones",
+              "g": "proportions"
+            },
+            {
+              "w": "planea",
+              "g": "soars"
+            },
+            {
+              "w": "desolada",
+              "g": "desolate"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Extreme close-up on Prometheus’s face, showing stoic endurance as the shadow of the eagle falls over him.",
+      "en": "Prometheus is brave. His sacrifice is just beginning.",
+      "levels": {
+        "facil": {
+          "es": "Prometeo es valiente. Su dolor es grande.",
+          "words": [
+            {
+              "w": "valiente",
+              "g": "brave"
+            },
+            {
+              "w": "dolor",
+              "g": "pain"
+            },
+            {
+              "w": "grande",
+              "g": "great"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Prometeo es fuerte. Su sacrificio es eterno por los humanos.",
+          "words": [
+            {
+              "w": "fuerte",
+              "g": "strong"
+            },
+            {
+              "w": "sacrificio",
+              "g": "sacrifice"
+            },
+            {
+              "w": "eterno",
+              "g": "eternal"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Prometeo es inquebrantable; su sacrificio marca el destino de la humanidad.",
+          "words": [
+            {
+              "w": "inquebrantable",
+              "g": "unbreakable"
+            },
+            {
+              "w": "marca",
+              "g": "marks"
+            },
+            {
+              "w": "destino",
+              "g": "destiny"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "El águila desciende, y el grito de Prometeo resuena en toda la eternidad. ¿Podrá la humanidad sobrevivir con el fuego que les costó un titán?",
+  "closingBeat": "El precio de la luz es, a veces, una oscuridad eterna."
+}

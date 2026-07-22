@@ -1,0 +1,1098 @@
+{
+  "series": "MITOS",
+  "chapter": 18,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "Las Sirenas y el Estrecho",
+  "level": "B1",
+  "grammarFocus": "imperativo (introducción)",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a rugged warrior with a short beard and a silver-streaked tunic, grips the wooden tiller of his ship. The sea is unnaturally still.",
+      "en": "The sea does not forget, but it demands a price for survival.",
+      "levels": {
+        "facil": {
+          "es": "El mar no olvida. ¡Escucha el peligro!",
+          "words": [
+            {
+              "w": "mar",
+              "g": "sea"
+            },
+            {
+              "w": "olvida",
+              "g": "forgets"
+            },
+            {
+              "w": "peligro",
+              "g": "danger"
+            },
+            {
+              "w": "escucha",
+              "g": "listen"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El mar no olvida la ofensa. ¡Prepara el barco para el peligro!",
+          "words": [
+            {
+              "w": "ofensa",
+              "g": "offense"
+            },
+            {
+              "w": "prepara",
+              "g": "prepare"
+            },
+            {
+              "w": "barco",
+              "g": "ship"
+            },
+            {
+              "w": "peligro",
+              "g": "danger"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El mar no olvida la afrenta recibida. ¡Prepara la nave, pues el destino reclama su tributo!",
+          "words": [
+            {
+              "w": "afrenta",
+              "g": "insult"
+            },
+            {
+              "w": "nave",
+              "g": "ship"
+            },
+            {
+              "w": "reclama",
+              "g": "claims"
+            },
+            {
+              "w": "tributo",
+              "g": "tribute"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises stands before his crew, pointing toward the horizon where jagged cliffs loom.",
+      "en": "Listen to me, men. We approach the strait of death.",
+      "levels": {
+        "facil": {
+          "es": "¡Escúchame, hombres! Mira las rocas grandes.",
+          "words": [
+            {
+              "w": "escúchame",
+              "g": "listen to me"
+            },
+            {
+              "w": "hombres",
+              "g": "men"
+            },
+            {
+              "w": "mira",
+              "g": "look at"
+            },
+            {
+              "w": "rocas",
+              "g": "rocks"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "¡Escuchadme bien! Mirad esas rocas peligrosas en el horizonte.",
+          "words": [
+            {
+              "w": "escuchadme",
+              "g": "listen to me (pl)"
+            },
+            {
+              "w": "mirad",
+              "g": "look at (pl)"
+            },
+            {
+              "w": "rocas",
+              "g": "rocks"
+            },
+            {
+              "w": "peligrosas",
+              "g": "dangerous"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "¡Escuchadme, guerreros! Observad el estrecho; allí aguarda nuestra perdición.",
+          "words": [
+            {
+              "w": "guerreros",
+              "g": "warriors"
+            },
+            {
+              "w": "observad",
+              "g": "observe"
+            },
+            {
+              "w": "estrecho",
+              "g": "strait"
+            },
+            {
+              "w": "perdición",
+              "g": "doom"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises holds thick beeswax in his hands, gesturing for his crew to take it.",
+      "en": "Take the wax and cover your ears immediately.",
+      "levels": {
+        "facil": {
+          "es": "¡Toma la cera! ¡Cubre tus oídos ahora!",
+          "words": [
+            {
+              "w": "toma",
+              "g": "take"
+            },
+            {
+              "w": "cera",
+              "g": "wax"
+            },
+            {
+              "w": "cubre",
+              "g": "cover"
+            },
+            {
+              "w": "oídos",
+              "g": "ears"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "¡Tomad la cera! ¡Cubrid vuestros oídos sin dudar!",
+          "words": [
+            {
+              "w": "tomad",
+              "g": "take (pl)"
+            },
+            {
+              "w": "cubrid",
+              "g": "cover (pl)"
+            },
+            {
+              "w": "oídos",
+              "g": "ears"
+            },
+            {
+              "w": "dudar",
+              "g": "hesitate"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "¡Tomad la cera y cubrid vuestros oídos de inmediato!",
+          "words": [
+            {
+              "w": "tomad",
+              "g": "take (pl)"
+            },
+            {
+              "w": "cubrid",
+              "g": "cover (pl)"
+            },
+            {
+              "w": "oídos",
+              "g": "ears"
+            },
+            {
+              "w": "inmediato",
+              "g": "immediately"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises gestures toward the mast, signaling his men to tie him to it.",
+      "en": "Tie me to the mast and do not let me go.",
+      "levels": {
+        "facil": {
+          "es": "¡Ata mi cuerpo al mástil! ¡No me dejes libre!",
+          "words": [
+            {
+              "w": "ata",
+              "g": "tie"
+            },
+            {
+              "w": "cuerpo",
+              "g": "body"
+            },
+            {
+              "w": "mástil",
+              "g": "mast"
+            },
+            {
+              "w": "libre",
+              "g": "free"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "¡Atadme al mástil! ¡No me soltéis bajo ninguna circunstancia!",
+          "words": [
+            {
+              "w": "atadme",
+              "g": "tie me (pl)"
+            },
+            {
+              "w": "mástil",
+              "g": "mast"
+            },
+            {
+              "w": "soltéis",
+              "g": "release (pl)"
+            },
+            {
+              "w": "circunstancia",
+              "g": "circumstance"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "¡Atadme con fuerza al mástil y no permitáis que escape de mis ataduras!",
+          "words": [
+            {
+              "w": "atadme",
+              "g": "tie me (pl)"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            },
+            {
+              "w": "permitáis",
+              "g": "allow (pl)"
+            },
+            {
+              "w": "ataduras",
+              "g": "bindings"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The ship enters a misty area; faint, ethereal silhouettes of creatures appear on the rocks.",
+      "en": "The singing begins. Sail forward, do not look back.",
+      "levels": {
+        "facil": {
+          "es": "La canción empieza. ¡Navega adelante! ¡No mires atrás!",
+          "words": [
+            {
+              "w": "canción",
+              "g": "song"
+            },
+            {
+              "w": "empieza",
+              "g": "begins"
+            },
+            {
+              "w": "navega",
+              "g": "sail"
+            },
+            {
+              "w": "atrás",
+              "g": "back"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El canto ha comenzado. ¡Navegad adelante! ¡No miréis atrás!",
+          "words": [
+            {
+              "w": "canto",
+              "g": "singing"
+            },
+            {
+              "w": "comenzado",
+              "g": "started"
+            },
+            {
+              "w": "navegad",
+              "g": "sail (pl)"
+            },
+            {
+              "w": "miréis",
+              "g": "look (pl)"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El canto seductor inunda el aire. ¡Navegad sin pausa y no miréis hacia las rocas!",
+          "words": [
+            {
+              "w": "seductor",
+              "g": "seductive"
+            },
+            {
+              "w": "inunda",
+              "g": "floods"
+            },
+            {
+              "w": "pausa",
+              "g": "pause"
+            },
+            {
+              "w": "rocas",
+              "g": "rocks"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulysses, a muscular man with a short dark beard and weathered skin, is tied tightly to the main mast of the ship with thick hemp ropes, his face contorted in a mix of agony and ecstasy.",
+      "en": "The music pierces the air; it sounds like honey and death.",
+      "levels": {
+        "facil": {
+          "es": "Escucha la música. Es dulce y peligrosa.",
+          "words": [
+            {
+              "w": "Escucha",
+              "g": "Listen"
+            },
+            {
+              "w": "música",
+              "g": "music"
+            },
+            {
+              "w": "dulce",
+              "g": "sweet"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La música atraviesa el aire. Suena a miel y a muerte.",
+          "words": [
+            {
+              "w": "atraviesa",
+              "g": "pierces"
+            },
+            {
+              "w": "aire",
+              "g": "air"
+            },
+            {
+              "w": "muerte",
+              "g": "death"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La melodía perfora el viento; es un canto de miel y fatalidad.",
+          "words": [
+            {
+              "w": "perfora",
+              "g": "pierces"
+            },
+            {
+              "w": "viento",
+              "g": "wind"
+            },
+            {
+              "w": "fatalidad",
+              "g": "fatality"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Three Sirens, creatures with beautiful female faces and bird-like bodies, perch on jagged, blood-stained rocks, their mouths open in hypnotic song.",
+      "en": "Look at the Sirens. Their faces are human, their souls are cruel.",
+      "levels": {
+        "facil": {
+          "es": "Mira a las sirenas. Tienen caras bellas.",
+          "words": [
+            {
+              "w": "Mira",
+              "g": "Look"
+            },
+            {
+              "w": "sirenas",
+              "g": "sirens"
+            },
+            {
+              "w": "caras",
+              "g": "faces"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Observa a las sirenas. Sus rostros son humanos, pero sus almas crueles.",
+          "words": [
+            {
+              "w": "Observa",
+              "g": "Observe"
+            },
+            {
+              "w": "rostros",
+              "g": "faces"
+            },
+            {
+              "w": "almas",
+              "g": "souls"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Contempla a las sirenas; poseen rostros de mujer, mas esconden una crueldad infinita.",
+          "words": [
+            {
+              "w": "Contempla",
+              "g": "Behold"
+            },
+            {
+              "w": "poseen",
+              "g": "possess"
+            },
+            {
+              "w": "crueldad",
+              "g": "cruelty"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulysses, tied to the mast, struggles against the ropes, his eyes rolling back as the song takes control of his mind.",
+      "en": "Free me! Untie the ropes now!",
+      "levels": {
+        "facil": {
+          "es": "¡Suéltame! ¡Quita las cuerdas ahora!",
+          "words": [
+            {
+              "w": "Suéltame",
+              "g": "Release me"
+            },
+            {
+              "w": "cuerdas",
+              "g": "ropes"
+            },
+            {
+              "w": "ahora",
+              "g": "now"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "¡Libérame! ¡Desata los nudos inmediatamente!",
+          "words": [
+            {
+              "w": "Libérame",
+              "g": "Free me"
+            },
+            {
+              "w": "Desata",
+              "g": "Untie"
+            },
+            {
+              "w": "nudos",
+              "g": "knots"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "¡Desátame! ¡Rompe estas ataduras de una vez!",
+          "words": [
+            {
+              "w": "Desátame",
+              "g": "Untie me"
+            },
+            {
+              "w": "Rompe",
+              "g": "Break"
+            },
+            {
+              "w": "ataduras",
+              "g": "bonds"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The crew of the ship, their ears covered in thick wax, row rhythmically and ignore the desperate pleas of Ulysses.",
+      "en": "Ignore his voice. Keep rowing, keep rowing.",
+      "levels": {
+        "facil": {
+          "es": "Ignora su voz. Rema, rema siempre.",
+          "words": [
+            {
+              "w": "Ignora",
+              "g": "Ignore"
+            },
+            {
+              "w": "voz",
+              "g": "voice"
+            },
+            {
+              "w": "Rema",
+              "g": "Row"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ignorad sus gritos. Seguid remando sin parar.",
+          "words": [
+            {
+              "w": "Ignorad",
+              "g": "Ignore (pl.)"
+            },
+            {
+              "w": "gritos",
+              "g": "shouts"
+            },
+            {
+              "w": "remando",
+              "g": "rowing"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Desoíd sus súplicas. Mantened el ritmo, continuad el avance.",
+          "words": [
+            {
+              "w": "Desoíd",
+              "g": "Disregard"
+            },
+            {
+              "w": "súplicas",
+              "g": "pleas"
+            },
+            {
+              "w": "avance",
+              "g": "advance"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A massive whirlpool begins to form near the rocks, and the shadowy head of the monster Scylla rises from the water on the opposite side.",
+      "en": "Look ahead! The sea opens its jaws.",
+      "levels": {
+        "facil": {
+          "es": "¡Mira adelante! El mar es un monstruo.",
+          "words": [
+            {
+              "w": "Mira",
+              "g": "Look"
+            },
+            {
+              "w": "adelante",
+              "g": "ahead"
+            },
+            {
+              "w": "monstruo",
+              "g": "monster"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "¡Mirad al frente! El océano abre sus fauces.",
+          "words": [
+            {
+              "w": "Mirad",
+              "g": "Look (pl.)"
+            },
+            {
+              "w": "océano",
+              "g": "ocean"
+            },
+            {
+              "w": "fauces",
+              "g": "jaws"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "¡Observad el horizonte! El abismo reclama su tributo.",
+          "words": [
+            {
+              "w": "Observad",
+              "g": "Observe (pl.)"
+            },
+            {
+              "w": "horizonte",
+              "g": "horizon"
+            },
+            {
+              "w": "tributo",
+              "g": "tribute"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a rugged man with a short beard and a scarred face, is bound tightly to the mast, his eyes wide with madness as he stares toward the rocks.",
+      "en": "Look at the rocks! Listen to their voices!",
+      "levels": {
+        "facil": {
+          "es": "¡Mira las rocas! ¡Escucha sus voces!",
+          "words": [
+            "Mira {look}",
+            "Escucha {listen}",
+            "rocas {rocks}"
+          ]
+        },
+        "intermedio": {
+          "es": "¡Observa las rocas! ¡Atiende a sus cantos!",
+          "words": [
+            "Observa {observe}",
+            "Atiende {attend}",
+            "cantos {songs}"
+          ]
+        },
+        "nativo": {
+          "es": "¡Contemplad los escollos! ¡Escuchad el reclamo de sus voces!",
+          "words": [
+            "Contemplad {behold}",
+            "escollos {reefs}",
+            "reclamo {call}"
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A close-up of a Siren, a bird-woman with haunting, beautiful human features, perched upon a jagged, blood-stained cliff, singing with her mouth wide open.",
+      "en": "Sing for the hero, let him come closer.",
+      "levels": {
+        "facil": {
+          "es": "Canta para el héroe. ¡Ven aquí!",
+          "words": [
+            "Canta {sing}",
+            "héroe {hero}",
+            "Ven {come}"
+          ]
+        },
+        "intermedio": {
+          "es": "Canta para el héroe, deja que se acerque.",
+          "words": [
+            "Canta {sing}",
+            "deja {let}",
+            "acerque {approach}"
+          ]
+        },
+        "nativo": {
+          "es": "Entonad para el héroe; atraedlo hacia la perdición.",
+          "words": [
+            "Entonad {intone}",
+            "atraedlo {lure him}",
+            "perdición {doom}"
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The rowers, their ears covered in thick wax, strain against their oars, their faces contorted with intense physical effort.",
+      "en": "Do not stop! Row faster, do not look back!",
+      "levels": {
+        "facil": {
+          "es": "¡No pares! ¡Rema rápido, no mires atrás!",
+          "words": [
+            "pares {stop}",
+            "Rema {row}",
+            "rápido {fast}"
+          ]
+        },
+        "intermedio": {
+          "es": "¡No os detengáis! ¡Remad con fuerza, no miréis atrás!",
+          "words": [
+            "detengáis {stop}",
+            "Remad {row}",
+            "fuerza {strength}"
+          ]
+        },
+        "nativo": {
+          "es": "¡No ceséis en el esfuerzo! ¡Remad con furia, no volváis la vista!",
+          "words": [
+            "ceséis {cease}",
+            "esfuerzo {effort}",
+            "furia {fury}"
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. To the starboard side, the massive, many-headed monster Scylla rises from the water, her long necks snaking through the air like eels.",
+      "en": "Beware the beast! Watch the right side!",
+      "levels": {
+        "facil": {
+          "es": "¡Cuidado con la bestia! ¡Mira a la derecha!",
+          "words": [
+            "Cuidado {care/beware}",
+            "bestia {beast}",
+            "derecha {right}"
+          ]
+        },
+        "intermedio": {
+          "es": "¡Atención a la bestia! ¡Observad el lado derecho!",
+          "words": [
+            "Atención {attention}",
+            "Observad {observe}",
+            "derecho {right}"
+          ]
+        },
+        "nativo": {
+          "es": "¡Guardaos de la hidra! ¡Fijad la vista a estribor!",
+          "words": [
+            "Guardaos {beware}",
+            "hidra {hydra}",
+            "estribor {starboard}"
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises strains against his ropes, his knuckles white, as he catches a glimpse of the churning whirlpool Charybdis on the left.",
+      "en": "Turn the boat! Avoid the whirlpool on the left!",
+      "levels": {
+        "facil": {
+          "es": "¡Gira el barco! ¡Evita el remolino a la izquierda!",
+          "words": [
+            "Gira {turn}",
+            "barco {boat}",
+            "evita {avoid}"
+          ]
+        },
+        "intermedio": {
+          "es": "¡Virad el navío! ¡Evitad el abismo a la izquierda!",
+          "words": [
+            "Virad {turn}",
+            "navío {ship}",
+            "abismo {abyss}"
+          ]
+        },
+        "nativo": {
+          "es": "¡Maniobrad la nave! ¡Esquivad la vorágine de babor!",
+          "words": [
+            "Maniobrad {maneuver}",
+            "Esquivad {dodge}",
+            "vorágine {whirlpool}"
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Odysseus, a muscular man with a short dark beard and weathered face, grips the mast tightly, his knuckles white, eyes wide with terror as the ship tilts.",
+      "en": "Odysseus grips the mast tight.",
+      "levels": {
+        "facil": {
+          "es": "¡Sujeta el mástil, Ulises!",
+          "words": [
+            {
+              "w": "Sujeta",
+              "g": "hold"
+            },
+            {
+              "w": "mástil",
+              "g": "mast"
+            },
+            {
+              "w": "fuerte",
+              "g": "tight"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "¡Aferraos al mástil con fuerza!",
+          "words": [
+            {
+              "w": "Aferraos",
+              "g": "cling to"
+            },
+            {
+              "w": "mástil",
+              "g": "mast"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "¡Abrazad el mástil, que el destino no os suelte!",
+          "words": [
+            {
+              "w": "Abrazad",
+              "g": "embrace"
+            },
+            {
+              "w": "mástil",
+              "g": "mast"
+            },
+            {
+              "w": "destino",
+              "g": "fate"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Scylla, a multi-headed serpentine horror with rows of jagged teeth, looms out of the mist, snatching a sailor from the deck.",
+      "en": "Scylla strikes from the mist.",
+      "levels": {
+        "facil": {
+          "es": "¡Mirad a la derecha! ¡Cuidado!",
+          "words": [
+            {
+              "w": "Mirad",
+              "g": "look"
+            },
+            {
+              "w": "derecha",
+              "g": "right"
+            },
+            {
+              "w": "cuidado",
+              "g": "careful"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "¡Observad la bestia! ¡Esquivad sus fauces!",
+          "words": [
+            {
+              "w": "Observad",
+              "g": "observe"
+            },
+            {
+              "w": "bestia",
+              "g": "beast"
+            },
+            {
+              "w": "fauces",
+              "g": "jaws"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "¡Atended al horror que emerge de las sombras!",
+          "words": [
+            {
+              "w": "Atended",
+              "g": "heed"
+            },
+            {
+              "w": "horror",
+              "g": "horror"
+            },
+            {
+              "w": "sombras",
+              "g": "shadows"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Charybdis, a massive whirlpool in the center of the sea, churns violently, sucking in debris and seawater.",
+      "en": "Charybdis opens her black throat.",
+      "levels": {
+        "facil": {
+          "es": "¡Apartad el barco del agua!",
+          "words": [
+            {
+              "w": "Apartad",
+              "g": "move away"
+            },
+            {
+              "w": "barco",
+              "g": "ship"
+            },
+            {
+              "w": "agua",
+              "g": "water"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "¡Evitad el abismo que nos devora!",
+          "words": [
+            {
+              "w": "Evitad",
+              "g": "avoid"
+            },
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "devora",
+              "g": "devours"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "¡Huid del remolino que traga la vida!",
+          "words": [
+            {
+              "w": "Huid",
+              "g": "flee"
+            },
+            {
+              "w": "remolino",
+              "g": "whirlpool"
+            },
+            {
+              "w": "traga",
+              "g": "swallows"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Odysseus, face twisted in anguish, screams a command toward his rowers amidst the chaos.",
+      "en": "Odysseus screams through the storm.",
+      "levels": {
+        "facil": {
+          "es": "¡Remad, remad más rápido!",
+          "words": [
+            {
+              "w": "Remad",
+              "g": "row"
+            },
+            {
+              "w": "rápido",
+              "g": "fast"
+            },
+            {
+              "w": "más",
+              "g": "more"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "¡Buscad la salida, no paréis ahora!",
+          "words": [
+            {
+              "w": "Buscad",
+              "g": "look for"
+            },
+            {
+              "w": "salida",
+              "g": "exit"
+            },
+            {
+              "w": "paréis",
+              "g": "stop"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "¡Impulsad los remos con furia ciega!",
+          "words": [
+            {
+              "w": "Impulsad",
+              "g": "propel"
+            },
+            {
+              "w": "remos",
+              "g": "oars"
+            },
+            {
+              "w": "furia",
+              "g": "fury"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The ship barely breaks through the narrow gap between the monster and the whirlpool, leaving a trail of splintered wood behind.",
+      "en": "The sea closes in behind them.",
+      "levels": {
+        "facil": {
+          "es": "¡Salid pronto de aquí!",
+          "words": [
+            {
+              "w": "Salid",
+              "g": "exit"
+            },
+            {
+              "w": "pronto",
+              "g": "soon"
+            },
+            {
+              "w": "aquí",
+              "g": "here"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "¡Cruzad el estrecho, no miréis atrás!",
+          "words": [
+            {
+              "w": "Cruzad",
+              "g": "cross"
+            },
+            {
+              "w": "estrecho",
+              "g": "strait"
+            },
+            {
+              "w": "atrás",
+              "g": "back"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "¡Escapad del abrazo de la muerte!",
+          "words": [
+            {
+              "w": "Escapad",
+              "g": "escape"
+            },
+            {
+              "w": "abrazo",
+              "g": "embrace"
+            },
+            {
+              "w": "muerte",
+              "g": "death"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "El navío ha escapado, pero el silencio que sigue a la tormenta es más aterrador que el rugido de los monstruos. ¿Adónde los llevarán las corrientes ahora?",
+  "closingBeat": "La supervivencia es solo el preludio de una tragedia mayor."
+}

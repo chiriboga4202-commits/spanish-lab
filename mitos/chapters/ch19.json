@@ -1,0 +1,1083 @@
+{
+  "series": "MITOS",
+  "chapter": 19,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "El Regreso de Ulises",
+  "level": "B1",
+  "grammarFocus": "pretérito/imperfecto mixto",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Ulises, a scarred man with a graying beard and weary eyes, wearing tattered rags and a hooded cloak, stands at the edge of his kingdom's shore.",
+      "en": "The tragedy was but a shadow; now, the long-awaited homecoming begins in silence.",
+      "levels": {
+        "facil": {
+          "es": "La tragedia terminó. Ulises caminaba hacia su casa en silencio.",
+          "words": [
+            {
+              "w": "terminó",
+              "g": "ended"
+            },
+            {
+              "w": "caminaba",
+              "g": "was walking"
+            },
+            {
+              "w": "silencio",
+              "g": "silence"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La tragedia era solo un recuerdo. Ulises caminaba hacia su hogar en absoluto silencio.",
+          "words": [
+            {
+              "w": "era",
+              "g": "was"
+            },
+            {
+              "w": "recuerdo",
+              "g": "memory"
+            },
+            {
+              "w": "hogar",
+              "g": "home"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La tragedia no era más que un preludio. Ulises pisaba su tierra, envuelto en un silencio absoluto.",
+          "words": [
+            {
+              "w": "preludio",
+              "g": "prelude"
+            },
+            {
+              "w": "pisaba",
+              "g": "was stepping on"
+            },
+            {
+              "w": "envuelto",
+              "g": "wrapped"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Ulises, a scarred man with a graying beard and weary eyes, wearing tattered rags and a hooded cloak, approaches the gate of his palace, looking at the stone walls.",
+      "en": "He stood before the walls he once defended, but now he was a stranger in his own land.",
+      "levels": {
+        "facil": {
+          "es": "Él estaba frente a los muros. Nadie conocía su cara.",
+          "words": [
+            {
+              "w": "estaba",
+              "g": "was"
+            },
+            {
+              "w": "frente",
+              "g": "in front"
+            },
+            {
+              "w": "conocía",
+              "g": "knew"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Se detuvo ante los muros que defendía. Era un extraño en su propia tierra.",
+          "words": [
+            {
+              "w": "detuvo",
+              "g": "stopped"
+            },
+            {
+              "w": "defendía",
+              "g": "was defending"
+            },
+            {
+              "w": "extraño",
+              "g": "stranger"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Se detuvo ante los muros que antaño defendió; ahora, un extraño recorría los senderos de su reino.",
+          "words": [
+            {
+              "w": "antaño",
+              "g": "long ago"
+            },
+            {
+              "w": "defendió",
+              "g": "defended"
+            },
+            {
+              "w": "recorría",
+              "g": "was traveling"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Argos, an old, frail, flea-ridden dog, lies on a pile of dirt near the palace entrance, his eyes dim.",
+      "en": "In the dust lay Argos, the dog who had waited twenty years for his master.",
+      "levels": {
+        "facil": {
+          "es": "Argos estaba en la tierra. Él esperaba a su dueño por veinte años.",
+          "words": [
+            {
+              "w": "estaba",
+              "g": "was"
+            },
+            {
+              "w": "esperaba",
+              "g": "was waiting"
+            },
+            {
+              "w": "dueño",
+              "g": "owner"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Argos yacía sobre el polvo. Había esperado a su amo durante veinte largos años.",
+          "words": [
+            {
+              "w": "yacía",
+              "g": "was lying"
+            },
+            {
+              "w": "polvo",
+              "g": "dust"
+            },
+            {
+              "w": "amo",
+              "g": "master"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Argos agonizaba sobre el polvo; durante veinte años, el leal can esperó el regreso de su señor.",
+          "words": [
+            {
+              "w": "agonizaba",
+              "g": "was dying"
+            },
+            {
+              "w": "leal",
+              "g": "loyal"
+            },
+            {
+              "w": "regreso",
+              "g": "return"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Close-up on Argos's eyes suddenly widening, sensing a familiar presence.",
+      "en": "The dog's ears twitched; a scent from the past cut through the decay.",
+      "levels": {
+        "facil": {
+          "es": "El perro escuchó algo. Él sintió un olor conocido.",
+          "words": [
+            {
+              "w": "escuchó",
+              "g": "heard"
+            },
+            {
+              "w": "sintió",
+              "g": "felt/sensed"
+            },
+            {
+              "w": "olor",
+              "g": "scent"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Las orejas del perro se movieron. Reconocía un aroma que venía del pasado.",
+          "words": [
+            {
+              "w": "orejas",
+              "g": "ears"
+            },
+            {
+              "w": "reconocía",
+              "g": "was recognizing"
+            },
+            {
+              "w": "aroma",
+              "g": "scent"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Las orejas del can se irguieron; un aroma del pasado, que el tiempo no borraba, lo despertó.",
+          "words": [
+            {
+              "w": "irguieron",
+              "g": "pricked up"
+            },
+            {
+              "w": "borraba",
+              "g": "was erasing"
+            },
+            {
+              "w": "despertó",
+              "g": "woke up"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Ulises, a scarred man with a graying beard and weary eyes, wearing tattered rags and a hooded cloak, looks down at the dog with profound sadness.",
+      "en": "Ulises looked at the dying animal, hiding his identity behind a mask of misery.",
+      "levels": {
+        "facil": {
+          "es": "Ulises miró al perro. Él quería llorar pero no podía.",
+          "words": [
+            {
+              "w": "miró",
+              "g": "looked at"
+            },
+            {
+              "w": "quería",
+              "g": "wanted"
+            },
+            {
+              "w": "podía",
+              "g": "could"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises miraba al animal con tristeza. Ocultaba su identidad bajo ropas pobres.",
+          "words": [
+            {
+              "w": "miraba",
+              "g": "was looking"
+            },
+            {
+              "w": "tristeza",
+              "g": "sadness"
+            },
+            {
+              "w": "ocultaba",
+              "g": "was hiding"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ulises contemplaba al animal con el alma rota; ocultaba su identidad bajo un disfraz de miseria.",
+          "words": [
+            {
+              "w": "contemplaba",
+              "g": "was gazing"
+            },
+            {
+              "w": "rota",
+              "g": "broken"
+            },
+            {
+              "w": "miseria",
+              "g": "misery"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a rugged man with a scarred face, grey-streaked hair, and worn beggar's rags, kneels beside Argos, an ancient, skeletal dog covered in flies, resting in a pile of dung.",
+      "en": "Ulises wiped a tear away. He could not speak to his dog.",
+      "levels": {
+        "facil": {
+          "es": "Ulises limpió una lágrima. No podía hablar con el perro.",
+          "words": [
+            {
+              "w": "limpió",
+              "g": "cleaned/wiped"
+            },
+            {
+              "w": "lágrima",
+              "g": "tear"
+            },
+            {
+              "w": "perro",
+              "g": "dog"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises se secó una lágrima furtiva. Le prohibía el destino hablar con su fiel amigo.",
+          "words": [
+            {
+              "w": "secó",
+              "g": "dried"
+            },
+            {
+              "w": "furtiva",
+              "g": "stealthy"
+            },
+            {
+              "w": "prohibía",
+              "g": "forbade"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ulises se enjugó una lágrima, ocultando su dolor. El destino le vedaba revelar su voz al animal.",
+          "words": [
+            {
+              "w": "enjugó",
+              "g": "wiped"
+            },
+            {
+              "w": "vedaba",
+              "g": "forbade"
+            },
+            {
+              "w": "revelar",
+              "g": "reveal"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Argos lifts his head weakly, his tail thumping once against the stone floor. Ulises, the rugged man in rags, turns away to hide his face.",
+      "en": "Argos moved his tail. He recognized the hero, but he was very weak.",
+      "levels": {
+        "facil": {
+          "es": "Argos movió la cola. Reconocía al héroe, pero estaba muy débil.",
+          "words": [
+            {
+              "w": "movió",
+              "g": "moved"
+            },
+            {
+              "w": "cola",
+              "g": "tail"
+            },
+            {
+              "w": "débil",
+              "g": "weak"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Argos agitó la cola con esfuerzo. Reconocía a su amo, aunque la vejez lo consumía.",
+          "words": [
+            {
+              "w": "agitó",
+              "g": "wagged"
+            },
+            {
+              "w": "esfuerzo",
+              "g": "effort"
+            },
+            {
+              "w": "consumía",
+              "g": "was consuming"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Argos batió la cola con un último esfuerzo. Identificaba a su señor, mas la decrepitud lo postraba.",
+          "words": [
+            {
+              "w": "batió",
+              "g": "beat/wagged"
+            },
+            {
+              "w": "identificaba",
+              "g": "was identifying"
+            },
+            {
+              "w": "decrepitud",
+              "g": "decrepitude"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises enters the great hall of the palace, walking with a hunched posture. He carries the heavy, unstrung wooden bow of Eurytus on his shoulder.",
+      "en": "He walked into the palace. He carried his heavy bow on his shoulder.",
+      "levels": {
+        "facil": {
+          "es": "Él entró en el palacio. Llevaba su arco pesado en el hombro.",
+          "words": [
+            {
+              "w": "entró",
+              "g": "entered"
+            },
+            {
+              "w": "arco",
+              "g": "bow"
+            },
+            {
+              "w": "pesado",
+              "g": "heavy"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Entró en el gran salón del palacio. Cargaba sobre el hombro aquel pesado arco legendario.",
+          "words": [
+            {
+              "w": "salón",
+              "g": "hall"
+            },
+            {
+              "w": "cargaba",
+              "g": "was carrying"
+            },
+            {
+              "w": "legendario",
+              "g": "legendary"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Cruzó el umbral del palacio. Portaba sobre el hombro el arco fatal, mudo testigo de su ausencia.",
+          "words": [
+            {
+              "w": "umbral",
+              "g": "threshold"
+            },
+            {
+              "w": "portaba",
+              "g": "was carrying"
+            },
+            {
+              "w": "ausencia",
+              "g": "absence"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises looks around the hall. The suitors are feasting, laughing, and wasting the king's wealth, unaware of his presence.",
+      "en": "The suitors were eating and drinking. They did not see the king.",
+      "levels": {
+        "facil": {
+          "es": "Los pretendientes comían y bebían. No veían al rey.",
+          "words": [
+            {
+              "w": "pretendientes",
+              "g": "suitors"
+            },
+            {
+              "w": "comían",
+              "g": "were eating"
+            },
+            {
+              "w": "bebían",
+              "g": "were drinking"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los pretendientes festejaban ruidosamente. No sospechaban que el rey estaba entre ellos.",
+          "words": [
+            {
+              "w": "festejaban",
+              "g": "were feasting"
+            },
+            {
+              "w": "ruidosamente",
+              "g": "loudly"
+            },
+            {
+              "w": "sospechaban",
+              "g": "suspected"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los soberbios pretendientes banqueteaban sin freno. Ignoraban, en su ceguera, que el monarca acechaba.",
+          "words": [
+            {
+              "w": "soberbios",
+              "g": "arrogant"
+            },
+            {
+              "w": "banqueteaban",
+              "g": "were banqueting"
+            },
+            {
+              "w": "acechaba",
+              "g": "was lurking"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises touches the wood of the bow with his calloused hand, remembering the battles of Troy.",
+      "en": "His fingers touched the wood. He remembered the old war.",
+      "levels": {
+        "facil": {
+          "es": "Sus dedos tocaron la madera. Recordaba la vieja guerra.",
+          "words": [
+            {
+              "w": "dedos",
+              "g": "fingers"
+            },
+            {
+              "w": "madera",
+              "g": "wood"
+            },
+            {
+              "w": "recordaba",
+              "g": "remembered"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Sus dedos recorrieron la madera fría. Los recuerdos de la guerra volvían a su mente.",
+          "words": [
+            {
+              "w": "recorrieron",
+              "g": "ran over"
+            },
+            {
+              "w": "fría",
+              "g": "cold"
+            },
+            {
+              "w": "mente",
+              "g": "mind"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Sus dedos acariciaron la madera tensa. Los espectros de Troya asaltaban su memoria.",
+          "words": [
+            {
+              "w": "acariciaron",
+              "g": "caressed"
+            },
+            {
+              "w": "tensa",
+              "g": "taut"
+            },
+            {
+              "w": "espectros",
+              "g": "specters"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a scarred man with grey-streaked dark hair and a ragged traveler's cloak, stands near the palace wall. Old Argos, a thin, dying dog with matted fur, lies on a pile of manure, lifting his head weakly to look at the stranger.",
+      "en": "Argos, the old dog, lay in the dirt. He smelled his master after twenty years.",
+      "levels": {
+        "facil": {
+          "es": "Argos era un perro viejo. Estaba en la tierra. Olía a su dueño después de veinte años.",
+          "words": [
+            {
+              "w": "perro",
+              "g": "dog"
+            },
+            {
+              "w": "dueño",
+              "g": "owner"
+            },
+            {
+              "w": "tierra",
+              "g": "dirt"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El viejo Argos yacía sobre la basura. Reconoció el aroma de su amo tras veinte años de espera.",
+          "words": [
+            {
+              "w": "yacía",
+              "g": "was lying"
+            },
+            {
+              "w": "aroma",
+              "g": "scent"
+            },
+            {
+              "w": "espera",
+              "g": "waiting"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Argos, el can decrépito, se hallaba postrado en el estiércol. Percibió el rastro de su señor, ausente durante dos décadas.",
+          "words": [
+            {
+              "w": "decrépito",
+              "g": "decrepit"
+            },
+            {
+              "w": "postrado",
+              "g": "prostrate"
+            },
+            {
+              "w": "décadas",
+              "g": "decades"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close-up on Argos’s eyes, suddenly bright and teary. Ulises’s hand, calloused and weathered, reaches out but stops in mid-air, trembling.",
+      "en": "The dog wagged his tail weakly. Ulises hid his tears behind his cloak.",
+      "levels": {
+        "facil": {
+          "es": "El perro movía la cola. Ulises escondía sus lágrimas bajo su capa.",
+          "words": [
+            {
+              "w": "cola",
+              "g": "tail"
+            },
+            {
+              "w": "escondía",
+              "g": "was hiding"
+            },
+            {
+              "w": "lágrimas",
+              "g": "tears"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El animal movía la cola con esfuerzo. Ulises ocultaba sus lágrimas tras la vieja capa.",
+          "words": [
+            {
+              "w": "esfuerzo",
+              "g": "effort"
+            },
+            {
+              "w": "ocultaba",
+              "g": "was hiding"
+            },
+            {
+              "w": "capa",
+              "g": "cloak"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El can agitó débilmente el rabo. Ulises, conmovido, enjugó sus ojos furtivamente tras el manto.",
+          "words": [
+            {
+              "w": "agitó",
+              "g": "wagged"
+            },
+            {
+              "w": "conmovido",
+              "g": "moved"
+            },
+            {
+              "w": "furtivamente",
+              "g": "furtively"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-nostyle: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises walks toward the center of the hall. The suitors are drunk, laughing, and throwing meat bones on the floor.",
+      "en": "The suitors were laughing loudly. They drank wine and did not see the king.",
+      "levels": {
+        "facil": {
+          "es": "Los pretendientes reían mucho. Bebían vino y no veían al rey.",
+          "words": [
+            {
+              "w": "pretendientes",
+              "g": "suitors"
+            },
+            {
+              "w": "reían",
+              "g": "were laughing"
+            },
+            {
+              "w": "vino",
+              "g": "wine"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los pretendientes reían a carcajadas. Bebían el vino sin notar la presencia del rey.",
+          "words": [
+            {
+              "w": "carcajadas",
+              "g": "loud laughter"
+            },
+            {
+              "w": "notar",
+              "g": "to notice"
+            },
+            {
+              "w": "presencia",
+              "g": "presence"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los pretendientes celebraban con estruendo. Libaban vino en abundancia, ignorando la figura del monarca.",
+          "words": [
+            {
+              "w": "estruendo",
+              "g": "uproar"
+            },
+            {
+              "w": "libaban",
+              "g": "drank"
+            },
+            {
+              "w": "monarca",
+              "g": "monarch"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises approaches the great bow, which is leaning against a marble pillar. The suitors look at him with disdain.",
+      "en": "Ulises stood before the bow. The men mocked the old beggar.",
+      "levels": {
+        "facil": {
+          "es": "Ulises estaba ante el arco. Los hombres se burlaban del viejo mendigo.",
+          "words": [
+            {
+              "w": "arco",
+              "g": "bow"
+            },
+            {
+              "w": "burlaban",
+              "g": "were mocking"
+            },
+            {
+              "w": "mendigo",
+              "g": "beggar"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises se detuvo frente al arco. Los pretendientes se reían del aspecto del mendigo.",
+          "words": [
+            {
+              "w": "detuvo",
+              "g": "stopped"
+            },
+            {
+              "w": "frente",
+              "g": "in front of"
+            },
+            {
+              "w": "aspecto",
+              "g": "appearance"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ulises se plantó ante el arco. Aquellos hombres escarnecían la figura del pordiosero.",
+          "words": [
+            {
+              "w": "plantó",
+              "g": "stood"
+            },
+            {
+              "w": "escarnecían",
+              "g": "mocked"
+            },
+            {
+              "w": "pordiosero",
+              "g": "beggar"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises’s fingers touch the string of the bow. He looks intensely at the tension of the wood.",
+      "en": "He touched the string. It was familiar. He felt the war in his hands.",
+      "levels": {
+        "facil": {
+          "es": "Tocó la cuerda. Era conocida. Sentía la guerra en sus manos.",
+          "words": [
+            {
+              "w": "cuerda",
+              "g": "string"
+            },
+            {
+              "w": "conocida",
+              "g": "familiar"
+            },
+            {
+              "w": "manos",
+              "g": "hands"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Tocó la cuerda del arco. Le resultaba familiar. Sentía el peso de la guerra en sus manos.",
+          "words": [
+            {
+              "w": "resultaba",
+              "g": "seemed"
+            },
+            {
+              "w": "familiar",
+              "g": "familiar"
+            },
+            {
+              "w": "peso",
+              "g": "weight"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Palpó la cuerda tensa; le era familiar. Recordaba, a través de sus manos, el fragor de la guerra.",
+          "words": [
+            {
+              "w": "palpó",
+              "g": "touched"
+            },
+            {
+              "w": "tensa",
+              "g": "taut"
+            },
+            {
+              "w": "fragor",
+              "g": "clash/noise"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a grizzled man with a scarred face, thick grey beard, and weary eyes, stands in the center of the hall, gripping the polished wood of his massive, curved bow.",
+      "en": "He gripped the bow firmly, and the wood seemed to hum with his touch.",
+      "levels": {
+        "facil": {
+          "es": "Ulises agarró el arco. La madera vibraba en sus manos.",
+          "words": [
+            "agarró",
+            "grabbed",
+            "madera",
+            "wood",
+            "manos",
+            "hands"
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises sujetó el arco con firmeza; la madera parecía vibrar bajo sus dedos.",
+          "words": [
+            "sujetó",
+            "held",
+            "firmeza",
+            "firmness",
+            "vibrar",
+            "vibrate"
+          ]
+        },
+        "nativo": {
+          "es": "Ulises empuñó el arco con autoridad. La madera, vieja conocida, resonaba bajo el contacto de sus callos.",
+          "words": [
+            "empuñó",
+            "gripped",
+            "autoridad",
+            "authority",
+            "resonaba",
+            "resonated"
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. In a dark corner, Argos, an old, mangy dog with cloudy eyes and ragged fur, lifts his head, his ears twitching as he recognizes the scent of his master.",
+      "en": "In the shadows, the old dog Argos lifted his head and let out a soft whine.",
+      "levels": {
+        "facil": {
+          "es": "En la sombra, el perro Argos levantó la cabeza. Lloró suavemente.",
+          "words": [
+            "sombra",
+            "shadow",
+            "perro",
+            "dog",
+            "cabeza",
+            "head"
+          ]
+        },
+        "intermedio": {
+          "es": "En un rincón oscuro, el viejo Argos levantó la cabeza y emitió un gemido sutil.",
+          "words": [
+            "rincón",
+            "corner",
+            "oscuro",
+            "dark",
+            "gemido",
+            "whine"
+          ]
+        },
+        "nativo": {
+          "es": "Desde las tinieblas, Argos alzó el hocico, reconociendo el aroma de su señor tras décadas de espera.",
+          "words": [
+            "tinieblas",
+            "darkness",
+            "hocico",
+            "snout",
+            "aroma",
+            "scent"
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises, a grizzled man with a scarred face, thick grey beard, and weary eyes, pulls the string of the bow with effortless strength, ignoring the jeering suitors.",
+      "en": "Ulises pulled the string. The suitors stopped laughing, stunned by his strength.",
+      "levels": {
+        "facil": {
+          "es": "Ulises tensó la cuerda. Los hombres dejaron de reír. Estaban sorprendidos.",
+          "words": [
+            "tensó",
+            "pulled",
+            "cuerda",
+            "string",
+            "sorprendidos",
+            "surprised"
+          ]
+        },
+        "intermedio": {
+          "es": "Ulises tensó la cuerda del arco. Los pretendientes callaron, asombrados por su fuerza.",
+          "words": [
+            "tensó",
+            "pulled",
+            "pretendientes",
+            "suitors",
+            "fuerza",
+            "strength"
+          ]
+        },
+        "nativo": {
+          "es": "Ulises tensó el arco con destreza. El silencio cayó sobre los pretendientes, anonadados ante tal exhibición de vigor.",
+          "words": [
+            "destreza",
+            "skill",
+            "silencio",
+            "silence",
+            "anonadados",
+            "stunned"
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A single, gleaming bronze arrow is nocked against the string, pointing toward the line of twelve axe heads.",
+      "en": "He aimed at the targets. The air in the room grew heavy and cold.",
+      "levels": {
+        "facil": {
+          "es": "Apuntó a las hachas. El aire en la sala estaba muy frío.",
+          "words": [
+            "apuntó",
+            "aimed",
+            "hachas",
+            "axes",
+            "frío",
+            "cold"
+          ]
+        },
+        "intermedio": {
+          "es": "Apuntó hacia las hachas. El ambiente en la sala se volvió pesado y tenso.",
+          "words": [
+            "apuntó",
+            "aimed",
+            "hachas",
+            "axes",
+            "tenso",
+            "tense"
+          ]
+        },
+        "nativo": {
+          "es": "Apuntó con precisión hacia las hachas alineadas. El aire en el gran salón se tornó gélido y cargado de presagios.",
+          "words": [
+            "precisión",
+            "precision",
+            "alineadas",
+            "aligned",
+            "presagios",
+            "omens"
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Ulises releases the string; a blur of movement captures the arrow mid-flight, while Argos watches, his tail wagging for the final time.",
+      "en": "The arrow flew. Argos closed his eyes, finally at peace.",
+      "levels": {
+        "facil": {
+          "es": "La flecha voló. Argos cerró los ojos. Por fin estaba en paz.",
+          "words": [
+            "flecha",
+            "arrow",
+            "voló",
+            "flew",
+            "paz",
+            "peace"
+          ]
+        },
+        "intermedio": {
+          "es": "La flecha salió disparada. Argos cerró los ojos, encontrando la paz al fin.",
+          "words": [
+            "disparada",
+            "fired",
+            "cerró",
+            "closed",
+            "paz",
+            "peace"
+          ]
+        },
+        "nativo": {
+          "es": "La saeta surcó el aire con un silbido. Argos cerró los ojos, exhalando su último aliento, finalmente en paz.",
+          "words": [
+            "saeta",
+            "arrow",
+            "surcó",
+            "traversed",
+            "aliento",
+            "breath"
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "La flecha atraviesa el primer hacha, marcando el inicio de una masacre inevitable.",
+  "closingBeat": "El destino no se perdona, solo se reclama."
+}

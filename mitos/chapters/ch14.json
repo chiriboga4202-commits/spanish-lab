@@ -1,0 +1,1173 @@
+{
+  "series": "MITOS",
+  "chapter": 14,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "La Manzana de la Discordia",
+  "level": "B1",
+  "grammarFocus": "comparativos y superlativos",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Eris, the goddess of discord, a tall, pale woman with sharp features and raven-black hair, watches from the shadows of Mount Olympus, holding a glowing, golden apple.",
+      "en": "Love is fragile, but hate is stronger. Eris watches the banquet with a cruel smile.",
+      "levels": {
+        "facil": {
+          "es": "El amor es frágil. El odio es más fuerte. Eris mira la fiesta.",
+          "words": [
+            {
+              "w": "frágil",
+              "g": "fragile"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            },
+            {
+              "w": "fiesta",
+              "g": "party"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El amor es frágil, pero el odio es mucho más fuerte. Eris observa el banquete con una sonrisa cruel.",
+          "words": [
+            {
+              "w": "observa",
+              "g": "watches"
+            },
+            {
+              "w": "banquete",
+              "g": "banquet"
+            },
+            {
+              "w": "cruel",
+              "g": "cruel"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Si el amor es frágil, el odio es el más poderoso de los venenos. Eris contempla el banquete con una sonrisa gélida.",
+          "words": [
+            {
+              "w": "poderoso",
+              "g": "powerful"
+            },
+            {
+              "w": "contempla",
+              "g": "contemplates"
+            },
+            {
+              "w": "gélida",
+              "g": "icy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Eris throws the golden apple into the center of the wedding feast of Peleus and Thetis. The apple glows with the inscription 'To the fairest'.",
+      "en": "She throws the golden apple. It is the most dangerous gift in Olympus.",
+      "levels": {
+        "facil": {
+          "es": "Ella lanza la manzana de oro. Es el regalo más peligroso.",
+          "words": [
+            {
+              "w": "lanza",
+              "g": "throws"
+            },
+            {
+              "w": "manzana",
+              "g": "apple"
+            },
+            {
+              "w": "peligroso",
+              "g": "dangerous"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Lanza la manzana de oro al centro. Es el regalo más peligroso del Olimpo.",
+          "words": [
+            {
+              "w": "centro",
+              "g": "center"
+            },
+            {
+              "w": "regalo",
+              "g": "gift"
+            },
+            {
+              "w": "Olimpo",
+              "g": "Olympus"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Arroja la manzana de oro al centro de la estancia; es el regalo más insidioso del Olimpo.",
+          "words": [
+            {
+              "w": "arroja",
+              "g": "casts"
+            },
+            {
+              "w": "estancia",
+              "g": "hall"
+            },
+            {
+              "w": "insidioso",
+              "g": "insidious"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hera, Athena, and Aphrodite stand together. Hera is regal and stern, Athena is armored and wise, and Aphrodite is radiant and graceful.",
+      "en": "Three goddesses look at the apple. Each one thinks she is the most beautiful.",
+      "levels": {
+        "facil": {
+          "es": "Tres diosas miran la manzana. Cada una es la más bella.",
+          "words": [
+            {
+              "w": "diosas",
+              "g": "goddesses"
+            },
+            {
+              "w": "bella",
+              "g": "beautiful"
+            },
+            {
+              "w": "miran",
+              "g": "look"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Tres diosas contemplan la manzana. Cada una cree que es la más hermosa de todas.",
+          "words": [
+            {
+              "w": "contemplan",
+              "g": "contemplate"
+            },
+            {
+              "w": "cree",
+              "g": "believes"
+            },
+            {
+              "w": "hermosa",
+              "g": "beautiful"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Tres diosas observan el fruto dorado. Cada cual se considera la más hermosa del panteón.",
+          "words": [
+            {
+              "w": "fruto",
+              "g": "fruit"
+            },
+            {
+              "w": "considera",
+              "g": "considers"
+            },
+            {
+              "w": "panteón",
+              "g": "pantheon"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, the king of gods, sits on his throne. He looks annoyed and gestures toward the distance, refusing to choose.",
+      "en": "Zeus refuses to judge. He is smarter than the others; he chooses a mortal.",
+      "levels": {
+        "facil": {
+          "es": "Zeus no quiere elegir. Él es más listo que las diosas.",
+          "words": [
+            {
+              "w": "elegir",
+              "g": "to choose"
+            },
+            {
+              "w": "listo",
+              "g": "smart"
+            },
+            {
+              "w": "quiere",
+              "g": "wants"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus se niega a decidir. Él es más astuto y elige a un mortal para el juicio.",
+          "words": [
+            {
+              "w": "niega",
+              "g": "refuses"
+            },
+            {
+              "w": "astuto",
+              "g": "cunning"
+            },
+            {
+              "w": "juicio",
+              "g": "judgment"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus declina el arbitraje. Es mucho más sagaz que ellas; delega la sentencia en un mortal.",
+          "words": [
+            {
+              "w": "declina",
+              "g": "declines"
+            },
+            {
+              "w": "arbitraje",
+              "g": "arbitration"
+            },
+            {
+              "w": "sagaz",
+              "g": "shrewd"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Paris, a young, handsome shepherd, stands in a field near Troy. Hermes, the messenger god, approaches him from the sky.",
+      "en": "Paris is just a shepherd, but his decision will be the most important in history.",
+      "levels": {
+        "facil": {
+          "es": "Paris es un pastor joven. Su decisión es muy importante.",
+          "words": [
+            {
+              "w": "pastor",
+              "g": "shepherd"
+            },
+            {
+              "w": "joven",
+              "g": "young"
+            },
+            {
+              "w": "decisión",
+              "g": "decision"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Paris es solo un pastor, pero su decisión será la más importante de la historia.",
+          "words": [
+            {
+              "w": "solo",
+              "g": "only"
+            },
+            {
+              "w": "historia",
+              "g": "history"
+            },
+            {
+              "w": "importante",
+              "g": "important"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Paris es apenas un pastor, mas su elección será la más trascendental de la historia antigua.",
+          "words": [
+            {
+              "w": "apenas",
+              "g": "barely"
+            },
+            {
+              "w": "elección",
+              "g": "choice"
+            },
+            {
+              "w": "trascendental",
+              "g": "transcendental"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Paris, a young man with curly chestnut hair and simple rustic tunics, stands in a lush mountain meadow. Hermes, the messenger god with winged sandals, descends from the clouds to meet him.",
+      "en": "Hermes descends from Olympus to find Paris, the shepherd.",
+      "levels": {
+        "facil": {
+          "es": "Hermes baja del cielo. Paris es un pastor joven.",
+          "words": [
+            {
+              "w": "baja",
+              "g": "descends"
+            },
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "pastor",
+              "g": "shepherd"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El mensajero Hermes desciende del Olimpo para encontrar a Paris, el pastor.",
+          "words": [
+            {
+              "w": "mensajero",
+              "g": "messenger"
+            },
+            {
+              "w": "desciende",
+              "g": "descends"
+            },
+            {
+              "w": "encontrar",
+              "g": "to find"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hermes, el mensajero alado, desciende del Olimpo y halla a Paris, el humilde pastor.",
+          "words": [
+            {
+              "w": "alado",
+              "g": "winged"
+            },
+            {
+              "w": "halla",
+              "g": "finds"
+            },
+            {
+              "w": "humilde",
+              "g": "humble"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hermes presents the glowing golden apple to Paris. Paris looks at it with confusion and awe.",
+      "en": "Hermes shows the golden apple to Paris.",
+      "levels": {
+        "facil": {
+          "es": "Hermes enseña la manzana de oro a Paris.",
+          "words": [
+            {
+              "w": "enseña",
+              "g": "shows"
+            },
+            {
+              "w": "manzana",
+              "g": "apple"
+            },
+            {
+              "w": "oro",
+              "g": "gold"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hermes muestra la manzana dorada al pastor. Es el objeto más valioso.",
+          "words": [
+            {
+              "w": "muestra",
+              "g": "shows"
+            },
+            {
+              "w": "dorada",
+              "g": "golden"
+            },
+            {
+              "w": "valioso",
+              "g": "valuable"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El dios extiende la manzana de oro ante el joven; es el premio más codiciado.",
+          "words": [
+            {
+              "w": "extiende",
+              "g": "extends"
+            },
+            {
+              "w": "ante",
+              "g": "before"
+            },
+            {
+              "w": "codiciado",
+              "g": "coveted"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hera, Athena, and Aphrodite materialize in the meadow. They appear larger than life, radiating divine power.",
+      "en": "The three goddesses appear before him.",
+      "levels": {
+        "facil": {
+          "es": "Las tres diosas aparecen frente a él.",
+          "words": [
+            {
+              "w": "tres",
+              "g": "three"
+            },
+            {
+              "w": "diosas",
+              "g": "goddesses"
+            },
+            {
+              "w": "aparecen",
+              "g": "appear"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hera, Atenea y Afrodita se materializan. Son más poderosas que cualquier mortal.",
+          "words": [
+            {
+              "w": "materializan",
+              "g": "materialize"
+            },
+            {
+              "w": "poderosas",
+              "g": "powerful"
+            },
+            {
+              "w": "mortal",
+              "g": "mortal"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hera, Atenea y Afrodita se manifiestan. Su presencia es más imponente que la de cualquier mortal.",
+          "words": [
+            {
+              "w": "manifiestan",
+              "g": "manifest"
+            },
+            {
+              "w": "presencia",
+              "g": "presence"
+            },
+            {
+              "w": "imponente",
+              "g": "imposing"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hera stands tall, regal, and proud, offering a gesture of power to Paris.",
+      "en": "Hera promises him power and kingdoms.",
+      "levels": {
+        "facil": {
+          "es": "Hera promete poder a Paris. Ella es la reina más importante.",
+          "words": [
+            {
+              "w": "promete",
+              "g": "promises"
+            },
+            {
+              "w": "poder",
+              "g": "power"
+            },
+            {
+              "w": "reina",
+              "g": "queen"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hera promete reinos. Ella es más ambiciosa que sus hermanas.",
+          "words": [
+            {
+              "w": "reinos",
+              "g": "kingdoms"
+            },
+            {
+              "w": "ambiciosa",
+              "g": "ambitious"
+            },
+            {
+              "w": "hermanas",
+              "g": "sisters"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hera ofrece imperios; su ambición es mayor que la de cualquier otra deidad.",
+          "words": [
+            {
+              "w": "ofrece",
+              "g": "offers"
+            },
+            {
+              "w": "imperios",
+              "g": "empires"
+            },
+            {
+              "w": "deidad",
+              "g": "deity"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Athena stands with a spear and helmet, looking wise and stern, offering wisdom and military skill.",
+      "en": "Athena promises him wisdom and victory in battle.",
+      "levels": {
+        "facil": {
+          "es": "Atenea promete sabiduría. Ella es la más inteligente.",
+          "words": [
+            {
+              "w": "sabiduría",
+              "g": "wisdom"
+            },
+            {
+              "w": "inteligente",
+              "g": "intelligent"
+            },
+            {
+              "w": "promete",
+              "g": "promises"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Atenea ofrece astucia en la guerra. Ella es mejor estratega que los dioses.",
+          "words": [
+            {
+              "w": "astucia",
+              "g": "cunning"
+            },
+            {
+              "w": "guerra",
+              "g": "war"
+            },
+            {
+              "w": "estratega",
+              "g": "strategist"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Atenea le promete el triunfo en la batalla; es la más sabia de todo el Olimpo.",
+          "words": [
+            {
+              "w": "triunfo",
+              "g": "triumph"
+            },
+            {
+              "w": "batalla",
+              "g": "battle"
+            },
+            {
+              "w": "sabia",
+              "g": "wise"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Paris, a young shepherd with curly hair and a simple tunic, looks nervous and confused. Hera is regal and tall, Athena is stern and armored, Aphrodite is radiant and soft. The golden apple glows between them.",
+      "en": "Paris is the most confused man in the world. The three goddesses are more beautiful than any mortal woman.",
+      "levels": {
+        "facil": {
+          "es": "Paris está muy confundido. Ellas son más bellas que cualquier mujer mortal.",
+          "words": [
+            {
+              "w": "confundido",
+              "g": "confused"
+            },
+            {
+              "w": "bellas",
+              "g": "beautiful"
+            },
+            {
+              "w": "mortal",
+              "g": "mortal"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Paris es el hombre más confundido del mundo. Las diosas son incomparablemente más bellas que cualquier mortal.",
+          "words": [
+            {
+              "w": "incomparablemente",
+              "g": "incomparably"
+            },
+            {
+              "w": "mortal",
+              "g": "mortal"
+            },
+            {
+              "w": "confundido",
+              "g": "confused"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Paris, el pastor, es el hombre más desconcertado del mundo. Aquellas tres deidades son más hermosas que toda criatura mortal.",
+          "words": [
+            {
+              "w": "desconcertado",
+              "g": "bewildered"
+            },
+            {
+              "w": "deidades",
+              "g": "deities"
+            },
+            {
+              "w": "criatura",
+              "g": "creature"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Aphrodite steps forward. She is the most graceful of the three. Her eyes sparkle with a dangerous charm.",
+      "en": "Aphrodite steps forward. She is the most graceful goddess, and her voice is sweeter than honey.",
+      "levels": {
+        "facil": {
+          "es": "Afrodita camina hacia él. Ella es la diosa más graciosa. Su voz es muy dulce.",
+          "words": [
+            {
+              "w": "camina",
+              "g": "walks"
+            },
+            {
+              "w": "graciosa",
+              "g": "graceful"
+            },
+            {
+              "w": "dulce",
+              "g": "sweet"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Afrodita da un paso al frente. Es la más agraciada de las tres, con una voz más dulce que la miel.",
+          "words": [
+            {
+              "w": "agraciada",
+              "g": "graceful"
+            },
+            {
+              "w": "frente",
+              "g": "front"
+            },
+            {
+              "w": "miel",
+              "g": "honey"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Afrodita se adelanta con elegancia. Es, sin duda, la más seductora, y su voz suena más dulce que la ambrosía.",
+          "words": [
+            {
+              "w": "seductora",
+              "g": "alluring"
+            },
+            {
+              "w": "adelanta",
+              "g": "advances"
+            },
+            {
+              "w": "ambrosía",
+              "g": "ambrosia"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Aphrodite whispers to Paris, pointing toward a distant horizon where the city of Sparta lies.",
+      "en": "She offers him the most beautiful woman on Earth. Her promise is more tempting than any kingdom.",
+      "levels": {
+        "facil": {
+          "es": "Ella ofrece la mujer más bella. Su promesa es mejor que un reino grande.",
+          "words": [
+            {
+              "w": "ofrece",
+              "g": "offers"
+            },
+            {
+              "w": "promesa",
+              "g": "promise"
+            },
+            {
+              "w": "reino",
+              "g": "kingdom"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Le promete a la mujer más bella de la Tierra. Su oferta es mucho más tentadora que cualquier reino.",
+          "words": [
+            {
+              "w": "promete",
+              "g": "promises"
+            },
+            {
+              "w": "tentadora",
+              "g": "tempting"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Le ofrece a la mujer más hermosa del mundo conocido. Su promesa resulta más tentadora que el poder de cualquier reino.",
+          "words": [
+            {
+              "w": "hermosa",
+              "g": "beautiful"
+            },
+            {
+              "w": "conocido",
+              "g": "known"
+            },
+            {
+              "w": "resulta",
+              "g": "proves to be"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Paris is mesmerized by Aphrodite's beauty. He holds the golden apple, his hand trembling slightly.",
+      "en": "Paris is captivated. Aphrodite is the most persuasive of the three sisters.",
+      "levels": {
+        "facil": {
+          "es": "Paris mira a Afrodita. Ella es la más persuasiva de las tres.",
+          "words": [
+            {
+              "w": "mira",
+              "g": "looks at"
+            },
+            {
+              "w": "persuasiva",
+              "g": "persuasive"
+            },
+            {
+              "w": "tres",
+              "g": "three"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Paris está cautivado. Afrodita es la más persuasiva y sabe cómo convencerlo.",
+          "words": [
+            {
+              "w": "cautivado",
+              "g": "captivated"
+            },
+            {
+              "w": "persuasiva",
+              "g": "persuasive"
+            },
+            {
+              "w": "convencerlo",
+              "g": "convince him"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Paris queda hechizado. De las tres, Afrodita es la más elocuente y persuasiva, envolviéndolo en su hechizo.",
+          "words": [
+            {
+              "w": "hechizado",
+              "g": "bewitched"
+            },
+            {
+              "w": "elocuente",
+              "g": "eloquent"
+            },
+            {
+              "w": "envolviéndolo",
+              "g": "enveloping him"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Paris extends his hand to give the golden apple to Aphrodite. Hera and Athena look on with faces full of cold, divine rage.",
+      "en": "He gives the apple to her. This is the worst decision he will ever make.",
+      "levels": {
+        "facil": {
+          "es": "Él da la manzana a ella. Es la peor decisión de su vida.",
+          "words": [
+            {
+              "w": "manzana",
+              "g": "apple"
+            },
+            {
+              "w": "decisión",
+              "g": "decision"
+            },
+            {
+              "w": "peor",
+              "g": "worst"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Le entrega la manzana. Es la peor decisión que tomará jamás.",
+          "words": [
+            {
+              "w": "entrega",
+              "g": "hands over"
+            },
+            {
+              "w": "peor",
+              "g": "worst"
+            },
+            {
+              "w": "jamás",
+              "g": "ever"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Le entrega el fruto dorado. Es, sin duda, la peor decisión que un mortal jamás haya tomado.",
+          "words": [
+            {
+              "w": "fruto",
+              "g": "fruit"
+            },
+            {
+              "w": "dado",
+              "g": "given"
+            },
+            {
+              "w": "mortal",
+              "g": "mortal"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Paris, a young shepherd prince with curly dark hair and a simple tunic, holds the golden apple. Aphrodite, a woman of radiant, ethereal beauty in a flowing silk chiton, smiles triumphantly as Hera and Athena fade into the dark, stormy background.",
+      "en": "The goddess vanishes. Paris holds the golden apple, feeling heavier than a simple fruit.",
+      "levels": {
+        "facil": {
+          "es": "Afrodita desaparece. Paris tiene la manzana. Es más pesada que una fruta normal.",
+          "words": [
+            {
+              "w": "desaparece",
+              "g": "vanishes"
+            },
+            {
+              "w": "pesada",
+              "g": "heavy"
+            },
+            {
+              "w": "fruta",
+              "g": "fruit"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La diosa se desvanece. Paris sostiene la manzana dorada, que pesa más que cualquier otra fruta en el mundo.",
+          "words": [
+            {
+              "w": "desvanece",
+              "g": "fades away"
+            },
+            {
+              "w": "sostiene",
+              "g": "holds"
+            },
+            {
+              "w": "dorada",
+              "g": "golden"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La diosa se disuelve en el éter. Paris sostiene el pomo áureo; pesa mucho más que el destino de un simple pastor.",
+          "words": [
+            {
+              "w": "disuelve",
+              "g": "dissolves"
+            },
+            {
+              "w": "pomo",
+              "g": "apple/fruit"
+            },
+            {
+              "w": "áureo",
+              "g": "golden"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Paris looks toward the horizon where the distant walls of Troy stand. He is no longer just a shepherd; his gaze is fixed on the sea.",
+      "en": "He looks toward Sparta. He believes this is the best path to glory.",
+      "levels": {
+        "facil": {
+          "es": "Mira hacia Esparta. Piensa que es el mejor camino a la gloria.",
+          "words": [
+            {
+              "w": "mira",
+              "g": "looks"
+            },
+            {
+              "w": "camino",
+              "g": "path"
+            },
+            {
+              "w": "gloria",
+              "g": "glory"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Dirige su mirada hacia Esparta. Está convencido de que es la mejor opción para alcanzar la gloria eterna.",
+          "words": [
+            {
+              "w": "dirige",
+              "g": "directs"
+            },
+            {
+              "w": "convencido",
+              "g": "convinced"
+            },
+            {
+              "w": "eterna",
+              "g": "eternal"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Su mirada se pierde en el horizonte espartano. Cree, con soberbia, que este es el camino más noble hacia la gloria.",
+          "words": [
+            {
+              "w": "horizonte",
+              "g": "horizon"
+            },
+            {
+              "w": "soberbia",
+              "g": "pride"
+            },
+            {
+              "w": "noble",
+              "g": "noble"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close up of Paris’s face, looking determined but haunted. In the background, the shadows of two angry goddesses, Hera and Athena, loom like monsters.",
+      "en": "But the other goddesses are not happy. Their rage is the most dangerous force in Olympus.",
+      "levels": {
+        "facil": {
+          "es": "Las otras diosas están muy enojadas. Su furia es lo más peligroso del Olimpo.",
+          "words": [
+            {
+              "w": "diosas",
+              "g": "goddesses"
+            },
+            {
+              "w": "enojadas",
+              "g": "angry"
+            },
+            {
+              "w": "furia",
+              "g": "rage"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Sin embargo, las diosas rechazadas están furiosas. Su ira es la fuerza más destructiva del Olimpo.",
+          "words": [
+            {
+              "w": "rechazadas",
+              "g": "rejected"
+            },
+            {
+              "w": "fuerza",
+              "g": "force"
+            },
+            {
+              "w": "destructiva",
+              "g": "destructive"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Las diosas despechadas observan desde las sombras. Su ira es, sin duda, la fuerza más temible que jamás haya conocido el Olimpo.",
+          "words": [
+            {
+              "w": "despechadas",
+              "g": "spurned"
+            },
+            {
+              "w": "temible",
+              "g": "fearsome"
+            },
+            {
+              "w": "conocido",
+              "g": "known"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A dark, stormy sky over the Aegean Sea. A single ship sails toward the horizon, tiny against the vast, dark waves.",
+      "en": "A ship departs. The winds of fate blow harder than ever before.",
+      "levels": {
+        "facil": {
+          "es": "Un barco sale. El viento sopla más fuerte que nunca.",
+          "words": [
+            {
+              "w": "barco",
+              "g": "ship"
+            },
+            {
+              "w": "viento",
+              "g": "wind"
+            },
+            {
+              "w": "sopla",
+              "g": "blows"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Un barco zarpa. Los vientos del destino soplan con más fuerza que en cualquier otra época.",
+          "words": [
+            {
+              "w": "zarpa",
+              "g": "sets sail"
+            },
+            {
+              "w": "destino",
+              "g": "fate"
+            },
+            {
+              "w": "época",
+              "g": "time/era"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Un navío surca las aguas. Los vientos del destino rugen, soplando con una intensidad mayor a la que el mundo haya visto jamás.",
+          "words": [
+            {
+              "w": "navío",
+              "g": "vessel"
+            },
+            {
+              "w": "surca",
+              "g": "plows/sails"
+            },
+            {
+              "w": "intensidad",
+              "g": "intensity"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A silhouette of a beautiful queen, Helen, standing on a balcony in Sparta, looking out at the sea as a storm brews.",
+      "en": "In Sparta, a queen waits. She does not know that her face will launch a thousand ships.",
+      "levels": {
+        "facil": {
+          "es": "En Esparta, una reina espera. Ella no sabe que su cara cambiará el mundo.",
+          "words": [
+            {
+              "w": "reina",
+              "g": "queen"
+            },
+            {
+              "w": "espera",
+              "g": "waits"
+            },
+            {
+              "w": "mundo",
+              "g": "world"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "En Esparta, la reina espera. Ella ignora que su belleza será la causa de la guerra más grande de la historia.",
+          "words": [
+            {
+              "w": "ignora",
+              "g": "is unaware"
+            },
+            {
+              "w": "belleza",
+              "g": "beauty"
+            },
+            {
+              "w": "causa",
+              "g": "cause"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "En las costas de Esparta, Helena aguarda. Ignora que su rostro es el detonante de la guerra más sangrienta de toda la antigüedad.",
+          "words": [
+            {
+              "w": "aguarda",
+              "g": "awaits"
+            },
+            {
+              "w": "detonante",
+              "g": "trigger"
+            },
+            {
+              "w": "sangrienta",
+              "g": "bloody"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "El barco de Paris se pierde en la niebla, navegando directamente hacia el corazón del palacio espartano. La guerra ya ha comenzado en el cielo; pronto, bajará a la tierra.",
+  "closingBeat": "Una elección impulsiva es a menudo la piedra angular de una tragedia inevitable."
+}

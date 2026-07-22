@@ -1,26 +1,27 @@
 {
   "series": "MITOS",
   "chapter": 2,
-  "arc": "Mitología Griega",
+  "book": "Grecia",
+  "arc": "I · Grecia",
   "title": "La Caja de Pandora",
   "level": "A1",
   "grammarFocus": "presente + tener",
   "panels": [
     {
       "n": 1,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora, a woman with flowing dark hair and graceful features wearing a simple white chiton, stands in a lush garden. Beside her is a mysterious, heavy bronze box with intricate carvings.",
-      "en": "Pandora is the first woman. She has a mysterious box.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora, a woman with flowing dark hair and intricate golden robes, stands in a shadowy hall, holding a heavy, ornate bronze box. Prometheus, a man with weary eyes and rugged features, watches her from the periphery.",
+      "en": "The price of light leaves a shadow. Pandora has the box.",
       "levels": {
         "facil": {
-          "es": "Pandora es la primera mujer. Ella tiene una caja misteriosa.",
+          "es": "La luz tiene una sombra. Pandora tiene la caja.",
           "words": [
             {
-              "w": "primera",
-              "g": "first"
+              "w": "luz",
+              "g": "light"
             },
             {
-              "w": "mujer",
-              "g": "woman"
+              "w": "sombra",
+              "g": "shadow"
             },
             {
               "w": "caja",
@@ -29,36 +30,36 @@
           ]
         },
         "intermedio": {
-          "es": "Pandora es la primera mujer creada. Ella tiene una caja antigua y misteriosa.",
+          "es": "Tras la luz, queda la sombra. Pandora tiene la caja en sus manos.",
           "words": [
             {
-              "w": "creada",
-              "g": "created"
+              "w": "tras",
+              "g": "after"
             },
             {
-              "w": "antigua",
-              "g": "ancient"
+              "w": "queda",
+              "g": "remains"
             },
             {
-              "w": "misteriosa",
-              "g": "mysterious"
+              "w": "manos",
+              "g": "hands"
             }
           ]
         },
         "nativo": {
-          "es": "Pandora es la primera mujer. En sus manos, ella tiene una caja de bronce, sellada con un enigma.",
+          "es": "La luz se apaga y deja su sombra. Pandora tiene la caja, un peso de bronce en sus manos.",
           "words": [
             {
-              "w": "manos",
-              "g": "hands"
+              "w": "apaga",
+              "g": "extinguishes"
+            },
+            {
+              "w": "peso",
+              "g": "weight"
             },
             {
               "w": "bronce",
               "g": "bronze"
-            },
-            {
-              "w": "sellada",
-              "g": "sealed"
             }
           ]
         }
@@ -66,131 +67,15 @@
     },
     {
       "n": 2,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora, a woman with flowing dark hair and graceful features wearing a simple white chiton, stands in a lush garden. The god Hermes, wearing winged sandals and a traveler’s cloak, hands her the box.",
-      "en": "Hermes gives the box to her. He says: 'Do not open this.'",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close-up on Pandora's face, eyes wide with fascination, staring at the intricate carvings on the bronze box. Epimetheus, a man with a gentle but cautious expression, stands behind her.",
+      "en": "Epimetheus has a warning. Pandora has only curiosity.",
       "levels": {
         "facil": {
-          "es": "Hermes le da la caja. Él dice: 'No abras la caja'.",
+          "es": "Epimeteo tiene una advertencia. Pandora tiene mucha curiosidad.",
           "words": [
-            {
-              "w": "da",
-              "g": "gives"
-            },
-            {
-              "w": "dice",
-              "g": "says"
-            },
-            {
-              "w": "abras",
-              "g": "open"
-            }
-          ]
-        },
-        "intermedio": {
-          "es": "El dios Hermes le entrega la caja. Él tiene una advertencia: 'No abras esto nunca'.",
-          "words": [
-            {
-              "w": "dios",
-              "g": "god"
-            },
-            {
-              "w": "entrega",
-              "g": "delivers"
-            },
             {
               "w": "advertencia",
               "g": "warning"
-            }
-          ]
-        },
-        "nativo": {
-          "es": "Hermes le confía el objeto. Tiene un mandato claro: 'Jamás abras esta caja, Pandora'.",
-          "words": [
-            {
-              "w": "confía",
-              "g": "entrusts"
-            },
-            {
-              "w": "objeto",
-              "g": "object"
-            },
-            {
-              "w": "mandato",
-              "g": "command"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "n": 3,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora, a woman with flowing dark hair and graceful features wearing a simple white chiton, sits alone in her room, staring at the box on a wooden table.",
-      "en": "Pandora is alone. She has the box in her room.",
-      "levels": {
-        "facil": {
-          "es": "Pandora está sola. Ella tiene la caja en su cuarto.",
-          "words": [
-            {
-              "w": "sola",
-              "g": "alone"
-            },
-            {
-              "w": "cuarto",
-              "g": "room"
-            },
-            {
-              "w": "está",
-              "g": "is"
-            }
-          ]
-        },
-        "intermedio": {
-          "es": "Pandora está sola ahora. Ella tiene la caja sobre la mesa de madera.",
-          "words": [
-            {
-              "w": "ahora",
-              "g": "now"
-            },
-            {
-              "w": "sobre",
-              "g": "on"
-            },
-            {
-              "w": "mesa",
-              "g": "table"
-            }
-          ]
-        },
-        "nativo": {
-          "es": "Pandora se encuentra sola. Tiene el pesado cofre frente a sí, observándolo con inquietud.",
-          "words": [
-            {
-              "w": "encuentra",
-              "g": "finds herself"
-            },
-            {
-              "w": "pesado",
-              "g": "heavy"
-            },
-            {
-              "w": "inquietud",
-              "g": "restlessness"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "n": 4,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora, a woman with flowing dark hair and graceful features wearing a simple white chiton, touches the lid of the box. Her expression shows intense curiosity.",
-      "en": "She looks at the box. She has curiosity in her heart.",
-      "levels": {
-        "facil": {
-          "es": "Ella mira la caja. Ella tiene mucha curiosidad.",
-          "words": [
-            {
-              "w": "mira",
-              "g": "looks at"
             },
             {
               "w": "mucha",
@@ -203,36 +88,152 @@
           ]
         },
         "intermedio": {
-          "es": "Ella mira el objeto. Tiene una curiosidad infinita en su corazón.",
+          "es": "Epimeteo tiene miedo. Pandora tiene una curiosidad infinita por el objeto.",
           "words": [
             {
-              "w": "objeto",
-              "g": "object"
+              "w": "miedo",
+              "g": "fear"
             },
             {
               "w": "infinita",
               "g": "infinite"
             },
             {
-              "w": "corazón",
-              "g": "heart"
+              "w": "objeto",
+              "g": "object"
             }
           ]
         },
         "nativo": {
-          "es": "La joven contempla el grabado. Tiene una curiosidad insaciable que le nubla el juicio.",
+          "es": "Epimeteo tiene una advertencia en los labios. Pandora tiene una curiosidad que quema.",
           "words": [
             {
-              "w": "contempla",
-              "g": "contemplates"
+              "w": "labios",
+              "g": "lips"
             },
             {
-              "w": "insaciable",
-              "g": "insatiable"
+              "w": "quema",
+              "g": "burns"
             },
             {
-              "w": "juicio",
-              "g": "judgment"
+              "w": "mirada",
+              "g": "gaze"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora walks through a lush, sun-drenched garden of Olympus. She carries the bronze box close to her chest.",
+      "en": "The garden is beautiful. The box has a strange weight.",
+      "levels": {
+        "facil": {
+          "es": "El jardín es bonito. La caja tiene un peso extraño.",
+          "words": [
+            {
+              "w": "jardín",
+              "g": "garden"
+            },
+            {
+              "w": "bonito",
+              "g": "beautiful"
+            },
+            {
+              "w": "extraño",
+              "g": "strange"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El jardín tiene mucha belleza. La caja tiene un peso muy extraño.",
+          "words": [
+            {
+              "w": "belleza",
+              "g": "beauty"
+            },
+            {
+              "w": "peso",
+              "g": "weight"
+            },
+            {
+              "w": "extraño",
+              "g": "strange"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El jardín tiene una calma engañosa. La caja tiene un peso que parece vibrar.",
+          "words": [
+            {
+              "w": "calma",
+              "g": "calm"
+            },
+            {
+              "w": "engañosa",
+              "g": "deceptive"
+            },
+            {
+              "w": "vibrar",
+              "g": "vibrate"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora sits on a marble bench, the bronze box resting on her lap. She traces the glowing, mysterious symbols on the lid with her finger.",
+      "en": "Pandora has the secret in her lap. The box has a soft, golden hum.",
+      "levels": {
+        "facil": {
+          "es": "Pandora tiene el secreto. La caja tiene un sonido suave.",
+          "words": [
+            {
+              "w": "secreto",
+              "g": "secret"
+            },
+            {
+              "w": "sonido",
+              "g": "sound"
+            },
+            {
+              "w": "suave",
+              "g": "soft"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Pandora tiene el secreto en su regazo. La caja tiene un brillo dorado.",
+          "words": [
+            {
+              "w": "regazo",
+              "g": "lap"
+            },
+            {
+              "w": "brillo",
+              "g": "glow"
+            },
+            {
+              "w": "dorado",
+              "g": "golden"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Pandora tiene el enigma en su regazo. La caja tiene un pulso dorado que susurra.",
+          "words": [
+            {
+              "w": "enigma",
+              "g": "enigma"
+            },
+            {
+              "w": "pulso",
+              "g": "pulse"
+            },
+            {
+              "w": "susurra",
+              "g": "whispers"
             }
           ]
         }
@@ -240,57 +241,57 @@
     },
     {
       "n": 5,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora, a woman with flowing dark hair and graceful features wearing a simple white chiton, lifts the lid of the box slightly. A faint, ominous glow escapes from the crack.",
-      "en": "Pandora touches the lid. She has the power to open it.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora's hand trembles as she touches the latch of the bronze box. The air around her ripples with dark, ethereal energy.",
+      "en": "Pandora has the latch now. The box has a dark hunger.",
       "levels": {
         "facil": {
-          "es": "Pandora toca la tapa. Ella tiene el poder de abrirla.",
+          "es": "Pandora tiene la llave. La caja tiene mucha hambre.",
           "words": [
             {
-              "w": "toca",
-              "g": "touches"
+              "w": "llave",
+              "g": "key/latch"
             },
             {
-              "w": "tapa",
-              "g": "lid"
+              "w": "hambre",
+              "g": "hunger"
             },
             {
-              "w": "poder",
-              "g": "power"
+              "w": "ahora",
+              "g": "now"
             }
           ]
         },
         "intermedio": {
-          "es": "Pandora toca la tapa de metal. Ella tiene la decisión en sus manos.",
+          "es": "Pandora tiene el cierre en sus dedos. La caja tiene una oscuridad oculta.",
           "words": [
             {
-              "w": "metal",
-              "g": "metal"
-            },
-            {
-              "w": "decisión",
-              "g": "decision"
-            },
-            {
-              "w": "manos",
-              "g": "hands"
-            }
-          ]
-        },
-        "nativo": {
-          "es": "Pandora levanta la pesada tapa. Tiene el destino del mundo entre sus dedos.",
-          "words": [
-            {
-              "w": "levanta",
-              "g": "lifts"
-            },
-            {
-              "w": "destino",
-              "g": "destiny"
+              "w": "cierre",
+              "g": "latch"
             },
             {
               "w": "dedos",
               "g": "fingers"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Pandora tiene el cierre bajo sus dedos. La caja tiene un hambre antigua que despierta.",
+          "words": [
+            {
+              "w": "despierta",
+              "g": "awakens"
+            },
+            {
+              "w": "antigua",
+              "g": "ancient"
+            },
+            {
+              "w": "cierre",
+              "g": "latch"
             }
           ]
         }
@@ -298,412 +299,637 @@
     },
     {
       "n": 6,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora, a woman with dark flowing hair and a simple linen chiton, has her fingers trembling over the ornate, glowing lock of the heavy bronze box.",
-      "en": "Pandora’s fingers tremble. She has a choice.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora has dark flowing hair, amber eyes, and a simple tunic. She stares at the ornate, heavy box, her fingers trembling near the latch.",
+      "en": "The box has a strange, cold vibration.",
       "levels": {
         "facil": {
-          "es": "Los dedos de Pandora tiemblan. Ella tiene una elección.",
+          "es": "La caja tiene una vibración extraña y fría.",
           "words": [
-            "dedos",
-            "fingers",
-            "tiemblan",
-            "tremble",
-            "elección",
-            "choice"
+            {
+              "w": "caja",
+              "g": "box"
+            },
+            {
+              "w": "vibración",
+              "g": "vibration"
+            },
+            {
+              "w": "extraña",
+              "g": "strange"
+            }
           ]
         },
         "intermedio": {
-          "es": "Los dedos de Pandora tiemblan sobre el metal. Ella tiene una decisión difícil.",
+          "es": "La caja tiene un peso y una vibración muy fría.",
           "words": [
-            "tiemblan",
-            "tremble",
-            "decisión",
-            "decision",
-            "difícil",
-            "difficult"
+            {
+              "w": "peso",
+              "g": "weight"
+            },
+            {
+              "w": "vibración",
+              "g": "vibration"
+            },
+            {
+              "w": "fría",
+              "g": "cold"
+            }
           ]
         },
         "nativo": {
-          "es": "Los dedos de Pandora flaquean ante el sello. Ella tiene el destino entre sus manos.",
+          "es": "La caja tiene una vibración gélida que recorre sus dedos.",
           "words": [
-            "flaquean",
-            "falter",
-            "sello",
-            "seal",
-            "destino",
-            "fate"
+            {
+              "w": "gélida",
+              "g": "icy"
+            },
+            {
+              "w": "recorre",
+              "g": "runs through"
+            },
+            {
+              "w": "dedos",
+              "g": "fingers"
+            }
           ]
         }
       }
     },
     {
       "n": 7,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora, a woman with dark flowing hair and a simple linen chiton, pushes the heavy lid up slightly. A faint, ominous green smoke begins to seep out.",
-      "en": "She lifts the lid. She has no fear now.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora has dark flowing hair, amber eyes, and a simple tunic. She looks around the empty, silent garden, searching for a sign.",
+      "en": "The garden has a heavy, sudden silence.",
       "levels": {
         "facil": {
-          "es": "Ella abre la caja. Ella no tiene miedo.",
+          "es": "El jardín tiene un silencio grande.",
           "words": [
-            "abre",
-            "opens",
-            "caja",
-            "box",
-            "miedo",
-            "fear"
+            {
+              "w": "jardín",
+              "g": "garden"
+            },
+            {
+              "w": "silencio",
+              "g": "silence"
+            },
+            {
+              "w": "grande",
+              "g": "big"
+            }
           ]
         },
         "intermedio": {
-          "es": "Pandora levanta la tapa. Ella no tiene dudas en este momento.",
+          "es": "El jardín tiene un silencio repentino y pesado.",
           "words": [
-            "levanta",
-            "lifts",
-            "tapa",
-            "lid",
-            "dudas",
-            "doubts"
+            {
+              "w": "repentino",
+              "g": "sudden"
+            },
+            {
+              "w": "pesado",
+              "g": "heavy"
+            },
+            {
+              "w": "silencio",
+              "g": "silence"
+            }
           ]
         },
         "nativo": {
-          "es": "Pandora alza la pesada tapa. Ella no tiene ápice de cautela en su alma.",
+          "es": "El jardín tiene un silencio sepulcral que oprime el aire.",
           "words": [
-            "alza",
-            "raises",
-            "ápice",
-            "iota",
-            "cautela",
-            "caution"
+            {
+              "w": "sepulcral",
+              "g": "grave-like"
+            },
+            {
+              "w": "oprime",
+              "g": "oppresses"
+            },
+            {
+              "w": "aire",
+              "g": "air"
+            }
           ]
         }
       }
     },
     {
       "n": 8,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora, a woman with dark flowing hair and a simple linen chiton, recoils as dark, shadowy spirits fly out of the box like stinging insects.",
-      "en": "The box opens. It has dark spirits inside.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora has dark flowing hair, amber eyes, and a simple tunic. She is sweating slightly; her eyes are wide with intense curiosity.",
+      "en": "Pandora has a wild fire in her eyes.",
       "levels": {
         "facil": {
-          "es": "La caja está abierta. Ella tiene sombras oscuras dentro.",
+          "es": "Pandora tiene fuego en sus ojos.",
           "words": [
-            "abierta",
-            "open",
-            "sombras",
-            "shadows",
-            "oscuras",
-            "dark"
+            {
+              "w": "Pandora",
+              "g": "Pandora"
+            },
+            {
+              "w": "fuego",
+              "g": "fire"
+            },
+            {
+              "w": "ojos",
+              "g": "eyes"
+            }
           ]
         },
         "intermedio": {
-          "es": "La caja se abre. Tiene espíritus oscuros en su interior.",
+          "es": "Pandora tiene un fuego salvaje en sus ojos curiosos.",
           "words": [
-            "abre",
-            "opens",
-            "espíritus",
-            "spirits",
-            "interior",
-            "inside"
+            {
+              "w": "salvaje",
+              "g": "wild"
+            },
+            {
+              "w": "curiosos",
+              "g": "curious"
+            },
+            {
+              "w": "ojos",
+              "g": "eyes"
+            }
           ]
         },
         "nativo": {
-          "es": "El cofre se abre de par en par. Tiene oscuras pesadillas en su interior.",
+          "es": "Pandora tiene una curiosidad febril que le enciende la mirada.",
           "words": [
-            "cofre",
-            "chest",
-            "par en par",
-            "wide open",
-            "pesadillas",
-            "nightmares"
+            {
+              "w": "curiosidad",
+              "g": "curiosity"
+            },
+            {
+              "w": "febril",
+              "g": "feverish"
+            },
+            {
+              "w": "mirada",
+              "g": "gaze"
+            }
           ]
         }
       }
     },
     {
       "n": 9,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora, a woman with dark flowing hair and a simple linen chiton, covers her face in horror as the room fills with swirling, chaotic energy.",
-      "en": "Pandora screams. She has great regret.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora has dark flowing hair, amber eyes, and a simple tunic. Her hand grips the golden latch tightly, muscles tense.",
+      "en": "The golden latch has a sharp, metallic edge.",
       "levels": {
         "facil": {
-          "es": "Pandora grita. Ella tiene mucha tristeza.",
+          "es": "El cierre dorado tiene una forma afilada.",
           "words": [
-            "grita",
-            "screams",
-            "mucha",
-            "much",
-            "tristeza",
-            "sadness"
+            {
+              "w": "cierre",
+              "g": "latch"
+            },
+            {
+              "w": "dorado",
+              "g": "golden"
+            },
+            {
+              "w": "afilada",
+              "g": "sharp"
+            }
           ]
         },
         "intermedio": {
-          "es": "Pandora grita de horror. Ella tiene un gran arrepentimiento.",
+          "es": "El cierre dorado tiene un borde metálico y afilado.",
           "words": [
-            "grita",
-            "screams",
-            "horror",
-            "horror",
-            "arrepentimiento",
-            "regret"
+            {
+              "w": "borde",
+              "g": "edge"
+            },
+            {
+              "w": "metálico",
+              "g": "metallic"
+            },
+            {
+              "w": "afilado",
+              "g": "sharp"
+            }
           ]
         },
         "nativo": {
-          "es": "Pandora profiere un grito. Ella tiene un remordimiento punzante.",
+          "es": "El cierre dorado tiene un filo metálico que le corta el aliento.",
           "words": [
-            "profiere",
-            "utters",
-            "remordimiento",
-            "remorse",
-            "punzante",
-            "stinging"
+            {
+              "w": "filo",
+              "g": "edge"
+            },
+            {
+              "w": "corta",
+              "g": "cuts"
+            },
+            {
+              "w": "aliento",
+              "g": "breath"
+            }
           ]
         }
       }
     },
     {
       "n": 10,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora, a woman with dark flowing hair and a simple linen chiton, kneels on the floor, surrounded by the swirling chaos of the unleashed evils.",
-      "en": "The world changes. It has new pain.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora has dark flowing hair, amber eyes, and a simple tunic. She begins to lift the lid, and a faint, dark smoke starts to curl out.",
+      "en": "The box has a dark secret inside.",
       "levels": {
         "facil": {
-          "es": "El mundo cambia. Tiene nuevo dolor.",
+          "es": "La caja tiene un secreto oscuro dentro.",
           "words": [
-            "mundo",
-            "world",
-            "cambia",
-            "changes",
-            "dolor",
-            "pain"
+            {
+              "w": "caja",
+              "g": "box"
+            },
+            {
+              "w": "secreto",
+              "g": "secret"
+            },
+            {
+              "w": "oscuro",
+              "g": "dark"
+            }
           ]
         },
         "intermedio": {
-          "es": "El mundo cambia ahora. Tiene un dolor desconocido.",
+          "es": "La caja tiene un oscuro secreto en su interior.",
           "words": [
-            "cambia",
-            "changes",
-            "dolor",
-            "pain",
-            "desconocido",
-            "unknown"
+            {
+              "w": "oscuro",
+              "g": "dark"
+            },
+            {
+              "w": "secreto",
+              "g": "secret"
+            },
+            {
+              "w": "interior",
+              "g": "inside"
+            }
           ]
         },
         "nativo": {
-          "es": "El mundo se transforma. Tiene un sufrimiento renovado.",
+          "es": "La caja tiene un oscuro enigma contenido en sus entrañas.",
           "words": [
-            "transforma",
-            "transforms",
-            "sufrimiento",
-            "suffering",
-            "renovado",
-            "renewed"
+            {
+              "w": "enigma",
+              "g": "enigma"
+            },
+            {
+              "w": "contenido",
+              "g": "contained"
+            },
+            {
+              "w": "entrañas",
+              "g": "bowels/depths"
+            }
           ]
         }
       }
     },
     {
       "n": 11,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora, a woman with loose dark curls and a simple linen chiton, stands frozen. Dark, smoky tendrils pour from an ornate golden jar, swirling into the air like shadows.",
-      "en": "Pandora watches the shadows. She has fear in her heart.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora, a woman with wild eyes and dark flowing hair, reaches her trembling hands toward the ornate golden latch of the box.",
+      "en": "Pandora reaches for the golden latch.",
       "levels": {
         "facil": {
-          "es": "Pandora mira las sombras. Ella tiene miedo en el corazón.",
+          "es": "Pandora tiene las manos cerca de la caja.",
           "words": [
-            "sombras (shadows)",
-            "miedo (fear)",
-            "corazón (heart)"
+            {
+              "w": "manos",
+              "g": "hands"
+            },
+            {
+              "w": "cerca",
+              "g": "near"
+            },
+            {
+              "w": "caja",
+              "g": "box"
+            }
           ]
         },
         "intermedio": {
-          "es": "Pandora observa las sombras oscuras. Ella tiene mucho miedo en su corazón.",
+          "es": "Pandora tiene una curiosidad inmensa y toca el cierre dorado.",
           "words": [
-            "observa (watches)",
-            "oscuras (dark)",
-            "corazón (heart)"
+            {
+              "w": "curiosidad",
+              "g": "curiosity"
+            },
+            {
+              "w": "toca",
+              "g": "touches"
+            },
+            {
+              "w": "cierre",
+              "g": "latch"
+            }
           ]
         },
         "nativo": {
-          "es": "Pandora contempla las sombras que escapan. Tiene un miedo gélido en el corazón.",
+          "es": "Pandora tiene los dedos inquietos sobre el cierre metálico.",
           "words": [
-            "contempla (contemplates)",
-            "escapan (escape)",
-            "gélido (icy)"
+            {
+              "w": "inquietos",
+              "g": "restless"
+            },
+            {
+              "w": "metálico",
+              "g": "metallic"
+            },
+            {
+              "w": "dedos",
+              "g": "fingers"
+            }
           ]
         }
       }
     },
     {
       "n": 12,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora, with loose dark curls and a simple linen chiton, reaches out to close the jar, but the dark spirits push her back with invisible force.",
-      "en": "The spirits are strong. Pandora has no power against them.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close up on the sharp metallic edge of the box, reflecting Pandora's wide, hesitant eyes.",
+      "en": "The metal edge shines cold and sharp.",
       "levels": {
         "facil": {
-          "es": "Los espíritus son fuertes. Pandora no tiene poder contra ellos.",
+          "es": "La caja tiene un borde muy afilado.",
           "words": [
-            "espíritus (spirits)",
-            "fuertes (strong)",
-            "poder (power)"
+            {
+              "w": "borde",
+              "g": "edge"
+            },
+            {
+              "w": "afilado",
+              "g": "sharp"
+            },
+            {
+              "w": "muy",
+              "g": "very"
+            }
           ]
         },
         "intermedio": {
-          "es": "Los espíritus oscuros son muy fuertes. Pandora no tiene poder alguno contra ellos.",
+          "es": "El metal tiene un brillo frío y peligroso.",
           "words": [
-            "oscuros (dark)",
-            "fuertes (strong)",
-            "alguno (any)"
+            {
+              "w": "brillo",
+              "g": "shine"
+            },
+            {
+              "w": "frío",
+              "g": "cold"
+            },
+            {
+              "w": "peligroso",
+              "g": "dangerous"
+            }
           ]
         },
         "nativo": {
-          "es": "Los espectros son violentos. Pandora no tiene fuerza para detener su avance.",
+          "es": "El borde tiene un filo cortante que refleja su duda.",
           "words": [
-            "espectros (specters)",
-            "violentos (violent)",
-            "avance (advance)"
+            {
+              "w": "filo",
+              "g": "edge"
+            },
+            {
+              "w": "cortante",
+              "g": "cutting"
+            },
+            {
+              "w": "refleja",
+              "g": "reflects"
+            }
           ]
         }
       }
     },
     {
       "n": 13,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Close up on Pandora’s face, loose dark curls framing her distressed expression. She has tears in her eyes.",
-      "en": "She cries for the world. She has deep sadness.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora pauses, her heart racing, looking over her shoulder at the silent, empty room.",
+      "en": "She hesitates, listening to the silence.",
       "levels": {
         "facil": {
-          "es": "Ella llora por el mundo. Ella tiene una tristeza profunda.",
+          "es": "Pandora tiene miedo en su corazón.",
           "words": [
-            "llora (cries)",
-            "mundo (world)",
-            "tristeza (sadness)"
+            {
+              "w": "miedo",
+              "g": "fear"
+            },
+            {
+              "w": "corazón",
+              "g": "heart"
+            },
+            {
+              "w": "tiene",
+              "g": "has"
+            }
           ]
         },
         "intermedio": {
-          "es": "Ella llora por el mundo entero. Pandora tiene una tristeza muy profunda.",
+          "es": "Ella tiene dudas, pero la curiosidad gana la batalla.",
           "words": [
-            "llora (cries)",
-            "entero (entire)",
-            "profunda (deep)"
+            {
+              "w": "dudas",
+              "g": "doubts"
+            },
+            {
+              "w": "gana",
+              "g": "wins"
+            },
+            {
+              "w": "batalla",
+              "g": "battle"
+            }
           ]
         },
         "nativo": {
-          "es": "Llora por la tragedia del mundo. Tiene una aflicción inmensa en el alma.",
+          "es": "Pandora tiene el pulso acelerado mientras el silencio la rodea.",
           "words": [
-            "tragedia (tragedy)",
-            "aflicción (affliction)",
-            "inmensa (immense)"
+            {
+              "w": "pulso",
+              "g": "pulse"
+            },
+            {
+              "w": "acelerado",
+              "g": "racing"
+            },
+            {
+              "w": "rodea",
+              "g": "surrounds"
+            }
           ]
         }
       }
     },
     {
       "n": 14,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Exterior shot of the Greek landscape. The sky turns dark and grey. Pandora, with loose dark curls and a simple linen chiton, stands alone in the distance.",
-      "en": "The sky is dark now. Pandora has a heavy burden.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora's hand grips the latch firmly; the box begins to vibrate with an inner, dark energy.",
+      "en": "With a firm grip, she forces the latch.",
       "levels": {
         "facil": {
-          "es": "El cielo está oscuro. Pandora tiene una carga pesada.",
+          "es": "Pandora tiene fuerza en las manos.",
           "words": [
-            "cielo (sky)",
-            "oscuro (dark)",
-            "carga (burden)"
+            {
+              "w": "fuerza",
+              "g": "strength"
+            },
+            {
+              "w": "manos",
+              "g": "hands"
+            },
+            {
+              "w": "tiene",
+              "g": "has"
+            }
           ]
         },
         "intermedio": {
-          "es": "El cielo ahora está gris y oscuro. Pandora tiene una carga muy pesada.",
+          "es": "Ella tiene una decisión firme y abre el cierre.",
           "words": [
-            "cielo (sky)",
-            "gris (grey)",
-            "pesada (heavy)"
+            {
+              "w": "decisión",
+              "g": "decision"
+            },
+            {
+              "w": "firme",
+              "g": "firm"
+            },
+            {
+              "w": "abre",
+              "g": "opens"
+            }
           ]
         },
         "nativo": {
-          "es": "El horizonte se torna sombrío. Pandora tiene una carga pesadísima sobre sus hombros.",
+          "es": "Pandora tiene la determinación necesaria para romper el sello.",
           "words": [
-            "horizonte (horizon)",
-            "sombrío (gloomy)",
-            "hombros (shoulders)"
+            {
+              "w": "determinación",
+              "g": "determination"
+            },
+            {
+              "w": "necesaria",
+              "g": "necessary"
+            },
+            {
+              "w": "romper",
+              "g": "break"
+            }
           ]
         }
       }
     },
     {
       "n": 15,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora, with loose dark curls and a simple linen chiton, looks at her trembling hands. She has guilt in her thoughts.",
-      "en": "She looks at her hands. Pandora has many regrets.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The lid pops open slightly; a sliver of darkness escapes, swirling like smoke.",
+      "en": "The lid opens and shadows escape.",
       "levels": {
         "facil": {
-          "es": "Ella mira sus manos. Pandora tiene muchos remordimientos.",
+          "es": "La caja tiene una abertura pequeña.",
           "words": [
-            "mira (looks)",
-            "manos (hands)",
-            "remordimientos (regrets)"
+            {
+              "w": "abertura",
+              "g": "opening"
+            },
+            {
+              "w": "pequeña",
+              "g": "small"
+            },
+            {
+              "w": "caja",
+              "g": "box"
+            }
           ]
         },
         "intermedio": {
-          "es": "Ella mira sus manos que tiemblan. Pandora tiene muchos remordimientos hoy.",
+          "es": "La caja tiene un humo oscuro en su interior.",
           "words": [
-            "tiemblan (tremble)",
-            "remordimientos (regrets)",
-            "hoy (today)"
+            {
+              "w": "humo",
+              "g": "smoke"
+            },
+            {
+              "w": "oscuro",
+              "g": "dark"
+            },
+            {
+              "w": "interior",
+              "g": "inside"
+            }
           ]
         },
         "nativo": {
-          "es": "Observa sus manos temblorosas. Pandora tiene un remordimiento agónico en su mente.",
+          "es": "La tapa tiene una grieta por donde brota una sombra densa.",
           "words": [
-            "temblorosas (trembling)",
-            "agónico (agonizing)",
-            "mente (mind)"
+            {
+              "w": "tapa",
+              "g": "lid"
+            },
+            {
+              "w": "grieta",
+              "g": "crack"
+            },
+            {
+              "w": "brota",
+              "g": "sprouts/escapes"
+            }
           ]
         }
       }
     },
     {
       "n": 16,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora, a woman with flowing dark hair and a simple linen chiton, kneels by the overturned, ornate bronze box. A tiny, glowing golden light flickers at the very bottom of the box.",
-      "en": "She looks into the box one last time.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora, a woman with long raven hair and a simple white chiton, stares in terror as jagged, shadowy spirits emerge from the box.",
+      "en": "The shadows escape. They have sharp teeth and dark eyes.",
       "levels": {
         "facil": {
-          "es": "Pandora mira la caja otra vez.",
+          "es": "Las sombras salen. Tienen dientes y ojos oscuros.",
           "words": [
             {
-              "w": "mira",
-              "g": "looks at"
+              "w": "sombras",
+              "g": "shadows"
             },
             {
-              "w": "caja",
-              "g": "box"
+              "w": "salen",
+              "g": "exit"
             },
             {
-              "w": "otra vez",
-              "g": "again"
+              "w": "tienen",
+              "g": "have"
             }
           ]
         },
         "intermedio": {
-          "es": "Pandora tiene la mirada fija en el fondo de la caja.",
+          "es": "Las sombras escapan de la caja. Tienen dientes afilados y ojos muy oscuros.",
           "words": [
             {
-              "w": "mirada",
-              "g": "gaze"
+              "w": "escapan",
+              "g": "escape"
             },
             {
-              "w": "fija",
-              "g": "fixed"
+              "w": "afilados",
+              "g": "sharp"
             },
             {
-              "w": "fondo",
-              "g": "bottom"
+              "w": "tienen",
+              "g": "have"
             }
           ]
         },
         "nativo": {
-          "es": "Pandora tiene los ojos clavados en el vacío de la caja.",
+          "es": "Sombras funestas escapan. Tienen colmillos afilados y una mirada cargada de malicia.",
           "words": [
             {
-              "w": "clavados",
-              "g": "nailed/fixed"
+              "w": "funestas",
+              "g": "fateful/dire"
             },
             {
-              "w": "vacío",
-              "g": "void"
+              "w": "colmillos",
+              "g": "fangs"
             },
             {
-              "w": "caja",
-              "g": "box"
+              "w": "malicia",
+              "g": "malice"
             }
           ]
         }
@@ -711,94 +937,19 @@
     },
     {
       "n": 17,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora reaches a trembling hand toward the glowing golden light inside the dark bronze box.",
-      "en": "There is a small light inside.",
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora covers her ears as the spirits scream, filling the room with chaos.",
+      "en": "Pandora screams. She has great fear in her heart.",
       "levels": {
         "facil": {
-          "es": "Ella tiene una luz pequeña en la mano.",
+          "es": "Pandora grita. Tiene mucho miedo en su corazón.",
           "words": [
             {
-              "w": "luz",
-              "g": "light"
+              "w": "grita",
+              "g": "screams"
             },
             {
-              "w": "pequeña",
-              "g": "small"
-            },
-            {
-              "w": "mano",
-              "g": "hand"
-            }
-          ]
-        },
-        "intermedio": {
-          "es": "Pandora tiene una luz dorada entre sus dedos.",
-          "words": [
-            {
-              "w": "dorada",
-              "g": "golden"
-            },
-            {
-              "w": "entre",
-              "g": "between"
-            },
-            {
-              "w": "dedos",
-              "g": "fingers"
-            }
-          ]
-        },
-        "nativo": {
-          "es": "Una luz tenue tiene vida propia entre sus dedos temblorosos.",
-          "words": [
-            {
-              "w": "tenue",
-              "g": "faint"
-            },
-            {
-              "w": "vida",
-              "g": "life"
-            },
-            {
-              "w": "temblorosos",
-              "g": "trembling"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "n": 18,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora holds the light close to her chest, her expression shifting from sorrow to a strange, quiet resolve.",
-      "en": "Hope is the only thing left.",
-      "levels": {
-        "facil": {
-          "es": "Ella tiene la esperanza ahora.",
-          "words": [
-            {
-              "w": "esperanza",
-              "g": "hope"
-            },
-            {
-              "w": "ahora",
-              "g": "now"
-            },
-            {
-              "w": "tiene",
-              "g": "has"
-            }
-          ]
-        },
-        "intermedio": {
-          "es": "Pandora tiene la última esperanza en su corazón.",
-          "words": [
-            {
-              "w": "última",
-              "g": "last"
-            },
-            {
-              "w": "esperanza",
-              "g": "hope"
+              "w": "miedo",
+              "g": "fear"
             },
             {
               "w": "corazón",
@@ -806,98 +957,16 @@
             }
           ]
         },
-        "nativo": {
-          "es": "La esperanza tiene un lugar seguro en su pecho.",
-          "words": [
-            {
-              "w": "lugar",
-              "g": "place"
-            },
-            {
-              "w": "seguro",
-              "g": "safe"
-            },
-            {
-              "w": "pecho",
-              "g": "chest"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "n": 19,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Pandora stands up, the glowing light illuminating her face against the dark, stormy background of Greece.",
-      "en": "The world is dark, but she has a purpose.",
-      "levels": {
-        "facil": {
-          "es": "El mundo es oscuro, pero ella tiene luz.",
-          "words": [
-            {
-              "w": "mundo",
-              "g": "world"
-            },
-            {
-              "w": "oscuro",
-              "g": "dark"
-            },
-            {
-              "w": "luz",
-              "g": "light"
-            }
-          ]
-        },
         "intermedio": {
-          "es": "El mundo tiene mucho dolor, pero ella tiene una misión.",
+          "es": "Pandora grita de horror. Ella tiene un miedo terrible dentro de su corazón.",
           "words": [
             {
-              "w": "dolor",
-              "g": "pain"
+              "w": "horror",
+              "g": "horror"
             },
             {
-              "w": "misión",
-              "g": "mission"
-            },
-            {
-              "w": "mucho",
-              "g": "much"
-            }
-          ]
-        },
-        "nativo": {
-          "es": "El mundo tiene sombras, mas ella tiene una nueva voluntad.",
-          "words": [
-            {
-              "w": "sombras",
-              "g": "shadows"
-            },
-            {
-              "w": "mas",
-              "g": "but"
-            },
-            {
-              "w": "voluntad",
-              "g": "will"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "n": 20,
-      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Close-up on Pandora's eyes reflecting the golden light, looking toward the horizon where shadows still loom.",
-      "en": "What will she do next?",
-      "levels": {
-        "facil": {
-          "es": "¿Qué tiene ella en el futuro?",
-          "words": [
-            {
-              "w": "qué",
-              "g": "what"
-            },
-            {
-              "w": "futuro",
-              "g": "future"
+              "w": "terrible",
+              "g": "terrible"
             },
             {
               "w": "tiene",
@@ -905,43 +974,200 @@
             }
           ]
         },
-        "intermedio": {
-          "es": "¿Qué tiene preparado el destino para ella?",
+        "nativo": {
+          "es": "Pandora profiere un alarido. Tiene el corazón atenazado por un pavor absoluto.",
           "words": [
             {
-              "w": "preparado",
-              "g": "prepared"
+              "w": "profiere",
+              "g": "utters"
             },
             {
-              "w": "destino",
-              "g": "destiny"
+              "w": "alarido",
+              "g": "shriek"
             },
             {
-              "w": "para",
-              "g": "for"
+              "w": "atenazado",
+              "g": "gripped"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora desperately tries to close the lid, but it is too late.",
+      "en": "She tries to close the box. She has no control now.",
+      "levels": {
+        "facil": {
+          "es": "Ella intenta cerrar la caja. No tiene control ahora.",
+          "words": [
+            {
+              "w": "intenta",
+              "g": "tries"
+            },
+            {
+              "w": "cerrar",
+              "g": "close"
+            },
+            {
+              "w": "control",
+              "g": "control"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ella quiere cerrar la caja rápidamente. No tiene ningún control sobre el caos.",
+          "words": [
+            {
+              "w": "rápidamente",
+              "g": "quickly"
+            },
+            {
+              "w": "ningún",
+              "g": "any"
+            },
+            {
+              "w": "caos",
+              "g": "chaos"
             }
           ]
         },
         "nativo": {
-          "es": "¿Qué tiene el destino guardado tras el horizonte?",
+          "es": "Intenta sellar la caja desesperada. Ya no tiene dominio sobre lo que ha desatado.",
           "words": [
             {
-              "w": "guardado",
-              "g": "kept"
+              "w": "sellar",
+              "g": "seal"
             },
             {
-              "w": "tras",
-              "g": "behind"
+              "w": "desesperada",
+              "g": "desperate"
             },
             {
-              "w": "horizonte",
-              "g": "horizon"
+              "w": "desatado",
+              "g": "unleashed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Inside the now-empty box, a tiny, glowing golden light remains at the bottom.",
+      "en": "Only one small light stays. It has a soft glow.",
+      "levels": {
+        "facil": {
+          "es": "Solo queda una luz pequeña. Tiene un brillo suave.",
+          "words": [
+            {
+              "w": "queda",
+              "g": "remains"
+            },
+            {
+              "w": "pequeña",
+              "g": "small"
+            },
+            {
+              "w": "brillo",
+              "g": "glow"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Solo una pequeña luz permanece al fondo. Tiene un brillo dorado y suave.",
+          "words": [
+            {
+              "w": "permanece",
+              "g": "remains"
+            },
+            {
+              "w": "fondo",
+              "g": "bottom"
+            },
+            {
+              "w": "dorado",
+              "g": "golden"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Tan solo una tenue luz subsiste en el fondo. Tiene un destello cálido y esperanzador.",
+          "words": [
+            {
+              "w": "tenue",
+              "g": "faint"
+            },
+            {
+              "w": "subsiste",
+              "g": "subsists"
+            },
+            {
+              "w": "esperanzador",
+              "g": "hopeful"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Pandora reaches out a trembling hand toward the light, her face a mix of sorrow and wonder.",
+      "en": "She touches the light. It has the power to survive.",
+      "levels": {
+        "facil": {
+          "es": "Ella toca la luz. Tiene el poder de sobrevivir.",
+          "words": [
+            {
+              "w": "toca",
+              "g": "touches"
+            },
+            {
+              "w": "poder",
+              "g": "power"
+            },
+            {
+              "w": "sobrevivir",
+              "g": "survive"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ella toca la luz con cuidado. Esta luz tiene el poder de sobrevivir al mal.",
+          "words": [
+            {
+              "w": "cuidado",
+              "g": "care"
+            },
+            {
+              "w": "sobrevivir",
+              "g": "survive"
+            },
+            {
+              "w": "mal",
+              "g": "evil"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Alcanza la luz con mano temblorosa. Posee el poder intrínseco de perdurar.",
+          "words": [
+            {
+              "w": "alcanza",
+              "g": "reaches"
+            },
+            {
+              "w": "temblorosa",
+              "g": "trembling"
+            },
+            {
+              "w": "intrínseco",
+              "g": "intrinsic"
             }
           ]
         }
       }
     }
   ],
-  "cliffhanger": "Pandora comienza a caminar hacia la oscuridad del mundo, con la luz de la esperanza protegida entre sus manos, sin saber si será suficiente para sanar las heridas que ella misma causó.",
-  "closingBeat": "A veces, incluso en el caos absoluto, lo último que perdemos es nuestra única oportunidad de redención."
+  "cliffhanger": "Pandora sostiene la luz en sus manos mientras, a lo lejos, el mundo comienza a cambiar. ¿Qué será de la humanidad ahora que el mal camina libre y la esperanza es el único refugio?",
+  "closingBeat": "La curiosidad humana es la puerta por la que entra el dolor, pero también la luz que nos permite seguir adelante."
 }

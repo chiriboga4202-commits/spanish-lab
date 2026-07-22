@@ -1,0 +1,1173 @@
+{
+  "series": "MITOS",
+  "chapter": 8,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "Perseo y Medusa",
+  "level": "A2",
+  "grammarFocus": "presente + descripción",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseo stands on the shore, young, athletic, wearing bronze sandals and a simple tunic. He looks at the dark, distant horizon where Icarus fell.",
+      "en": "The sea is quiet now. The hero watches the horizon where the feathers fell.",
+      "levels": {
+        "facil": {
+          "es": "El mar está tranquilo. El héroe mira el horizonte lejos.",
+          "words": [
+            {
+              "w": "tranquilo",
+              "g": "calm"
+            },
+            {
+              "w": "horizonte",
+              "g": "horizon"
+            },
+            {
+              "w": "héroe",
+              "g": "hero"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El mar está en calma. El joven héroe observa el horizonte donde cayeron las plumas.",
+          "words": [
+            {
+              "w": "observa",
+              "g": "watches"
+            },
+            {
+              "w": "calma",
+              "g": "calm"
+            },
+            {
+              "w": "plumas",
+              "g": "feathers"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El mar yace en calma. El héroe contempla el horizonte, testigo mudo de la reciente caída.",
+          "words": [
+            {
+              "w": "yace",
+              "g": "lies"
+            },
+            {
+              "w": "contempla",
+              "g": "contemplates"
+            },
+            {
+              "w": "testigo",
+              "g": "witness"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseo holds a polished bronze shield that glows under the sun. He is young, athletic, wearing bronze sandals and a simple tunic.",
+      "en": "He holds a shield. It is bright and clean like a mirror.",
+      "levels": {
+        "facil": {
+          "es": "Él tiene un escudo. Es brillante como un espejo.",
+          "words": [
+            {
+              "w": "escudo",
+              "g": "shield"
+            },
+            {
+              "w": "brillante",
+              "g": "shiny"
+            },
+            {
+              "w": "espejo",
+              "g": "mirror"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Sostiene un escudo de bronce. Es muy brillante, parece un espejo.",
+          "words": [
+            {
+              "w": "sostiene",
+              "g": "holds"
+            },
+            {
+              "w": "bronce",
+              "g": "bronze"
+            },
+            {
+              "w": "parece",
+              "g": "seems"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Empuña un escudo de bronce bruñido. Su superficie es un espejo impecable.",
+          "words": [
+            {
+              "w": "empuña",
+              "g": "wields"
+            },
+            {
+              "w": "bruñido",
+              "g": "burnished"
+            },
+            {
+              "w": "impecable",
+              "g": "flawless"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseo stands before a dark, jagged cave entrance, young, athletic, wearing bronze sandals and a simple tunic.",
+      "en": "The hero arrives at the cave. The air is cold and heavy.",
+      "levels": {
+        "facil": {
+          "es": "El héroe llega a la cueva. El aire es frío.",
+          "words": [
+            {
+              "w": "llega",
+              "g": "arrives"
+            },
+            {
+              "w": "cueva",
+              "g": "cave"
+            },
+            {
+              "w": "frío",
+              "g": "cold"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El héroe llega frente a la cueva. El aire es denso y muy frío.",
+          "words": [
+            {
+              "w": "frente",
+              "g": "in front of"
+            },
+            {
+              "w": "denso",
+              "g": "dense"
+            },
+            {
+              "w": "frío",
+              "g": "cold"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El héroe se detiene ante la boca de la cueva. El ambiente es gélido y pesado.",
+          "words": [
+            {
+              "w": "se detiene",
+              "g": "stops"
+            },
+            {
+              "w": "gélido",
+              "g": "icy"
+            },
+            {
+              "w": "pesado",
+              "g": "heavy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseo looks into the reflection of his shield, young, athletic, wearing bronze sandals and a simple tunic.",
+      "en": "He does not look directly ahead. He only looks at the reflection.",
+      "levels": {
+        "facil": {
+          "es": "Él no mira al frente. Solo mira el reflejo.",
+          "words": [
+            {
+              "w": "mira",
+              "g": "looks"
+            },
+            {
+              "w": "frente",
+              "g": "ahead"
+            },
+            {
+              "w": "reflejo",
+              "g": "reflection"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "No mira directamente al frente. Solo observa a través del reflejo.",
+          "words": [
+            {
+              "w": "directamente",
+              "g": "directly"
+            },
+            {
+              "w": "observa",
+              "g": "observes"
+            },
+            {
+              "w": "través",
+              "g": "through"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Evita mirar al frente. Sus ojos se fijan únicamente en el reflejo del metal.",
+          "words": [
+            {
+              "w": "evita",
+              "g": "avoids"
+            },
+            {
+              "w": "fijan",
+              "g": "fixate"
+            },
+            {
+              "w": "únicamente",
+              "g": "only"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Inside the dark cave, a stone statue of a warrior stands, young, athletic, wearing bronze sandals and a simple tunic.",
+      "en": "A stone statue stands in the dark. It is a man who saw too much.",
+      "levels": {
+        "facil": {
+          "es": "Hay una estatua de piedra en la oscuridad. Es un hombre.",
+          "words": [
+            {
+              "w": "estatua",
+              "g": "statue"
+            },
+            {
+              "w": "piedra",
+              "g": "stone"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Una estatua de piedra está en la oscuridad. Es un hombre que miró demasiado.",
+          "words": [
+            {
+              "w": "estatua",
+              "g": "statue"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            },
+            {
+              "w": "demasiado",
+              "g": "too much"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Una figura de piedra emerge de la penumbra. Es un hombre que vio lo prohibido.",
+          "words": [
+            {
+              "w": "figura",
+              "g": "figure"
+            },
+            {
+              "w": "emerge",
+              "g": "emerges"
+            },
+            {
+              "w": "prohibido",
+              "g": "forbidden"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseo holds his polished bronze shield high, his knuckles white with tension. In the reflection, the dark, serpentine silhouette of Medusa moves slowly across the cave floor.",
+      "en": "Perseo holds his shield up. He sees a shadow moving in the reflection.",
+      "levels": {
+        "facil": {
+          "es": "Perseo levanta su escudo. Él ve una sombra en el reflejo.",
+          "words": [
+            {
+              "w": "levanta",
+              "g": "raises"
+            },
+            {
+              "w": "escudo",
+              "g": "shield"
+            },
+            {
+              "w": "sombra",
+              "g": "shadow"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Perseo sostiene el escudo en alto. Observa una sombra que se mueve en el reflejo.",
+          "words": [
+            {
+              "w": "sostiene",
+              "g": "holds"
+            },
+            {
+              "w": "observa",
+              "g": "observes"
+            },
+            {
+              "w": "reflejo",
+              "g": "reflection"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Perseo alza el escudo de bronce. Sus ojos, fijos en el metal, captan el movimiento de una sombra sinuosa.",
+          "words": [
+            {
+              "w": "alza",
+              "g": "hoists"
+            },
+            {
+              "w": "fijos",
+              "g": "fixed"
+            },
+            {
+              "w": "sinuosa",
+              "g": "sinuous"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close-up on Medusa's face, partially obscured by writhing snakes. Her eyes are glowing with a faint, sickly light, scanning the room.",
+      "en": "Medusa is near. Her hair is full of snakes. She is looking for him.",
+      "levels": {
+        "facil": {
+          "es": "Medusa está cerca. Su pelo tiene serpientes. Ella busca al héroe.",
+          "words": [
+            {
+              "w": "cerca",
+              "g": "near"
+            },
+            {
+              "w": "pelo",
+              "g": "hair"
+            },
+            {
+              "w": "serpientes",
+              "g": "snakes"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Medusa está cerca. Su cabello es un nido de serpientes. Ella busca a alguien en la oscuridad.",
+          "words": [
+            {
+              "w": "cabello",
+              "g": "hair"
+            },
+            {
+              "w": "nido",
+              "g": "nest"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Medusa acecha. Su cabellera es un enjambre de víboras vivas. Sus ojos buscan una presa entre las sombras.",
+          "words": [
+            {
+              "w": "acecha",
+              "g": "stalks"
+            },
+            {
+              "w": "enjambre",
+              "g": "swarm"
+            },
+            {
+              "w": "presa",
+              "g": "prey"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseo breathes heavily, his chest rising and falling. He is hiding behind a large stone pillar, keeping his eyes averted.",
+      "en": "Perseo hides behind a stone. He is very nervous and breathes slowly.",
+      "levels": {
+        "facil": {
+          "es": "Perseo se esconde detrás de una piedra. Él está nervioso y respira lento.",
+          "words": [
+            {
+              "w": "esconde",
+              "g": "hides"
+            },
+            {
+              "w": "piedra",
+              "g": "stone"
+            },
+            {
+              "w": "nervioso",
+              "g": "nervous"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Perseo se oculta tras un pilar. Está nervioso y respira con dificultad.",
+          "words": [
+            {
+              "w": "oculta",
+              "g": "hides"
+            },
+            {
+              "w": "pilar",
+              "g": "pillar"
+            },
+            {
+              "w": "dificultad",
+              "g": "difficulty"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Perseo se oculta tras un pilar de piedra. Su respiración es pesada, el miedo late en su pecho.",
+          "words": [
+            {
+              "w": "pesada",
+              "g": "heavy"
+            },
+            {
+              "w": "late",
+              "g": "beats"
+            },
+            {
+              "w": "pecho",
+              "g": "chest"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Medusa slithers over the statues of previous victims, her claws scraping against the stone floor.",
+      "en": "Medusa walks over the stone statues. The sound is sharp and dry.",
+      "levels": {
+        "facil": {
+          "es": "Medusa camina sobre las estatuas. El ruido es fuerte y seco.",
+          "words": [
+            {
+              "w": "camina",
+              "g": "walks"
+            },
+            {
+              "w": "estatuas",
+              "g": "statues"
+            },
+            {
+              "w": "ruido",
+              "g": "noise"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Medusa se desliza sobre las estatuas. El sonido es seco y constante.",
+          "words": [
+            {
+              "w": "desliza",
+              "g": "slides"
+            },
+            {
+              "w": "sonido",
+              "g": "sound"
+            },
+            {
+              "w": "constante",
+              "g": "constant"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Medusa se arrastra sobre los restos de piedra. El roce de sus garras contra el suelo es un eco gélido.",
+          "words": [
+            {
+              "w": "arrastra",
+              "g": "crawls"
+            },
+            {
+              "w": "garras",
+              "g": "claws"
+            },
+            {
+              "w": "gélido",
+              "g": "icy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseo grips his sword tightly, his knuckles pale. He prepares to step out from the shadows.",
+      "en": "Perseo holds his sword. He is ready to fight the monster now.",
+      "levels": {
+        "facil": {
+          "es": "Perseo agarra su espada. Él está listo para luchar ahora.",
+          "words": [
+            {
+              "w": "agarra",
+              "g": "grabs"
+            },
+            {
+              "w": "espada",
+              "g": "sword"
+            },
+            {
+              "w": "luchar",
+              "g": "fight"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Perseo empuña su espada. Está preparado para enfrentar al monstruo.",
+          "words": [
+            {
+              "w": "empuña",
+              "g": "grips"
+            },
+            {
+              "w": "preparado",
+              "g": "prepared"
+            },
+            {
+              "w": "enfrentar",
+              "g": "face"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Perseo empuña el acero con firmeza. El momento de la verdad llega; está listo para el ataque.",
+          "words": [
+            {
+              "w": "acero",
+              "g": "steel"
+            },
+            {
+              "w": "firmeza",
+              "g": "firmness"
+            },
+            {
+              "w": "ataque",
+              "g": "attack"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseus, a young man with curly dark hair and a bronze breastplate, raises his polished shield high, his face pale and focused. Medusa, a tall woman with writhing venomous serpents for hair, looms in the shadows behind him.",
+      "en": "Perseus lifts his shield. He does not look directly at the monster.",
+      "levels": {
+        "facil": {
+          "es": "Perseo levanta su escudo. No mira al monstruo directamente.",
+          "words": [
+            {
+              "w": "levanta",
+              "g": "lifts"
+            },
+            {
+              "w": "escudo",
+              "g": "shield"
+            },
+            {
+              "w": "mira",
+              "g": "looks"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Perseo alza su escudo brillante. Evita mirar al monstruo a los ojos.",
+          "words": [
+            {
+              "w": "alza",
+              "g": "raises"
+            },
+            {
+              "w": "brillante",
+              "g": "shiny"
+            },
+            {
+              "w": "evita",
+              "g": "avoids"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Perseo eleva el escudo bruñido, esquivando la mirada letal de la gorgona.",
+          "words": [
+            {
+              "w": "eleva",
+              "g": "raises"
+            },
+            {
+              "w": "bruñido",
+              "g": "polished"
+            },
+            {
+              "w": "esquivando",
+              "g": "avoiding"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A close-up on the surface of the bronze shield. In the reflection, Medusa's terrifying face is visible, her eyes glowing with a sickly pale light.",
+      "en": "The shield is a mirror. Medusa is in the reflection.",
+      "levels": {
+        "facil": {
+          "es": "El escudo es un espejo. Medusa está en el reflejo.",
+          "words": [
+            {
+              "w": "espejo",
+              "g": "mirror"
+            },
+            {
+              "w": "está",
+              "g": "is"
+            },
+            {
+              "w": "reflejo",
+              "g": "reflection"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El metal actúa como espejo. El rostro de Medusa aparece en la superficie.",
+          "words": [
+            {
+              "w": "actúa",
+              "g": "acts"
+            },
+            {
+              "w": "rostro",
+              "g": "face"
+            },
+            {
+              "w": "superficie",
+              "g": "surface"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El metal bruñido se convierte en espejo; el semblante monstruoso de Medusa emerge en el reflejo.",
+          "words": [
+            {
+              "w": "bruñido",
+              "g": "polished"
+            },
+            {
+              "w": "semblante",
+              "g": "countenance"
+            },
+            {
+              "w": "emerge",
+              "g": "emerges"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Medusa hisses, her snake-hair coiling aggressively. She senses Perseus, her head turning slowly toward his position.",
+      "en": "Medusa hears a sound. She moves her head and hisses.",
+      "levels": {
+        "facil": {
+          "es": "Medusa escucha un sonido. Mueve su cabeza y silba.",
+          "words": [
+            {
+              "w": "escucha",
+              "g": "hears"
+            },
+            {
+              "w": "sonido",
+              "g": "sound"
+            },
+            {
+              "w": "silba",
+              "g": "hisses"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Medusa oye un ruido tenue. Gira la cabeza y lanza un siseo amenazante.",
+          "words": [
+            {
+              "w": "oye",
+              "g": "hears"
+            },
+            {
+              "w": "tenue",
+              "g": "faint"
+            },
+            {
+              "w": "siseo",
+              "g": "hiss"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Medusa percibe un leve movimiento. Su cabeza gira con lentitud, emitiendo un siseo sepulcral.",
+          "words": [
+            {
+              "w": "percibe",
+              "g": "perceives"
+            },
+            {
+              "w": "lentitud",
+              "g": "slowness"
+            },
+            {
+              "w": "sepulcral",
+              "g": "sepulchral"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseus is sweating, his hand gripping the sword hilt tightly. He is ready to strike.",
+      "en": "Perseus waits. He is ready to attack.",
+      "levels": {
+        "facil": {
+          "es": "Perseo espera. Él está listo para atacar.",
+          "words": [
+            {
+              "w": "espera",
+              "g": "waits"
+            },
+            {
+              "w": "listo",
+              "g": "ready"
+            },
+            {
+              "w": "atacar",
+              "g": "to attack"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Perseo aguarda en silencio. Su mano aprieta la espada con fuerza.",
+          "words": [
+            {
+              "w": "aguarda",
+              "g": "awaits"
+            },
+            {
+              "w": "silencio",
+              "g": "silence"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Perseo aguarda, conteniendo el aliento. Empuña su acero, firme y decidido.",
+          "words": [
+            {
+              "w": "conteniendo",
+              "g": "holding"
+            },
+            {
+              "w": "aliento",
+              "g": "breath"
+            },
+            {
+              "w": "decidido",
+              "g": "determined"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Medusa lunges forward, her claws outstretched, her eyes wide and glowing intensely.",
+      "en": "Medusa jumps. She is very angry and hungry.",
+      "levels": {
+        "facil": {
+          "es": "Medusa salta. Ella está muy enojada y hambrienta.",
+          "words": [
+            {
+              "w": "salta",
+              "g": "jumps"
+            },
+            {
+              "w": "enojada",
+              "g": "angry"
+            },
+            {
+              "w": "hambrienta",
+              "g": "hungry"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Medusa se lanza hacia adelante. Tiene mucha furia en sus ojos.",
+          "words": [
+            {
+              "w": "lanza",
+              "g": "launches"
+            },
+            {
+              "w": "furia",
+              "g": "fury"
+            },
+            {
+              "w": "ojos",
+              "g": "eyes"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Medusa se abalanza con ferocidad, sus ojos brillan con una sed de muerte.",
+          "words": [
+            {
+              "w": "abalanza",
+              "g": "lunges"
+            },
+            {
+              "w": "ferocidad",
+              "g": "ferocity"
+            },
+            {
+              "w": "sed",
+              "g": "thirst"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseus, a young hero with a bronze helmet and polished shield, stands steady. Medusa, a woman with writhing venomous serpents for hair, lunges toward him.",
+      "en": "Perseus lifts his polished shield; Medusa sees her own reflection.",
+      "levels": {
+        "facil": {
+          "es": "Perseo levanta el escudo. Medusa ve su cara en el espejo.",
+          "words": [
+            {
+              "w": "levanta",
+              "g": "lifts"
+            },
+            {
+              "w": "espejo",
+              "g": "mirror"
+            },
+            {
+              "w": "cara",
+              "g": "face"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Perseo alza su escudo brillante. Medusa contempla su propio reflejo.",
+          "words": [
+            {
+              "w": "alza",
+              "g": "raises"
+            },
+            {
+              "w": "brillante",
+              "g": "shiny"
+            },
+            {
+              "w": "reflejo",
+              "g": "reflection"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Perseo eleva el escudo bruñido; Medusa se topa con su propia mirada en el metal.",
+          "words": [
+            {
+              "w": "bruñido",
+              "g": "polished"
+            },
+            {
+              "w": "topa",
+              "g": "encounters"
+            },
+            {
+              "w": "mirada",
+              "g": "gaze"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Medusa freezes mid-air, her expression shifting from fury to pure, petrified shock.",
+      "en": "The monster stops. Her heart turns to cold stone.",
+      "levels": {
+        "facil": {
+          "es": "El monstruo para. Su corazón es de piedra ahora.",
+          "words": [
+            {
+              "w": "monstruo",
+              "g": "monster"
+            },
+            {
+              "w": "piedra",
+              "g": "stone"
+            },
+            {
+              "w": "ahora",
+              "g": "now"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El monstruo se detiene. Su cuerpo se convierte en roca fría.",
+          "words": [
+            {
+              "w": "detiene",
+              "g": "stops"
+            },
+            {
+              "w": "convierte",
+              "g": "becomes"
+            },
+            {
+              "w": "roca",
+              "g": "rock"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La criatura se paraliza en seco. Su piel se torna en una gélida piedra.",
+          "words": [
+            {
+              "w": "paraliza",
+              "g": "paralyzed"
+            },
+            {
+              "w": "torna",
+              "g": "turns into"
+            },
+            {
+              "w": "gélida",
+              "g": "icy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseus swings his sword with precision, striking the neck of the now-static Medusa.",
+      "en": "Perseus strikes with his sword. The blade is sharp and fast.",
+      "levels": {
+        "facil": {
+          "es": "Perseo ataca con la espada. La hoja es rápida y fuerte.",
+          "words": [
+            {
+              "w": "ataca",
+              "g": "attacks"
+            },
+            {
+              "w": "espada",
+              "g": "sword"
+            },
+            {
+              "w": "rápida",
+              "g": "fast"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Perseo golpea con su espada. El filo corta el aire con precisión.",
+          "words": [
+            {
+              "w": "golpea",
+              "g": "strikes"
+            },
+            {
+              "w": "filo",
+              "g": "blade edge"
+            },
+            {
+              "w": "precisión",
+              "g": "precision"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Perseo descarga su acero. Un tajo certero atraviesa el cuello de la Gorgona.",
+          "words": [
+            {
+              "w": "descarga",
+              "g": "unleashes"
+            },
+            {
+              "w": "certero",
+              "g": "accurate"
+            },
+            {
+              "w": "tajo",
+              "g": "slash"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Medusa falls to the ground, her snake-hair finally silent. Perseus stands over her, breathing heavily.",
+      "en": "The silence returns to the cave. The fight is over.",
+      "levels": {
+        "facil": {
+          "es": "Hay silencio en la cueva. La lucha termina ahora.",
+          "words": [
+            {
+              "w": "silencio",
+              "g": "silence"
+            },
+            {
+              "w": "cueva",
+              "g": "cave"
+            },
+            {
+              "w": "lucha",
+              "g": "fight"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El silencio regresa a la cueva. La batalla llega a su fin.",
+          "words": [
+            {
+              "w": "regresa",
+              "g": "returns"
+            },
+            {
+              "w": "batalla",
+              "g": "battle"
+            },
+            {
+              "w": "fin",
+              "g": "end"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Un silencio sepulcral inunda la caverna. La contienda ha cesado.",
+          "words": [
+            {
+              "w": "sepulcral",
+              "g": "sepulchral"
+            },
+            {
+              "w": "inunda",
+              "g": "floods"
+            },
+            {
+              "w": "contienda",
+              "g": "struggle"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Perseus reaches down, his hand trembling, to grab the severed head. From the neck, something glowing and winged begins to emerge.",
+      "en": "Perseus reaches for the head, but something strange rises from the blood.",
+      "levels": {
+        "facil": {
+          "es": "Perseo busca la cabeza. Algo extraño sale de la sangre.",
+          "words": [
+            {
+              "w": "busca",
+              "g": "reaches/seeks"
+            },
+            {
+              "w": "cabeza",
+              "g": "head"
+            },
+            {
+              "w": "sangre",
+              "g": "blood"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Perseo se acerca a la cabeza. Una forma extraña surge de la sangre.",
+          "words": [
+            {
+              "w": "acerca",
+              "g": "approaches"
+            },
+            {
+              "w": "forma",
+              "g": "form"
+            },
+            {
+              "w": "surge",
+              "g": "arises"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Perseo extiende la mano hacia la cabeza; de la sangre brota una silueta alada.",
+          "words": [
+            {
+              "w": "extiende",
+              "g": "reaches"
+            },
+            {
+              "w": "brota",
+              "g": "sprouts"
+            },
+            {
+              "w": "alada",
+              "g": "winged"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "El héroe cree que la pesadilla ha terminado, pero de la sangre de la Gorgona nace algo que el cielo no debería conocer.",
+  "closingBeat": "La victoria es a menudo la semilla de un nuevo peligro."
+}

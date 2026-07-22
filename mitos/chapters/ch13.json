@@ -1,0 +1,1113 @@
+{
+  "series": "MITOS",
+  "chapter": 13,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "El Canto de Orfeo",
+  "level": "A2-B1",
+  "grammarFocus": "verbos reflexivos",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo, a young man with a lyre strapped to his back, stands at the edge of a dark, yawning chasm. He looks determined.",
+      "en": "The price of glory is paid in shadow. Orpheus stands at the edge of the abyss.",
+      "levels": {
+        "facil": {
+          "es": "La gloria tiene un precio. Orfeo se prepara y se detiene ante el abismo.",
+          "words": [
+            {
+              "w": "precio",
+              "g": "price"
+            },
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "se detiene",
+              "g": "stops himself"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El precio de la gloria es la sombra. Orfeo se detiene frente al abismo oscuro.",
+          "words": [
+            {
+              "w": "sombra",
+              "g": "shadow"
+            },
+            {
+              "w": "frente a",
+              "g": "in front of"
+            },
+            {
+              "w": "se detiene",
+              "g": "stops himself"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La gloria exige un precio en sombras. Orfeo se detiene al borde del abismo.",
+          "words": [
+            {
+              "w": "exige",
+              "g": "demands"
+            },
+            {
+              "w": "borde",
+              "g": "edge"
+            },
+            {
+              "w": "se detiene",
+              "g": "stops himself"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo descends into a rocky, misty cavern, clutching his lyre. He looks nervous but focused.",
+      "en": "He descends. He calms himself with a deep breath.",
+      "levels": {
+        "facil": {
+          "es": "Orfeo baja. Él se tranquiliza con una respiración profunda.",
+          "words": [
+            {
+              "w": "baja",
+              "g": "descends"
+            },
+            {
+              "w": "se tranquiliza",
+              "g": "calms himself"
+            },
+            {
+              "w": "profunda",
+              "g": "deep"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Orfeo desciende a la cueva. Se prepara mentalmente para el camino.",
+          "words": [
+            {
+              "w": "desciende",
+              "g": "descends"
+            },
+            {
+              "w": "se prepara",
+              "g": "prepares himself"
+            },
+            {
+              "w": "camino",
+              "g": "path"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Orfeo desciende. Se sosiega mientras el aire frío lo rodea.",
+          "words": [
+            {
+              "w": "se sosiega",
+              "g": "calms himself"
+            },
+            {
+              "w": "mientras",
+              "g": "while"
+            },
+            {
+              "w": "rodea",
+              "g": "surrounds"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo plays his lyre; the music manifests as faint, glowing gold ripples in the dark, spectral air.",
+      "en": "He plays his lyre. The music surrounds him like a golden shield.",
+      "levels": {
+        "facil": {
+          "es": "Toca su lira. La música se siente como un escudo.",
+          "words": [
+            {
+              "w": "toca",
+              "g": "plays"
+            },
+            {
+              "w": "lira",
+              "g": "lyre"
+            },
+            {
+              "w": "se siente",
+              "g": "feels (itself)"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Orfeo toca su lira. La melodía se extiende y lo protege.",
+          "words": [
+            {
+              "w": "melodía",
+              "g": "melody"
+            },
+            {
+              "w": "se extiende",
+              "g": "spreads out"
+            },
+            {
+              "w": "se protege",
+              "g": "protects himself"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Orfeo tañe su lira. La música se manifiesta, envolviéndolo en oro.",
+          "words": [
+            {
+              "w": "tañe",
+              "g": "plucks/plays"
+            },
+            {
+              "w": "se manifiesta",
+              "g": "manifests"
+            },
+            {
+              "w": "envolviéndolo",
+              "g": "wrapping him"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Cerberus, the three-headed dog, growls in the shadows, but stops, ears perked, listening to the music.",
+      "en": "The three-headed beast emerges. It calms down at the sound of the melody.",
+      "levels": {
+        "facil": {
+          "es": "El perro de tres cabezas aparece. Se calma al escuchar la música.",
+          "words": [
+            {
+              "w": "perro",
+              "g": "dog"
+            },
+            {
+              "w": "cabezas",
+              "g": "heads"
+            },
+            {
+              "w": "se calma",
+              "g": "calms himself"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La bestia de tres cabezas surge. Se amansa al oír el canto.",
+          "words": [
+            {
+              "w": "bestia",
+              "g": "beast"
+            },
+            {
+              "w": "surge",
+              "g": "emerges"
+            },
+            {
+              "w": "se amansa",
+              "g": "tames himself"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La fiera de tres testas emerge. Se apacigua ante la armonía del canto.",
+          "words": [
+            {
+              "w": "fiera",
+              "g": "wild beast"
+            },
+            {
+              "w": "testas",
+              "g": "heads"
+            },
+            {
+              "w": "se apacigua",
+              "g": "calms himself"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades sits on his throne, looking down, his face stern but intrigued by the sound echoing in his hall.",
+      "en": "Hades sits on his throne. He wonders who dares to enter his kingdom.",
+      "levels": {
+        "facil": {
+          "es": "Hades está en su trono. Él se pregunta quién entra en su reino.",
+          "words": [
+            {
+              "w": "trono",
+              "g": "throne"
+            },
+            {
+              "w": "se pregunta",
+              "g": "wonders (asks himself)"
+            },
+            {
+              "w": "reino",
+              "g": "kingdom"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades observa desde el trono. Se cuestiona quién se atreve a entrar.",
+          "words": [
+            {
+              "w": "observa",
+              "g": "observes"
+            },
+            {
+              "w": "se cuestiona",
+              "g": "questions himself"
+            },
+            {
+              "w": "se atreve",
+              "g": "dares"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades preside desde el trono. Se interroga sobre quién se aventura en sus dominios.",
+          "words": [
+            {
+              "w": "preside",
+              "g": "presides"
+            },
+            {
+              "w": "se interroga",
+              "g": "asks himself"
+            },
+            {
+              "w": "se aventura",
+              "g": "ventures himself"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo, a man with wild dark curls and a simple linen tunic, stands before Hades, a towering figure in obsidian armor. Orfeo bows his head low.",
+      "en": "Orfeo bows before the king of the dead.",
+      "levels": {
+        "facil": {
+          "es": "Orfeo se inclina ante Hades.",
+          "words": [
+            {
+              "w": "se inclina",
+              "g": "bows"
+            },
+            {
+              "w": "ante",
+              "g": "before"
+            },
+            {
+              "w": "el rey",
+              "g": "the king"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Orfeo se inclina con respeto frente al señor de los muertos.",
+          "words": [
+            {
+              "w": "se inclina",
+              "g": "bows"
+            },
+            {
+              "w": "respeto",
+              "g": "respect"
+            },
+            {
+              "w": "frente a",
+              "g": "in front of"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Orfeo se inclina con humildad ante el oscuro soberano del inframundo.",
+          "words": [
+            {
+              "w": "se inclina",
+              "g": "bows"
+            },
+            {
+              "w": "humildad",
+              "g": "humility"
+            },
+            {
+              "w": "soberano",
+              "g": "sovereign"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo plucks a golden string on his lyre. Hades leans forward, his expression shifting from anger to curiosity.",
+      "en": "The music softens Hades' heart.",
+      "levels": {
+        "facil": {
+          "es": "La música se calma. Hades se sorprende.",
+          "words": [
+            {
+              "w": "se calma",
+              "g": "calms down"
+            },
+            {
+              "w": "se sorprende",
+              "g": "is surprised"
+            },
+            {
+              "w": "la música",
+              "g": "the music"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La melodía se suaviza y Hades se conmueve en su trono.",
+          "words": [
+            {
+              "w": "se suaviza",
+              "g": "softens"
+            },
+            {
+              "w": "se conmueve",
+              "g": "is moved"
+            },
+            {
+              "w": "trono",
+              "g": "throne"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La melodía se torna dulce; Hades se estremece bajo el hechizo.",
+          "words": [
+            {
+              "w": "se torna",
+              "g": "becomes"
+            },
+            {
+              "w": "se estremece",
+              "g": "shudders"
+            },
+            {
+              "w": "hechizo",
+              "g": "spell"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo sings, his eyes closed. Shadows around them seem to dance and retreat.",
+      "en": "Orfeo sings of his lost Eurídice.",
+      "levels": {
+        "facil": {
+          "es": "Orfeo se concentra y canta por su amor.",
+          "words": [
+            {
+              "w": "se concentra",
+              "g": "concentrates"
+            },
+            {
+              "w": "canta",
+              "g": "sings"
+            },
+            {
+              "w": "amor",
+              "g": "love"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Orfeo se pierde en su canto, recordando a Eurídice.",
+          "words": [
+            {
+              "w": "se pierde",
+              "g": "gets lost"
+            },
+            {
+              "w": "recordando",
+              "g": "remembering"
+            },
+            {
+              "w": "canto",
+              "g": "song"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Orfeo se entrega a su lamento, invocando la memoria de su amada.",
+          "words": [
+            {
+              "w": "se entrega",
+              "g": "surrenders"
+            },
+            {
+              "w": "lamento",
+              "g": "lament"
+            },
+            {
+              "w": "invocando",
+              "g": "invoking"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades speaks, gesturing toward the shadows behind him. He looks solemn and ancient.",
+      "en": "Hades agrees to grant his wish.",
+      "levels": {
+        "facil": {
+          "es": "Hades se levanta y acepta.",
+          "words": [
+            {
+              "w": "se levanta",
+              "g": "stands up"
+            },
+            {
+              "w": "acepta",
+              "g": "accepts"
+            },
+            {
+              "w": "Hades",
+              "g": "Hades"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades se levanta de su trono y decide concederle el deseo.",
+          "words": [
+            {
+              "w": "se levanta",
+              "g": "stands up"
+            },
+            {
+              "w": "concederle",
+              "g": "to grant him"
+            },
+            {
+              "w": "deseo",
+              "g": "wish"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades se alza, solemne, otorgándole la oportunidad que busca.",
+          "words": [
+            {
+              "w": "se alza",
+              "g": "rises"
+            },
+            {
+              "w": "solemne",
+              "g": "solemn"
+            },
+            {
+              "w": "otorgándole",
+              "g": "granting him"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Eurídice appears in the misty distance, looking pale and ghostly. Orfeo reaches out but stops himself.",
+      "en": "Eurídice appears, but she stays far away.",
+      "levels": {
+        "facil": {
+          "es": "Eurídice se ve cerca. Orfeo se detiene.",
+          "words": [
+            {
+              "w": "se ve",
+              "g": "is seen"
+            },
+            {
+              "w": "cerca",
+              "g": "near"
+            },
+            {
+              "w": "se detiene",
+              "g": "stops"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Eurídice se aparece entre las sombras; Orfeo se contiene.",
+          "words": [
+            {
+              "w": "se aparece",
+              "g": "appears"
+            },
+            {
+              "w": "sombras",
+              "g": "shadows"
+            },
+            {
+              "w": "se contiene",
+              "g": "restrains himself"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Eurídice se manifiesta como un espectro; Orfeo se mantiene firme.",
+          "words": [
+            {
+              "w": "se manifiesta",
+              "g": "manifests"
+            },
+            {
+              "w": "espectro",
+              "g": "specter"
+            },
+            {
+              "w": "se mantiene",
+              "g": "remains"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo, a young man with a laurel crown and a golden lyre, walks forward, his eyes fixed ahead on the jagged path. Eurídice, a pale woman in a torn white chiton, follows him silently in the shadows.",
+      "en": "Orpheus walks ahead. He does not turn around to look at her.",
+      "levels": {
+        "facil": {
+          "es": "Orfeo camina adelante. Él no se gira para verla.",
+          "words": [
+            {
+              "w": "camina",
+              "g": "walks"
+            },
+            {
+              "w": "adelante",
+              "g": "ahead"
+            },
+            {
+              "w": "se gira",
+              "g": "turns around"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Orfeo avanza con paso firme. Se niega a girarse para mirarla.",
+          "words": [
+            {
+              "w": "avanza",
+              "g": "advances"
+            },
+            {
+              "w": "firme",
+              "g": "firm"
+            },
+            {
+              "w": "se niega",
+              "g": "refuses"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Orfeo se adelanta por el sendero. Se contiene y evita girarse a cualquier precio.",
+          "words": [
+            {
+              "w": "se adelanta",
+              "g": "moves ahead"
+            },
+            {
+              "w": "se contiene",
+              "g": "restrains himself"
+            },
+            {
+              "w": "evita",
+              "g": "avoids"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close up on Orfeo's face, sweat beading on his brow. He is trembling, his hands gripping the lyre tightly.",
+      "levels": {
+        "facil": {
+          "es": "Orfeo siente miedo. Él se prepara para el largo camino.",
+          "words": [
+            {
+              "w": "siente",
+              "g": "feels"
+            },
+            {
+              "w": "miedo",
+              "g": "fear"
+            },
+            {
+              "w": "se prepara",
+              "g": "prepares himself"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Orfeo siente mucha ansiedad. Se concentra para no perder el control.",
+          "words": [
+            {
+              "w": "ansiedad",
+              "g": "anxiety"
+            },
+            {
+              "w": "se concentra",
+              "g": "focuses"
+            },
+            {
+              "w": "control",
+              "g": "control"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El terror se apodera de Orfeo, pero se obliga a mantener la calma.",
+          "words": [
+            {
+              "w": "se apodera",
+              "g": "takes hold"
+            },
+            {
+              "w": "se obliga",
+              "g": "forces himself"
+            },
+            {
+              "w": "calma",
+              "g": "calm"
+            }
+          ]
+        }
+      },
+      "en": "Orpheus feels terror, but he forces himself to stay calm."
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Eurídice stumbles on a rock in the dark, her hand reaching out towards Orfeo's back.",
+      "levels": {
+        "facil": {
+          "es": "Eurídice tropieza en la oscuridad. Ella se cae al suelo.",
+          "words": [
+            {
+              "w": "tropieza",
+              "g": "stumbles"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            },
+            {
+              "w": "se cae",
+              "g": "falls"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Eurídice tropieza con una piedra. Se tambalea y casi pierde el equilibrio.",
+          "words": [
+            {
+              "w": "piedra",
+              "g": "stone"
+            },
+            {
+              "w": "se tambalea",
+              "g": "staggers"
+            },
+            {
+              "w": "equilibrio",
+              "g": "balance"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Eurídice tropieza en la penumbra y se desploma sobre el terreno escarpado.",
+          "words": [
+            {
+              "w": "penumbra",
+              "g": "gloom"
+            },
+            {
+              "w": "se desploma",
+              "g": "collapses"
+            },
+            {
+              "w": "escarpado",
+              "g": "steep"
+            }
+          ]
+        }
+      },
+      "en": "Eurydice stumbles in the gloom and collapses onto the steep ground."
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo stops abruptly, one foot raised, his back to the viewer. He is listening intently to the silence behind him.",
+      "levels": {
+        "facil": {
+          "es": "Orfeo se detiene. Él escucha un ruido detrás.",
+          "words": [
+            {
+              "w": "se detiene",
+              "g": "stops"
+            },
+            {
+              "w": "escucha",
+              "g": "listens"
+            },
+            {
+              "w": "ruido",
+              "g": "noise"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Orfeo se detiene en seco. Se pregunta si ella está bien.",
+          "words": [
+            {
+              "w": "en seco",
+              "g": "abruptly"
+            },
+            {
+              "w": "se pregunta",
+              "g": "wonders"
+            },
+            {
+              "w": "bien",
+              "g": "okay"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Orfeo se paraliza. Se inquieta ante el silencio repentino.",
+          "words": [
+            {
+              "w": "se paraliza",
+              "g": "freezes"
+            },
+            {
+              "w": "se inquieta",
+              "g": "gets anxious"
+            },
+            {
+              "w": "repentino",
+              "g": "sudden"
+            }
+          ]
+        }
+      },
+      "en": "Orpheus freezes. He grows anxious at the sudden silence."
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Eurídice gasps, her eyes wide with pain. She struggles to stand, clutching her ankle.",
+      "levels": {
+        "facil": {
+          "es": "Eurídice tiene dolor. Ella se levanta con esfuerzo.",
+          "words": [
+            {
+              "w": "dolor",
+              "g": "pain"
+            },
+            {
+              "w": "se levanta",
+              "g": "stands up"
+            },
+            {
+              "w": "esfuerzo",
+              "g": "effort"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Eurídice siente dolor. Se queja suavemente y se pone en pie.",
+          "words": [
+            {
+              "w": "se queja",
+              "g": "complains/moans"
+            },
+            {
+              "w": "suavemente",
+              "g": "softly"
+            },
+            {
+              "w": "se pone en pie",
+              "g": "stands up"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Eurídice gime de dolor. Se esfuerza por incorporarse mientras sujeta su tobillo.",
+          "words": [
+            {
+              "w": "gime",
+              "g": "moans"
+            },
+            {
+              "w": "incorporarse",
+              "g": "to get up"
+            },
+            {
+              "w": "sujeta",
+              "g": "holds"
+            }
+          ]
+        }
+      },
+      "en": "Eurydice moans in pain. She struggles to get up while holding her ankle."
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo, a man with a lyre and disheveled dark hair, stands with his back to the viewer, muscles tense, jaw clenched. Eurídice, a woman in a torn white tunic, stands behind him in the shadows.",
+      "en": "He stops himself from turning around. He controls his desire.",
+      "levels": {
+        "facil": {
+          "es": "Orfeo se detiene. Él se controla.",
+          "words": [
+            {
+              "w": "detiene",
+              "g": "stops"
+            },
+            {
+              "w": "controla",
+              "g": "controls"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Orfeo se contiene. Se obliga a sí mismo a no girarse.",
+          "words": [
+            {
+              "w": "contiene",
+              "g": "restrains"
+            },
+            {
+              "w": "girarse",
+              "g": "turn around"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Orfeo se inmoviliza. Se domina, negándose a mirar atrás.",
+          "words": [
+            {
+              "w": "inmoviliza",
+              "g": "freezes"
+            },
+            {
+              "w": "domina",
+              "g": "masters himself"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo walks forward, his hand trembling on the strings of his lyre. The path ahead is dark and steep.",
+      "en": "He walks forward. He feels afraid for her.",
+      "levels": {
+        "facil": {
+          "es": "Él camina. Se siente muy preocupado.",
+          "words": [
+            {
+              "w": "camina",
+              "g": "walks"
+            },
+            {
+              "w": "preocupado",
+              "g": "worried"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Él sigue adelante. Se preocupa por ella en la oscuridad.",
+          "words": [
+            {
+              "w": "sigue",
+              "g": "continues"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Avanza con paso incierto. Se inquieta ante el silencio de su amada.",
+          "words": [
+            {
+              "w": "incierto",
+              "g": "uncertain"
+            },
+            {
+              "w": "inquieta",
+              "g": "grows uneasy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Eurídice is just a few steps behind, her face pale, eyes wide with doubt.",
+      "en": "Eurídice follows him. She is exhausted.",
+      "levels": {
+        "facil": {
+          "es": "Eurídice se acerca. Ella se cansa mucho.",
+          "words": [
+            {
+              "w": "acerca",
+              "g": "approaches"
+            },
+            {
+              "w": "cansa",
+              "g": "tires"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Eurídice se esfuerza por seguirlo. Se siente agotada.",
+          "words": [
+            {
+              "w": "esfuerza",
+              "g": "strives"
+            },
+            {
+              "w": "agotada",
+              "g": "exhausted"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Eurídice se arrastra tras él. Se consume por el esfuerzo.",
+          "words": [
+            {
+              "w": "arrastra",
+              "g": "drags herself"
+            },
+            {
+              "w": "consume",
+              "g": "is consumed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A sliver of sunlight appears at the mouth of the cave. Orfeo is inches away from the exit.",
+      "en": "The light is near. He is about to save himself.",
+      "levels": {
+        "facil": {
+          "es": "La luz se ve. Él se va a salvar.",
+          "words": [
+            {
+              "w": "luz",
+              "g": "light"
+            },
+            {
+              "w": "salvar",
+              "g": "save"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La luz aparece. Se prepara para salir del inframundo.",
+          "words": [
+            {
+              "w": "aparece",
+              "g": "appears"
+            },
+            {
+              "w": "inframundo",
+              "g": "underworld"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La luz despunta. Se dispone a culminar su hazaña.",
+          "words": [
+            {
+              "w": "despunta",
+              "g": "breaks/dawns"
+            },
+            {
+              "w": "hazaña",
+              "g": "feat"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Orfeo stands at the threshold. His head turns slightly, his eyes wide, breaking the rule.",
+      "en": "He cannot help it. He turns his head to look.",
+      "levels": {
+        "facil": {
+          "es": "Él no puede más. Se gira para mirar.",
+          "words": [
+            {
+              "w": "gira",
+              "g": "turns"
+            },
+            {
+              "w": "mirar",
+              "g": "look"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "No se puede aguantar. Se voltea de repente.",
+          "words": [
+            {
+              "w": "aguantar",
+              "g": "hold back"
+            },
+            {
+              "w": "voltea",
+              "g": "turns around"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La duda lo vence. Se gira, quebrantando la ley del Hades.",
+          "words": [
+            {
+              "w": "vence",
+              "g": "conquers"
+            },
+            {
+              "w": "quebrantando",
+              "g": "breaking"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "En el instante en que Orfeo gira la cabeza, el tiempo se detiene y Eurídice comienza a desvanecerse como humo en el viento.",
+  "closingBeat": "El amor que no confía es el primero en perderse."
+}

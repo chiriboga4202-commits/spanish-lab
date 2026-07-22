@@ -1,0 +1,1233 @@
+{
+  "series": "MITOS",
+  "chapter": 5,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "El Monte Olimpo",
+  "level": "A2",
+  "grammarFocus": "artículos + adjetivos",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus stands at the edge of a jagged cliff, his white beard long and wild, his eyes glowing like electric storms, looking down at the smoking ruins of the Titan war.",
+      "en": "The smoke of the war still rises. Zeus looks at the horizon.",
+      "levels": {
+        "facil": {
+          "es": "El humo es negro. Zeus mira el horizonte lejano.",
+          "words": [
+            {
+              "w": "humo",
+              "g": "smoke"
+            },
+            {
+              "w": "negro",
+              "g": "black"
+            },
+            {
+              "w": "lejano",
+              "g": "distant"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El humo espeso sube al cielo. Zeus observa el horizonte vacío.",
+          "words": [
+            {
+              "w": "espeso",
+              "g": "thick"
+            },
+            {
+              "w": "sube",
+              "g": "rises"
+            },
+            {
+              "w": "vacío",
+              "g": "empty"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El humo denso aún se alza. Zeus contempla el horizonte desolado.",
+          "words": [
+            {
+              "w": "denso",
+              "g": "dense"
+            },
+            {
+              "w": "alza",
+              "g": "rises"
+            },
+            {
+              "w": "desolado",
+              "g": "desolate"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Poseidon emerges from the sea, his long dark beard dripping with brine, clutching a massive golden trident, his expression stern and cold.",
+      "en": "Poseidon rises from the deep ocean. He is a strong god.",
+      "levels": {
+        "facil": {
+          "es": "Poseidón sale del mar. Es un dios muy fuerte.",
+          "words": [
+            {
+              "w": "sale",
+              "g": "emerges"
+            },
+            {
+              "w": "mar",
+              "g": "sea"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Poseidón emerge del océano profundo. Es un dios poderoso y serio.",
+          "words": [
+            {
+              "w": "emerge",
+              "g": "emerges"
+            },
+            {
+              "w": "profundo",
+              "g": "deep"
+            },
+            {
+              "w": "poderoso",
+              "g": "powerful"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Poseidón surge del abismo marino. Es un dios soberano y adusto.",
+          "words": [
+            {
+              "w": "surge",
+              "g": "surges"
+            },
+            {
+              "w": "abismo",
+              "g": "abyss"
+            },
+            {
+              "w": "adusto",
+              "g": "stern"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades stands in the shadows, his skin pale as marble, wearing a crown of dark iron, his eyes hidden by a heavy cloak.",
+      "en": "Hades stands in the dark shadows. He is a silent god.",
+      "levels": {
+        "facil": {
+          "es": "Hades está en la sombra oscura. Es un dios silencioso.",
+          "words": [
+            {
+              "w": "sombra",
+              "g": "shadow"
+            },
+            {
+              "w": "oscura",
+              "g": "dark"
+            },
+            {
+              "w": "silencioso",
+              "g": "silent"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades permanece en las sombras oscuras. Es un dios callado y frío.",
+          "words": [
+            {
+              "w": "permanece",
+              "g": "remains"
+            },
+            {
+              "w": "callado",
+              "g": "quiet"
+            },
+            {
+              "w": "frío",
+              "g": "cold"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades aguarda en las sombras sombrías. Es un dios taciturno y gélido.",
+          "words": [
+            {
+              "w": "aguarda",
+              "g": "waits"
+            },
+            {
+              "w": "sombrías",
+              "g": "shadowy"
+            },
+            {
+              "w": "gélido",
+              "g": "icy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, Poseidon, and Hades face each other on the peaks of Mount Olympus. The air crackles with golden lightning.",
+      "en": "The three brothers meet on the high mountain. The air is tense.",
+      "levels": {
+        "facil": {
+          "es": "Los tres hermanos están en la montaña alta. El aire es tenso.",
+          "words": [
+            {
+              "w": "hermanos",
+              "g": "brothers"
+            },
+            {
+              "w": "montaña",
+              "g": "mountain"
+            },
+            {
+              "w": "tenso",
+              "g": "tense"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los tres hermanos se reúnen en la alta montaña. El ambiente es tenso.",
+          "words": [
+            {
+              "w": "reúnen",
+              "g": "meet"
+            },
+            {
+              "w": "alta",
+              "g": "high"
+            },
+            {
+              "w": "ambiente",
+              "g": "atmosphere"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los tres hermanos convergen en la cima excelsa. El aire es opresivo.",
+          "words": [
+            {
+              "w": "convergen",
+              "g": "converge"
+            },
+            {
+              "w": "excelsa",
+              "g": "lofty"
+            },
+            {
+              "w": "opresivo",
+              "g": "oppressive"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus holds a shimmering, golden helmet in his hand, preparing to cast lots to divide the kingdoms of the world.",
+      "en": "Zeus holds a golden helmet. He prepares to divide the great world.",
+      "levels": {
+        "facil": {
+          "es": "Zeus tiene un casco dorado. Él divide el mundo grande.",
+          "words": [
+            {
+              "w": "casco",
+              "g": "helmet"
+            },
+            {
+              "w": "dorado",
+              "g": "golden"
+            },
+            {
+              "w": "divide",
+              "g": "divides"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus sostiene un yelmo dorado. Él prepara la división del vasto mundo.",
+          "words": [
+            {
+              "w": "sostiene",
+              "g": "holds"
+            },
+            {
+              "w": "yelmo",
+              "g": "helmet"
+            },
+            {
+              "w": "vasto",
+              "g": "vast"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus empuña un yelmo áureo. Se dispone a repartir el vasto orbe.",
+          "words": [
+            {
+              "w": "empuña",
+              "g": "grasps"
+            },
+            {
+              "w": "áureo",
+              "g": "golden"
+            },
+            {
+              "w": "repartir",
+              "g": "distribute"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, a towering man with a thick white beard and intense eyes, holds a heavy golden helmet high above the stone altar.",
+      "en": "Zeus raises the heavy golden helmet. The air feels electric.",
+      "levels": {
+        "facil": {
+          "es": "Zeus levanta el casco dorado pesado. El aire es eléctrico.",
+          "words": [
+            {
+              "w": "casco",
+              "g": "helmet"
+            },
+            {
+              "w": "dorado",
+              "g": "golden"
+            },
+            {
+              "w": "pesado",
+              "g": "heavy"
+            },
+            {
+              "w": "eléctrico",
+              "g": "electric"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus levanta el gran casco dorado. El ambiente tenso se siente eléctrico.",
+          "words": [
+            {
+              "w": "gran",
+              "g": "great/big"
+            },
+            {
+              "w": "ambiente",
+              "g": "atmosphere"
+            },
+            {
+              "w": "tenso",
+              "g": "tense"
+            },
+            {
+              "w": "se siente",
+              "g": "feels"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus alza el yelmo dorado. El aire estático presagia la tormenta.",
+          "words": [
+            {
+              "w": "alza",
+              "g": "raises"
+            },
+            {
+              "w": "yelmo",
+              "g": "helmet"
+            },
+            {
+              "w": "estático",
+              "g": "static"
+            },
+            {
+              "w": "presagia",
+              "g": "foreshadows"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Poseidon, a rugged man with wild sea-green hair and a trident in hand, looks at the helmet with greedy eyes.",
+      "en": "Poseidon looks at the helmet. He wants the deep blue sea.",
+      "levels": {
+        "facil": {
+          "es": "Poseidón mira el casco. Él quiere el mar azul profundo.",
+          "words": [
+            {
+              "w": "mira",
+              "g": "looks at"
+            },
+            {
+              "w": "mar",
+              "g": "sea"
+            },
+            {
+              "w": "azul",
+              "g": "blue"
+            },
+            {
+              "w": "profundo",
+              "g": "deep"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Poseidón observa el objeto. Desea el vasto mar azul.",
+          "words": [
+            {
+              "w": "observa",
+              "g": "observes"
+            },
+            {
+              "w": "objeto",
+              "g": "object"
+            },
+            {
+              "w": "desea",
+              "g": "desires"
+            },
+            {
+              "w": "vasto",
+              "g": "vast"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Poseidón contempla el yelmo con ojos codiciosos. Ansía el dominio del mar proceloso.",
+          "words": [
+            {
+              "w": "contempla",
+              "g": "contemplates"
+            },
+            {
+              "w": "codiciosos",
+              "g": "greedy"
+            },
+            {
+              "w": "ansía",
+              "g": "craves"
+            },
+            {
+              "w": "proceloso",
+              "g": "stormy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Hades, a pale man with dark, hollow eyes and a black cloak, stands apart, his face hidden in shadow.",
+      "en": "Hades stays in the cold shadow. He is a silent god.",
+      "levels": {
+        "facil": {
+          "es": "Hades está en la sombra fría. Es un dios callado.",
+          "words": [
+            {
+              "w": "sombra",
+              "g": "shadow"
+            },
+            {
+              "w": "fría",
+              "g": "cold"
+            },
+            {
+              "w": "dios",
+              "g": "god"
+            },
+            {
+              "w": "callado",
+              "g": "quiet"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades permanece en la sombra oscura. Es un dios frío y silencioso.",
+          "words": [
+            {
+              "w": "permanece",
+              "g": "remains"
+            },
+            {
+              "w": "oscura",
+              "g": "dark"
+            },
+            {
+              "w": "frío",
+              "g": "cold"
+            },
+            {
+              "w": "silencioso",
+              "g": "silent"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades aguarda en la umbría gélida. Es el dios taciturno y sombrío.",
+          "words": [
+            {
+              "w": "aguarda",
+              "g": "waits"
+            },
+            {
+              "w": "umbría",
+              "g": "shade"
+            },
+            {
+              "w": "gélida",
+              "g": "icy"
+            },
+            {
+              "w": "taciturno",
+              "g": "taciturn"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A close-up of the helmet shows glowing, ancient symbols engraved into the gold.",
+      "en": "Ancient symbols glow on the gold. The magic is old and strong.",
+      "levels": {
+        "facil": {
+          "es": "Símbolos antiguos brillan en el oro. La magia es vieja y fuerte.",
+          "words": [
+            {
+              "w": "símbolos",
+              "g": "symbols"
+            },
+            {
+              "w": "antiguos",
+              "g": "ancient"
+            },
+            {
+              "w": "brillan",
+              "g": "shine"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Símbolos antiguos resplandecen en el oro. La magia es antigua y poderosa.",
+          "words": [
+            {
+              "w": "resplandecen",
+              "g": "glow"
+            },
+            {
+              "w": "oro",
+              "g": "gold"
+            },
+            {
+              "w": "antigua",
+              "g": "ancient"
+            },
+            {
+              "w": "poderosa",
+              "g": "powerful"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Glifos arcanos fulguran sobre el oro puro. La magia es ancestral y formidable.",
+          "words": [
+            {
+              "w": "glifos",
+              "g": "glyphs"
+            },
+            {
+              "w": "fulguran",
+              "g": "flash/glow"
+            },
+            {
+              "w": "puro",
+              "g": "pure"
+            },
+            {
+              "w": "formidable",
+              "g": "formidable"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus places his hand on the helmet, looking at his brothers with a stern, authoritative expression.",
+      "en": "Zeus touches the gold. He decides the new world order.",
+      "levels": {
+        "facil": {
+          "es": "Zeus toca el oro. Él decide el mundo nuevo.",
+          "words": [
+            {
+              "w": "toca",
+              "g": "touches"
+            },
+            {
+              "w": "oro",
+              "g": "gold"
+            },
+            {
+              "w": "decide",
+              "g": "decides"
+            },
+            {
+              "w": "nuevo",
+              "g": "new"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus toca el metal dorado. Determina el nuevo orden mundial.",
+          "words": [
+            {
+              "w": "metal",
+              "g": "metal"
+            },
+            {
+              "w": "dorado",
+              "g": "golden"
+            },
+            {
+              "w": "determina",
+              "g": "determines"
+            },
+            {
+              "w": "orden",
+              "g": "order"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus posa su mano sobre el metal aurífero. Dicta el nuevo orden del cosmos.",
+          "words": [
+            {
+              "w": "posa",
+              "g": "places"
+            },
+            {
+              "w": "aurífero",
+              "g": "golden"
+            },
+            {
+              "w": "dicta",
+              "g": "dictates"
+            },
+            {
+              "w": "cosmos",
+              "g": "cosmos"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Zeus, a powerful man with a thick white beard and intense electric-blue eyes, gestures toward the horizon. The vast, clear sky glows behind him.",
+      "en": "Zeus claims the vast, bright sky.",
+      "levels": {
+        "facil": {
+          "es": "Zeus toma el cielo azul. Es un lugar grande y brillante.",
+          "words": [
+            {
+              "w": "cielo",
+              "g": "sky"
+            },
+            {
+              "w": "grande",
+              "g": "big"
+            },
+            {
+              "w": "brillante",
+              "g": "bright"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus reclama el cielo infinito. Es un dominio alto y luminoso.",
+          "words": [
+            {
+              "w": "reclama",
+              "g": "claims"
+            },
+            {
+              "w": "infinito",
+              "g": "infinite"
+            },
+            {
+              "w": "luminoso",
+              "g": "luminous"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus se apropia del firmamento vasto. El reino es soberano y diáfano.",
+          "words": [
+            {
+              "w": "apropia",
+              "g": "takes possession"
+            },
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            },
+            {
+              "w": "soberano",
+              "g": "sovereign"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Poseidon, a rugged man with a wild dark beard and salt-crusted hair, holds a golden trident. The deep, turbulent ocean swirls around his feet.",
+      "en": "Poseidon chooses the deep, wild sea.",
+      "levels": {
+        "facil": {
+          "es": "Poseidón elige el mar profundo. Es un agua fría y fuerte.",
+          "words": [
+            {
+              "w": "elige",
+              "g": "chooses"
+            },
+            {
+              "w": "profundo",
+              "g": "deep"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Poseidón elige el mar inmenso. Es un reino salado y salvaje.",
+          "words": [
+            {
+              "w": "inmenso",
+              "g": "immense"
+            },
+            {
+              "w": "salado",
+              "g": "salty"
+            },
+            {
+              "w": "salvaje",
+              "g": "wild"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Poseidón reclama el océano proceloso. Su dominio es húmedo y tempestuoso.",
+          "words": [
+            {
+              "w": "océano",
+              "g": "ocean"
+            },
+            {
+              "w": "proceloso",
+              "g": "stormy"
+            },
+            {
+              "w": "tempestuoso",
+              "g": "tempestuous"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Hades, a gaunt man with pale skin, cold eyes, and long obsidian hair, stands in a dark, stony cavern. He holds a heavy, dark iron key.",
+      "en": "Hades remains in the dark, silent underworld.",
+      "levels": {
+        "facil": {
+          "es": "Hades prefiere el inframundo oscuro. Es un lugar callado y viejo.",
+          "words": [
+            {
+              "w": "prefiere",
+              "g": "prefers"
+            },
+            {
+              "w": "oscuro",
+              "g": "dark"
+            },
+            {
+              "w": "callado",
+              "g": "silent"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hades habita el inframundo tenebroso. Es un territorio eterno y silencioso.",
+          "words": [
+            {
+              "w": "habita",
+              "g": "inhabits"
+            },
+            {
+              "w": "tenebroso",
+              "g": "gloomy"
+            },
+            {
+              "w": "eterno",
+              "g": "eternal"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hades reclama el inframundo sombrío. Su morada es gélida y sepulcral.",
+          "words": [
+            {
+              "w": "sombrío",
+              "g": "shadowy"
+            },
+            {
+              "w": "morada",
+              "g": "dwelling"
+            },
+            {
+              "w": "sepulcral",
+              "g": "sepulchral"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Hera, a regal woman with piercing eyes and a golden diadem, stands beside Zeus. She wears a long, flowing white gown with golden embroidery.",
+      "en": "Hera looks at the new, golden world.",
+      "levels": {
+        "facil": {
+          "es": "Hera mira el mundo nuevo. Ella es una diosa hermosa y seria.",
+          "words": [
+            {
+              "w": "mira",
+              "g": "looks at"
+            },
+            {
+              "w": "nuevo",
+              "g": "new"
+            },
+            {
+              "w": "hermosa",
+              "g": "beautiful"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Hera observa el mundo dorado. Ella es una reina poderosa y elegante.",
+          "words": [
+            {
+              "w": "observa",
+              "g": "observes"
+            },
+            {
+              "w": "dorado",
+              "g": "golden"
+            },
+            {
+              "w": "elegante",
+              "g": "elegant"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hera contempla el orbe resplandeciente. Es una soberana altiva y majestuosa.",
+          "words": [
+            {
+              "w": "contempla",
+              "g": "contemplates"
+            },
+            {
+              "w": "resplandeciente",
+              "g": "shining"
+            },
+            {
+              "w": "majestuosa",
+              "g": "majestic"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. Athena, a young woman with sharp, intelligent eyes, holds a wooden shield. She stands near a tall, ancient olive tree.",
+      "en": "Athena watches with a wise, calm gaze.",
+      "levels": {
+        "facil": {
+          "es": "Atenea mira con ojos listos. Ella es una mujer sabia y tranquila.",
+          "words": [
+            {
+              "w": "ojos",
+              "g": "eyes"
+            },
+            {
+              "w": "sabia",
+              "g": "wise"
+            },
+            {
+              "w": "tranquila",
+              "g": "calm"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Atenea observa con una mirada inteligente. Ella es una diosa prudente y alerta.",
+          "words": [
+            {
+              "w": "mirada",
+              "g": "gaze"
+            },
+            {
+              "w": "inteligente",
+              "g": "intelligent"
+            },
+            {
+              "w": "prudente",
+              "g": "prudent"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Atenea observa con una mirada perspicaz. Es una estratega lúcida y cauta.",
+          "words": [
+            {
+              "w": "perspicaz",
+              "g": "sharp"
+            },
+            {
+              "w": "lúcida",
+              "g": "clear-headed"
+            },
+            {
+              "w": "cauta",
+              "g": "cautious"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Poseidón, un hombre robusto con barba densa y ojos como el mar, sostiene un tridente brillante.",
+      "en": "Poseidon rises from the deep ocean. He is a strong and restless god.",
+      "levels": {
+        "facil": {
+          "es": "Poseidón sale del mar profundo. Es un dios fuerte y activo.",
+          "words": [
+            {
+              "w": "profundo",
+              "g": "deep"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            },
+            {
+              "w": "activo",
+              "g": "active"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Poseidón emerge del océano profundo. Es un dios vigoroso y constante.",
+          "words": [
+            {
+              "w": "emerge",
+              "g": "emerges"
+            },
+            {
+              "w": "vigoroso",
+              "g": "vigorous"
+            },
+            {
+              "w": "constante",
+              "g": "constant"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Poseidón emerge de las aguas profundas. Es un dios impetuoso y soberano.",
+          "words": [
+            {
+              "w": "aguas",
+              "g": "waters"
+            },
+            {
+              "w": "impetuoso",
+              "g": "impetuous"
+            },
+            {
+              "w": "soberano",
+              "g": "sovereign"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Zeus, un hombre imponente con cabellos blancos y mirada eléctrica, observa desde un trono de nubes.",
+      "en": "Zeus watches from his throne. He is the supreme and just king.",
+      "levels": {
+        "facil": {
+          "es": "Zeus mira desde su trono. Es el rey supremo y justo.",
+          "words": [
+            {
+              "w": "mira",
+              "g": "looks"
+            },
+            {
+              "w": "supremo",
+              "g": "supreme"
+            },
+            {
+              "w": "justo",
+              "g": "just"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Zeus observa desde su alto trono. Es el rey supremo y muy justo.",
+          "words": [
+            {
+              "w": "observa",
+              "g": "observes"
+            },
+            {
+              "w": "alto",
+              "g": "high"
+            },
+            {
+              "w": "justo",
+              "g": "fair"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Zeus contempla desde su trono radiante. Es el monarca absoluto y severo.",
+          "words": [
+            {
+              "w": "contempla",
+              "g": "contemplates"
+            },
+            {
+              "w": "radiante",
+              "g": "radiant"
+            },
+            {
+              "w": "severo",
+              "g": "stern"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Los doce dioses se reúnen en el Monte Olimpo bajo una luz divina.",
+      "en": "The twelve gods meet on Mount Olympus. They are powerful and immortal.",
+      "levels": {
+        "facil": {
+          "es": "Los doce dioses están en el monte. Son poderosos e inmortales.",
+          "words": [
+            {
+              "w": "doce",
+              "g": "twelve"
+            },
+            {
+              "w": "poderosos",
+              "g": "powerful"
+            },
+            {
+              "w": "inmortales",
+              "g": "immortal"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los doce dioses se reúnen en el Olimpo. Son seres poderosos e inmortales.",
+          "words": [
+            {
+              "w": "reúnen",
+              "g": "gather"
+            },
+            {
+              "w": "seres",
+              "g": "beings"
+            },
+            {
+              "w": "inmortales",
+              "g": "immortal"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los doce dioses convergen en el Olimpo sagrado. Son deidades omnipotentes e inmortales.",
+          "words": [
+            {
+              "w": "convergen",
+              "g": "converge"
+            },
+            {
+              "w": "sagrado",
+              "g": "sacred"
+            },
+            {
+              "w": "omnipotentes",
+              "g": "omnipotent"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Un rayo cruza el cielo oscuro. Zeus levanta su mano con tensión.",
+      "en": "A lightning bolt crosses the sky. The air is heavy and tense.",
+      "levels": {
+        "facil": {
+          "es": "Un rayo cruza el cielo. El aire es pesado y tenso.",
+          "words": [
+            {
+              "w": "rayo",
+              "g": "lightning"
+            },
+            {
+              "w": "pesado",
+              "g": "heavy"
+            },
+            {
+              "w": "tenso",
+              "g": "tense"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Un rayo brillante cruza el cielo oscuro. El ambiente es pesado y tenso.",
+          "words": [
+            {
+              "w": "brillante",
+              "g": "bright"
+            },
+            {
+              "w": "oscuro",
+              "g": "dark"
+            },
+            {
+              "w": "ambiente",
+              "g": "atmosphere"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Un relámpago fulgurante rasga el cielo sombrío. El ambiente se vuelve denso y tenso.",
+          "words": [
+            {
+              "w": "fulgurante",
+              "g": "flashing"
+            },
+            {
+              "w": "sombrío",
+              "g": "gloomy"
+            },
+            {
+              "w": "denso",
+              "g": "dense"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Los dioses miran hacia la tierra. Una sombra oscura empieza a crecer en el horizonte.",
+      "en": "The gods look down. A dark, mysterious shadow grows on the horizon.",
+      "levels": {
+        "facil": {
+          "es": "Los dioses miran abajo. Una sombra oscura crece en el horizonte.",
+          "words": [
+            {
+              "w": "miran",
+              "g": "look"
+            },
+            {
+              "w": "sombra",
+              "g": "shadow"
+            },
+            {
+              "w": "horizonte",
+              "g": "horizon"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los dioses observan la tierra. Una sombra oscura y misteriosa crece en el horizonte.",
+          "words": [
+            {
+              "w": "observan",
+              "g": "observe"
+            },
+            {
+              "w": "misteriosa",
+              "g": "mysterious"
+            },
+            {
+              "w": "crece",
+              "g": "grows"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los dioses contemplan el mundo inferior. Una sombra oscura y enigmática se expande en el horizonte.",
+          "words": [
+            {
+              "w": "contemplan",
+              "g": "contemplate"
+            },
+            {
+              "w": "enigmática",
+              "g": "enigmatic"
+            },
+            {
+              "w": "expande",
+              "g": "expands"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "La paz del Olimpo se rompe: algo antiguo ha despertado en las profundidades de la tierra, desafiando el orden recién establecido.",
+  "closingBeat": "El equilibrio es una ilusión cuando el pasado tiene hambre."
+}

@@ -1,0 +1,1173 @@
+{
+  "series": "MITOS",
+  "chapter": 11,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "Las Pruebas de Heracles",
+  "level": "A2",
+  "grammarFocus": "números y cantidades",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a man of massive, scarred musculature and wild, matted beard, follows a single, glowing golden thread through the pitch-black labyrinth of the underworld.",
+      "en": "The thread leads him out of the darkness, but the path to redemption is long.",
+      "levels": {
+        "facil": {
+          "es": "El hilo brilla. Hay un largo camino.",
+          "words": [
+            {
+              "w": "hilo",
+              "g": "thread"
+            },
+            {
+              "w": "brilla",
+              "g": "shines"
+            },
+            {
+              "w": "largo",
+              "g": "long"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El hilo guía a Heracles. El camino es largo y difícil.",
+          "words": [
+            {
+              "w": "guía",
+              "g": "guides"
+            },
+            {
+              "w": "camino",
+              "g": "path"
+            },
+            {
+              "w": "difícil",
+              "g": "difficult"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El hilo destella en la penumbra. El sendero hacia la redención apenas comienza.",
+          "words": [
+            {
+              "w": "destella",
+              "g": "flashes"
+            },
+            {
+              "w": "penumbra",
+              "g": "gloom"
+            },
+            {
+              "w": "redención",
+              "g": "redemption"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a man of massive, scarred musculature and wild, matted beard, stands before the Oracle at Delphi, who holds up one finger.",
+      "en": "One life was taken, so one debt must be paid through many trials.",
+      "levels": {
+        "facil": {
+          "es": "Una vida terminó. Ahora, una deuda espera.",
+          "words": [
+            {
+              "w": "vida",
+              "g": "life"
+            },
+            {
+              "w": "terminó",
+              "g": "ended"
+            },
+            {
+              "w": "deuda",
+              "g": "debt"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Una sola vida se perdió; ahora debes pagar una gran deuda.",
+          "words": [
+            {
+              "w": "perdió",
+              "g": "lost"
+            },
+            {
+              "w": "pagar",
+              "g": "to pay"
+            },
+            {
+              "w": "gran",
+              "g": "great"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Por una vida arrebatada, una sola expiación es requerida.",
+          "words": [
+            {
+              "w": "arrebatada",
+              "g": "snatched"
+            },
+            {
+              "w": "expiación",
+              "g": "atonement"
+            },
+            {
+              "w": "requerida",
+              "g": "required"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a man of massive, scarred musculature and wild, matted beard, stares at a stone tablet listing twelve distinct, brutal tasks.",
+      "en": "The gods demand exactly twelve labors to wash away his sins.",
+      "levels": {
+        "facil": {
+          "es": "Doce trabajos son necesarios para el héroe.",
+          "words": [
+            {
+              "w": "doce",
+              "g": "twelve"
+            },
+            {
+              "w": "trabajos",
+              "g": "labors"
+            },
+            {
+              "w": "necesarios",
+              "g": "necessary"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los dioses exigen doce pruebas para borrar sus pecados.",
+          "words": [
+            {
+              "w": "dioses",
+              "g": "gods"
+            },
+            {
+              "w": "exigen",
+              "g": "demand"
+            },
+            {
+              "w": "pecados",
+              "g": "sins"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Doce tareas ineludibles pesan sobre sus hombros como penitencia.",
+          "words": [
+            {
+              "w": "tareas",
+              "g": "tasks"
+            },
+            {
+              "w": "ineludibles",
+              "g": "unavoidable"
+            },
+            {
+              "w": "penitencia",
+              "g": "penance"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a man of massive, scarred musculature and wild, matted beard, stands in the Nemean forest, eyes fixed on a single, massive, golden-maned lion in the shadows.",
+      "en": "The first labor: a single, invulnerable beast that terrorizes the valley.",
+      "levels": {
+        "facil": {
+          "es": "El primer trabajo comienza. Hay un león muy grande.",
+          "words": [
+            {
+              "w": "primer",
+              "g": "first"
+            },
+            {
+              "w": "león",
+              "g": "lion"
+            },
+            {
+              "w": "grande",
+              "g": "big"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La primera prueba: un solo león invulnerable acecha el valle.",
+          "words": [
+            {
+              "w": "primera",
+              "g": "first"
+            },
+            {
+              "w": "invulnerable",
+              "g": "invulnerable"
+            },
+            {
+              "w": "acecha",
+              "g": "stalks"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La primera labor: abatir a la bestia única e invulnerable de Nemea.",
+          "words": [
+            {
+              "w": "abatir",
+              "g": "to take down"
+            },
+            {
+              "w": "bestia",
+              "g": "beast"
+            },
+            {
+              "w": "única",
+              "g": "unique"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a man of massive, scarred musculature and wild, matted beard, raises his wooden club against the lion, but the weapon shatters upon impact.",
+      "en": "His club breaks into pieces, for no ordinary weapon can pierce its hide.",
+      "levels": {
+        "facil": {
+          "es": "Su palo se rompe en muchos pedazos.",
+          "words": [
+            {
+              "w": "palo",
+              "g": "club"
+            },
+            {
+              "w": "rompe",
+              "g": "breaks"
+            },
+            {
+              "w": "pedazos",
+              "g": "pieces"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El arma se quiebra en varios fragmentos contra la piel del león.",
+          "words": [
+            {
+              "w": "arma",
+              "g": "weapon"
+            },
+            {
+              "w": "quiebra",
+              "g": "shatters"
+            },
+            {
+              "w": "fragmentos",
+              "g": "fragments"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Su garrote se hace añicos; ninguna arma forjada por manos mortales lo hiere.",
+          "words": [
+            {
+              "w": "garrote",
+              "g": "club"
+            },
+            {
+              "w": "añicos",
+              "g": "shards"
+            },
+            {
+              "w": "mortales",
+              "g": "mortal"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a muscular man with a thick beard and lion-skin cloak, realizes his sword is useless as it lies in two pieces on the ground. The massive Nemean lion snarls in the shadows.",
+      "en": "Heracles drops his broken sword. He has zero weapons left.",
+      "levels": {
+        "facil": {
+          "es": "Heracles tira la espada rota. Tiene cero armas ahora.",
+          "words": [
+            {
+              "w": "rota",
+              "g": "broken"
+            },
+            {
+              "w": "cero",
+              "g": "zero"
+            },
+            {
+              "w": "armas",
+              "g": "weapons"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Heracles suelta su espada partida. Ya no le quedan armas.",
+          "words": [
+            {
+              "w": "suelta",
+              "g": "drops"
+            },
+            {
+              "w": "partida",
+              "g": "split"
+            },
+            {
+              "w": "quedan",
+              "g": "remain"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Heracles arroja el acero roto. Carece de cualquier arma para el combate.",
+          "words": [
+            {
+              "w": "arroja",
+              "g": "throws"
+            },
+            {
+              "w": "acero",
+              "g": "steel"
+            },
+            {
+              "w": "carece",
+              "g": "lacks"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles charges at the lion, his massive arms ready to grapple.",
+      "en": "He runs with his two powerful arms wide open.",
+      "levels": {
+        "facil": {
+          "es": "Él corre con sus dos brazos fuertes.",
+          "words": [
+            {
+              "w": "corre",
+              "g": "runs"
+            },
+            {
+              "w": "brazos",
+              "g": "arms"
+            },
+            {
+              "w": "fuertes",
+              "g": "strong"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Corre hacia la bestia con sus dos brazos abiertos.",
+          "words": [
+            {
+              "w": "hacia",
+              "g": "towards"
+            },
+            {
+              "w": "bestia",
+              "g": "beast"
+            },
+            {
+              "w": "abiertos",
+              "g": "open"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Se lanza al frente, extendiendo sus dos brazos como grilletes.",
+          "words": [
+            {
+              "w": "lanza",
+              "g": "launches"
+            },
+            {
+              "w": "extendiendo",
+              "g": "extending"
+            },
+            {
+              "w": "grilletes",
+              "g": "shackles"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close-up of the struggle: Heracles' hands grabbing the lion's throat. The lion's claws rake his back.",
+      "en": "Ten claws cut his back, but he does not let go.",
+      "levels": {
+        "facil": {
+          "es": "Diez garras cortan su espalda, pero él no suelta al león.",
+          "words": [
+            {
+              "w": "diez",
+              "g": "ten"
+            },
+            {
+              "w": "garras",
+              "g": "claws"
+            },
+            {
+              "w": "espalda",
+              "g": "back"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Diez garras afiladas hieren su espalda, mas él resiste.",
+          "words": [
+            {
+              "w": "afiladas",
+              "g": "sharp"
+            },
+            {
+              "w": "hieren",
+              "g": "wound"
+            },
+            {
+              "w": "resiste",
+              "g": "resists"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Diez zarpazos laceran su espalda, mas su agarre es inamovible.",
+          "words": [
+            {
+              "w": "zarpazos",
+              "g": "claw blows"
+            },
+            {
+              "w": "laceran",
+              "g": "lacerate"
+            },
+            {
+              "w": "inamovible",
+              "g": "immovable"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles is straining every muscle, his face contorted in effort, choking the lion.",
+      "en": "He uses all his strength. One goal: victory.",
+      "levels": {
+        "facil": {
+          "es": "Usa toda su fuerza. Tiene una meta: la victoria.",
+          "words": [
+            {
+              "w": "toda",
+              "g": "all"
+            },
+            {
+              "w": "fuerza",
+              "g": "strength"
+            },
+            {
+              "w": "meta",
+              "g": "goal"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Emplea toda su energía vital. Solo busca una cosa: la victoria.",
+          "words": [
+            {
+              "w": "emplea",
+              "g": "employs"
+            },
+            {
+              "w": "energía",
+              "g": "energy"
+            },
+            {
+              "w": "busca",
+              "g": "seeks"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Concentra toda su potencia en un solo objetivo: alcanzar la victoria.",
+          "words": [
+            {
+              "w": "potencia",
+              "g": "power"
+            },
+            {
+              "w": "objetivo",
+              "g": "objective"
+            },
+            {
+              "w": "alcanzar",
+              "g": "achieve"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The lion begins to weaken, its eyes closing as Heracles maintains his hold.",
+      "en": "The beast has four legs, but zero breath remains.",
+      "levels": {
+        "facil": {
+          "es": "La bestia tiene cuatro patas, pero ya no tiene aire.",
+          "words": [
+            {
+              "w": "cuatro",
+              "g": "four"
+            },
+            {
+              "w": "patas",
+              "g": "legs"
+            },
+            {
+              "w": "aire",
+              "g": "breath"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La bestia se tambalea sobre sus cuatro patas, sin aliento.",
+          "words": [
+            {
+              "w": "tambalea",
+              "g": "staggers"
+            },
+            {
+              "w": "aliento",
+              "g": "breath"
+            },
+            {
+              "w": "sin",
+              "g": "without"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Pese a sus cuatro patas, la bestia sucumbe, privada de todo aliento.",
+          "words": [
+            {
+              "w": "pese",
+              "g": "despite"
+            },
+            {
+              "w": "sucumbe",
+              "g": "succumbs"
+            },
+            {
+              "w": "privada",
+              "g": "deprived"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a muscular man with a thick beard and lion-skin cloak, stands over the fallen Nemean Lion, his hands gripping its massive jaws.",
+      "en": "He holds the jaws with both hands.",
+      "levels": {
+        "facil": {
+          "es": "Heracles usa sus dos manos. Abre las fauces del león.",
+          "words": [
+            {
+              "w": "dos",
+              "g": "two"
+            },
+            {
+              "w": "manos",
+              "g": "hands"
+            },
+            {
+              "w": "abre",
+              "g": "opens"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Con sus dos manos fuertes, Heracles abre las fauces de la bestia.",
+          "words": [
+            {
+              "w": "fuertes",
+              "g": "strong"
+            },
+            {
+              "w": "fauces",
+              "g": "jaws"
+            },
+            {
+              "w": "bestia",
+              "g": "beast"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El héroe inmoviliza a la fiera; sus dos manos se cierran como tenazas sobre las fauces invulnerables.",
+          "words": [
+            {
+              "w": "inmoviliza",
+              "g": "immobilizes"
+            },
+            {
+              "w": "fiera",
+              "g": "wild beast"
+            },
+            {
+              "w": "tenazas",
+              "g": "pincers"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a muscular man with a thick beard and lion-skin cloak, exerts immense pressure as the lion struggles one last time.",
+      "en": "The beast has a thousand sharp teeth.",
+      "levels": {
+        "facil": {
+          "es": "El león tiene mil dientes afilados.",
+          "words": [
+            {
+              "w": "mil",
+              "g": "thousand"
+            },
+            {
+              "w": "dientes",
+              "g": "teeth"
+            },
+            {
+              "w": "afilados",
+              "g": "sharp"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La bestia muestra mil dientes afilados, pero Heracles no tiene miedo.",
+          "words": [
+            {
+              "w": "muestra",
+              "g": "shows"
+            },
+            {
+              "w": "miedo",
+              "g": "fear"
+            },
+            {
+              "w": "bestia",
+              "g": "beast"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Brillan mil colmillos en la oscuridad, un arma inútil ante la fuerza bruta del semidiós.",
+          "words": [
+            {
+              "w": "colmillos",
+              "g": "fangs"
+            },
+            {
+              "w": "oscuridad",
+              "g": "darkness"
+            },
+            {
+              "w": "semidiós",
+              "g": "demigod"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a muscular man with a thick beard and lion-skin cloak, watches as the lion finally goes limp.",
+      "en": "The first labor is almost finished.",
+      "levels": {
+        "facil": {
+          "es": "Es el primer trabajo. Casi termina.",
+          "words": [
+            {
+              "w": "primer",
+              "g": "first"
+            },
+            {
+              "w": "trabajo",
+              "g": "labor"
+            },
+            {
+              "w": "termina",
+              "g": "finishes"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El primer trabajo está llegando a su final.",
+          "words": [
+            {
+              "w": "llegando",
+              "g": "arriving"
+            },
+            {
+              "w": "final",
+              "g": "end"
+            },
+            {
+              "w": "trabajo",
+              "g": "labor"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El primero de los doce trabajos toca a su fin con la rendición del monstruo.",
+          "words": [
+            {
+              "w": "doce",
+              "g": "twelve"
+            },
+            {
+              "w": "rendición",
+              "g": "surrender"
+            },
+            {
+              "w": "monstruo",
+              "g": "monster"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a muscular man with a thick beard and lion-skin cloak, stands up, breathing heavily, looking at the distant horizon.",
+      "en": "He counts many scars on his arms.",
+      "levels": {
+        "facil": {
+          "es": "Heracles ve muchas cicatrices en sus brazos.",
+          "words": [
+            {
+              "w": "muchas",
+              "g": "many"
+            },
+            {
+              "w": "cicatrices",
+              "g": "scars"
+            },
+            {
+              "w": "brazos",
+              "g": "arms"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Él cuenta muchas cicatrices nuevas en sus brazos cansados.",
+          "words": [
+            {
+              "w": "cuenta",
+              "g": "counts"
+            },
+            {
+              "w": "nuevas",
+              "g": "new"
+            },
+            {
+              "w": "cansados",
+              "g": "tired"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Observa sus brazos, marcados por muchas heridas que apenas comienzan a sangrar.",
+          "words": [
+            {
+              "w": "observa",
+              "g": "observes"
+            },
+            {
+              "w": "marcados",
+              "g": "marked"
+            },
+            {
+              "w": "sangrar",
+              "g": "bleed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a muscular man with a thick beard and lion-skin cloak, begins to skin the lion using its own claw.",
+      "en": "Only a few drops of blood fall.",
+      "levels": {
+        "facil": {
+          "es": "Solo caen unas pocas gotas de sangre.",
+          "words": [
+            {
+              "w": "solo",
+              "g": "only"
+            },
+            {
+              "w": "pocas",
+              "g": "few"
+            },
+            {
+              "w": "gotas",
+              "g": "drops"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Caen solo unas pocas gotas de sangre sobre la tierra seca.",
+          "words": [
+            {
+              "w": "caen",
+              "g": "fall"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            },
+            {
+              "w": "seca",
+              "g": "dry"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Unas pocas gotas de sangre carmesí tiñen el suelo, el tributo final de la fiera.",
+          "words": [
+            {
+              "w": "carmesí",
+              "g": "crimson"
+            },
+            {
+              "w": "tiñen",
+              "g": "stain"
+            },
+            {
+              "w": "tributo",
+              "g": "tribute"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a man of massive, corded musculature and tangled dark beard, stands over the limp, golden-furred body of the Nemean Lion. He wipes his brow with a bloodied hand.",
+      "en": "One lion lies dead. The first test is over.",
+      "levels": {
+        "facil": {
+          "es": "Un león está muerto. Es el primer trabajo.",
+          "words": [
+            {
+              "w": "león",
+              "g": "lion"
+            },
+            {
+              "w": "muerto",
+              "g": "dead"
+            },
+            {
+              "w": "primer",
+              "g": "first"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El león yace muerto. El primer trabajo ha terminado.",
+          "words": [
+            {
+              "w": "yace",
+              "g": "lies"
+            },
+            {
+              "w": "terminado",
+              "g": "finished"
+            },
+            {
+              "w": "trabajo",
+              "g": "task"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La bestia yace inerte. El primero de los doce trabajos ha llegado a su fin.",
+          "words": [
+            {
+              "w": "inerte",
+              "g": "lifeless"
+            },
+            {
+              "w": "doce",
+              "g": "twelve"
+            },
+            {
+              "w": "fin",
+              "g": "end"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a man of massive, corded musculature and tangled dark beard, struggles to skin the beast with its own razor-sharp claw.",
+      "en": "He uses one claw to cut the skin.",
+      "levels": {
+        "facil": {
+          "es": "Usa una garra para cortar la piel.",
+          "words": [
+            {
+              "w": "una",
+              "g": "one"
+            },
+            {
+              "w": "garra",
+              "g": "claw"
+            },
+            {
+              "w": "piel",
+              "g": "skin"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Utiliza una de las garras para rasgar la piel dura.",
+          "words": [
+            {
+              "w": "utiliza",
+              "g": "uses"
+            },
+            {
+              "w": "rasgar",
+              "g": "to tear"
+            },
+            {
+              "w": "dura",
+              "g": "tough"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Emplea una sola garra, afilada como el acero, para desollar la piel invulnerable.",
+          "words": [
+            {
+              "w": "emplea",
+              "g": "employs"
+            },
+            {
+              "w": "afilada",
+              "g": "sharp"
+            },
+            {
+              "w": "invulnerable",
+              "g": "invulnerable"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a man of massive, corded musculature and tangled dark beard, stands tall draped in the lion skin, looking toward the distant horizon.",
+      "en": "Eleven tasks remain for him.",
+      "levels": {
+        "facil": {
+          "es": "Quedan once trabajos más.",
+          "words": [
+            {
+              "w": "quedan",
+              "g": "remain"
+            },
+            {
+              "w": "once",
+              "g": "eleven"
+            },
+            {
+              "w": "más",
+              "g": "more"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Ahora le faltan once tareas para ser libre.",
+          "words": [
+            {
+              "w": "faltan",
+              "g": "are missing"
+            },
+            {
+              "w": "tareas",
+              "g": "tasks"
+            },
+            {
+              "w": "libre",
+              "g": "free"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Aún restan once pruebas titánicas en su penoso camino hacia la redención.",
+          "words": [
+            {
+              "w": "restan",
+              "g": "remain"
+            },
+            {
+              "w": "titánicas",
+              "g": "titanic"
+            },
+            {
+              "w": "redención",
+              "g": "redemption"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a man of massive, corded musculature and tangled dark beard, turns his back, his shadow stretching long against the mountain path.",
+      "en": "The path ahead is dark and long.",
+      "levels": {
+        "facil": {
+          "es": "El camino es muy largo.",
+          "words": [
+            {
+              "w": "camino",
+              "g": "path"
+            },
+            {
+              "w": "largo",
+              "g": "long"
+            },
+            {
+              "w": "muy",
+              "g": "very"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El camino frente a él es oscuro y largo.",
+          "words": [
+            {
+              "w": "frente",
+              "g": "in front of"
+            },
+            {
+              "w": "oscuro",
+              "g": "dark"
+            },
+            {
+              "w": "largo",
+              "g": "long"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Un sendero sombrío y tortuoso se extiende ante sus pies cansados.",
+          "words": [
+            {
+              "w": "sendero",
+              "g": "path"
+            },
+            {
+              "w": "sombrío",
+              "g": "shadowy"
+            },
+            {
+              "w": "tortuoso",
+              "g": "winding"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Heracles, a man of massive, corded musculature and tangled dark beard, sees a monstrous, multi-headed shadow rising from a swamp in the distance.",
+      "en": "But wait—the swamp bubbles with something new.",
+      "levels": {
+        "facil": {
+          "es": "Pero el pantano tiene algo nuevo.",
+          "words": [
+            {
+              "w": "pantano",
+              "g": "swamp"
+            },
+            {
+              "w": "nuevo",
+              "g": "new"
+            },
+            {
+              "w": "pero",
+              "g": "but"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Sin embargo, algo surge desde el pantano profundo.",
+          "words": [
+            {
+              "w": "sin embargo",
+              "g": "however"
+            },
+            {
+              "w": "surge",
+              "g": "emerges"
+            },
+            {
+              "w": "profundo",
+              "g": "deep"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Mas desde el fétido pantano, una amenaza de múltiples cabezas comienza a emerger.",
+          "words": [
+            {
+              "w": "fétido",
+              "g": "fetid"
+            },
+            {
+              "w": "múltiples",
+              "g": "multiple"
+            },
+            {
+              "w": "emerger",
+              "g": "to emerge"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "El león era solo el principio; ahora, el pantano de Lerna oculta una hidra con más cabezas de las que un hombre puede contar.",
+  "closingBeat": "La expiación nunca es un camino recto, sino un ciclo de dolor que se multiplica."
+}

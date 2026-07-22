@@ -1,0 +1,1173 @@
+{
+  "series": "MITOS",
+  "chapter": 15,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "La Ira de Aquiles",
+  "level": "B1",
+  "grammarFocus": "pretérito vs imperfecto",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Achilles stands alone on the shore of Troy, tall with golden hair, wearing bronze-plated leather armor. He looks at the horizon.",
+      "en": "The choice was made, and the war dragged on.",
+      "levels": {
+        "facil": {
+          "es": "La elección pasó. La guerra continuaba.",
+          "words": [
+            {
+              "w": "elección",
+              "g": "choice"
+            },
+            {
+              "w": "pasó",
+              "g": "happened (pret.)"
+            },
+            {
+              "w": "continuaba",
+              "g": "was continuing (imp.)"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La decisión fue tomada, mientras la guerra se prolongaba sin fin.",
+          "words": [
+            {
+              "w": "decisión",
+              "g": "decision"
+            },
+            {
+              "w": "fue tomada",
+              "g": "was taken (pret.)"
+            },
+            {
+              "w": "prolongaba",
+              "g": "prolonged (imp.)"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Aquella decisión fue el punto de inflexión; afuera, la guerra se prolongaba interminable.",
+          "words": [
+            {
+              "w": "inflexión",
+              "g": "turning point"
+            },
+            {
+              "w": "fue",
+              "g": "was (pret.)"
+            },
+            {
+              "w": "prolongaba",
+              "g": "was dragging (imp.)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close up on Achilles, tall with golden hair, his face twisted in cold resentment.",
+      "en": "Ten long years had passed under the walls of Troy.",
+      "levels": {
+        "facil": {
+          "es": "Diez años pasaron bajo las murallas.",
+          "words": [
+            {
+              "w": "años",
+              "g": "years"
+            },
+            {
+              "w": "pasaron",
+              "g": "passed (pret.)"
+            },
+            {
+              "w": "murallas",
+              "g": "walls"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Diez largos años transcurrieron ante los muros de Troya.",
+          "words": [
+            {
+              "w": "largos",
+              "g": "long"
+            },
+            {
+              "w": "transcurrieron",
+              "g": "elapsed (pret.)"
+            },
+            {
+              "w": "muros",
+              "g": "walls"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Diez años habían transcurrido bajo el acecho de las murallas troyanas.",
+          "words": [
+            {
+              "w": "transcurrido",
+              "g": "elapsed"
+            },
+            {
+              "w": "habían",
+              "g": "had (imp.)"
+            },
+            {
+              "w": "acecho",
+              "g": "stalking/siege"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Agamemnon, a heavy-set king with a dark beard and golden crown, argues with Achilles, tall with golden hair.",
+      "en": "The King insulted him. Achilles stopped fighting.",
+      "levels": {
+        "facil": {
+          "es": "El rey le insultó. Aquiles dejó de luchar.",
+          "words": [
+            {
+              "w": "rey",
+              "g": "king"
+            },
+            {
+              "w": "insultó",
+              "g": "insulted (pret.)"
+            },
+            {
+              "w": "dejó",
+              "g": "stopped (pret.)"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El rey lo ofendió. Entonces, Aquiles se negó a combatir.",
+          "words": [
+            {
+              "w": "ofendió",
+              "g": "offended (pret.)"
+            },
+            {
+              "w": "entonces",
+              "g": "then"
+            },
+            {
+              "w": "negó",
+              "g": "refused (pret.)"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El rey lo humilló; por ello, Aquiles se retiró del campo de batalla.",
+          "words": [
+            {
+              "w": "humilló",
+              "g": "humiliated (pret.)"
+            },
+            {
+              "w": "retiró",
+              "g": "withdrew (pret.)"
+            },
+            {
+              "w": "campo",
+              "g": "field"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Achilles, tall with golden hair, sits inside his dark tent, sharpening his spear with a whetstone.",
+      "en": "While the Greeks fought, he stayed in his tent.",
+      "levels": {
+        "facil": {
+          "es": "Los griegos peleaban. Él estaba en su tienda.",
+          "words": [
+            {
+              "w": "griegos",
+              "g": "Greeks"
+            },
+            {
+              "w": "peleaban",
+              "g": "were fighting (imp.)"
+            },
+            {
+              "w": "estaba",
+              "g": "was (imp.)"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Mientras los griegos luchaban, él permanecía en su tienda.",
+          "words": [
+            {
+              "w": "mientras",
+              "g": "while"
+            },
+            {
+              "w": "luchaban",
+              "g": "fought (imp.)"
+            },
+            {
+              "w": "permanecía",
+              "g": "remained (imp.)"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Mientras sus aliados perecían en el frente, él permanecía inerte en su tienda.",
+          "words": [
+            {
+              "w": "aliados",
+              "g": "allies"
+            },
+            {
+              "w": "perecían",
+              "g": "were perishing (imp.)"
+            },
+            {
+              "w": "inerte",
+              "g": "inert"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A view of the battlefield in the distance, smoke rising, blood on the sand.",
+      "en": "The air was thick with smoke and death.",
+      "levels": {
+        "facil": {
+          "es": "Había humo. Había muerte en el aire.",
+          "words": [
+            {
+              "w": "había",
+              "g": "there was (imp.)"
+            },
+            {
+              "w": "humo",
+              "g": "smoke"
+            },
+            {
+              "w": "muerte",
+              "g": "death"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El ambiente estaba cargado de humo y muerte.",
+          "words": [
+            {
+              "w": "ambiente",
+              "g": "atmosphere"
+            },
+            {
+              "w": "estaba",
+              "g": "was (imp.)"
+            },
+            {
+              "w": "cargado",
+              "g": "heavy/laden"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El aire se sentía denso, cargado de ceniza y olor a muerte.",
+          "words": [
+            {
+              "w": "sentía",
+              "g": "felt (imp.)"
+            },
+            {
+              "w": "denso",
+              "g": "dense"
+            },
+            {
+              "w": "ceniza",
+              "g": "ash"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Patroclo, a lean warrior with curly hair and a sorrowful gaze, stands outside Achilles' tent looking toward the distant smoke of the Trojan battlefield.",
+      "en": "Patroclus watched the horizon. The sky was dark with smoke.",
+      "levels": {
+        "facil": {
+          "es": "Patroclo miraba el horizonte. El cielo estaba lleno de humo.",
+          "words": [
+            {
+              "w": "miraba",
+              "g": "was looking"
+            },
+            {
+              "w": "estaba",
+              "g": "was"
+            },
+            {
+              "w": "lleno",
+              "g": "full"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Patroclo observaba el horizonte con preocupación. El cielo estaba oscurecido por el humo de la guerra.",
+          "words": [
+            {
+              "w": "observaba",
+              "g": "was observing"
+            },
+            {
+              "w": "oscurecido",
+              "g": "darkened"
+            },
+            {
+              "w": "preocupación",
+              "g": "worry"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Patroclo escrutaba el horizonte; el firmamento se teñía de hollín mientras la guerra devoraba la llanura.",
+          "words": [
+            {
+              "w": "escrutaba",
+              "g": "scanned"
+            },
+            {
+              "w": "firmamento",
+              "g": "firmament"
+            },
+            {
+              "w": "devoraba",
+              "g": "was devouring"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Achilles, a towering man with golden hair and intense eyes, sits inside the tent sharpening his blade. He ignores the sounds of war.",
+      "en": "Inside, Achilles sharpened his sword. He didn't care about the battle.",
+      "levels": {
+        "facil": {
+          "es": "Dentro, Aquiles afilaba su espada. No le importaba la batalla.",
+          "words": [
+            {
+              "w": "afilaba",
+              "g": "was sharpening"
+            },
+            {
+              "w": "espada",
+              "g": "sword"
+            },
+            {
+              "w": "importaba",
+              "g": "mattered"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Dentro de la tienda, Aquiles afilaba su espada con calma. La batalla no le importaba en absoluto.",
+          "words": [
+            {
+              "w": "tienda",
+              "g": "tent"
+            },
+            {
+              "w": "calma",
+              "g": "calm"
+            },
+            {
+              "w": "absoluto",
+              "g": "at all"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "En la penumbra, Aquiles afilaba el acero con parsimonia; el fragor del combate le resultaba indiferente.",
+          "words": [
+            {
+              "w": "penumbra",
+              "g": "twilight/gloom"
+            },
+            {
+              "w": "parsimonia",
+              "g": "slowness"
+            },
+            {
+              "w": "fragor",
+              "g": "din"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Patroclus enters the tent. He looks at Achilles with pleading eyes, pointing toward the burning ships in the distance.",
+      "en": "Patroclus entered the tent. He pointed at the burning ships.",
+      "levels": {
+        "facil": {
+          "es": "Patroclo entró en la tienda. Señaló los barcos en llamas.",
+          "words": [
+            {
+              "w": "entró",
+              "g": "entered"
+            },
+            {
+              "w": "señaló",
+              "g": "pointed"
+            },
+            {
+              "w": "llamas",
+              "g": "flames"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Patroclo entró en la tienda apresuradamente. Señaló con el dedo los barcos que ardían en la costa.",
+          "words": [
+            {
+              "w": "apresuradamente",
+              "g": "hurriedly"
+            },
+            {
+              "w": "ardían",
+              "g": "were burning"
+            },
+            {
+              "w": "costa",
+              "g": "coast"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Patroclo irrumpió en la estancia. Con un gesto trémulo, señaló los navíos que sucumbían ante el fuego.",
+          "words": [
+            {
+              "w": "irrumpió",
+              "g": "burst in"
+            },
+            {
+              "w": "trémulo",
+              "g": "trembling"
+            },
+            {
+              "w": "sucumbían",
+              "g": "were succumbing"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Achilles stands up abruptly, his eyes burning with rage. He tosses the sword aside, shaking his head.",
+      "en": "Achilles stood up. He threw his sword down and shouted.",
+      "levels": {
+        "facil": {
+          "es": "Aquiles se levantó. Tiró su espada al suelo y gritó.",
+          "words": [
+            {
+              "w": "levantó",
+              "g": "stood up"
+            },
+            {
+              "w": "tiró",
+              "g": "threw"
+            },
+            {
+              "w": "gritó",
+              "g": "shouted"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Aquiles se levantó bruscamente. Arrojó su espada al suelo mientras gritaba con furia.",
+          "words": [
+            {
+              "w": "bruscamente",
+              "g": "abruptly"
+            },
+            {
+              "w": "arrojó",
+              "g": "tossed"
+            },
+            {
+              "w": "furia",
+              "g": "fury"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Aquiles se irguió con ímpetu. Desechó el acero contra el suelo mientras su voz retumbaba en la tienda.",
+          "words": [
+            {
+              "w": "irguió",
+              "g": "rose up"
+            },
+            {
+              "w": "ímpetu",
+              "g": "impetus"
+            },
+            {
+              "w": "retumbaba",
+              "g": "resounded"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Patroclus walks away, his back to Achilles. He looks dejected, realizing Achilles will not change his mind.",
+      "en": "Patroclus left. He knew Achilles wouldn't fight today.",
+      "levels": {
+        "facil": {
+          "es": "Patroclo salió. Él sabía que Aquiles no iba a luchar.",
+          "words": [
+            {
+              "w": "salió",
+              "g": "left"
+            },
+            {
+              "w": "sabía",
+              "g": "knew"
+            },
+            {
+              "w": "luchar",
+              "g": "to fight"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Patroclo salió de la tienda. Sabía que Aquiles no cambiaría de opinión hoy.",
+          "words": [
+            {
+              "w": "cambiaría",
+              "g": "would change"
+            },
+            {
+              "w": "opinión",
+              "g": "mind"
+            },
+            {
+              "w": "hoy",
+              "g": "today"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Patroclo se retiró, cabizbajo. Comprendió que el orgullo de Aquiles era una muralla infranqueable.",
+          "words": [
+            {
+              "w": "retiró",
+              "g": "withdrew"
+            },
+            {
+              "w": "cabizbajo",
+              "g": "dejected"
+            },
+            {
+              "w": "infranqueable",
+              "g": "impassable"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Patroclo walks alone on the blood-stained sand of the Trojan beach. Patroclo: young man, shoulder-length wavy golden hair, wearing simple linen tunic and bronze greaves.",
+      "en": "Patroclus walked along the beach. The air was heavy with smoke.",
+      "levels": {
+        "facil": {
+          "es": "Patroclo caminaba por la playa. El aire tenía mucho humo.",
+          "words": [
+            {
+              "w": "caminaba",
+              "g": "walked"
+            },
+            {
+              "w": "playa",
+              "g": "beach"
+            },
+            {
+              "w": "humo",
+              "g": "smoke"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Patroclo caminaba por la orilla. El aire estaba pesado por el humo.",
+          "words": [
+            {
+              "w": "orilla",
+              "g": "shore"
+            },
+            {
+              "w": "pesado",
+              "g": "heavy"
+            },
+            {
+              "w": "humo",
+              "g": "smoke"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Patroclo caminaba a solas por la orilla. El ambiente estaba denso, cargado de humo y ceniza.",
+          "words": [
+            {
+              "w": "a solas",
+              "g": "alone"
+            },
+            {
+              "w": "ambiente",
+              "g": "atmosphere"
+            },
+            {
+              "w": "denso",
+              "g": "dense"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Patroclo looks at the Greek ships burning in the distance, flames reflecting in his eyes. Patroclo: young man, shoulder-length wavy golden hair, wearing simple linen tunic and bronze greaves.",
+      "en": "He watched the ships burning. The Greeks were losing the war.",
+      "levels": {
+        "facil": {
+          "es": "Él miraba los barcos. Los griegos perdían la guerra.",
+          "words": [
+            {
+              "w": "miraba",
+              "g": "watched"
+            },
+            {
+              "w": "barcos",
+              "g": "ships"
+            },
+            {
+              "w": "guerra",
+              "g": "war"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Observaba cómo ardían los barcos. Los griegos perdían la batalla.",
+          "words": [
+            {
+              "w": "observaba",
+              "g": "observed"
+            },
+            {
+              "w": "ardían",
+              "g": "burned"
+            },
+            {
+              "w": "batalla",
+              "g": "battle"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Contemplaba el incendio de las naves. La derrota griega se tornaba inevitable.",
+          "words": [
+            {
+              "w": "contemplaba",
+              "g": "gazed at"
+            },
+            {
+              "w": "derrota",
+              "g": "defeat"
+            },
+            {
+              "w": "inevitable",
+              "g": "inevitable"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A Greek soldier runs past Patroclo, wounded and terrified. Patroclo: young man, shoulder-length wavy golden hair, wearing simple linen tunic and bronze greaves.",
+      "en": "A wounded soldier ran past him. He was crying for help.",
+      "levels": {
+        "facil": {
+          "es": "Un soldado herido corría cerca. Él pedía ayuda.",
+          "words": [
+            {
+              "w": "soldado",
+              "g": "soldier"
+            },
+            {
+              "w": "herido",
+              "g": "wounded"
+            },
+            {
+              "w": "ayuda",
+              "g": "help"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Un soldado herido pasó corriendo. Gritaba pidiendo auxilio.",
+          "words": [
+            {
+              "w": "pasó",
+              "g": "passed by"
+            },
+            {
+              "w": "gritaba",
+              "g": "was shouting"
+            },
+            {
+              "w": "auxilio",
+              "g": "aid"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Un soldado herido pasó a su lado. Clamaba auxilio entre sollozos.",
+          "words": [
+            {
+              "w": "a su lado",
+              "g": "by his side"
+            },
+            {
+              "w": "clamaba",
+              "g": "cried out"
+            },
+            {
+              "w": "sollozos",
+              "g": "sobs"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Patroclo looks down at his own hands, then towards the tent where Achilles remains. Patroclo: young man, shoulder-length wavy golden hair, wearing simple linen tunic and bronze greaves.",
+      "en": "Patroclus felt fear. He looked at Achilles' tent.",
+      "levels": {
+        "facil": {
+          "es": "Patroclo tenía miedo. Miró la tienda de Aquiles.",
+          "words": [
+            {
+              "w": "tenía",
+              "g": "had/felt"
+            },
+            {
+              "w": "miedo",
+              "g": "fear"
+            },
+            {
+              "w": "tienda",
+              "g": "tent"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Patroclo sentía miedo. Miró hacia la tienda de Aquiles.",
+          "words": [
+            {
+              "w": "sentía",
+              "g": "felt"
+            },
+            {
+              "w": "hacia",
+              "g": "towards"
+            },
+            {
+              "w": "tienda",
+              "g": "tent"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Patroclo fue invadido por el miedo. Dirigió su mirada a la tienda de Aquiles.",
+          "words": [
+            {
+              "w": "invadido",
+              "g": "invaded"
+            },
+            {
+              "w": "dirigió",
+              "g": "directed"
+            },
+            {
+              "w": "mirada",
+              "g": "gaze"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Patroclo makes a decision, his expression hardening. He turns toward the armor stand inside the tent entrance. Patroclo: young man, shoulder-length wavy golden hair, wearing simple linen tunic and bronze greaves.",
+      "en": "He made a choice. He walked inside the tent again.",
+      "levels": {
+        "facil": {
+          "es": "Él tomó una decisión. Entró otra vez en la tienda.",
+          "words": [
+            {
+              "w": "tomó",
+              "g": "took/made"
+            },
+            {
+              "w": "decisión",
+              "g": "decision"
+            },
+            {
+              "w": "entró",
+              "g": "entered"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Tomó una decisión. Entró de nuevo en la tienda.",
+          "words": [
+            {
+              "w": "decisión",
+              "g": "decision"
+            },
+            {
+              "w": "entró",
+              "g": "entered"
+            },
+            {
+              "w": "de nuevo",
+              "g": "again"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Tomó una decisión firme. Regresó al interior de la tienda.",
+          "words": [
+            {
+              "w": "firme",
+              "g": "firm"
+            },
+            {
+              "w": "regresó",
+              "g": "returned"
+            },
+            {
+              "w": "interior",
+              "g": "inside"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Patroclo, a young man with curly hair and a golden tunic, stands before the bronze-clad Achilles, a tall warrior with long golden hair and a cold, sharp gaze. Patroclo reaches for the legendary armor.",
+      "en": "Patroclus reached for the armor. Achilles watched him, silent and cold.",
+      "levels": {
+        "facil": {
+          "es": "Patroclo tocó la armadura. Aquiles miraba en silencio.",
+          "words": [
+            {
+              "w": "armadura",
+              "g": "armor"
+            },
+            {
+              "w": "tocó",
+              "g": "touched (pret)"
+            },
+            {
+              "w": "miraba",
+              "g": "watched (imp)"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Patroclo extendió la mano hacia la armadura. Aquiles lo observaba en un silencio gélido.",
+          "words": [
+            {
+              "w": "extendió",
+              "g": "reached (pret)"
+            },
+            {
+              "w": "observaba",
+              "g": "was watching (imp)"
+            },
+            {
+              "w": "gélido",
+              "g": "icy"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Patroclo asió la armadura dorada. Aquiles, impasible, lo escrutaba desde la sombra.",
+          "words": [
+            {
+              "w": "asió",
+              "g": "seized (pret)"
+            },
+            {
+              "w": "escrutaba",
+              "g": "scrutinized (imp)"
+            },
+            {
+              "w": "impasible",
+              "g": "unmoved"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Patroclo puts on the heavy bronze breastplate of Achilles. His expression is resolute.",
+      "en": "He put on the bronze. He was desperate to save the Greeks.",
+      "levels": {
+        "facil": {
+          "es": "Se puso el bronce. Quería salvar a los griegos.",
+          "words": [
+            {
+              "w": "puso",
+              "g": "put on (pret)"
+            },
+            {
+              "w": "quería",
+              "g": "wanted (imp)"
+            },
+            {
+              "w": "salvar",
+              "g": "save"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Se vistió con el bronce pesado. Sentía una desesperación por salvar a sus compañeros.",
+          "words": [
+            {
+              "w": "vistió",
+              "g": "dressed (pret)"
+            },
+            {
+              "w": "sentía",
+              "g": "felt (imp)"
+            },
+            {
+              "w": "desesperación",
+              "g": "desperation"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Ciñó la coraza de bronce. Lo consumía la urgencia de socorrer a los suyos.",
+          "words": [
+            {
+              "w": "ciñó",
+              "g": "girded (pret)"
+            },
+            {
+              "w": "consumía",
+              "g": "was consuming (imp)"
+            },
+            {
+              "w": "socorrer",
+              "g": "to aid"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Achilles turns his back, his face hidden in shadow. Patroclo is now fully armored, looking like a god of war.",
+      "en": "Achilles turned his back. Patroclo looked like a god.",
+      "levels": {
+        "facil": {
+          "es": "Aquiles se dio la vuelta. Patroclo parecía un dios.",
+          "words": [
+            {
+              "w": "dio",
+              "g": "gave/turned (pret)"
+            },
+            {
+              "w": "parecía",
+              "g": "seemed (imp)"
+            },
+            {
+              "w": "dios",
+              "g": "god"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Aquiles le dio la espalda. Patroclo parecía un guerrero divino.",
+          "words": [
+            {
+              "w": "espalda",
+              "g": "back"
+            },
+            {
+              "w": "parecía",
+              "g": "resembled (imp)"
+            },
+            {
+              "w": "divino",
+              "g": "divine"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Aquiles le volvió la espalda. Patroclo destellaba como un dios de la guerra.",
+          "words": [
+            {
+              "w": "volvió",
+              "g": "turned (pret)"
+            },
+            {
+              "w": "destellaba",
+              "g": "was gleaming (imp)"
+            },
+            {
+              "w": "guerra",
+              "g": "war"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Patroclo walks out of the tent toward the battlefield. The sun hits his armor, creating a blinding reflection.",
+      "en": "He stepped out. The light was blinding.",
+      "levels": {
+        "facil": {
+          "es": "Salió. La luz era muy fuerte.",
+          "words": [
+            {
+              "w": "salió",
+              "g": "stepped out (pret)"
+            },
+            {
+              "w": "era",
+              "g": "was (imp)"
+            },
+            {
+              "w": "fuerte",
+              "g": "strong"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Salió de la tienda. La luz cegaba sus ojos.",
+          "words": [
+            {
+              "w": "salió",
+              "g": "exited (pret)"
+            },
+            {
+              "w": "cegaba",
+              "g": "was blinding (imp)"
+            },
+            {
+              "w": "ojos",
+              "g": "eyes"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Cruzó el umbral. Un resplandor cegador lo envolvía.",
+          "words": [
+            {
+              "w": "cruzó",
+              "g": "crossed (pret)"
+            },
+            {
+              "w": "resplandor",
+              "g": "glare"
+            },
+            {
+              "w": "envolvía",
+              "g": "was wrapping (imp)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A massive shadow of a Trojan warrior looms over Patroclo as he enters the fray. Close up on Patroclo's determined eyes.",
+      "en": "The Trojans saw him. They thought it was Achilles.",
+      "levels": {
+        "facil": {
+          "es": "Los troyanos lo vieron. Pensaron que era Aquiles.",
+          "words": [
+            {
+              "w": "vieron",
+              "g": "saw (pret)"
+            },
+            {
+              "w": "pensaron",
+              "g": "thought (pret)"
+            },
+            {
+              "w": "era",
+              "g": "was (imp)"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los troyanos lo divisaron. Creían que el gran Aquiles regresaba.",
+          "words": [
+            {
+              "w": "divisaron",
+              "g": "spotted (pret)"
+            },
+            {
+              "w": "creían",
+              "g": "believed (imp)"
+            },
+            {
+              "w": "regresaba",
+              "g": "was returning (imp)"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los troyanos lo avistaron. Creyeron que el mismo Aquiles volvía a la liza.",
+          "words": [
+            {
+              "w": "avistaron",
+              "g": "sighted (pret)"
+            },
+            {
+              "w": "creyeron",
+              "g": "believed (pret)"
+            },
+            {
+              "w": "liza",
+              "g": "battlefield"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "El pánico se extendió por las filas troyanas al ver la armadura dorada, pero Patroclo sabía que el destino nunca perdona el engaño.",
+  "closingBeat": "La gloria y la muerte a menudo llevan la misma máscara."
+}

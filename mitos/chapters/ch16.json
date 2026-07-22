@@ -1,0 +1,1173 @@
+{
+  "series": "MITOS",
+  "chapter": 16,
+  "book": "Grecia",
+  "arc": "I · Grecia",
+  "title": "El Caballo de Troya",
+  "level": "B1",
+  "grammarFocus": "pretérito irregular",
+  "panels": [
+    {
+      "n": 1,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Odysseus stands on the desolate beach, his face scarred and weary, staring at the burning ruins of a distant camp. He wears a worn bronze breastplate and a tattered crimson cloak.",
+      "en": "Glory and death share the same mask, and today, that mask is made of dust and ash.",
+      "levels": {
+        "facil": {
+          "es": "La gloria y la muerte tienen la misma máscara. Hoy, solo veo polvo y cenizas.",
+          "words": [
+            {
+              "w": "máscara",
+              "g": "mask"
+            },
+            {
+              "w": "polvo",
+              "g": "dust"
+            },
+            {
+              "w": "cenizas",
+              "g": "ashes"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La gloria y la muerte comparten la misma máscara, y hoy, esta se oculta bajo el polvo y las cenizas.",
+          "words": [
+            {
+              "w": "comparten",
+              "g": "share"
+            },
+            {
+              "w": "oculta",
+              "g": "hides"
+            },
+            {
+              "w": "cenizas",
+              "g": "ashes"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La gloria y la muerte portan la misma máscara; hoy, el destino solo quiso dejar polvo y cenizas tras de sí.",
+          "words": [
+            {
+              "w": "portan",
+              "g": "wear/carry"
+            },
+            {
+              "w": "destino",
+              "g": "fate"
+            },
+            {
+              "w": "tras",
+              "g": "behind"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Odysseus watches as his men haul massive, rough-hewn timber beams across the sand. A skeletal structure of a giant horse begins to rise against the sunset.",
+      "en": "Odysseus knew he could not take the city by force. He chose a different path.",
+      "levels": {
+        "facil": {
+          "es": "Odiseo supo que no podía ganar por la fuerza. Él hizo un plan nuevo.",
+          "words": [
+            {
+              "w": "supo",
+              "g": "knew (irregular)"
+            },
+            {
+              "w": "fuerza",
+              "g": "force"
+            },
+            {
+              "w": "plan",
+              "g": "plan"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Odiseo supo que la fuerza no bastaría. Por eso, él hizo algo inesperado.",
+          "words": [
+            {
+              "w": "supo",
+              "g": "knew (irregular)"
+            },
+            {
+              "w": "bastaría",
+              "g": "would suffice"
+            },
+            {
+              "w": "inesperado",
+              "g": "unexpected"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Odiseo supo que la fuerza bruta sería insuficiente. Así, hizo de la astucia su única arma.",
+          "words": [
+            {
+              "w": "supo",
+              "g": "knew (irregular)"
+            },
+            {
+              "w": "insuficiente",
+              "g": "insufficient"
+            },
+            {
+              "w": "astucia",
+              "g": "cunning"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close-up on the hands of a Greek carpenter carving a wooden eye for the horse. The wood is dark, aged oak.",
+      "en": "Weeks passed. They carved the wood until the giant beast was finished.",
+      "levels": {
+        "facil": {
+          "es": "Pasaron semanas. Ellos trajeron madera y el caballo estuvo listo.",
+          "words": [
+            {
+              "w": "pasaron",
+              "g": "passed"
+            },
+            {
+              "w": "trajeron",
+              "g": "brought (irregular)"
+            },
+            {
+              "w": "listo",
+              "g": "ready"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Pasaron las semanas y ellos trajeron troncos enormes para dar forma a la bestia.",
+          "words": [
+            {
+              "w": "pasaron",
+              "g": "passed"
+            },
+            {
+              "w": "trajeron",
+              "g": "brought (irregular)"
+            },
+            {
+              "w": "bestia",
+              "g": "beast"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Transcurrieron semanas mientras ellos trajeron madera noble para erigir la estructura hueca.",
+          "words": [
+            {
+              "w": "transcurrieron",
+              "g": "elapsed"
+            },
+            {
+              "w": "trajeron",
+              "g": "brought (irregular)"
+            },
+            {
+              "w": "erigir",
+              "g": "to erect"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 4,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Odysseus stands before the completed, towering wooden horse. He holds a chisel, looking up at the hollow belly.",
+      "en": "The belly was hollow, a secret room for those who would strike from within.",
+      "levels": {
+        "facil": {
+          "es": "El caballo estuvo vacío por dentro. Odiseo dijo: 'Es un escondite perfecto'.",
+          "words": [
+            {
+              "w": "estuvo",
+              "g": "was (irregular)"
+            },
+            {
+              "w": "vacío",
+              "g": "empty"
+            },
+            {
+              "w": "escondite",
+              "g": "hiding place"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El interior estuvo hueco. Odiseo dijo que allí cabrían los hombres más valientes.",
+          "words": [
+            {
+              "w": "estuvo",
+              "g": "was (irregular)"
+            },
+            {
+              "w": "hueco",
+              "g": "hollow"
+            },
+            {
+              "w": "cabrían",
+              "g": "would fit"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El vientre estuvo hueco, un santuario de madera donde Odiseo dispuso a sus hombres de confianza.",
+          "words": [
+            {
+              "w": "estuvo",
+              "g": "was (irregular)"
+            },
+            {
+              "w": "vientre",
+              "g": "belly"
+            },
+            {
+              "w": "dispuso",
+              "g": "arranged (irregular)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 5,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The Greek fleet is seen sailing away into the fog, leaving the massive horse alone on the quiet beach near the Trojan walls.",
+      "en": "The Greeks sailed away, leaving the horse as a final, silent offering.",
+      "levels": {
+        "facil": {
+          "es": "Los griegos se fueron en sus barcos. El caballo se quedó solo en la playa.",
+          "words": [
+            {
+              "w": "fueron",
+              "g": "went (irregular)"
+            },
+            {
+              "w": "se quedó",
+              "g": "remained"
+            },
+            {
+              "w": "playa",
+              "g": "beach"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los griegos se fueron por el mar y el caballo se quedó como una ofrenda silenciosa.",
+          "words": [
+            {
+              "w": "fueron",
+              "g": "went (irregular)"
+            },
+            {
+              "w": "ofrenda",
+              "g": "offering"
+            },
+            {
+              "w": "silenciosa",
+              "g": "silent"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los griegos se fueron, dejando tras de sí una ofrenda que el destino ocultó bajo una falsa paz.",
+          "words": [
+            {
+              "w": "fueron",
+              "g": "went (irregular)"
+            },
+            {
+              "w": "ocultó",
+              "g": "hid"
+            },
+            {
+              "w": "falsa",
+              "g": "false"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 6,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A wide shot of the Trojan beach at dawn. The massive, hollow wooden horse stands alone on the sand. In the distance, the Greek fleet sails away into the horizon.",
+      "en": "The Greek ships disappeared into the sea, leaving the horse alone.",
+      "levels": {
+        "facil": {
+          "es": "Los barcos griegos se fueron. El caballo se quedó solo en la playa.",
+          "words": [
+            {
+              "w": "fueron",
+              "g": "went (ir)"
+            },
+            {
+              "w": "quedó",
+              "g": "stayed (quedar)"
+            },
+            {
+              "w": "playa",
+              "g": "beach"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Las naves griegas se alejaron por el horizonte y el inmenso caballo quedó abandonado en la arena.",
+          "words": [
+            {
+              "w": "alejaron",
+              "g": "moved away"
+            },
+            {
+              "w": "quedó",
+              "g": "remained"
+            },
+            {
+              "w": "arena",
+              "g": "sand"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los navíos griegos se esfumaron tras el horizonte; el coloso de madera permaneció como un espectro solitario en la costa.",
+          "words": [
+            {
+              "w": "esfumaron",
+              "g": "vanished"
+            },
+            {
+              "w": "coloso",
+              "g": "colossus"
+            },
+            {
+              "w": "permaneció",
+              "g": "remained"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 7,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Close-up on the Trojan gates. The guards look out, confused, pointing at the horse on the beach.",
+      "en": "The Trojans opened the gates and saw the strange gift.",
+      "levels": {
+        "facil": {
+          "es": "Los troyanos abrieron las puertas. Ellos vieron el regalo extraño.",
+          "words": [
+            {
+              "w": "abrieron",
+              "g": "opened (abrir)"
+            },
+            {
+              "w": "vieron",
+              "g": "saw (ver)"
+            },
+            {
+              "w": "regalo",
+              "g": "gift"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los guerreros de Troya abrieron las puertas de la ciudad y contemplaron aquel regalo inexplicable.",
+          "words": [
+            {
+              "w": "abrieron",
+              "g": "opened"
+            },
+            {
+              "w": "contemplaron",
+              "g": "contemplated"
+            },
+            {
+              "w": "inexplicable",
+              "g": "inexplicable"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los centinelas franquean los portones y observan, atónitos, la ofrenda que el enemigo dejó atrás.",
+          "words": [
+            {
+              "w": "franquean",
+              "g": "open/clear"
+            },
+            {
+              "w": "atónitos",
+              "g": "stunned"
+            },
+            {
+              "w": "ofrenda",
+              "g": "offering"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 8,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Trojan soldiers walk cautiously toward the wooden horse. The horse looms over them, silent and imposing.",
+      "en": "They approached the horse with fear and curiosity.",
+      "levels": {
+        "facil": {
+          "es": "Ellos caminaron hacia el caballo. Tuvieron miedo pero también curiosidad.",
+          "words": [
+            {
+              "w": "caminaron",
+              "g": "walked"
+            },
+            {
+              "w": "tuvieron",
+              "g": "had (tener)"
+            },
+            {
+              "w": "miedo",
+              "g": "fear"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Se acercaron al caballo con cautela. Tuvieron dudas sobre si era una trampa o un trofeo.",
+          "words": [
+            {
+              "w": "acercaron",
+              "g": "approached"
+            },
+            {
+              "w": "tuvieron",
+              "g": "had"
+            },
+            {
+              "w": "trampa",
+              "g": "trap"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Avanzaron con recelo hacia la estructura. Tuvieron el presentimiento de que aquel obsequio ocultaba un designio funesto.",
+          "words": [
+            {
+              "w": "recelo",
+              "g": "suspicion"
+            },
+            {
+              "w": "presentimiento",
+              "g": "premonition"
+            },
+            {
+              "w": "funesto",
+              "g": "fateful/gloomy"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 9,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A priest of Troy, Laocoon, gestures frantically at the horse, warning the people not to touch it.",
+      "en": "The priest Laocoon shouted, 'Do not trust this!'",
+      "levels": {
+        "facil": {
+          "es": "El sacerdote gritó: '¡No confíen en este caballo!'",
+          "words": [
+            {
+              "w": "sacerdote",
+              "g": "priest"
+            },
+            {
+              "w": "gritó",
+              "g": "shouted"
+            },
+            {
+              "w": "confíen",
+              "g": "trust"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El sacerdote Laocoonte advirtió: 'No confíen en los griegos ni en sus regalos'.",
+          "words": [
+            {
+              "w": "advirtió",
+              "g": "warned"
+            },
+            {
+              "w": "regalos",
+              "g": "gifts"
+            },
+            {
+              "w": "confíen",
+              "g": "trust"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Laocoonte alzó la voz, desesperado: '¡Temed a los dánaos incluso cuando traen regalos!'",
+          "words": [
+            {
+              "w": "alzó",
+              "g": "raised"
+            },
+            {
+              "w": "dánaos",
+              "g": "Danaans (Greeks)"
+            },
+            {
+              "w": "incluso",
+              "g": "even"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 10,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A group of Trojans begins to push the horse toward the city gates, ignoring the priest.",
+      "en": "But they did not listen and pushed the horse into the city.",
+      "levels": {
+        "facil": {
+          "es": "Pero nadie escuchó al hombre. Ellos pusieron el caballo dentro de la ciudad.",
+          "words": [
+            {
+              "w": "nadie",
+              "g": "nobody"
+            },
+            {
+              "w": "escuchó",
+              "g": "listened"
+            },
+            {
+              "w": "pusieron",
+              "g": "put (poner)"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "No hicieron caso a sus palabras y empujaron el caballo hacia el interior de las murallas.",
+          "words": [
+            {
+              "w": "hicieron",
+              "g": "made/did (hacer)"
+            },
+            {
+              "w": "empujaron",
+              "g": "pushed"
+            },
+            {
+              "w": "murallas",
+              "g": "walls"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hicieron oídos sordos a la profecía y arrastraron la mole de madera hasta el corazón de Troya.",
+          "words": [
+            {
+              "w": "hicieron",
+              "g": "made"
+            },
+            {
+              "w": "sordos",
+              "g": "deaf"
+            },
+            {
+              "w": "mole",
+              "g": "massive object"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 11,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. The massive wooden horse stands in the center of the city square. Priam, an elderly king with a white beard and regal robes, touches the horse's flank with awe.",
+      "en": "The King touched the wood. He believed it was a divine gift.",
+      "levels": {
+        "facil": {
+          "es": "El rey tocó la madera. Él creyó que era un regalo divino.",
+          "words": [
+            {
+              "w": "creyó",
+              "g": "believed (pret. ir.)"
+            },
+            {
+              "w": "regalo",
+              "g": "gift"
+            },
+            {
+              "w": "madera",
+              "g": "wood"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El rey puso su mano sobre la madera. Creyó firmemente que era un regalo de los dioses.",
+          "words": [
+            {
+              "w": "creyó",
+              "g": "believed"
+            },
+            {
+              "w": "firmemente",
+              "g": "firmly"
+            },
+            {
+              "w": "divinos",
+              "g": "divine"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El monarca posó su mano sobre la estructura. Creyó, en su ceguera, que aquel coloso era un obsequio de los dioses.",
+          "words": [
+            {
+              "w": "monarca",
+              "g": "monarch"
+            },
+            {
+              "w": "creyó",
+              "g": "believed"
+            },
+            {
+              "w": "obsequio",
+              "g": "gift"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 12,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Trojans celebrate around the horse with torches. Priam, an elderly king with a white beard and regal robes, watches the joy.",
+      "en": "The people sang. They did not know the danger inside.",
+      "levels": {
+        "facil": {
+          "es": "La gente cantó. Ellos no supieron del peligro dentro.",
+          "words": [
+            {
+              "w": "cantó",
+              "g": "sang (pret. ir.)"
+            },
+            {
+              "w": "supieron",
+              "g": "knew/found out (pret. ir.)"
+            },
+            {
+              "w": "peligro",
+              "g": "danger"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "El pueblo cantó con alegría. No supieron que el peligro estaba oculto en el vientre del animal.",
+          "words": [
+            {
+              "w": "pueblo",
+              "g": "people"
+            },
+            {
+              "w": "supieron",
+              "g": "knew"
+            },
+            {
+              "w": "oculto",
+              "g": "hidden"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "El pueblo cantó y festejó. Jamás supieron que la muerte les acechaba desde las entrañas de madera.",
+          "words": [
+            {
+              "w": "festejó",
+              "g": "celebrated"
+            },
+            {
+              "w": "supieron",
+              "g": "knew"
+            },
+            {
+              "w": "acechaba",
+              "g": "was lurking"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 13,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Helen of Troy, a woman with flowing golden hair and a white silk dress, looks at the horse with a suspicious, melancholic expression.",
+      "en": "Helen looked at the horse. She sensed a strange truth.",
+      "levels": {
+        "facil": {
+          "es": "Helena miró al caballo. Ella vio una verdad extraña.",
+          "words": [
+            {
+              "w": "miró",
+              "g": "looked"
+            },
+            {
+              "w": "vio",
+              "g": "saw (pret. ir.)"
+            },
+            {
+              "w": "verdad",
+              "g": "truth"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Helena observó la estatua. Vio algo extraño en su silencio.",
+          "words": [
+            {
+              "w": "observó",
+              "g": "observed"
+            },
+            {
+              "w": "vio",
+              "g": "saw"
+            },
+            {
+              "w": "extraño",
+              "g": "strange"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Helena de Troya contempló el equino. Vio, tras la madera, el eco de una traición anunciada.",
+          "words": [
+            {
+              "w": "contempló",
+              "g": "contemplated"
+            },
+            {
+              "w": "vio",
+              "g": "saw"
+            },
+            {
+              "w": "traición",
+              "g": "betrayal"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 14,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Night falls. The Trojans have fallen asleep, exhausted from the party. The city is quiet.",
+      "en": "The city slept. The soldiers went to their houses.",
+      "levels": {
+        "facil": {
+          "es": "La ciudad durmió. Los soldados fueron a sus casas.",
+          "words": [
+            {
+              "w": "durmió",
+              "g": "slept"
+            },
+            {
+              "w": "fueron",
+              "g": "went (pret. ir.)"
+            },
+            {
+              "w": "casas",
+              "g": "houses"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La ciudad entera durmió profundamente. Los soldados fueron a descansar a sus hogares.",
+          "words": [
+            {
+              "w": "entera",
+              "g": "entire"
+            },
+            {
+              "w": "fueron",
+              "g": "went"
+            },
+            {
+              "w": "descansar",
+              "g": "to rest"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Troya finalmente durmió. Los guardias fueron a sus lechos, vencidos por el vino y el cansancio.",
+          "words": [
+            {
+              "w": "finalmente",
+              "g": "finally"
+            },
+            {
+              "w": "fueron",
+              "g": "went"
+            },
+            {
+              "w": "lechos",
+              "g": "beds"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 15,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A small hidden door on the horse's belly begins to open. A sliver of light spills out.",
+      "en": "A door opened in the horse. They made a plan.",
+      "levels": {
+        "facil": {
+          "es": "Una puerta se abrió. Ellos hicieron un plan.",
+          "words": [
+            {
+              "w": "abrió",
+              "g": "opened"
+            },
+            {
+              "w": "hicieron",
+              "g": "made/did (pret. ir.)"
+            },
+            {
+              "w": "plan",
+              "g": "plan"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Una escotilla secreta se abrió. Los griegos hicieron realidad su plan de ataque.",
+          "words": [
+            {
+              "w": "escotilla",
+              "g": "hatch"
+            },
+            {
+              "w": "hicieron",
+              "g": "made"
+            },
+            {
+              "w": "ataque",
+              "g": "attack"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Una escotilla oculta se abrió con sigilo. Los griegos hicieron lo necesario para iniciar la caída de la ciudad.",
+          "words": [
+            {
+              "w": "sigilo",
+              "g": "stealth"
+            },
+            {
+              "w": "hicieron",
+              "g": "made"
+            },
+            {
+              "w": "caída",
+              "g": "fall"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 16,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Odysseus, a rugged warrior with a scarred face and piercing eyes, climbs down a rope from the horse's belly.",
+      "en": "Odysseus stepped onto the ground first.",
+      "levels": {
+        "facil": {
+          "es": "Odiseo vino al suelo primero.",
+          "words": [
+            {
+              "w": "vino",
+              "g": "came"
+            },
+            {
+              "w": "suelo",
+              "g": "ground"
+            },
+            {
+              "w": "primero",
+              "g": "first"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Odiseo vino a la tierra y tocó el suelo primero.",
+          "words": [
+            {
+              "w": "vino",
+              "g": "came"
+            },
+            {
+              "w": "tierra",
+              "g": "earth"
+            },
+            {
+              "w": "tocó",
+              "g": "touched"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Odiseo vino del vientre de madera y pisó el suelo con sigilo.",
+          "words": [
+            {
+              "w": "vino",
+              "g": "came"
+            },
+            {
+              "w": "vientre",
+              "g": "belly"
+            },
+            {
+              "w": "pisó",
+              "g": "stepped on"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 17,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Dozens of Greek soldiers silently drop from the horse, holding bronze swords.",
+      "en": "The soldiers put their weapons in their hands.",
+      "levels": {
+        "facil": {
+          "es": "Los soldados tuvieron sus armas en las manos.",
+          "words": [
+            {
+              "w": "tuvieron",
+              "g": "had/held"
+            },
+            {
+              "w": "armas",
+              "g": "weapons"
+            },
+            {
+              "w": "manos",
+              "g": "hands"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los soldados tuvieron sus espadas listas bajo la noche.",
+          "words": [
+            {
+              "w": "tuvieron",
+              "g": "held"
+            },
+            {
+              "w": "espadas",
+              "g": "swords"
+            },
+            {
+              "w": "listas",
+              "g": "ready"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Los soldados tuvieron el acero en sus manos, listos para la matanza.",
+          "words": [
+            {
+              "w": "tuvieron",
+              "g": "held"
+            },
+            {
+              "w": "acero",
+              "g": "steel"
+            },
+            {
+              "w": "matanza",
+              "g": "slaughter"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 18,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. Odysseus signals to the shadows, and a soldier opens the massive city gate.",
+      "en": "They made a path for the army.",
+      "levels": {
+        "facil": {
+          "es": "Ellos hicieron un camino abierto.",
+          "words": [
+            {
+              "w": "hicieron",
+              "g": "made"
+            },
+            {
+              "w": "camino",
+              "g": "path"
+            },
+            {
+              "w": "abierto",
+              "g": "open"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Los griegos hicieron una señal y abrieron las puertas.",
+          "words": [
+            {
+              "w": "hicieron",
+              "g": "made"
+            },
+            {
+              "w": "señal",
+              "g": "signal"
+            },
+            {
+              "w": "abrieron",
+              "g": "opened"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "Hicieron crujir las bisagras; la puerta cedió ante su fuerza.",
+          "words": [
+            {
+              "w": "hicieron",
+              "g": "made"
+            },
+            {
+              "w": "crujir",
+              "g": "creak"
+            },
+            {
+              "w": "cedió",
+              "g": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 19,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. In the distance, the Greek fleet quietly pulls into the harbor under moonlight.",
+      "en": "The fleet was near the coast.",
+      "levels": {
+        "facil": {
+          "es": "La flota estuvo cerca de la costa.",
+          "words": [
+            {
+              "w": "estuvo",
+              "g": "was"
+            },
+            {
+              "w": "flota",
+              "g": "fleet"
+            },
+            {
+              "w": "costa",
+              "g": "coast"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "La gran flota estuvo esperando la señal de fuego.",
+          "words": [
+            {
+              "w": "estuvo",
+              "g": "was"
+            },
+            {
+              "w": "esperando",
+              "g": "waiting"
+            },
+            {
+              "w": "señal",
+              "g": "signal"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La flota estuvo oculta en la bruma, aguardando el momento final.",
+          "words": [
+            {
+              "w": "estuvo",
+              "g": "was"
+            },
+            {
+              "w": "oculta",
+              "g": "hidden"
+            },
+            {
+              "w": "aguardando",
+              "g": "waiting for"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 20,
+      "art_prompt": "Epic mythological graphic-novel style: painterly, dramatic chiaroscuro lighting, classical composition, gold-and-ember palette, semi-realistic proportions, cinematic. Consistent character designs. 3:4 vertical panel. NO text, NO letters, NO speech bubbles in the image. A single torch is lit by Odysseus, casting a long, ominous shadow over the sleeping city walls.",
+      "en": "The fire burned; Troy's end began.",
+      "levels": {
+        "facil": {
+          "es": "El fuego ardió. El fin llegó.",
+          "words": [
+            {
+              "w": "ardió",
+              "g": "burned"
+            },
+            {
+              "w": "llegó",
+              "g": "arrived"
+            },
+            {
+              "w": "fin",
+              "g": "end"
+            }
+          ]
+        },
+        "intermedio": {
+          "es": "Odiseo encendió la antorcha; el fin de Troya empezó.",
+          "words": [
+            {
+              "w": "encendió",
+              "g": "lit"
+            },
+            {
+              "w": "antorcha",
+              "g": "torch"
+            },
+            {
+              "w": "empezó",
+              "g": "began"
+            }
+          ]
+        },
+        "nativo": {
+          "es": "La antorcha relució en la oscuridad; el destino de Troya estuvo sellado.",
+          "words": [
+            {
+              "w": "relució",
+              "g": "shone"
+            },
+            {
+              "w": "destino",
+              "g": "fate"
+            },
+            {
+              "w": "sellado",
+              "g": "sealed"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cliffhanger": "As the Greek fleet descends upon the shore, Helena stands on her balcony, watching the horizon ignite with fire—she knows the gods have finally chosen a side.",
+  "closingBeat": "La astucia es el arma más afilada cuando el acero no es suficiente."
+}
