@@ -11735,6 +11735,129 @@ document.addEventListener('keydown', e => {
 })();
 
 
+// ── WORKSHEETS (2026-07-15, Phase 2) — self-contained graded exercise sets ────
+// Reuses the STATIC_EXERCISES banks (DATA only — no renderer entanglement).
+// Options are SHUFFLED with correct-VALUE tracking, because the banks store the
+// answer as options[0] by convention; an unshuffled quiz would always be "pick
+// #1". Launchable manually (📝) or from a worksheet assignment (marks it done).
+(function initWorksheet() {
+  const hasBank = () => typeof STATIC_EXERCISES !== 'undefined' && STATIC_EXERCISES;
+  const esc = s => String(s == null ? '' : s).replace(/</g, '&lt;');
+  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+  function normFB(x, k) {
+    const answer = x.options[x.correct];
+    return { concept: k, prompt: (x.before || '') + ' ______ ' + (x.after || ''), hint: x.en || '', options: shuffle(x.options.slice()), answer, explanation: x.explanation || '', say: ((x.before || '') + ' ' + answer + ' ' + (x.after || '')).trim() };
+  }
+  function normPair(x, k) {
+    const answer = (x.cards[x.correct] || {}).es || '';
+    return { concept: k, prompt: x.question || '¿Cuál es correcta?', hint: '', options: shuffle(x.cards.map(c => c.es)), answer, explanation: x.explanation || '', say: answer };
+  }
+  function pool(keys) {
+    const items = [];
+    (keys || []).forEach(k => { const b = (hasBank() && STATIC_EXERCISES[k]) || {}; (b.fillblank || []).forEach(x => items.push(normFB(x, k))); (b.pairs || []).forEach(x => items.push(normPair(x, k))); });
+    return items;
+  }
+  function defaultConcepts() {
+    try { const s = Object.keys(conceptMastery || {}).filter(k => hasBank() && STATIC_EXERCISES[k]); if (s.length) return s; } catch (e) {}
+    try { const f = pathFrontierKey(); if (hasBank() && STATIC_EXERCISES[f]) return [f]; } catch (e) {}
+    return (hasBank() && STATIC_EXERCISES['ser-estar']) ? ['ser-estar'] : Object.keys(hasBank() ? STATIC_EXERCISES : {}).slice(0, 1);
+  }
+
+  const css = document.createElement('style');
+  css.textContent =
+    '#ws-fab{position:fixed;right:16px;bottom:202px;z-index:400;width:54px;height:54px;border-radius:50%;border:none;background:linear-gradient(135deg,#2a9d8f,#264653);color:#fff;font-size:24px;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.5);}' +
+    '#ws-overlay{position:fixed;inset:0;z-index:800;background:#0b0f14;display:none;flex-direction:column;}' +
+    '#ws-overlay.open{display:flex;}' +
+    '#ws-top{display:flex;align-items:center;gap:8px;padding:12px 14px;}' +
+    '#ws-top .ws-x{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:34px;height:34px;font-size:15px;cursor:pointer;}' +
+    '#ws-top .ws-title{font-size:14px;font-weight:700;color:#fff;}' +
+    '#ws-top .ws-count{margin-left:auto;font-size:12px;color:#8899aa;}' +
+    '#ws-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 22px 40px;max-width:600px;width:100%;margin:0 auto;box-sizing:border-box;overflow-y:auto;}' +
+    '.ws-hint{font-size:13px;color:#7d8aa0;margin-bottom:8px;}' +
+    '.ws-q{font-size:22px;font-weight:700;color:#fff;line-height:1.5;margin-bottom:20px;}' +
+    '.ws-opt{display:block;width:100%;text-align:left;background:#18202a;border:1px solid #2a3644;color:#e8eef5;border-radius:12px;padding:14px 16px;font-size:16px;margin-bottom:10px;cursor:pointer;}' +
+    '.ws-opt.correct{background:#14432f;border-color:#4ade80;color:#d6ffe4;}' +
+    '.ws-opt.wrong{background:#4a1f1f;border-color:#ff6b6b;color:#ffdada;}' +
+    '.ws-exp{font-size:13.5px;color:#aab6c8;background:#141b23;border-left:3px solid #2a9d8f;border-radius:6px;padding:10px 12px;margin-top:6px;}' +
+    '.ws-next{margin-top:18px;background:#2a9d8f;border:none;color:#06231f;font-weight:700;border-radius:22px;padding:12px 22px;font-size:15px;cursor:pointer;}' +
+    '.ws-end{text-align:center;}' +
+    '.ws-score{font-size:44px;font-weight:800;color:#2a9d8f;}' +
+    '@media(min-width:700px){#ws-body{max-width:560px;}}';
+  document.head.appendChild(css);
+
+  const fab = document.createElement('button');
+  fab.id = 'ws-fab'; fab.textContent = '📝'; fab.title = 'Hoja de ejercicios';
+  fab.setAttribute('aria-label', 'Open worksheet'); fab.onclick = () => openWorksheet();
+  document.body.appendChild(fab);
+
+  let overlay, body, top, questions = [], idx = 0, correct = 0, spec = {};
+
+  function openWorksheet(s) {
+    spec = s || {};
+    const concepts = (spec.concepts && spec.concepts.length) ? spec.concepts : defaultConcepts();
+    const size = Math.max(1, Math.min(20, spec.size || 8));
+    questions = shuffle(pool(concepts)).slice(0, size);
+    if (!questions.length) { try { showToast('No hay ejercicios disponibles', 2000); } catch (e) {} return; }
+    idx = 0; correct = 0;
+    if (!overlay) {
+      overlay = document.createElement('div'); overlay.id = 'ws-overlay';
+      overlay.innerHTML = '<div id="ws-top"><button class="ws-x" aria-label="Close">✕</button><span class="ws-title"></span><span class="ws-count"></span></div><div id="ws-body"></div>';
+      document.body.appendChild(overlay);
+      body = overlay.querySelector('#ws-body'); top = overlay.querySelector('#ws-top');
+      overlay.querySelector('.ws-x').onclick = closeWorksheet;
+    }
+    top.querySelector('.ws-title').textContent = spec.title || 'Hoja de ejercicios';
+    overlay.classList.add('open'); document.body.style.overflow = 'hidden';
+    renderQ();
+  }
+  function renderQ() {
+    if (idx >= questions.length) return renderEnd();
+    top.querySelector('.ws-count').textContent = (idx + 1) + ' / ' + questions.length;
+    const q = questions[idx];
+    body.innerHTML = (q.hint ? '<div class="ws-hint">' + esc(q.hint) + '</div>' : '') +
+      '<div class="ws-q">' + esc(q.prompt) + '</div>' +
+      '<div id="ws-opts">' + q.options.map((o, i) => '<button class="ws-opt" data-i="' + i + '">' + esc(o) + '</button>').join('') + '</div>' +
+      '<div id="ws-after"></div>';
+    body.querySelectorAll('.ws-opt').forEach(b => b.onclick = () => pick(b, q));
+  }
+  function pick(btn, q) {
+    const chosen = q.options[+btn.dataset.i];
+    if (chosen === q.answer) correct++;
+    body.querySelectorAll('.ws-opt').forEach(b => {
+      b.disabled = true;
+      if (q.options[+b.dataset.i] === q.answer) b.classList.add('correct');
+      else if (b === btn) b.classList.add('wrong');
+    });
+    try { speakSpanish(q.say); } catch (e) {}
+    body.querySelector('#ws-after').innerHTML =
+      (q.explanation ? '<div class="ws-exp">' + esc(q.explanation) + '</div>' : '') +
+      '<button class="ws-next">' + (idx === questions.length - 1 ? 'Ver resultado ›' : 'Siguiente ›') + '</button>';
+    body.querySelector('.ws-next').onclick = () => { idx++; renderQ(); };
+  }
+  function renderEnd() {
+    const pct = Math.round(correct / questions.length * 100);
+    top.querySelector('.ws-count').textContent = '';
+    body.innerHTML = '<div class="ws-end"><div class="ws-score">' + correct + '/' + questions.length + '</div>' +
+      '<div style="font-size:16px;color:#e8eef5;margin:10px 0">' + (pct >= 80 ? '¡Excelente! 🎉' : pct >= 60 ? '¡Bien hecho! 👍' : 'Sigue practicando 💪') + '</div>' +
+      '<button class="ws-next" id="ws-close">Cerrar</button></div>';
+    body.querySelector('#ws-close').onclick = closeWorksheet;
+    try { const h = JSON.parse(localStorage.getItem('sl_worksheets') || '[]'); h.unshift({ ts: Date.now(), score: correct, total: questions.length, concepts: spec.concepts || null }); localStorage.setItem('sl_worksheets', JSON.stringify(h.slice(0, 50))); } catch (e) {}
+    if (spec.assignmentId) {
+      try {
+        const sid = (typeof getStudentId === 'function') ? getStudentId() : localStorage.getItem('sl_student_id');
+        fetch('/api/student-config', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ studentId: sid, completeAssignment: spec.assignmentId }) }).catch(() => {});
+      } catch (e) {}
+    }
+  }
+  function closeWorksheet() {
+    if (overlay) overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    try { window.speechSynthesis.cancel(); } catch (e) {}
+  }
+  window.openWorksheet = openWorksheet;
+})();
+
 // ── BOOTSTRAP (2026-07-01) ────────────────────────────────────────────────────
 // init() was defined but never actually called anywhere in the file — nothing
 // wired it to page load (no <body onload>, no DOMContentLoaded listener). That
