@@ -11044,7 +11044,8 @@ function renderAssignmentBanner() {
     // Episode assignment (Phase 2a): tappable, opens the MITOS reader.
     if (a.type === 'episode' || a.episodeId) {
       const t = String(a.title || 'Episodio').replace(/</g, '&lt;');
-      return `<span class="assignment-item" style="border:1px solid #b8860b;cursor:pointer" onclick="try{openComic()}catch(e){}">📖 Leer: ${t}${due}</span>`;
+      const eid = String(a.episodeId || '').replace(/[^a-z0-9_-]/gi, '');
+      return `<span class="assignment-item" style="border:1px solid #b8860b;cursor:pointer" onclick="try{window.openMitosById?openMitosById('${eid}'):openComic()}catch(e){}">📖 Leer: ${t}${due}</span>`;
     }
     // Worksheet assignment (Phase 2): tappable, opens the graded worksheet.
     if (a.type === 'worksheet') {
@@ -11488,9 +11489,54 @@ document.addEventListener('keydown', e => {
   const LABEL = { facil: 'Fácil', intermedio: 'Intermedio', nativo: 'Nativo' };
   let level = localStorage.getItem('sl_mitos_level') || 'facil';
   let showEN = localStorage.getItem('sl_mitos_en') !== '0';
-  let overlay, stage, nav, idx = 0;
-  const N = CH.panels.length;
+  let overlay, stage, nav, picker, idx = 0;
+  let CH = CH1, N = CH1.panels.length;
   const esc = s => String(s == null ? '' : s).replace(/</g, '&lt;');
+  // Chapter catalog (titles from MITOS_LIBRARY.md). Ch1 is inline; others load
+  // from mitos/chapters/chNN.json once generated (else "próximamente").
+  const CATALOG = [
+    { n: 1, id: 'mitos-s1e1', arc: 'Grecia', title: 'El Ladrón del Fuego', inline: true },
+    { n: 2, id: 'mitos-ch2', arc: 'Grecia', title: 'La Caja de Pandora' },
+    { n: 3, id: 'mitos-ch3', arc: 'Grecia', title: 'El Vuelo de Ícaro' },
+    { n: 4, id: 'mitos-ch4', arc: 'Grecia', title: 'Perseo y Medusa' },
+    { n: 5, id: 'mitos-ch5', arc: 'Grecia', title: 'El Rapto de Perséfone' },
+    { n: 6, id: 'mitos-ch6', arc: 'Grecia', title: 'Teseo y el Minotauro' },
+    { n: 7, id: 'mitos-ch7', arc: 'Grecia', title: 'El Canto de Orfeo' },
+    { n: 8, id: 'mitos-ch8', arc: 'Grecia', title: 'Las Pruebas de Heracles' },
+    { n: 9, id: 'mitos-ch9', arc: 'Grecia', title: 'El Caballo de Troya' },
+    { n: 10, id: 'mitos-ch10', arc: 'Grecia', title: 'La Odisea' },
+    { n: 11, id: 'mitos-ch11', arc: 'Mundo', title: 'El Martillo de Thor' },
+    { n: 12, id: 'mitos-ch12', arc: 'Mundo', title: 'Loki, el Embaucador' },
+    { n: 13, id: 'mitos-ch13', arc: 'Mundo', title: 'El Ragnarök' },
+    { n: 14, id: 'mitos-ch14', arc: 'Mundo', title: 'Osiris y el Río' },
+    { n: 15, id: 'mitos-ch15', arc: 'Mundo', title: 'Anubis y el Juicio' },
+    { n: 16, id: 'mitos-ch16', arc: 'Mundo', title: 'Ra contra Apofis' },
+    { n: 17, id: 'mitos-ch17', arc: 'Mundo', title: 'Quetzalcóatl' },
+    { n: 18, id: 'mitos-ch18', arc: 'Mundo', title: 'El Quinto Sol' },
+    { n: 19, id: 'mitos-ch19', arc: 'Mundo', title: 'Los Héroes Gemelos' },
+    { n: 20, id: 'mitos-ch20', arc: 'Mundo', title: 'Inti y el Imperio del Sol' },
+    { n: 21, id: 'mitos-ch21', arc: 'España', title: 'Tartessos y los Fenicios' },
+    { n: 22, id: 'mitos-ch22', arc: 'España', title: 'Roma en Hispania' },
+    { n: 23, id: 'mitos-ch23', arc: 'España', title: 'El Reino Visigodo' },
+    { n: 24, id: 'mitos-ch24', arc: 'España', title: '711: La Llegada de Al-Ándalus' },
+    { n: 25, id: 'mitos-ch25', arc: 'España', title: 'Córdoba, Luz del Mundo' },
+    { n: 26, id: 'mitos-ch26', arc: 'España', title: 'El Cid' },
+    { n: 27, id: 'mitos-ch27', arc: 'España', title: 'Isabel y Fernando' },
+    { n: 28, id: 'mitos-ch28', arc: 'España', title: '1492' },
+    { n: 29, id: 'mitos-ch29', arc: 'España', title: 'El Imperio donde no se Pone el Sol' },
+    { n: 30, id: 'mitos-ch30', arc: 'España', title: 'El Siglo de Oro' },
+  ];
+  function progressStore() { try { return JSON.parse(localStorage.getItem('sl_mitos_progress') || '{}'); } catch (e) { return {}; } }
+  function saveProgress() { try { const p = progressStore(); p[CH.id] = idx; localStorage.setItem('sl_mitos_progress', JSON.stringify(p)); localStorage.setItem('sl_mitos_last', CH.id); } catch (e) {} }
+  // Normalise a generated chapter JSON (words may be [{w,g}] arrays) to reader shape.
+  function normChapter(j, n) {
+    const wob = w => Array.isArray(w) ? w.reduce((o, x) => { if (x && x.w) o[x.w] = x.g; return o; }, {}) : (w || {});
+    return {
+      id: 'mitos-ch' + n, title: j.title || ('Capítulo ' + n), grad: ['#1a1030', '#3a1c1c'], imgBase: 'mitos/ch' + String(n).padStart(2, '0') + '/p',
+      panels: (j.panels || []).map(p => { const lv = {}; ['facil', 'intermedio', 'nativo'].forEach(k => { if (p.levels && p.levels[k]) lv[k] = { es: p.levels[k].es || '', words: wob(p.levels[k].words) }; }); if (!lv.facil) lv.facil = { es: p.es || '', words: {} }; return { emoji: '📖', en: p.en || '', levels: lv }; }),
+      closing: { es: j.closingBeat || j.cliffhanger || '', en: '' },
+    };
+  }
 
   const css = document.createElement('style');
   css.textContent =
@@ -11523,7 +11569,19 @@ document.addEventListener('keydown', e => {
     '#mitos-nav #mitos-count{color:#8a8398;font-size:12px;}' +
     '.m-gloss{position:fixed;z-index:900;background:#20202c;border:1px solid #5a5468;border-radius:12px;padding:10px 14px;color:#fff;font-size:15px;max-width:270px;box-shadow:0 10px 34px rgba(0,0,0,.7);}' +
     '.m-gloss b{display:block;color:#f0d99b;font-size:13px;margin-bottom:3px;}' +
-    '@media(min-width:700px){#mitos-bars,#mitos-head,#mitos-nav{width:100%;max-width:560px;margin-left:auto;margin-right:auto;}.m-panel{max-width:560px;width:100%;}}';
+    '@media(min-width:700px){#mitos-bars,#mitos-head,#mitos-nav{width:100%;max-width:560px;margin-left:auto;margin-right:auto;}.m-panel{max-width:560px;width:100%;}}' +
+    '#mitos-picker{position:fixed;inset:0;z-index:800;background:#0a0812;display:none;flex-direction:column;}' +
+    '#mitos-picker.open{display:flex;}' +
+    '#mp-top{display:flex;align-items:center;gap:8px;padding:14px;}' +
+    '#mp-top .mp-x{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:34px;height:34px;font-size:15px;cursor:pointer;}' +
+    '#mp-top .mp-title{font-size:15px;font-weight:700;color:#e9c46a;}' +
+    '#mp-list{flex:1;overflow-y:auto;padding:0 14px 40px;max-width:560px;width:100%;margin:0 auto;box-sizing:border-box;}' +
+    '.mp-arc{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a8398;margin:18px 0 8px;}' +
+    '.mp-ch{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#161320;border:1px solid #2a2438;color:#e8e4f2;border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;}' +
+    '.mp-ch.locked{opacity:.5;cursor:default;}' +
+    '.mp-ch .mp-n{font-size:13px;color:#8a8398;width:22px;flex-shrink:0;text-align:center;}' +
+    '.mp-ch .mp-t{flex:1;font-size:15px;font-weight:600;}' +
+    '.mp-ch .mp-b{font-size:12px;color:#b8860b;flex-shrink:0;white-space:nowrap;}';
   document.head.appendChild(css);
 
   const fab = document.createElement('button');
@@ -11690,7 +11748,7 @@ document.addEventListener('keydown', e => {
     nav.querySelector('#mitos-next').textContent = '↺ Reiniciar';
     nav.querySelector('#mitos-count').textContent = 'Fin';
   }
-  function render(speak) { if (idx >= N) paintClosing(); else paintPanel(speak); }
+  function render(speak) { if (idx >= N) paintClosing(); else paintPanel(speak); saveProgress(); }
   function next() {
     try { window.speechSynthesis.cancel(); } catch (e) {}
     if (idx >= N) { idx = 0; render(true); return; }
@@ -11710,34 +11768,85 @@ document.addEventListener('keydown', e => {
     const en = stage && stage.querySelector('.m-en'); if (en) en.classList.toggle('off', !showEN);
     overlay.querySelector('.m-toggle').textContent = showEN ? '🇬🇧 EN on' : '🇬🇧 EN off';
   }
-  function openComic() {
-    if (!overlay) {
-      overlay = document.createElement('div'); overlay.id = 'mitos-overlay';
-      overlay.innerHTML =
-        '<div id="mitos-bars">' + CH.panels.map(() => '<div class="seg"></div>').join('') + '</div>' +
-        '<div id="mitos-head"><button class="m-x" aria-label="Close">✕</button>' +
-          '<div id="mitos-seg">' + LEVELS.map(l => '<button data-lv="' + l + '"' + (l === level ? ' class="on"' : '') + '>' + LABEL[l] + '</button>').join('') + '</div>' +
-          '<button class="m-toggle">' + (showEN ? '🇬🇧 EN on' : '🇬🇧 EN off') + '</button></div>' +
-        '<div id="mitos-stage"></div>' +
-        '<div id="mitos-nav"><button id="mitos-prev">‹ Atrás</button><span id="mitos-count"></span><button id="mitos-next">Siguiente ›</button></div>';
-      document.body.appendChild(overlay);
-      stage = overlay.querySelector('#mitos-stage');
-      nav = overlay.querySelector('#mitos-nav');
-      overlay.querySelector('.m-x').onclick = closeComic;
-      overlay.querySelector('.m-toggle').onclick = toggleEN;
-      overlay.querySelectorAll('#mitos-seg button').forEach(b => b.onclick = () => setLevel(b.dataset.lv));
-      nav.querySelector('#mitos-prev').onclick = prev;
-      nav.querySelector('#mitos-next').onclick = next;
-    }
-    idx = 0; overlay.classList.add('open'); document.body.style.overflow = 'hidden';
+  // Build the reader shell once; bars get rebuilt per chapter (panel count varies).
+  function ensureReader() {
+    if (overlay) return;
+    overlay = document.createElement('div'); overlay.id = 'mitos-overlay';
+    overlay.innerHTML =
+      '<div id="mitos-bars"></div>' +
+      '<div id="mitos-head"><button class="m-x" aria-label="Close">✕</button>' +
+        '<div id="mitos-seg">' + LEVELS.map(l => '<button data-lv="' + l + '"' + (l === level ? ' class="on"' : '') + '>' + LABEL[l] + '</button>').join('') + '</div>' +
+        '<button class="m-toggle">' + (showEN ? '🇬🇧 EN on' : '🇬🇧 EN off') + '</button></div>' +
+      '<div id="mitos-stage"></div>' +
+      '<div id="mitos-nav"><button id="mitos-prev">‹ Atrás</button><span id="mitos-count"></span><button id="mitos-next">Siguiente ›</button></div>';
+    document.body.appendChild(overlay);
+    stage = overlay.querySelector('#mitos-stage');
+    nav = overlay.querySelector('#mitos-nav');
+    overlay.querySelector('.m-x').onclick = backToPicker;
+    overlay.querySelector('.m-toggle').onclick = toggleEN;
+    overlay.querySelectorAll('#mitos-seg button').forEach(b => b.onclick = () => setLevel(b.dataset.lv));
+    nav.querySelector('#mitos-prev').onclick = prev;
+    nav.querySelector('#mitos-next').onclick = next;
+  }
+  // Open a loaded chapter, resuming from saved panel (unless finished → restart).
+  function startChapter(data) {
+    CH = data; N = data.panels.length;
+    ensureReader();
+    overlay.querySelector('#mitos-bars').innerHTML = CH.panels.map(() => '<div class="seg"></div>').join('');
+    const saved = progressStore()[CH.id];
+    idx = (typeof saved === 'number' && saved > 0 && saved < N) ? saved : 0;
+    if (picker) picker.classList.remove('open');
+    overlay.classList.add('open'); document.body.style.overflow = 'hidden';
     render(true);
+  }
+  async function openChapter(meta) {
+    if (meta.inline) { startChapter(CH1); return; }
+    try {
+      const r = await fetch('mitos/chapters/ch' + String(meta.n).padStart(2, '0') + '.json', { cache: 'no-store' });
+      if (!r.ok) throw 0;
+      startChapter(normChapter(await r.json(), meta.n));
+    } catch (e) {
+      try { showToast('«' + meta.title + '» — próximamente 📖', 2600); } catch (x) {}
+    }
+  }
+  // Chapter picker: choose what to read; shows resume/read state per chapter.
+  function openComic() {
+    if (!picker) {
+      picker = document.createElement('div'); picker.id = 'mitos-picker';
+      picker.innerHTML = '<div id="mp-top"><button class="mp-x" aria-label="Close">✕</button><span class="mp-title">📖 MITOS — Capítulos</span></div><div id="mp-list"></div>';
+      document.body.appendChild(picker);
+      picker.querySelector('.mp-x').onclick = () => { picker.classList.remove('open'); document.body.style.overflow = ''; };
+    }
+    const prog = progressStore();
+    let arc = '';
+    picker.querySelector('#mp-list').innerHTML = CATALOG.map(c => {
+      let head = '';
+      if (c.arc !== arc) { arc = c.arc; head = '<div class="mp-arc">' + arc + '</div>'; }
+      const saved = prog[c.id];
+      let badge;
+      if (!c.inline) badge = '<span class="mp-b lock">🔒 Próximamente</span>';
+      else if (typeof saved !== 'number') badge = '<span class="mp-b">▶ Empezar</span>';
+      else if (saved >= CH1.panels.length || saved <= 0) badge = '<span class="mp-b done">✓ Leído</span>';
+      else badge = '<span class="mp-b">▶ Reanudar · p' + (saved + 1) + '</span>';
+      return head + '<button class="mp-ch' + (c.inline ? '' : ' locked') + '" data-n="' + c.n + '"><span class="mp-n">' + c.n + '</span><span class="mp-t">' + c.title + '</span>' + badge + '</button>';
+    }).join('');
+    picker.querySelectorAll('.mp-ch').forEach(b => b.onclick = () => openChapter(CATALOG[Number(b.dataset.n) - 1]));
+    picker.classList.add('open'); document.body.style.overflow = 'hidden';
+  }
+  function backToPicker() {
+    try { window.speechSynthesis.cancel(); } catch (e) {}
+    saveProgress();
+    if (overlay) overlay.classList.remove('open');
+    openComic();
   }
   function closeComic() {
     if (overlay) overlay.classList.remove('open');
+    if (picker) picker.classList.remove('open');
     document.body.style.overflow = '';
     try { window.speechSynthesis.cancel(); } catch (e) {}
   }
   window.openComic = openComic;
+  window.openMitosById = function (id) { const c = CATALOG.find(x => x.id === id); if (c) openChapter(c); else openComic(); };
 })();
 
 
